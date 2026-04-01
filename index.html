@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ONENIGHTVIP | Exclusive VIP Club</title>
+    
+    <meta name="description" content="ONENIGHTVIP คลับระดับ VIP บริการประทับใจ การันตีโปรไฟล์ตรงปก">
+    
     <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
 
     <style>
@@ -14,6 +18,7 @@
             --text-dark: #8c5a5a;
             --text-muted: #b87a7a;
             --accent: #b56c5e;
+            --badge-green: #10b981;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,7 +34,7 @@
         }
 
         /* =========================================
-           1. Navbar (อัปเดตปุ่มและเมนูตรงกลาง)
+           1. Navbar (Logo & Buttons)
            ========================================= */
         .navbar {
             display: flex;
@@ -55,33 +60,15 @@
             font-weight: bold;
         }
 
-        /* เมนูตรงกลาง Navbar */
-        .nav-links {
-            display: flex;
-            gap: 25px;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            font-size: 1rem;
-            transition: color 0.3s;
-        }
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--accent);
-            text-shadow: 0 0 8px rgba(181, 108, 94, 0.3);
-        }
-
         .nav-buttons {
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        /* ปุ่มเข้าสู่ระบบ (โปร่งใส ขอบสี) */
+        /* ปุ่มเข้าสู่ระบบ (โปร่งใส ขอบสีโรสโกลด์) */
         .btn-outline {
             text-decoration: none;
-            font-family: 'Prompt', sans-serif;
             font-weight: 500;
             font-size: 1rem;
             color: var(--accent);
@@ -91,14 +78,11 @@
             border: 2px solid var(--accent);
             transition: all 0.3s ease;
         }
-        .btn-outline:hover {
-            background: rgba(181, 108, 94, 0.1);
-        }
+        .btn-outline:hover { background: rgba(181, 108, 94, 0.1); }
 
         /* ปุ่มสมัครสมาชิก (3D นูนๆ) */
         .btn-3d {
             text-decoration: none;
-            font-family: 'Prompt', sans-serif;
             font-weight: 500;
             font-size: 1rem;
             color: var(--accent);
@@ -115,181 +99,105 @@
         }
 
         /* =========================================
-           2. ส่วนหัวเสริม (Header Extensions)
-           ========================================= */
-        .header-extensions {
-            padding: 20px 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* 2.1 ป้ายโปรโมชั่น */
-        .promo-banner {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 12px;
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--text-dark);
-            font-weight: 500;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-        }
-
-        /* 2.2 วงกลมสตอรี่ (เลื่อนซ้ายขวาได้) */
-        .story-container {
-            display: flex;
-            gap: 20px;
-            overflow-x: auto;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            scrollbar-width: none; /* ซ่อน scrollbar ใน Firefox */
-        }
-        .story-container::-webkit-scrollbar { display: none; } /* ซ่อน scrollbar ใน Chrome */
-
-        .story-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            min-width: 80px;
-            cursor: pointer;
-        }
-        .story-ring {
-            width: 75px;
-            height: 75px;
-            border-radius: 50%;
-            padding: 3px;
-            background: linear-gradient(45deg, #ffd15c, #ff8da1, #b56c5e); /* ขอบสีทอง/โรสโกลด์ */
-            box-shadow: 0 4px 10px rgba(181, 108, 94, 0.3);
-            transition: transform 0.3s;
-        }
-        .story-item:hover .story-ring { transform: scale(1.05); }
-        .story-ring img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid white; /* ขอบขาวด้านใน */
-        }
-        .story-name { font-size: 0.85rem; color: var(--text-dark); font-weight: 500; }
-
-        /* 2.3 ป้ายเอเจนซี่ (เลื่อนซ้ายขวาได้) */
-        .agency-container {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            padding-bottom: 15px;
-            margin-bottom: 15px;
-            scrollbar-width: none;
-        }
-        .agency-container::-webkit-scrollbar { display: none; }
-
-        .agency-card {
-            min-width: 220px;
-            height: 90px;
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.8);
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            gap: 15px;
-            cursor: pointer;
-            box-shadow: 4px 4px 15px rgba(200, 180, 180, 0.2);
-            transition: transform 0.2s;
-            position: relative;
-        }
-        .agency-card:hover { transform: translateY(-3px); }
-        .agency-img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; }
-        .agency-info h4 { color: var(--text-dark); font-size: 1rem; margin-bottom: 4px; }
-        .agency-info p { color: var(--text-muted); font-size: 0.8rem; display: flex; align-items: center; gap: 4px; }
-        
-        .badge-recommend {
-            position: absolute;
-            top: -8px;
-            right: 10px;
-            background: linear-gradient(145deg, #ffd15c, #fcae1e);
-            color: white;
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-weight: 600;
-        }
-
-        /* 2.4 แถบเมนูด้านล่างสุดของ Header (Telegram & กรอง) */
-        .action-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.6);
-            padding-top: 15px;
-        }
-        .telegram-group { display: flex; gap: 10px; }
-        .btn-tele {
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(255,255,255,0.8);
-            color: #0088cc;
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .btn-filter {
-            background: transparent;
-            border: none;
-            color: var(--text-dark);
-            font-family: 'Prompt';
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-        }
-
-        /* =========================================
-           3. Grid Layout (โครงสร้างการ์ดเดิม)
+           2. Grid Layout & Card Design
            ========================================= */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
-            padding: 20px 5% 50px 5%;
+            padding: 40px 5% 50px 5%;
             max-width: 1400px;
             margin: 0 auto;
         }
-        .card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border-radius: 20px; padding: 15px; border: 1px solid rgba(255,255,255,0.6); box-shadow: 8px 8px 20px rgba(200, 180, 180, 0.2); }
-        .card-image-box { position: relative; width: 100%; height: 380px; border-radius: 12px; overflow: hidden; margin-bottom: 15px; }
+
+        .card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 15px;
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 8px 8px 20px rgba(200, 180, 180, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .card:hover { transform: translateY(-5px); }
+
+        /* Image Box */
+        .card-image-box {
+            position: relative;
+            width: 100%;
+            height: 380px; 
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #f5e6e6; 
+            margin-bottom: 15px;
+        }
         .card-image-box img { width: 100%; height: 100%; object-fit: cover; }
-        .badge-image { position: absolute; top: 12px; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: white; z-index: 10; }
+        
+        .badge-image {
+            position: absolute; top: 12px; padding: 4px 12px; border-radius: 20px;
+            font-size: 0.8rem; font-weight: 600; color: white; z-index: 10;
+        }
         .badge-new { left: 12px; background: linear-gradient(145deg, #ff8da1, #ff5e7e); }
-        .heart-btn { position: absolute; bottom: 12px; right: 12px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.3); display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; }
+        .badge-hot { right: 12px; background: linear-gradient(145deg, #ffd15c, #fcae1e); }
+
+        .heart-btn {
+            position: absolute; bottom: 12px; right: 12px;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; z-index: 10;
+        }
+
+        /* Card Info */
         .card-info { text-align: left; }
         .name-group { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
         .card-name { font-size: 1.2rem; font-weight: 600; color: var(--text-dark); }
         .card-age { font-size: 1.1rem; color: var(--text-muted); font-weight: normal; }
-        .card-location { font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; margin-bottom: 8px; }
-        .card-stats-text { font-size: 0.9rem; color: var(--text-dark); margin-bottom: 12px; font-weight: 500; }
-        .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed rgba(181, 108, 94, 0.3); padding-top: 12px; }
-        .price { font-size: 1.25rem; font-weight: bold; color: #b56c5e; }
+        .verified-badge { font-size: 1.3rem; color: var(--badge-green); }
+
+        .card-location {
+            font-size: 0.85rem; color: var(--text-muted);
+            display: flex; align-items: center; gap: 4px; margin-bottom: 8px;
+        }
+
+        .card-stats-text {
+            font-size: 0.9rem; color: var(--text-dark);
+            margin-bottom: 12px; font-weight: 500;
+        }
+
+        .card-footer {
+            display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px dashed rgba(181, 108, 94, 0.3); padding-top: 12px;
+        }
+
+        .price { font-size: 1.25rem; font-weight: bold; color: var(--accent); }
+        
         .engagement { font-size: 0.9rem; display: flex; align-items: center; gap: 12px; color: var(--text-dark); }
         .engage-item { display: flex; align-items: center; gap: 4px; }
 
+        /* =========================================
+           3. Responsive Design for Mobile
+           ========================================= */
         @media (max-width: 768px) {
             .navbar { flex-wrap: wrap; }
-            .nav-links { order: 3; width: 100%; justify-content: center; margin-top: 15px; }
-            .grid-container { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+            .grid-container { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; padding: 20px 3%; }
             .card-image-box { height: 220px; }
-            .action-bar { flex-direction: column; gap: 15px; align-items: flex-start; }
+            
+            /* -- ปรับแก้ส่วนข้อมูลเฉพาะบนโทรศัพท์ -- */
+            .card-name { font-size: 1.05rem; }
+            
+            /* 1. ลบ parentheses () และทำให้ อายุเป็นตัวหนา */
+            .card-age { font-size: 1rem; font-weight: bold; color: var(--text-dark); }
+            
+            /* 2. ทำให้เครื่องหมายถูกใหญ่ขึ้นเฉพาะโทรศัพท์ */
+            .verified-badge { font-size: 1.6rem; }
+            
+            /* 3. ซ่อนรูปตาและยอดคนดู */
+            .engage-views { display: none; }
+            
+            .price { font-size: 1.1rem; }
+            .engagement { font-size: 0.8rem; gap: 8px; }
         }
     </style>
 </head>
@@ -300,109 +208,178 @@
             <div class="logo-text">ONENIGHTVIP</div>
         </div>
         
-        <div class="nav-links">
-            <a href="#" class="active">หน้าแรก</a>
-            <a href="#">เอเจนซี่</a>
-            <a href="#">กระดานผู้นำ</a>
-        </div>
-
         <div class="nav-buttons">
             <a href="#login" class="btn-outline">เข้าสู่ระบบ</a>
             <a href="#register" class="btn-3d">สมัครสมาชิก</a>
         </div>
     </nav>
 
-    <div class="header-extensions">
-        
-        <div class="promo-banner">
-            <span class="iconify" data-icon="heroicons:sparkles" style="color: #fcae1e; font-size: 1.2rem;"></span>
-            โปรโมชั่น Sideline & Agencies - มีนาคม 2026
-        </div>
-
-        <div class="story-container">
-            <div class="story-item">
-                <div class="story-ring"><img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=150&q=80" alt="น้อง เจนนี่"></div>
-                <span class="story-name">เจนนี่</span>
-            </div>
-            <div class="story-item">
-                <div class="story-ring"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="น้อง มอลลี่"></div>
-                <span class="story-name">มอลลี่</span>
-            </div>
-            <div class="story-item">
-                <div class="story-ring"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&q=80" alt="น้อง ฮันนี่"></div>
-                <span class="story-name">ฮันนี่</span>
-            </div>
-             <div class="story-item">
-                <div class="story-ring"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" alt="น้อง เป๊ปซี่"></div>
-                <span class="story-name">เป๊ปซี่</span>
-            </div>
-        </div>
-
-        <div class="agency-container">
-            <div class="agency-card">
-                <span class="badge-recommend">👑 แนะนำ</span>
-                <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=100&q=80" alt="Love Studio" class="agency-img">
-                <div class="agency-info">
-                    <h4>Love Studio</h4>
-                    <p><span class="iconify" data-icon="heroicons:users"></span> 16 คน</p>
-                </div>
-            </div>
-            <div class="agency-card">
-                <img src="https://images.unsplash.com/photo-1516483638261-f4085ee6bd0f?auto=format&fit=crop&w=100&q=80" alt="Girlfriend Club" class="agency-img">
-                <div class="agency-info">
-                    <h4>Girlfriend Club</h4>
-                    <p><span class="iconify" data-icon="heroicons:users"></span> 10 คน</p>
-                </div>
-            </div>
-            <div class="agency-card">
-                <span class="badge-recommend">👑 แนะนำ</span>
-                <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?auto=format&fit=crop&w=100&q=80" alt="Queens Club" class="agency-img">
-                <div class="agency-info">
-                    <h4>Queens Club</h4>
-                    <p><span class="iconify" data-icon="heroicons:users"></span> 18 คน</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="action-bar">
-            <div class="telegram-group">
-                <a href="#" class="btn-tele">
-                    <span class="iconify" data-icon="logos:telegram"></span> เข้าร่วมกลุ่ม Telegram #1
-                </a>
-                <a href="#" class="btn-tele">
-                    <span class="iconify" data-icon="logos:telegram"></span> เข้าร่วมกลุ่ม Telegram #2
-                </a>
-            </div>
-            <button class="btn-filter">
-                <span class="iconify" data-icon="heroicons:adjustments-horizontal" style="font-size: 1.2rem;"></span> ค้นหาและกรอง
-            </button>
-        </div>
-
-    </div> <main class="grid-container">
+    <main class="grid-container">
         
         <div class="card">
             <div class="card-image-box">
-                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=500&q=80" alt="น้อง B">
+                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=500&q=80" alt="น้องบี">
                 <span class="badge-image badge-new">New</span>
                 <button class="heart-btn" onclick="toggleHeart(this)">
                     <span class="iconify heart-icon" data-icon="mdi:cards-heart-outline" style="color: white; font-size: 1.5rem;"></span>
                 </button>
             </div>
+            
             <div class="card-info">
                 <div class="name-group">
-                    <span class="iconify" data-icon="heroicons:check-badge-solid" style="color: #10b981; font-size: 1.3rem;"></span>
-                    <span class="card-name">น้อง B <span class="card-age">(24)</span></span>
+                    <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span>
+                    <span class="card-name">น้องบี <span class="card-age">24</span></span>
                 </div>
+
                 <div class="card-location">
-                    <span class="iconify" data-icon="mdi:map-marker" style="color: #b56c5e; font-size: 1rem;"></span>
+                    <span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent); font-size: 1rem;"></span>
                     กรุงเทพฯ, ลาดพร้าว
                 </div>
-                <div class="card-stats-text">34-24-36 • 157/49</div>
+
+                <div class="card-stats-text">
+                    34-24-36 • 157/49
+                </div>
+
                 <div class="card-footer">
                     <div class="price">฿1,000</div>
                     <div class="engagement">
-                        <span class="engage-item"><span class="iconify" data-icon="heroicons:eye" style="font-size: 1.1rem;"></span> 156</span>
-                        <span class="engage-item"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24; font-size: 1.1rem;"></span> 4.8 (18)</span>
+                        <span class="engage-item engage-views"><span class="iconify" data-icon="heroicons:eye" style="font-size: 1.1rem;"></span> 156</span>
+                        <span class="engage-item engage-rating"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24; font-size: 1.1rem;"></span> 4.8</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-image-box">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80" alt="น้ำหวาน">
+                <span class="badge-image badge-hot">มาแรง</span>
+                <button class="heart-btn" onclick="toggleHeart(this)">
+                    <span class="iconify heart-icon" data-icon="mdi:cards-heart-outline" style="color: white; font-size: 1.5rem;"></span>
+                </button>
+            </div>
+            
+            <div class="card-info">
+                <div class="name-group">
+                    <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span>
+                    <span class="card-name">น้ำหวาน <span class="card-age">22</span></span>
+                </div>
+
+                <div class="card-location">
+                    <span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent); font-size: 1rem;"></span>
+                    กรุงเทพฯ, บึงกุ่ม
+                </div>
+
+                <div class="card-stats-text">
+                    34B-25-35 • 160/45
+                </div>
+
+                <div class="card-footer">
+                    <div class="price">฿1,200</div>
+                    <div class="engagement">
+                        <span class="engage-item engage-views"><span class="iconify" data-icon="heroicons:eye" style="font-size: 1.1rem;"></span> 342</span>
+                        <span class="engage-item engage-rating"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24; font-size: 1.1rem;"></span> 5.0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-image-box">
+                <img src="https://images.unsplash.com/photo-1524250552884-958e84196811?auto=format&fit=crop&w=500&q=80" alt="น้องมอลลี่">
+                <button class="heart-btn" onclick="toggleHeart(this)">
+                    <span class="iconify heart-icon" data-icon="mdi:cards-heart-outline" style="color: white; font-size: 1.5rem;"></span>
+                </button>
+            </div>
+            
+            <div class="card-info">
+                <div class="name-group">
+                    <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span>
+                    <span class="card-name">น้องมอลลี่ <span class="card-age">23</span></span>
+                </div>
+
+                <div class="card-location">
+                    <span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent); font-size: 1rem;"></span>
+                    กรุงเทพฯ, สุขุมวิท
+                </div>
+
+                <div class="card-stats-text">
+                    32C-24-34 • 165/48
+                </div>
+
+                <div class="card-footer">
+                    <div class="price">฿1,500</div>
+                    <div class="engagement">
+                        <span class="engage-item engage-views"><span class="iconify" data-icon="heroicons:eye" style="font-size: 1.1rem;"></span> 210</span>
+                        <span class="engage-item engage-rating"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24; font-size: 1.1rem;"></span> 4.9</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-image-box">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=500&q=80" alt="น้องนานา">
+                <span class="badge-image badge-new">New</span>
+                <button class="heart-btn" onclick="toggleHeart(this)">
+                    <span class="iconify heart-icon" data-icon="mdi:cards-heart-outline" style="color: white; font-size: 1.5rem;"></span>
+                </button>
+            </div>
+            
+            <div class="card-info">
+                <div class="name-group">
+                    <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span>
+                    <span class="card-name">น้องนานา <span class="card-age">25</span></span>
+                </div>
+
+                <div class="card-location">
+                    <span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent); font-size: 1rem;"></span>
+                    นนทบุรี, บางใหญ่
+                </div>
+
+                <div class="card-stats-text">
+                    36-26-38 • 158/52
+                </div>
+
+                <div class="card-footer">
+                    <div class="price">฿900</div>
+                    <div class="engagement">
+                        <span class="engage-item engage-views"><span class="iconify" data-icon="heroicons:eye" style="font-size: 1.1rem;"></span> 102</span>
+                        <span class="engage-item engage-rating"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24; font-size: 1.1rem;"></span> 4.7</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-image-box">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=500&q=80" alt="เป๊ปซี่">
+                <span class="badge-image badge-hot">มาแรง</span>
+                <button class="heart-btn" onclick="toggleHeart(this)">
+                    <span class="iconify heart-icon" data-icon="mdi:cards-heart-outline" style="color: white; font-size: 1.5rem;"></span>
+                </button>
+            </div>
+            
+            <div class="card-info">
+                <div class="name-group">
+                    <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span>
+                    <span class="card-name">เป๊ปซี่ <span class="card-age">21</span></span>
+                </div>
+
+                <div class="card-location">
+                    <span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent); font-size: 1rem;"></span>
+                    กรุงเทพฯ, ดินแดง
+                </div>
+
+                <div class="card-stats-text">
+                    33-24-34 • 161/47
+                </div>
+
+                <div class="card-footer">
+                    <div class="price">฿1,300</div>
+                    <div class="engagement">
+                        <span class="engage-item engage-views"><span class="iconify" data-icon="heroicons:eye" style="font-size: 1.1rem;"></span> 415</span>
+                        <span class="engage-item engage-rating"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24; font-size: 1.1rem;"></span> 5.0</span>
                     </div>
                 </div>
             </div>
