@@ -9,12 +9,16 @@
     
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
 
-    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Prompt:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
     
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+
     <style>
         :root {
             --text-rosegold: linear-gradient(to right, #b56c5e, #e29f8c, #b56c5e);
             --bg-glass: rgba(255, 255, 255, 0.4);
+            --text-dark: #8c5a5a;
+            --text-muted: #b87a7a;
         }
 
         * {
@@ -24,19 +28,16 @@
         }
 
         body {
-            /* เรียกใช้รูปหินอ่อนที่คุณอัปโหลดไว้ */
             background-image: url('bg-marble.jpg'); 
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            background-color: #fdf5f5; /* สีสำรองกรณีรูปยังไม่โหลด */
+            background-color: #fdf5f5; 
             font-family: 'Prompt', sans-serif;
             min-height: 100vh;
         }
 
-        /* =========================================
-           Header & Logo (โลโก้ ONENIGHTVIP)
-           ========================================= */
+        /* Navbar & Buttons (คงความ 3D และสีโรสโกลด์ไว้) */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -51,24 +52,16 @@
             z-index: 100;
         }
 
-        .logo-container {
-            text-align: center;
-        }
-
         .logo-text {
-            font-family: 'Italiana', serif; /* ฟอนต์หรูหรา */
+            font-family: 'Italiana', serif;
             font-size: 2.8rem;
             letter-spacing: 4px;
-            /* เทคนิคทำสีตัวอักษรเป็นสีโรสโกลด์แวววาว */
             background: var(--text-rosegold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: bold;
         }
 
-        /* =========================================
-           3D Pill Button (ปุ่มนูน 3 มิติสีชมพู)
-           ========================================= */
         .btn-3d {
             display: inline-block;
             text-decoration: none;
@@ -76,15 +69,10 @@
             font-weight: 500;
             font-size: 1rem;
             color: #b56c5e;
-            padding: 12px 35px;
+            padding: 10px 30px;
             border-radius: 50px;
             background: linear-gradient(145deg, #ffede6, #ffd1c4);
-            /* สร้างมิติแสงเงาให้ปุ่มนูนและเงางามแบบในรูป */
-            box-shadow: 
-                6px 6px 15px rgba(220, 180, 170, 0.6), 
-                -6px -6px 15px rgba(255, 255, 255, 1),
-                inset 0px 5px 8px rgba(255, 255, 255, 0.8),
-                inset 0px -3px 5px rgba(200, 150, 140, 0.2);
+            box-shadow: 6px 6px 15px rgba(220, 180, 170, 0.6), -6px -6px 15px rgba(255, 255, 255, 1), inset 0px 5px 8px rgba(255, 255, 255, 0.8), inset 0px -3px 5px rgba(200, 150, 140, 0.2);
             transition: all 0.2s ease;
             border: 1px solid rgba(255,255,255,0.5);
             cursor: pointer;
@@ -92,26 +80,15 @@
 
         .btn-3d:hover {
             transform: translateY(-2px);
-            box-shadow: 
-                8px 8px 20px rgba(220, 180, 170, 0.7), 
-                -8px -8px 20px rgba(255, 255, 255, 1),
-                inset 0px 5px 8px rgba(255, 255, 255, 0.9);
-        }
-
-        .btn-3d:active {
-            transform: translateY(2px);
-            /* พอกดปุ่ม เงาจะยุบลงไป */
-            box-shadow: 
-                inset 6px 6px 15px rgba(220, 180, 170, 0.6), 
-                inset -6px -6px 15px rgba(255, 255, 255, 1);
+            box-shadow: 8px 8px 20px rgba(220, 180, 170, 0.7), -8px -8px 20px rgba(255, 255, 255, 1), inset 0px 5px 8px rgba(255, 255, 255, 0.9);
         }
 
         /* =========================================
-           Grid Layout (กระดานโปรไฟล์ รองรับมือถือ/PC)
+           Grid Layout & Card Design (อัปเดตใหม่)
            ========================================= */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
             padding: 40px 5%;
             max-width: 1400px;
@@ -119,9 +96,9 @@
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
-            border-radius: 25px;
+            border-radius: 20px;
             padding: 15px;
             border: 1px solid rgba(255,255,255,0.6);
             box-shadow: 8px 8px 20px rgba(200, 180, 180, 0.2), -8px -8px 20px rgba(255, 255, 255, 0.8);
@@ -134,10 +111,11 @@
 
         .card-image-box {
             width: 100%;
-            height: 350px;
-            border-radius: 15px;
+            height: 380px; /* เพิ่มความสูงรูปให้ดูสวยขึ้น */
+            border-radius: 12px;
             overflow: hidden;
             background-color: #f5e6e6; 
+            margin-bottom: 15px;
         }
 
         .card-image-box img {
@@ -146,17 +124,82 @@
             object-fit: cover;
         }
 
+        /* ส่วนข้อมูลใน Card ที่จัดใหม่ */
         .card-info {
-            padding: 15px 5px 5px 5px;
-            text-align: center;
+            text-align: left; /* จัดข้อความชิดซ้ายตามรูปต้นฉบับ */
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .name-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .card-name {
-            font-size: 1.3rem;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .views-count {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        .badge-status {
+            font-size: 0.75rem;
+            background: linear-gradient(145deg, #ffd7d7, #ffb5b5);
+            color: #8c5a5a;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            box-shadow: 2px 2px 5px rgba(220, 180, 170, 0.4);
+        }
+
+        .card-location {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+
+        .card-stats-text {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            margin-bottom: 12px;
             font-weight: 500;
+        }
+
+        /* ส่วนราคาและเรตติ้งด้านล่างสุด */
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px dashed rgba(181, 108, 94, 0.3);
+            padding-top: 12px;
+        }
+
+        .price {
+            font-size: 1.25rem;
+            font-weight: bold;
             color: #b56c5e;
-            margin-bottom: 15px;
-            display: block;
+        }
+
+        .engagement {
+            font-size: 0.9rem;
+            display: flex;
+            gap: 12px;
+            color: var(--text-dark);
         }
 
         /* Responsive Mobile */
@@ -164,23 +207,18 @@
             .navbar {
                 flex-direction: column;
                 gap: 15px;
-                padding: 15px;
-            }
-            .logo-text {
-                font-size: 2.2rem;
             }
             .grid-container {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* ปรับให้มือถือแสดง 2 แถว */
                 gap: 15px;
                 padding: 20px 3%;
             }
             .card-image-box {
-                height: 200px;
+                height: 220px;
             }
-            .btn-3d {
-                padding: 10px 25px;
-                font-size: 0.9rem;
-            }
+            .card-name { font-size: 1rem; }
+            .price { font-size: 1.1rem; }
+            .engagement { font-size: 0.8rem; gap: 8px; }
         }
     </style>
 </head>
@@ -200,21 +238,67 @@
         
         <div class="card">
             <div class="card-image-box">
-                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=500&q=80" alt="น้อง A">
+                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=500&q=80" alt="น้อง B">
             </div>
+            
             <div class="card-info">
-                <span class="card-name">น้อง A (22)</span>
-                <a href="#profile" class="btn-3d" style="width: 100%;">ดูโปรไฟล์</a>
+                <div class="card-header">
+                    <div class="name-group">
+                        <span class="iconify" data-icon="heroicons:check-badge-solid" style="color: #fbbf24; font-size: 1.3rem;"></span>
+                        <span class="card-name">น้อง B <span class="views-count">(24)</span></span>
+                    </div>
+                    <span class="badge-status">New</span>
+                </div>
+
+                <div class="card-location">
+                    <span class="iconify" data-icon="mdi:map-marker" style="color: #b56c5e; font-size: 1rem;"></span>
+                    กรุงเทพฯ, ลาดพร้าว
+                </div>
+
+                <div class="card-stats-text">
+                    34-24-36 • 157/49 • 23 ปี
+                </div>
+
+                <div class="card-footer">
+                    <div class="price">฿1,000</div>
+                    <div class="engagement">
+                        <span>⭐ 4.8 (18)</span>
+                        <span>❤️ (18)</span>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="card">
             <div class="card-image-box">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80" alt="น้อง B">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80" alt="น้อง น้ำหวาน">
             </div>
+            
             <div class="card-info">
-                <span class="card-name">น้อง B (24)</span>
-                <a href="#profile" class="btn-3d" style="width: 100%;">ดูโปรไฟล์</a>
+                <div class="card-header">
+                    <div class="name-group">
+                        <span class="iconify" data-icon="heroicons:check-badge-solid" style="color: #fbbf24; font-size: 1.3rem;"></span>
+                        <span class="card-name">น้ำหวาน <span class="views-count">(156)</span></span>
+                    </div>
+                    <span class="badge-status" style="background: linear-gradient(145deg, #ffd15c, #fcae1e); color: white;">มาแรง</span>
+                </div>
+
+                <div class="card-location">
+                    <span class="iconify" data-icon="mdi:map-marker" style="color: #b56c5e; font-size: 1rem;"></span>
+                    กรุงเทพฯ, บึงกุ่ม
+                </div>
+
+                <div class="card-stats-text">
+                    34B-25-35 • 160/45 • 22 ปี
+                </div>
+
+                <div class="card-footer">
+                    <div class="price">฿1,200</div>
+                    <div class="engagement">
+                        <span>⭐ 5.0 (42)</span>
+                        <span>❤️ (89)</span>
+                    </div>
+                </div>
             </div>
         </div>
 
