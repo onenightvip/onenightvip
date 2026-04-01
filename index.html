@@ -4,120 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>OM-SOD CLUB | คลับส่วนตัวที่ตอบโจทย์ทุกไลฟ์สไตล์</title>
-    <meta name="description" content="OM-SOD CLUB คลับระดับ VIP บริการประทับใจ การันตีโปรไฟล์ตรงปก พร้อมระบบจองที่ปลอดภัยที่สุด">
-    <meta name="keywords" content="omsod, คลับวีไอพี, บริการส่วนตัว, จองคิว">
-    <meta property="og:title" content="OM-SOD CLUB | VIP Exclusive">
-    <meta property="og:description" content="พบกับประสบการณ์ระดับพรีเมียมได้ที่นี่">
-    <meta property="og:image" content="https://www.onenightvip.com/your-cover-image.jpg"> <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="DENY">
+    <title>ONENIGHTVIP | Exclusive VIP Club</title>
+    <meta name="description" content="ONENIGHTVIP คลับระดับ VIP บริการประทับใจ การันตีโปรไฟล์ตรงปก">
+    
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
 
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Prompt:wght@300;400;500&display=swap" rel="stylesheet">
     
     <style>
-        /* =========================================
-           Core Variables & Theme (ธีมชมพูหินอ่อน)
-           ========================================= */
         :root {
-            --bg-color: #fdf5f5;
-            --text-main: #b87a7a;
-            --text-dark: #8c5a5a;
-            --primary-light: #ffd7d7;
-            --primary-dark: #ffb5b5;
-            --shadow-light: #ffffff;
-            --shadow-dark: #e6d5d5;
+            --text-rosegold: linear-gradient(to right, #b56c5e, #e29f8c, #b56c5e);
+            --bg-glass: rgba(255, 255, 255, 0.4);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Prompt', sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            background-image: url('https://www.transparenttextures.com/patterns/marble.png');
+            /* เรียกใช้รูปหินอ่อนที่คุณอัปโหลดไว้ */
+            background-image: url('bg-marble.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #fdf5f5; /* สีสำรองกรณีรูปยังไม่โหลด */
+            font-family: 'Prompt', sans-serif;
             min-height: 100vh;
         }
 
         /* =========================================
-           Navbar (เมนูด้านบน)
+           Header & Logo (โลโก้ ONENIGHTVIP)
            ========================================= */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 5%;
-            background: rgba(253, 245, 245, 0.8);
-            backdrop-filter: blur(10px);
+            padding: 20px 5%;
+            background: var(--bg-glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 15px rgba(230, 213, 213, 0.5);
         }
 
-        .logo {
-            font-family: serif;
-            font-size: 1.8rem;
-            color: var(--text-dark);
+        .logo-container {
+            text-align: center;
+        }
+
+        .logo-text {
+            font-family: 'Italiana', serif; /* ฟอนต์หรูหรา */
+            font-size: 2.8rem;
+            letter-spacing: 4px;
+            /* เทคนิคทำสีตัวอักษรเป็นสีโรสโกลด์แวววาว */
+            background: var(--text-rosegold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             font-weight: bold;
-            letter-spacing: 2px;
-            text-decoration: none;
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        /* ปุ่มสไตล์ Neumorphism */
-        .btn {
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-        }
-
-        .btn-login {
-            background: var(--bg-color);
-            color: var(--text-dark);
-            box-shadow: 4px 4px 10px var(--shadow-dark), -4px -4px 10px var(--shadow-light);
-        }
-
-        .btn-register {
-            background: linear-gradient(145deg, var(--primary-light), var(--primary-dark));
-            color: white;
-            box-shadow: 4px 4px 10px var(--shadow-dark), -4px -4px 10px var(--shadow-light);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 6px 6px 15px var(--shadow-dark), -6px -6px 15px var(--shadow-light);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-            box-shadow: inset 4px 4px 10px var(--shadow-dark), inset -4px -4px 10px var(--shadow-light);
         }
 
         /* =========================================
-           Hero Section (ส่วนต้อนรับ)
+           3D Pill Button (ปุ่มนูน 3 มิติสีชมพู)
            ========================================= */
-        .hero {
-            text-align: center;
-            padding: 40px 20px;
+        .btn-3d {
+            display: inline-block;
+            text-decoration: none;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 500;
+            font-size: 1rem;
+            color: #b56c5e;
+            padding: 12px 35px;
+            border-radius: 50px;
+            background: linear-gradient(145deg, #ffede6, #ffd1c4);
+            /* สร้างมิติแสงเงาให้ปุ่มนูนและเงางามแบบในรูป */
+            box-shadow: 
+                6px 6px 15px rgba(220, 180, 170, 0.6), 
+                -6px -6px 15px rgba(255, 255, 255, 1),
+                inset 0px 5px 8px rgba(255, 255, 255, 0.8),
+                inset 0px -3px 5px rgba(200, 150, 140, 0.2);
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255,255,255,0.5);
+            cursor: pointer;
         }
 
-        .hero h1 {
-            font-size: 2.5rem;
-            color: var(--text-dark);
-            margin-bottom: 10px;
+        .btn-3d:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                8px 8px 20px rgba(220, 180, 170, 0.7), 
+                -8px -8px 20px rgba(255, 255, 255, 1),
+                inset 0px 5px 8px rgba(255, 255, 255, 0.9);
+        }
+
+        .btn-3d:active {
+            transform: translateY(2px);
+            /* พอกดปุ่ม เงาจะยุบลงไป */
+            box-shadow: 
+                inset 6px 6px 15px rgba(220, 180, 170, 0.6), 
+                inset -6px -6px 15px rgba(255, 255, 255, 1);
         }
 
         /* =========================================
@@ -125,19 +111,20 @@
            ========================================= */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            padding: 20px 5%;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+            padding: 40px 5%;
             max-width: 1400px;
             margin: 0 auto;
         }
 
-        /* Profile Card (การ์ดนางแบบ) */
         .card {
-            background: var(--bg-color);
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
             padding: 15px;
-            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 8px 8px 20px rgba(200, 180, 180, 0.2), -8px -8px 20px rgba(255, 255, 255, 0.8);
             transition: transform 0.3s ease;
         }
 
@@ -150,81 +137,49 @@
             height: 350px;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: inset 4px 4px 10px rgba(0,0,0,0.05);
-            background-color: #eee; /* สีพื้นหลังชั่วคราวกรณีรูปไม่โหลด */
-            position: relative;
+            background-color: #f5e6e6; 
         }
 
         .card-image-box img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .card:hover .card-image-box img {
-            transform: scale(1.05);
         }
 
         .card-info {
             padding: 15px 5px 5px 5px;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
+            text-align: center;
         }
 
         .card-name {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .card-status {
-            font-size: 0.8rem;
-            background: #d4edda;
-            color: #155724;
-            padding: 3px 10px;
-            border-radius: 20px;
-        }
-
-        .card-stats {
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            color: var(--text-main);
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn-full {
-            width: 100%;
-            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #b56c5e;
+            margin-bottom: 15px;
             display: block;
-            margin-top: 15px;
-            padding: 12px;
         }
 
-        /* =========================================
-           Responsive Design (สำหรับมือถือจอเล็ก)
-           ========================================= */
+        /* Responsive Mobile */
         @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
                 gap: 15px;
+                padding: 15px;
+            }
+            .logo-text {
+                font-size: 2.2rem;
             }
             .grid-container {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* ปรับให้มือถือแสดง 2 คอลัมน์ได้ */
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
                 gap: 15px;
-                padding: 10px 3%;
+                padding: 20px 3%;
             }
             .card-image-box {
-                height: 220px;
+                height: 200px;
             }
-            .hero h1 {
-                font-size: 1.8rem;
+            .btn-3d {
+                padding: 10px 25px;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -232,68 +187,34 @@
 <body>
 
     <nav class="navbar">
-        <a href="#" class="logo">OneNightVIP</a>
+        <div class="logo-container">
+            <div class="logo-text">ONENIGHTVIP</div>
+        </div>
         <div class="nav-buttons">
-            <a href="#login" class="btn btn-login">เข้าสู่ระบบ</a>
-            <a href="#register" class="btn btn-register">สมัครสมาชิก</a>
+            <a href="#register" class="btn-3d">สมัครสมาชิก</a>
+            <a href="#login" class="btn-3d" style="margin-left: 10px;">เข้าสู่ระบบ</a>
         </div>
     </nav>
-
-    <header class="hero">
-        <h1>อัปเดตความสดใสประจำวัน</h1>
-        <p>ค้นหาสเปกที่ตรงใจคุณที่สุด พร้อมบริการระดับ VIP</p>
-    </header>
 
     <main class="grid-container">
         
         <div class="card">
             <div class="card-image-box">
-                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="น้อง A">
+                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=500&q=80" alt="น้อง A">
             </div>
             <div class="card-info">
-                <div class="card-header">
-                    <span class="card-name">น้อง A (22)</span>
-                    <span class="card-status">ว่าง</span>
-                </div>
-                <div class="card-stats">
-                    <span>📍 สุขุมวิท</span>
-                    <span>⭐ 5.0 (24)</span>
-                </div>
-                <a href="#" class="btn btn-register btn-full">ดูโปรไฟล์</a>
+                <span class="card-name">น้อง A (22)</span>
+                <a href="#profile" class="btn-3d" style="width: 100%;">ดูโปรไฟล์</a>
             </div>
         </div>
 
         <div class="card">
             <div class="card-image-box">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="น้อง B">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80" alt="น้อง B">
             </div>
             <div class="card-info">
-                <div class="card-header">
-                    <span class="card-name">น้อง B (24)</span>
-                    <span class="card-status">ว่าง</span>
-                </div>
-                <div class="card-stats">
-                    <span>📍 ลาดพร้าว</span>
-                    <span>⭐ 4.8 (18)</span>
-                </div>
-                <a href="#" class="btn btn-register btn-full">ดูโปรไฟล์</a>
-            </div>
-        </div>
-        
-        <div class="card">
-            <div class="card-image-box">
-                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="น้อง C">
-            </div>
-            <div class="card-info">
-                <div class="card-header">
-                    <span class="card-name">น้อง C (21)</span>
-                    <span class="card-status">ว่าง</span>
-                </div>
-                <div class="card-stats">
-                    <span>📍 รัชดา</span>
-                    <span>⭐ 4.9 (32)</span>
-                </div>
-                <a href="#" class="btn btn-register btn-full">ดูโปรไฟล์</a>
+                <span class="card-name">น้อง B (24)</span>
+                <a href="#profile" class="btn-3d" style="width: 100%;">ดูโปรไฟล์</a>
             </div>
         </div>
 
