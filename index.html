@@ -12,12 +12,18 @@
 
     <style>
         :root {
-            --text-rosegold: linear-gradient(to right, #b56c5e, #e29f8c, #b56c5e);
-            --bg-glass: rgba(255, 255, 255, 0.6);
+            /* โทนสีหลักของเรา */
+            --accent: #b56c5e; /* โรสโกลด์ */
+            --accent-light: #e29f8c;
+            --btn-gradient: linear-gradient(145deg, #ffede6, #ffd1c4); /* ชมพูพีช 3D */
             --text-dark: #8c5a5a;
             --text-muted: #b87a7a;
-            --accent: #b56c5e;
-            --badge-green: #10b981;
+            --bg-glass: rgba(255, 255, 255, 0.6);
+
+            /* สีสำหรับ Dark Modal */
+            --modal-bg: #111111; /* ดำ VIP */
+            --modal-input-bg: #1a1a1a;
+            --text-on-dark: #fdf5f5;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,6 +35,9 @@
             font-family: 'Prompt', sans-serif; min-height: 100vh;
             overflow-x: hidden;
         }
+
+        /* ป้องกันการเลื่อนหน้าจอหลังตัว modal เปิด */
+        body.modal-open { overflow: hidden; }
 
         /* =========================================
            1. Navbar
@@ -48,71 +57,118 @@
 
         .nav-buttons { display: flex; gap: 15px; }
         
-        .btn-outline { text-decoration: none; color: var(--accent); padding: 8px 25px; border-radius: 50px; border: 2px solid var(--accent); font-weight: 500; text-align: center; }
-        .btn-3d { text-decoration: none; color: var(--accent); padding: 10px 30px; border-radius: 50px; background: linear-gradient(145deg, #ffede6, #ffd1c4); box-shadow: 4px 4px 10px rgba(220, 180, 170, 0.6), -4px -4px 10px rgba(255, 255, 255, 1); font-weight: 500; border: 1px solid rgba(255,255,255,0.5); text-align: center; }
+        /* ปุ่มสไตล์เดิม */
+        .btn-outline { text-decoration: none; color: var(--accent); padding: 8px 25px; border-radius: 50px; border: 2px solid var(--accent); font-weight: 500; text-align: center; cursor: pointer; background: transparent; font-family: 'Prompt'; font-size: 1rem;}
+        .btn-3d { text-decoration: none; color: var(--accent); padding: 10px 30px; border-radius: 50px; background: var(--btn-gradient); box-shadow: 4px 4px 10px rgba(220, 180, 170, 0.6), -4px -4px 10px rgba(255, 255, 255, 1); font-weight: 500; border: 1px solid rgba(255,255,255,0.5); text-align: center; cursor: pointer; font-family: 'Prompt'; font-size: 1rem;}
 
-        /* ปุ่ม Hamburger สำหรับมือถือ (ซ่อนใน Desktop) */
-        .mobile-menu-btn {
-            display: none;
-            background: none; border: none;
-            font-size: 2rem; color: var(--text-dark);
-            cursor: pointer;
-        }
+        .mobile-menu-btn { display: none; background: none; border: none; font-size: 2rem; color: var(--text-dark); cursor: pointer; }
 
         /* =========================================
-           2. Mobile Bottom Menu (ซ่อนเป็นค่าเริ่มต้น)
+           2. Mobile Bottom Menu
            ========================================= */
-        .mobile-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(3px);
-            z-index: 999; opacity: 0; visibility: hidden;
-            transition: all 0.3s ease;
-        }
+        .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(3px); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
         .mobile-overlay.active { opacity: 1; visibility: visible; }
-
-        .mobile-bottom-sheet {
-            position: fixed; bottom: -100%; left: 0; width: 100%;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
-            border-radius: 30px 30px 0 0; padding: 20px 25px 30px 25px;
-            z-index: 1000; box-shadow: 0 -5px 25px rgba(0,0,0,0.1);
-            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; flex-direction: column; gap: 20px;
-        }
+        .mobile-bottom-sheet { position: fixed; bottom: -100%; left: 0; width: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 30px 30px 0 0; padding: 20px 25px 30px 25px; z-index: 1000; box-shadow: 0 -5px 25px rgba(0,0,0,0.1); transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; gap: 20px; }
         .mobile-bottom-sheet.active { bottom: 0; }
-
-        /* ขีดด้านบนเมนู (Handle) */
-        .sheet-handle {
-            width: 50px; height: 5px; background: rgba(181, 108, 94, 0.3);
-            border-radius: 10px; margin: 0 auto 10px auto;
-        }
-
-        /* เมนูลิงก์ในมือถือ */
-        .sheet-links { display: flex; flex-direction: column; gap: 15px; }
-        .sheet-links a {
-            display: flex; align-items: center; gap: 15px;
-            text-decoration: none; color: var(--text-dark);
-            font-size: 1.1rem; font-weight: 500; padding: 10px 0;
-            border-bottom: 1px solid rgba(181, 108, 94, 0.1);
-        }
-        .sheet-links a.active { color: var(--accent); }
-
-        /* ปุ่มสลับภาษา */
-        .lang-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .lang-btn {
-            display: flex; justify-content: center; align-items: center; gap: 8px;
-            padding: 12px; border-radius: 15px; border: 1px solid rgba(181, 108, 94, 0.3);
-            background: transparent; color: var(--text-dark); font-family: 'Prompt';
-            font-size: 1rem; font-weight: 500; cursor: pointer;
-        }
-        .lang-btn.active { background: rgba(181, 108, 94, 0.1); border-color: var(--accent); color: var(--accent); }
-
-        /* ปุ่ม Auth ในมือถือ */
+        .sheet-handle { width: 50px; height: 5px; background: rgba(181, 108, 94, 0.3); border-radius: 10px; margin: 0 auto 10px auto; }
+        .sheet-links { display: flex; flex-direction: column; gap: 10px; }
+        .sheet-links a { display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--text-dark); font-size: 1.1rem; font-weight: 500; padding: 12px 0; border-bottom: 1px solid rgba(181, 108, 94, 0.1); }
         .sheet-auth { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 5px; }
-        .sheet-auth .btn-outline { padding: 12px; }
-        .sheet-auth .btn-3d { padding: 12px; }
 
         /* =========================================
-           3. Header Extensions (สตอรี่, คลับ)
+           3. Dark VIP Auth Modal (🎯 สเต็ปนี้คือหัวใจ)
+           ========================================= */
+        .auth-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px);
+            z-index: 2000; display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: all 0.3s ease;
+            padding: 20px;
+        }
+        .auth-overlay.active { opacity: 1; visibility: visible; }
+
+        .auth-modal {
+            background: var(--modal-bg); width: 100%; max-width: 450px;
+            border-radius: 25px; border: 1px solid rgba(181, 108, 94, 0.3);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            padding: 30px; position: relative;
+            transform: scale(0.9); transition: transform 0.3s ease;
+            max-height: 90vh; overflow-y: auto; /* เผื่อจอมือถือสั้น */
+            scrollbar-width: none;
+        }
+        .auth-modal::-webkit-scrollbar { display: none; }
+        .auth-overlay.active .auth-modal { transform: scale(1); }
+
+        .close-modal {
+            position: absolute; top: 20px; right: 20px;
+            background: none; border: none; color: var(--text-muted);
+            font-size: 1.8rem; cursor: pointer;
+        }
+
+        /* Tabs */
+        .auth-tabs { display: flex; gap: 20px; margin-bottom: 25px; border-bottom: 1px solid rgba(181, 108, 94, 0.2); }
+        .tab-btn {
+            background: none; border: none; color: var(--text-muted);
+            font-family: 'Prompt'; font-size: 1.2rem; font-weight: 600;
+            padding: 10px 5px; cursor: pointer; position: relative;
+        }
+        .tab-btn.active { color: var(--text-on-dark); }
+        .tab-btn.active::after {
+            content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 3px;
+            background: var(--accent); border-radius: 3px;
+        }
+
+        /* Form Elements */
+        .auth-form { display: none; flex-direction: column; gap: 15px; }
+        .auth-form.active { display: flex; }
+
+        .input-group { display: flex; flex-direction: column; gap: 5px; }
+        .input-group label { color: var(--accent-light); font-size: 0.9rem; font-weight: 500; }
+        .auth-input {
+            background: var(--modal-input-bg); border: 1px solid rgba(181, 108, 94, 0.2);
+            border-radius: 12px; padding: 12px 15px; color: var(--text-on-dark);
+            font-family: 'Prompt'; font-size: 1rem;
+        }
+        .auth-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 10px rgba(181, 108, 94, 0.2); }
+
+        /* โซนสมัครสมาชิก: เลือกสถานะ */
+        .status-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 5px; }
+        .status-radio { display: none; }
+        .status-label {
+            display: flex; justify-content: center; align-items: center;
+            padding: 10px; border-radius: 12px; background: var(--modal-input-bg);
+            border: 1px solid rgba(181, 108, 94, 0.2); color: var(--text-muted);
+            font-size: 0.9rem; cursor: pointer; transition: all 0.2s;
+        }
+        .status-radio:checked + .status-label {
+            border-color: var(--accent); background: rgba(181, 108, 94, 0.1); color: var(--accent);
+        }
+
+        /* ช่องติ๊กยืนยันอายุ */
+        .check-group { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
+        .auth-check { width: 18px; height: 18px; cursor: pointer; accent-color: var(--accent); }
+        .check-group label { color: var(--text-muted); font-size: 0.85rem; cursor: pointer; }
+
+        /* ปุ่ม Submit ด้านล่าง (ใช้สไตล์ 3D โทนสีเรา) */
+        .auth-submit { margin-top: 15px; width: 100%; padding: 12px; font-size: 1.1rem; }
+
+        /* Social Login */
+        .social-auth { margin-top: 25px; text-align: center; }
+        .social-divider { position: relative; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 20px; }
+        .social-divider::before, .social-divider::after { content: ''; position: absolute; top: 50%; width: 35%; height: 1px; background: rgba(181, 108, 94, 0.2); }
+        .social-divider::before { left: 0; } .social-divider::after { right: 0; }
+
+        .social-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .btn-social {
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+            padding: 10px; border-radius: 12px; background: #fff; border: none;
+            font-family: 'Prompt'; font-weight: 500; cursor: pointer;
+        }
+        .btn-line { background: #06c755; color: white; }
+        .btn-google { background: white; color: #333; border: 1px solid #ddd; }
+
+        /* =========================================
+           Header Extensions, Grid Cards (เดิม)
            ========================================= */
         .header-extensions { padding: 20px 5%; max-width: 1400px; margin: 0 auto; }
         .story-container { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 15px; margin-bottom: 20px; scrollbar-width: none; }
@@ -121,7 +177,6 @@
         .story-ring { width: 75px; height: 75px; border-radius: 50%; padding: 3px; background: linear-gradient(45deg, #ffd15c, #ff8da1, #b56c5e); transition: transform 0.3s; }
         .story-ring img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid white; }
         .story-name { font-size: 0.85rem; color: var(--text-dark); font-weight: 500; }
-
         .agency-container { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 15px; margin-bottom: 15px; scrollbar-width: none; }
         .agency-container::-webkit-scrollbar { display: none; }
         .agency-card { min-width: 220px; height: 90px; border-radius: 15px; background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.8); display: flex; align-items: center; padding: 10px; gap: 15px; position: relative; box-shadow: 4px 4px 15px rgba(200, 180, 180, 0.2); }
@@ -129,15 +184,9 @@
         .agency-info h4 { color: var(--text-dark); font-size: 1rem; margin-bottom: 4px; }
         .agency-info p { color: var(--text-muted); font-size: 0.8rem; display: flex; align-items: center; gap: 4px; }
         .badge-recommend { position: absolute; top: -8px; right: 10px; background: linear-gradient(145deg, #ffd15c, #fcae1e); color: white; font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
-
         .action-bar { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255, 255, 255, 0.6); padding-top: 15px; }
-        .telegram-group { display: flex; gap: 10px; }
         .btn-tele { background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255,255,255,0.8); color: #0088cc; padding: 6px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 5px; text-decoration: none; }
         .btn-filter { background: transparent; border: none; color: var(--text-dark); font-family: 'Prompt'; font-weight: 500; display: flex; align-items: center; gap: 5px; cursor: pointer; }
-
-        /* =========================================
-           4. Grid Cards 
-           ========================================= */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 10px 5% 50px 5%; max-width: 1400px; margin: 0 auto; }
         .card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border-radius: 20px; padding: 15px; border: 1px solid rgba(255,255,255,0.6); box-shadow: 8px 8px 20px rgba(200, 180, 180, 0.2); }
         .card-image-box { position: relative; width: 100%; height: 380px; border-radius: 12px; overflow: hidden; margin-bottom: 15px; }
@@ -146,13 +195,11 @@
         .badge-new { left: 12px; background: linear-gradient(145deg, #ff8da1, #ff5e7e); }
         .badge-hot { right: 12px; background: linear-gradient(145deg, #ffd15c, #fcae1e); }
         .heart-btn { position: absolute; bottom: 12px; right: 12px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.3); display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; }
-
         .card-info { text-align: left; }
         .name-group { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
         .card-name { font-size: 1.2rem; font-weight: 600; color: var(--text-dark); }
         .card-age { font-size: 1.1rem; color: var(--text-muted); font-weight: normal; margin-left: 4px; }
         .verified-badge { font-size: 1.3rem; color: var(--badge-green); }
-
         .card-location { font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; margin-bottom: 8px; }
         .card-stats-text { font-size: 0.9rem; color: var(--text-dark); margin-bottom: 12px; font-weight: 500; }
         .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed rgba(181, 108, 94, 0.3); padding-top: 12px; }
@@ -161,24 +208,26 @@
         .engage-item { display: flex; align-items: center; gap: 4px; }
 
         /* =========================================
-           📱 RESPONSIVE สำหรับโทรศัพท์มือถือ
+           📱 RESPONSIVE
            ========================================= */
         @media (max-width: 768px) {
-            /* 1. ซ่อนเมนูกลางและปุ่มใน Desktop, แสดงปุ่ม Hamburger แทน */
             .nav-links, .nav-buttons { display: none; }
             .mobile-menu-btn { display: block; }
             .logo-img { height: 40px; }
-            
             .action-bar { flex-direction: column; gap: 15px; align-items: flex-start; }
             .grid-container { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; padding: 10px 3% 30px 3%; }
             .card-image-box { height: 220px; }
-            
-            /* -- ปรับแต่งการ์ดเฉพาะมือถือ -- */
             .card-name { font-size: 1.05rem; }
             .verified-badge { font-size: 1.5rem !important; }
             .card-age { font-weight: bold; color: var(--text-dark); font-size: 1rem; }
             .engage-views { display: none !important; }
             .price { font-size: 1.15rem; }
+            
+            /* ปรับแต่ง Modal ในมือถือ */
+            .auth-modal { padding: 25px 20px; border-radius: 20px; }
+            .auth-tabs { gap: 10px; }
+            .tab-btn { font-size: 1.1rem; }
+            .status-group { grid-template-columns: 1fr; gap: 5px; } /* เลือกสถานะเรียงดิ่ง */
         }
     </style>
 </head>
@@ -195,8 +244,8 @@
             <a href="#">กระดานผู้นำ</a>
         </div>
         <div class="nav-buttons">
-            <a href="#login" class="btn-outline">เข้าสู่ระบบ</a>
-            <a href="#register" class="btn-3d">สมัครสมาชิก</a>
+            <button class="btn-outline" onclick="openAuthModal('login')">เข้าสู่ระบบ</button>
+            <button class="btn-3d" onclick="openAuthModal('register')">สมัครสมาชิก</button>
         </div>
 
         <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
@@ -207,21 +256,93 @@
     <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
     <div class="mobile-bottom-sheet" id="mobileSheet">
         <div class="sheet-handle"></div>
-        
         <div class="sheet-links">
-            <a href="#" class="active"><span class="iconify" data-icon="heroicons:home" style="font-size: 1.3rem;"></span> หน้าแรก</a>
-            <a href="#"><span class="iconify" data-icon="heroicons:building-office-2" style="font-size: 1.3rem;"></span> เอเจนซี่</a>
-            <a href="#"><span class="iconify" data-icon="heroicons:trophy" style="font-size: 1.3rem;"></span> กระดานผู้นำ</a>
+            <a href="#" class="active"><span class="iconify" data-icon="heroicons:home"></span> หน้าแรก</a>
+            <a href="#"><span class="iconify" data-icon="heroicons:building-office-2"></span> เอเจนซี่</a>
+            <a href="#"><span class="iconify" data-icon="heroicons:trophy"></span> กระดานผู้นำ</a>
         </div>
-
-        <div class="lang-toggle">
-            <button class="lang-btn active"><span class="iconify" data-icon="twemoji:flag-thailand" style="font-size: 1.2rem;"></span> ไทย</button>
-            <button class="lang-btn"><span class="iconify" data-icon="twemoji:flag-united-kingdom" style="font-size: 1.2rem;"></span> EN</button>
-        </div>
-
         <div class="sheet-auth">
-            <a href="#login" class="btn-outline">เข้าสู่ระบบ</a>
-            <a href="#register" class="btn-3d">สมัครสมาชิก</a>
+            <button class="btn-outline" onclick="toggleMobileMenu(); openAuthModal('login')">เข้าสู่ระบบ</button>
+            <button class="btn-3d" onclick="toggleMobileMenu(); openAuthModal('register')">สมัครสมาชิก</button>
+        </div>
+    </div>
+
+    <div class="auth-overlay" id="authOverlay" onclick="closeAuthModal(event)">
+        <div class="auth-modal" id="authModal">
+            <button class="close-modal" onclick="closeAuthModal(force=true)">&times;</button>
+            
+            <div class="auth-tabs">
+                <button class="tab-btn active" id="loginTabBtn" onclick="switchAuthTab('login')">เข้าสู่ระบบ</button>
+                <button class="tab-btn" id="registerTabBtn" onclick="switchAuthTab('register')">สมัครสมาชิก</button>
+            </div>
+
+            <form id="loginForm" class="auth-form active" onsubmit="handleAuthSubmit(event, 'login')">
+                <div class="input-group">
+                    <label>อีเมล</label>
+                    <input type="email" class="auth-input" placeholder="your@email.com" required>
+                </div>
+                <div class="input-group">
+                    <label>รหัสผ่าน</label>
+                    <input type="password" class="auth-input" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-3d auth-submit">เข้าสู่ระบบปลอดภัย</button>
+                
+                <div class="social-auth">
+                    <div class="social-divider">หรือเข้าสู่ระบบด้วย</div>
+                    <div class="social-btns">
+                        <button type="button" class="btn-social btn-line">
+                            <span class="iconify" data-icon="logos:line" style="font-size: 1.2rem;"></span> LINE
+                        </button>
+                        <button type="button" class="btn-social btn-google">
+                            <span class="iconify" data-icon="logos:google-icon" style="font-size: 1rem;"></span> Google
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <form id="registerForm" class="auth-form" onsubmit="handleAuthSubmit(event, 'register')">
+                <div class="input-group">
+                    <label>อีเมล</label>
+                    <input type="email" class="auth-input" placeholder="your@email.com" required>
+                </div>
+                <div class="status-group">
+                    <div class="input-group">
+                        <label>ชื่อผู้ใช้ (Username)</label>
+                        <input type="text" class="auth-input" placeholder="user123" required>
+                    </div>
+                    <div class="input-group">
+                        <label>ชื่อที่แสดง</label>
+                        <input type="text" class="auth-input" placeholder="สุดหล่อ VIP" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>รหัสผ่าน</label>
+                    <input type="password" class="auth-input" placeholder="••••••••" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>ฉันเป็น...</label>
+                    <div class="status-group">
+                        <input type="radio" name="member_type" id="type_tourist" class="status-radio" value="tourist" checked>
+                        <label for="type_tourist" class="status-label">นักท่องเที่ยว</label>
+                        
+                        <input type="radio" name="member_type" id="type_sideline" class="status-radio" value="sideline">
+                        <label for="type_sideline" class="status-label">ไซด์ไลน์ / เอเจนซี่</label>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>รหัสแนะนำ (ถ้ามี)</label>
+                    <input type="text" class="auth-input" placeholder="REFXXXX">
+                </div>
+
+                <div class="check-group">
+                    <input type="checkbox" id="age_check" class="auth-check" required>
+                    <label for="age_check">ฉันยืนยันว่ามีอายุครบ 20 ปีบริบูรณ์แล้ว</label>
+                </div>
+
+                <button type="submit" class="btn-3d auth-submit">สร้างบัญชี VIP</button>
+            </form>
         </div>
     </div>
 
@@ -232,70 +353,21 @@
             <div class="story-item"><div class="story-ring"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&q=80"></div><span class="story-name">ฮันนี่</span></div>
             <div class="story-item"><div class="story-ring"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80"></div><span class="story-name">เป๊ปซี่</span></div>
         </div>
-
         <div class="agency-container">
             <div class="agency-card"><span class="badge-recommend">👑 แนะนำ</span><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=100&q=80" class="agency-img"><div class="agency-info"><h4>Love Studio</h4><p><span class="iconify" data-icon="heroicons:users"></span> 16 คน</p></div></div>
             <div class="agency-card"><img src="https://images.unsplash.com/photo-1516483638261-f4085ee6bd0f?auto=format&fit=crop&w=100&q=80" class="agency-img"><div class="agency-info"><h4>Girlfriend Club</h4><p><span class="iconify" data-icon="heroicons:users"></span> 10 คน</p></div></div>
         </div>
-
         <div class="action-bar">
-            <div class="telegram-group">
-                <a href="#" class="btn-tele"><span class="iconify" data-icon="logos:telegram"></span> เข้าร่วม Telegram</a>
-            </div>
-            <button class="btn-filter"><span class="iconify" data-icon="heroicons:adjustments-horizontal" style="font-size: 1.2rem;"></span> กรอง</button>
+            <div class="telegram-group"><a href="#" class="btn-tele"><span class="iconify" data-icon="logos:telegram"></span> เข้าร่วม Telegram</a></div>
+            <button class="btn-filter"><span class="iconify" data-icon="heroicons:adjustments-horizontal"></span> กรอง</button>
         </div>
     </div>
-
     <main class="grid-container">
-        <div class="card">
-            <div class="card-image-box">
-                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=500&q=80">
-                <span class="badge-image badge-new">New</span>
-                <button class="heart-btn" onclick="toggleHeart(this)"><span class="iconify heart-icon" data-icon="mdi:cards-heart-outline" style="color: white; font-size: 1.5rem;"></span></button>
-            </div>
-            <div class="card-info">
-                <div class="name-group">
-                    <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span>
-                    <span class="card-name">น้อง B <span class="card-age">24</span></span>
-                </div>
-                <div class="card-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent); font-size: 1rem;"></span> กรุงเทพฯ, ลาดพร้าว</div>
-                <div class="card-stats-text">34-24-36 • 157/49</div>
-                <div class="card-footer">
-                    <div class="price">฿1,000</div>
-                    <div class="engagement">
-                        <span class="engage-item engage-views"><span class="iconify" data-icon="heroicons:eye" style="font-size: 1.1rem;"></span> 156</span>
-                        <span class="engage-item"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24; font-size: 1.1rem;"></span> 4.8</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-image-box">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80">
-                <span class="badge-image badge-hot">มาแรง</span>
-                <button class="heart-btn" onclick="toggleHeart(this)"><span class="iconify heart-icon" data-icon="mdi:cards-heart-outline" style="color: white; font-size: 1.5rem;"></span></button>
-            </div>
-            <div class="card-info">
-                <div class="name-group">
-                    <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span>
-                    <span class="card-name">น้ำหวาน <span class="card-age">22</span></span>
-                </div>
-                <div class="card-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent); font-size: 1rem;"></span> กรุงเทพฯ, บึงกุ่ม</div>
-                <div class="card-stats-text">34B-25-35 • 160/45</div>
-                <div class="card-footer">
-                    <div class="price">฿1,200</div>
-                    <div class="engagement">
-                        <span class="engage-item engage-views"><span class="iconify" data-icon="heroicons:eye" style="font-size: 1.1rem;"></span> 342</span>
-                        <span class="engage-item"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24; font-size: 1.1rem;"></span> 5.0</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="card"><div class="card-image-box"><img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=500&q=80"><span class="badge-image badge-new">New</span><button class="heart-btn" onclick="toggleHeart(this)"><span class="iconify heart-icon" data-icon="mdi:cards-heart-outline" style="color: white; font-size: 1.5rem;"></span></button></div><div class="card-info"><div class="name-group"><span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span><span class="card-name">น้อง B <span class="card-age">24</span></span></div><div class="card-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent);"></span> กรุงเทพฯ, ลาดพร้าว</div><div class="card-stats-text">34-24-36 • 157/49</div><div class="card-footer"><div class="price">฿1,000</div><div class="engagement"><span class="engage-item engage-views"><span class="iconify" data-icon="heroicons:eye"></span> 156</span><span class="engage-item"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24;"></span> 4.8</span></div></div></div></div>
     </main>
 
     <script>
-        // ฟังก์ชันเปลี่ยนสีหัวใจ
+        /* --- JavaScript เดิมของเรา --- */
         function toggleHeart(button) {
             let icon = button.querySelector('.heart-icon');
             if (icon.getAttribute('data-icon') === 'mdi:cards-heart-outline') {
@@ -306,11 +378,60 @@
                 icon.style.color = 'white'; 
             }
         }
-
-        // ฟังก์ชันเปิด/ปิด เมนูมือถือ
         function toggleMobileMenu() {
             document.getElementById('mobileOverlay').classList.toggle('active');
             document.getElementById('mobileSheet').classList.toggle('active');
+        }
+
+        /* =========================================
+           🎯 JavaScript ใหม่สำหรับ Auth Modal
+           ========================================= */
+        const authOverlay = document.getElementById('authOverlay');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const loginTabBtn = document.getElementById('loginTabBtn');
+        const registerTabBtn = document.getElementById('registerTabBtn');
+
+        // ฟังก์ชันเปิด Modal
+        function openAuthModal(tab = 'login') {
+            authOverlay.classList.add('active');
+            document.body.classList.add('modal-open'); // ล็อกสกอร์ลหลัง
+            switchAuthTab(tab);
+        }
+
+        // ฟังก์ชันปิด Modal
+        function closeAuthModal(event = null, force = false) {
+            // ปิดเมื่อกดพื้นหลัง หรือกดปุ่ม X
+            if (force || event.target === authOverlay) {
+                authOverlay.classList.remove('active');
+                document.body.classList.remove('modal-open');
+            }
+        }
+
+        // ฟังก์ชันสลับ Tab: เข้าสู่ระบบ / สมัครสมาชิก
+        function switchAuthTab(tab) {
+            if (tab === 'login') {
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+                loginTabBtn.classList.add('active');
+                registerTabBtn.classList.remove('active');
+            } else {
+                loginForm.classList.remove('active');
+                registerForm.classList.add('active');
+                loginTabBtn.classList.remove('active');
+                registerTabBtn.classList.add('active');
+            }
+        }
+
+        // ฟังก์ชันจัดการตอนกดส่งฟอร์ม (ชั่วคราว)
+        function handleAuthSubmit(event, type) {
+            event.preventDefault();
+            if (type === 'login') {
+                alert('กำลังเข้าสู่ระบบ... (ขั้นตอนนี้ต้องต่อหลังบ้านจริง)');
+            } else {
+                alert('กำลังลงทะเบียน... (ขั้นตอนนี้ต้องต่อหลังบ้านจริง)');
+            }
+            closeAuthModal(force=true); // ปิดหน้าต่างหลังกด
         }
     </script>
 </body>
