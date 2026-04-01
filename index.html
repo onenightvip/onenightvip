@@ -3,123 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OM-SOD STUDIO | Sideline VIP in Thailand</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <title>OM-SOD CLUB | คลับส่วนตัวที่ตอบโจทย์ทุกไลฟ์สไตล์</title>
+    <meta name="description" content="OM-SOD CLUB คลับระดับ VIP บริการประทับใจ การันตีโปรไฟล์ตรงปก พร้อมระบบจองที่ปลอดภัยที่สุด">
+    <meta name="keywords" content="omsod, คลับวีไอพี, บริการส่วนตัว, จองคิว">
+    <meta property="og:title" content="OM-SOD CLUB | VIP Exclusive">
+    <meta property="og:description" content="พบกับประสบการณ์ระดับพรีเมียมได้ที่นี่">
+    <meta property="og:image" content="https://www.onenightvip.com/your-cover-image.jpg"> <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
     <style>
+        /* =========================================
+           Core Variables & Theme (ธีมชมพูหินอ่อน)
+           ========================================= */
+        :root {
+            --bg-color: #fdf5f5;
+            --text-main: #b87a7a;
+            --text-dark: #8c5a5a;
+            --primary-light: #ffd7d7;
+            --primary-dark: #ffb5b5;
+            --shadow-light: #ffffff;
+            --shadow-dark: #e6d5d5;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Prompt', sans-serif;
         }
+
         body {
-            background-color: #fdf5f5; /* สีพื้นหลังชมพูอ่อน */
-            color: #b87a7a;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            background-image: url('https://www.transparenttextures.com/patterns/marble.png');
             min-height: 100vh;
+        }
+
+        /* =========================================
+           Navbar (เมนูด้านบน)
+           ========================================= */
+        .navbar {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            background-image: url('https://www.transparenttextures.com/patterns/marble.png'); /* ลายหินอ่อนบางๆ */
+            padding: 15px 5%;
+            background: rgba(253, 245, 245, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(230, 213, 213, 0.5);
         }
-        .header {
-            text-align: center;
-            margin-top: 50px;
-            margin-bottom: 30px;
-        }
-        .header h1 {
+
+        .logo {
             font-family: serif;
-            font-size: 3.5rem;
-            color: #bd736d;
-            letter-spacing: 5px;
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* ปุ่มสไตล์ Neumorphism */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-login {
+            background: var(--bg-color);
+            color: var(--text-dark);
+            box-shadow: 4px 4px 10px var(--shadow-dark), -4px -4px 10px var(--shadow-light);
+        }
+
+        .btn-register {
+            background: linear-gradient(145deg, var(--primary-light), var(--primary-dark));
+            color: white;
+            box-shadow: 4px 4px 10px var(--shadow-dark), -4px -4px 10px var(--shadow-light);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 6px 6px 15px var(--shadow-dark), -6px -6px 15px var(--shadow-light);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: inset 4px 4px 10px var(--shadow-dark), inset -4px -4px 10px var(--shadow-light);
+        }
+
+        /* =========================================
+           Hero Section (ส่วนต้อนรับ)
+           ========================================= */
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: var(--text-dark);
             margin-bottom: 10px;
         }
-        .header p {
-            font-size: 1.5rem;
-            color: #c78984;
-        }
-        .btn-booking {
-            background: linear-gradient(145deg, #ffd7d7, #ffb5b5);
-            color: white;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.5rem;
-            font-weight: 500;
-            cursor: pointer;
-            box-shadow: 5px 5px 15px #e6d5d5, -5px -5px 15px #ffffff;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            margin-bottom: 50px;
-        }
-        .btn-booking:hover {
-            transform: translateY(-2px);
-            box-shadow: 7px 7px 20px #e6d5d5, -7px -7px 20px #ffffff;
-        }
-        .cards-container {
-            display: flex;
+
+        /* =========================================
+           Grid Layout (กระดานโปรไฟล์ รองรับมือถือ/PC)
+           ========================================= */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-            max-width: 1000px;
-            padding: 20px;
+            padding: 20px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
         }
+
+        /* Profile Card (การ์ดนางแบบ) */
         .card {
-            background: #fffafa;
-            width: 280px;
-            padding: 40px 20px;
-            border-radius: 30px;
-            text-align: center;
-            box-shadow: 10px 10px 20px #eadede, -10px -10px 20px #ffffff;
+            background: var(--bg-color);
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
             transition: transform 0.3s ease;
-            cursor: pointer;
         }
+
         .card:hover {
             transform: translateY(-5px);
         }
-        .card img {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 20px;
-            opacity: 0.7;
+
+        .card-image-box {
+            width: 100%;
+            height: 350px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: inset 4px 4px 10px rgba(0,0,0,0.05);
+            background-color: #eee; /* สีพื้นหลังชั่วคราวกรณีรูปไม่โหลด */
+            position: relative;
         }
-        .card h3 {
-            font-size: 1.4rem;
-            color: #d18b85;
-            margin-bottom: 5px;
+
+        .card-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
         }
-        .card p {
-            font-size: 1rem;
-            color: #d9a09b;
+
+        .card:hover .card-image-box img {
+            transform: scale(1.05);
+        }
+
+        .card-info {
+            padding: 15px 5px 5px 5px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .card-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .card-status {
+            font-size: 0.8rem;
+            background: #d4edda;
+            color: #155724;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .card-stats {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-full {
+            width: 100%;
+            text-align: center;
+            display: block;
+            margin-top: 15px;
+            padding: 12px;
+        }
+
+        /* =========================================
+           Responsive Design (สำหรับมือถือจอเล็ก)
+           ========================================= */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .grid-container {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* ปรับให้มือถือแสดง 2 คอลัมน์ได้ */
+                gap: 15px;
+                padding: 10px 3%;
+            }
+            .card-image-box {
+                height: 220px;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>OM-SOD STUDIO</h1>
-        <p>Sideline Vip in Thailand</p>
-    </div>
+    <nav class="navbar">
+        <a href="#" class="logo">OM-SOD CLUB</a>
+        <div class="nav-buttons">
+            <a href="#login" class="btn btn-login">เข้าสู่ระบบ</a>
+            <a href="#register" class="btn btn-register">สมัครสมาชิก</a>
+        </div>
+    </nav>
 
-    <a href="#" class="btn-booking">จองคิว 👆</a>
+    <header class="hero">
+        <h1>อัปเดตความสดใสประจำวัน</h1>
+        <p>ค้นหาสเปกที่ตรงใจคุณที่สุด พร้อมบริการระดับ VIP</p>
+    </header>
 
-    <div class="cards-container">
+    <main class="grid-container">
+        
         <div class="card">
-            <div style="font-size: 3rem; margin-bottom: 10px;">📋</div>
-            <h3>Our Services</h3>
-            <p>บริการของเรา</p>
+            <div class="card-image-box">
+                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="น้อง A">
+            </div>
+            <div class="card-info">
+                <div class="card-header">
+                    <span class="card-name">น้อง A (22)</span>
+                    <span class="card-status">ว่าง</span>
+                </div>
+                <div class="card-stats">
+                    <span>📍 สุขุมวิท</span>
+                    <span>⭐ 5.0 (24)</span>
+                </div>
+                <a href="#" class="btn btn-register btn-full">ดูโปรไฟล์</a>
+            </div>
         </div>
+
         <div class="card">
-            <div style="font-size: 3rem; margin-bottom: 10px;">⭐</div>
-            <h3>Reviews</h3>
-            <p>รีวิวจากลูกค้าจริง</p>
+            <div class="card-image-box">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="น้อง B">
+            </div>
+            <div class="card-info">
+                <div class="card-header">
+                    <span class="card-name">น้อง B (24)</span>
+                    <span class="card-status">ว่าง</span>
+                </div>
+                <div class="card-stats">
+                    <span>📍 ลาดพร้าว</span>
+                    <span>⭐ 4.8 (18)</span>
+                </div>
+                <a href="#" class="btn btn-register btn-full">ดูโปรไฟล์</a>
+            </div>
         </div>
+        
         <div class="card">
-            <div style="font-size: 3rem; margin-bottom: 10px;">📍</div>
-            <h3>Location</h3>
-            <p>พิกัดน้องๆ</p>
+            <div class="card-image-box">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="น้อง C">
+            </div>
+            <div class="card-info">
+                <div class="card-header">
+                    <span class="card-name">น้อง C (21)</span>
+                    <span class="card-status">ว่าง</span>
+                </div>
+                <div class="card-stats">
+                    <span>📍 รัชดา</span>
+                    <span>⭐ 4.9 (32)</span>
+                </div>
+                <a href="#" class="btn btn-register btn-full">ดูโปรไฟล์</a>
+            </div>
         </div>
-    </div>
+
+    </main>
 
 </body>
 </html>
