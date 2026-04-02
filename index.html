@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
-        /* 🌟 คืนชีพสีสันเดิมของคุณ Rose Gold 🌟 */
+        /* 🌟 ธีม Rose Gold สุดพรีเมียม 🌟 */
         :root {
             --accent: #b56c5e; 
             --accent-light: #e29f8c;
@@ -28,7 +28,7 @@
             --dash-bg: #0f0f0f;
             --dash-card: #1a1a1a;
             --dash-border: #333333;
-            --dash-gold: var(--accent); /* กลับมาใช้สี Rose Gold ครับ */
+            --dash-gold: var(--accent);
             --dash-gold-hover: #9c594c;
         }
 
@@ -51,11 +51,35 @@
         .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; }
         .nav-links a.active { color: var(--accent); }
         .nav-buttons { display: flex; gap: 15px; align-items: center; }
-        .btn-outline { text-decoration: none; color: var(--accent); padding: 8px 25px; border-radius: 50px; border: 2px solid var(--accent); font-weight: 500; background: transparent; cursor: pointer; font-family: 'Prompt'; font-size: 1rem; display: block;}
-        .btn-3d { text-decoration: none; color: var(--accent); padding: 10px 30px; border-radius: 50px; background: var(--btn-gradient); box-shadow: 4px 4px 10px rgba(220, 180, 170, 0.6), -4px -4px 10px rgba(255, 255, 255, 1); font-weight: 500; border: 1px solid rgba(255,255,255,0.5); cursor: pointer; font-family: 'Prompt'; font-size: 1rem; display: block;}
         
-        .btn-dash { background: #111; color: var(--dash-gold); border: 1px solid var(--dash-gold); padding: 8px 20px; border-radius: 50px; cursor: pointer; font-family: 'Prompt'; font-weight: 500; font-size: 1rem; display: none; align-items: center; gap: 5px;}
-        .btn-logout { background: transparent; color: #ff4d4f; border: 1px solid #ff4d4f; padding: 8px 20px; border-radius: 50px; cursor: pointer; font-family: 'Prompt'; font-weight: 500; font-size: 1rem; display: none; align-items: center; gap: 5px;}
+        /* 🎯 ปุ่ม Nav ตามดีไซน์ที่คุณส่งรูปมาเป๊ะๆ */
+        .btn-outline { 
+            background: #ffffff; color: var(--accent); border: 1px solid var(--accent); 
+            padding: 8px 25px; border-radius: 50px; font-weight: 500; cursor: pointer; 
+            font-family: 'Prompt'; font-size: 1rem; display: block; transition: 0.2s;
+        }
+        .btn-outline:hover { background: rgba(181, 108, 94, 0.05); }
+        
+        .btn-3d { 
+            background: var(--btn-gradient); color: var(--accent); border: none;
+            padding: 8px 25px; border-radius: 50px; font-weight: 500; cursor: pointer; 
+            font-family: 'Prompt'; font-size: 1rem; display: block; box-shadow: 0 4px 10px rgba(181, 108, 94, 0.2); transition: 0.2s;
+        }
+        .btn-3d:hover { transform: translateY(-2px); }
+
+        .btn-dash { 
+            background: #111111; color: var(--accent); border: 1px solid #333; 
+            padding: 8px 20px; border-radius: 50px; cursor: pointer; 
+            font-family: 'Prompt'; font-weight: 500; font-size: 1rem; display: none; align-items: center; gap: 8px; transition: 0.2s;
+        }
+        .btn-dash:hover { border-color: var(--accent); }
+
+        .btn-logout { 
+            background: #ffffff; color: #ff4d4f; border: 1px solid #ff4d4f; 
+            padding: 8px 20px; border-radius: 50px; cursor: pointer; 
+            font-family: 'Prompt'; font-weight: 500; font-size: 1rem; display: none; align-items: center; gap: 8px; transition: 0.2s;
+        }
+        .btn-logout:hover { background: #fff1f0; }
         
         .mobile-menu-btn { display: none; background: none; border: none; font-size: 2rem; color: var(--text-dark); cursor: pointer; }
 
@@ -67,19 +91,16 @@
         .sheet-handle { width: 50px; height: 5px; background: rgba(181, 108, 94, 0.3); border-radius: 10px; margin: 0 auto 10px auto; }
         .sheet-links { display: flex; flex-direction: column; gap: 10px; }
         .sheet-links a { display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--text-dark); font-size: 1.1rem; font-weight: 500; padding: 12px 0; border-bottom: 1px solid rgba(181, 108, 94, 0.1); }
-        .sheet-auth { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 5px; }
+        .sheet-auth { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(181, 108, 94, 0.1); }
 
-        /* 🎯 AUTH MODALS */
+        /* AUTH MODALS */
         .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.3s ease; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; padding: 20px; }
         .auth-overlay.active { opacity: 1; visibility: visible; }
-        
         .auth-modal { background: var(--modal-bg); width: 100%; max-width: 480px; border-radius: 20px; border: 1px solid rgba(181, 108, 94, 0.3); padding: 35px 30px; position: relative; transform: scale(0.9); transition: transform 0.3s; max-height: 90vh; overflow-y: auto; scrollbar-width: none; color: #fff; font-family: 'Prompt', sans-serif; box-shadow: 0 10px 40px rgba(0,0,0,0.5);}
         .auth-modal::-webkit-scrollbar { display: none; }
         .auth-overlay.active .auth-modal { transform: scale(1); }
         .close-modal { position: absolute; top: 15px; right: 15px; background: none; border: none; color: #888; font-size: 1.5rem; cursor: pointer; transition: 0.2s;}
         .close-modal:hover { color: var(--dash-gold); }
-
-        .auth-tabs { display: none; } 
 
         .auth-header { text-align: center; margin-bottom: 25px; }
         .auth-header-icon { color: var(--dash-gold); font-size: 2.5rem; margin-bottom: 10px; border: 1px solid var(--dash-gold); border-radius: 12px; padding: 8px; display: inline-block; background: rgba(181, 108, 94, 0.1);}
@@ -88,17 +109,13 @@
 
         .auth-form { display: none; flex-direction: column; gap: 18px; }
         .auth-form.active { display: flex; }
-        
         .input-group { display: flex; flex-direction: column; gap: 6px; text-align: left;}
         .input-group label { color: #ddd; font-size: 0.9rem; font-weight: 500; display: flex; gap: 5px;}
         .required-star { color: #ff4d4f; }
-        
         .auth-input { background: var(--modal-input-bg); border: 1px solid rgba(181, 108, 94, 0.2); border-radius: 8px; padding: 12px 15px; color: #fff; font-family: 'Prompt'; font-size: 1rem; width: 100%; transition: 0.2s; outline: none;}
         .auth-input:focus { border-color: var(--dash-gold); box-shadow: 0 0 0 2px rgba(181, 108, 94, 0.2); }
-        .auth-input::placeholder { color: #555; }
         .input-hint { font-size: 0.75rem; color: #777; margin-top: 2px;}
 
-        /* กรอบ Role Cards เท่ากัน 100% */
         .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 5px; align-items: stretch; }
         .role-card { background: var(--modal-input-bg); border: 1px solid rgba(181, 108, 94, 0.2); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; height: 100%; }
         .role-card:hover { border-color: #777; }
@@ -137,7 +154,7 @@
         .close-dash { background: #333; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; justify-content: center; align-items: center; }
         .dash-container { max-width: 900px; margin: 30px auto; padding: 0 5%; display: flex; flex-direction: column; gap: 30px; text-align: center; color: #888;}
 
-        /* 👑 AGENCY DASHBOARD */
+        /* AGENCY DASHBOARD */
         .agency-dashboard { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0a0a; z-index: 5000; display: flex; opacity: 0; visibility: hidden; transition: all 0.3s ease; font-family: 'Prompt', sans-serif; color: #fff; }
         .agency-dashboard.active { opacity: 1; visibility: visible; }
         .ag-sidebar { width: 250px; background: #111; border-right: 1px solid #222; padding: 20px 0; display: flex; flex-direction: column; }
@@ -163,10 +180,7 @@
         /* PROFILE DETAIL OVERLAY */
         .profile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dash-bg); z-index: 4000; overflow-y: auto; opacity: 0; visibility: hidden; transition: all 0.3s ease; transform: translateY(20px); padding-bottom: 90px; font-family: 'Prompt', sans-serif; }
         .profile-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
-        
-        /* 🚨 แก้ไข justify(Content -> justify-content ตรงนี้ 🚨 */
         .btn-back-profile { position: absolute; top: 20px; left: 20px; width: 45px; height: 45px; border-radius: 50%; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 4010; transition: 0.2s; }
-        
         .profile-hero { width: 100%; height: 60vh; position: relative; }
         .profile-hero img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
         .hero-gradient { position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, var(--dash-bg) 0%, transparent 100%); }
@@ -177,10 +191,7 @@
         .verified-badge { font-size: 1.3rem; color: var(--badge-green); }
         .pro-location { font-size: 1rem; color: #aaa; display: flex; align-items: center; gap: 5px; }
         .pro-action-btns { display: flex; gap: 15px; }
-        
-        /* 🚨 แก้ไข justify(Content -> justify-content ตรงนี้ 🚨 */
         .btn-pro-icon { width: 45px; height: 45px; border-radius: 50%; background: var(--dash-card); border: 1px solid var(--dash-border); color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; }
-        
         .pro-stats-box { background: var(--dash-card); border: 1px solid var(--dash-border); border-radius: 20px; padding: 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; text-align: center; margin-bottom: 25px; }
         .pro-stat-item { border-right: 1px solid #333; }
         .pro-stat-item:last-child { border-right: none; }
@@ -191,15 +202,7 @@
         .tags-container { display: flex; flex-wrap: wrap; gap: 10px; }
         .service-tag { background: rgba(181, 108, 94, 0.1); color: var(--dash-gold); border: 1px solid rgba(181, 108, 94, 0.3); padding: 6px 15px; border-radius: 20px; font-size: 0.9rem; }
         .pro-desc { font-size: 1rem; color: #ccc; line-height: 1.6; background: #151515; padding: 20px; border-radius: 15px; border-left: 4px solid var(--dash-gold); }
-        .review-card { background: var(--dash-card); border-radius: 15px; padding: 15px; border: 1px solid var(--dash-border); margin-bottom: 15px; }
-        .review-head { display: flex; justify-content: space-between; margin-bottom: 10px; }
-        .review-user { font-weight: 500; color: #ddd; display: flex; align-items: center; gap: 5px; }
-        .review-stars { color: #fbbf24; }
-        .review-text { font-size: 0.95rem; color: #aaa; }
-        
-        /* 🚨 แก้ไข justify(Content -> justify-content ตรงนี้ 🚨 */
         .sticky-booking-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(15px); border-top: 1px solid var(--dash-border); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 4020; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        
         .profile-overlay.active .sticky-booking-bar { transform: translateY(0); }
         .book-price-box { display: flex; flex-direction: column; }
         .book-label { font-size: 0.85rem; color: #888; }
@@ -220,10 +223,7 @@
         .verified-badge-small { font-size: 1.1rem; color: var(--badge-green); }
         .card-location { font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; margin-bottom: 8px; }
         .card-stats-text { font-size: 0.9rem; color: var(--text-dark); margin-bottom: 12px; font-weight: 500; flex: 1;}
-        
-        /* 🚨 แก้ไข justify(Content -> justify-content ตรงนี้ 🚨 */
         .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed rgba(181, 108, 94, 0.3); padding-top: 12px; flex-shrink: 0;}
-        
         .price { font-size: 1.25rem; font-weight: bold; color: var(--accent); }
         .engagement { font-size: 0.9rem; display: flex; align-items: center; gap: 12px; color: var(--text-dark); }
         .engage-item { display: flex; align-items: center; gap: 4px; }
@@ -257,7 +257,7 @@
         <div class="nav-buttons" id="desktopNavButtons">
             <button class="btn-outline" id="navBtnLogin" onclick="openAuthModal('login')">เข้าสู่ระบบ</button>
             <button class="btn-3d" id="navBtnReg" onclick="openAuthModal('register')">สมัครสมาชิก</button>
-            <button class="btn-dash" id="navBtnDash" onclick="openDashboard()">บัญชีของฉัน</button>
+            <button class="btn-dash" id="navBtnDash" onclick="openDashboard()"><span class="iconify" data-icon="heroicons:user-circle"></span> บัญชีของฉัน</button>
             <button class="btn-logout" id="navBtnLogout" onclick="handleLogout()">ออกจากระบบ</button>
         </div>
         <button class="mobile-menu-btn" onclick="toggleMobileMenu()"><span class="iconify" data-icon="heroicons:bars-3-bottom-right"></span></button>
@@ -270,7 +270,7 @@
         <div class="sheet-auth" id="mobileAuthButtons">
             <button class="btn-outline" id="mobBtnLogin" onclick="toggleMobileMenu(); openAuthModal('login')">เข้าสู่ระบบ</button>
             <button class="btn-3d" id="mobBtnReg" onclick="toggleMobileMenu(); openAuthModal('register')">สมัครสมาชิก</button>
-            <button class="btn-dash" id="mobBtnDash" onclick="toggleMobileMenu(); openDashboard()" style="width: 100%; justify-content: center;">บัญชีของฉัน</button>
+            <button class="btn-dash" id="mobBtnDash" onclick="toggleMobileMenu(); openDashboard()" style="width: 100%; justify-content: center;"><span class="iconify" data-icon="heroicons:user-circle"></span> บัญชีของฉัน</button>
             <button class="btn-logout" id="mobBtnLogout" onclick="toggleMobileMenu(); handleLogout()" style="width: 100%; justify-content: center;">ออกจากระบบ</button>
         </div>
     </div>
@@ -540,7 +540,7 @@
                     navBtnDash.onclick = openAgencyDashboard;
                     mobBtnDash.onclick = () => { toggleMobileMenu(); openAgencyDashboard(); };
                     navBtnDash.innerHTML = '<span class="iconify" data-icon="heroicons:briefcase"></span> จัดการหลังบ้าน';
-                    mobBtnDash.innerText = 'จัดการหลังบ้าน';
+                    mobBtnDash.innerHTML = '<span class="iconify" data-icon="heroicons:briefcase"></span> จัดการหลังบ้าน';
 
                     document.getElementById('agUserName').innerText = displayName;
                     document.getElementById('agWelcomeName').innerText = displayName;
@@ -549,7 +549,7 @@
                     navBtnDash.onclick = openDashboard;
                     mobBtnDash.onclick = () => { toggleMobileMenu(); openDashboard(); };
                     navBtnDash.innerHTML = '<span class="iconify" data-icon="heroicons:user-circle"></span> บัญชีของฉัน';
-                    mobBtnDash.innerText = 'บัญชีของฉัน';
+                    mobBtnDash.innerHTML = '<span class="iconify" data-icon="heroicons:user-circle"></span> บัญชีของฉัน';
                 }
             }
         }
