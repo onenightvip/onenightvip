@@ -21,7 +21,6 @@
             --modal-input-bg: #1a1a1a;
             --text-on-dark: #fdf5f5;
             --badge-green: #10b981;
-            
             --dash-bg: #0f0f0f;
             --dash-card: #1a1a1a;
             --dash-border: #333333;
@@ -40,7 +39,7 @@
         }
         body.modal-open { overflow: hidden; }
 
-        /* Navbar & Mobile Menu (เหมือนเดิมเป๊ะ) */
+        /* Navbar & Menu (คงเดิม) */
         .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: var(--bg-glass); backdrop-filter: blur(15px); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 100; }
         .logo-img { height: 50px; width: auto; object-fit: contain; filter: drop-shadow(2px 4px 6px rgba(181, 108, 94, 0.1)); }
         .nav-links { display: flex; gap: 25px; }
@@ -64,6 +63,88 @@
         .sheet-links { display: flex; flex-direction: column; gap: 10px; }
         .sheet-links a { display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--text-dark); font-size: 1.1rem; font-weight: 500; padding: 12px 0; border-bottom: 1px solid rgba(181, 108, 94, 0.1); }
         .sheet-auth { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(181, 108, 94, 0.1); }
+
+        /* =========================================
+           ✨ 1. STORIES CAROUSEL (IG Style - Adapted Theme)
+           ========================================= */
+        .stories-carousel__container {
+            display: flex; gap: 16px; overflow-x: auto; padding: 25px 5%;
+            max-width: 1400px; margin: 0 auto; scrollbar-width: none;
+        }
+        .stories-carousel__container::-webkit-scrollbar { display: none; }
+        .stories-carousel__item {
+            align-items: center; background: transparent; border: none; cursor: pointer;
+            display: flex; flex-direction: column; flex-shrink: 0; gap: 8px; padding: 4px; position: relative;
+            transition: transform .2s cubic-bezier(.34,1.56,.64,1);
+        }
+        .stories-carousel__item:hover { transform: scale(1.05); }
+        .stories-carousel__ring {
+            height: 72px; width: 72px; border-radius: 50%; padding: 3px;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            position: relative;
+        }
+        .stories-carousel__avatar {
+            height: 100%; width: 100%; border-radius: 50%;
+            border: 3px solid #fdf5f5; object-fit: cover; background: #fff;
+        }
+        .stories-carousel__name {
+            color: var(--text-dark); font-size: 13px; font-weight: 500;
+            max-width: 76px; overflow: hidden; text-align: center; text-overflow: ellipsis; white-space: nowrap;
+            transition: color .2s ease;
+        }
+        .stories-carousel__item:hover .stories-carousel__name { color: var(--accent); }
+        .stories-carousel__count {
+            align-items: center; background: var(--btn-gradient);
+            border: 2px solid #fdf5f5; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            color: var(--accent); display: flex; font-size: 10px; font-weight: 700;
+            height: 20px; justify-content: center; min-width: 20px; padding: 0 5px;
+            position: absolute; right: 2px; top: 2px;
+        }
+
+        /* =========================================
+           ✨ 2. AGENCIES CAROUSEL (Marquee Style - Adapted Theme)
+           ========================================= */
+        .agencies-carousel-wrapper {
+            overflow: hidden; padding: 15px 0 25px 0; background: rgba(255,255,255,0.4);
+            border-top: 1px solid rgba(181, 108, 94, 0.1); border-bottom: 1px solid rgba(181, 108, 94, 0.1);
+        }
+        @keyframes marquee { 0% { transform: translate(0) } to { transform: translate(-50%) } }
+        .agencies-carousel__track {
+            animation: marquee 40s linear infinite; display: flex; width: max-content;
+        }
+        .agencies-carousel-wrapper:hover .agencies-carousel__track { animation-play-state: paused; }
+        .agencies-carousel__strip { display: flex; gap: 15px; padding-right: 15px; }
+        
+        .agencies-carousel__spotlight {
+            border: 1px solid rgba(181, 108, 94, 0.2); border-radius: 14px; display: block; flex-shrink: 0;
+            height: 100px; overflow: hidden; position: relative; text-decoration: none; width: 240px;
+            background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.03); transition: all .25s ease;
+        }
+        .agencies-carousel__spotlight:hover {
+            border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(181, 108, 94, 0.15);
+        }
+        .agencies-carousel__spotlight-image {
+            height: 100%; width: 100%; object-fit: cover; position: absolute; transition: transform .4s ease; opacity: 0.9;
+        }
+        .agencies-carousel__spotlight:hover .agencies-carousel__spotlight-image { transform: scale(1.06); opacity: 1;}
+        /* ไล่สี Gradient จากใสไปสีเนื้อ เพื่อให้อ่านตัวหนังสือชัด */
+        .agencies-carousel__spotlight-overlay {
+            background: linear-gradient(180deg,transparent,transparent 25%,rgba(253, 245, 245, 0.6) 55%,rgba(253, 245, 245, 0.95));
+            inset: 0; position: absolute;
+        }
+        .agencies-carousel__spotlight-content {
+            align-items: flex-end; bottom: 0; display: flex; gap: 10px; left: 0; padding: 10px 12px; position: absolute; right: 0; z-index: 1;
+        }
+        .agencies-carousel__spotlight-logo {
+            border: 1.5px solid var(--accent-light); border-radius: 8px; flex-shrink: 0; height: 32px; width: 32px; object-fit: cover; background: #fff;
+        }
+        .agencies-carousel__spotlight-name {
+            color: var(--text-dark); font-size: .9rem; font-weight: 600; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .agencies-carousel__spotlight-count {
+            align-items: center; color: var(--accent); display: flex; font-size: .7rem; font-weight: 500; gap: 3px;
+        }
+
 
         /* AUTH MODALS */
         .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.3s ease; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; padding: 20px; }
@@ -189,11 +270,9 @@
         .book-price { font-size: 1.5rem; font-weight: 600; color: var(--dash-gold); }
         .btn-booking { background: var(--btn-gradient); color: var(--accent); border: 1px solid rgba(255,255,255,0.5); padding: 12px 30px; border-radius: 50px; font-size: 1.1rem; font-weight: 600; font-family: 'Prompt'; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); display: flex; align-items: center; gap: 8px; }
 
-        /* 🆕 ปรับ Grid หน้าแรกให้ดึงข้อมูลอัตโนมัติ 🆕 */
-        .header-extensions { padding: 20px 5%; max-width: 1400px; margin: 0 auto; }
+        /* Grid Cards หน้าแรก */
+        .header-extensions { padding: 0 5%; max-width: 1400px; margin: 0 auto; margin-top: 20px;}
         .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 10px 5% 50px 5%; max-width: 1400px; margin: 0 auto; align-items: stretch; }
-        
-        /* สไตล์ของการ์ดเด็ก (Card) */
         .card { background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); border-radius: 20px; padding: 15px; border: 1px solid rgba(255,255,255,0.6); box-shadow: 8px 8px 20px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.2s; display: flex; flex-direction: column; height: 100%;}
         .card:hover { transform: translateY(-5px); }
         .card-image-box { position: relative; width: 100%; height: 380px; border-radius: 12px; overflow: hidden; margin-bottom: 15px; flex-shrink: 0;}
@@ -259,23 +338,94 @@
         </div>
     </div>
 
+    <div class="stories-carousel__container">
+        <button class="stories-carousel__item">
+            <div class="stories-carousel__ring">
+                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=100&q=80" class="stories-carousel__avatar" alt="Story">
+                <span class="stories-carousel__count">3</span>
+            </div>
+            <span class="stories-carousel__name">น้อง A</span>
+        </button>
+        <button class="stories-carousel__item">
+            <div class="stories-carousel__ring">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80" class="stories-carousel__avatar" alt="Story">
+                <span class="stories-carousel__count">1</span>
+            </div>
+            <span class="stories-carousel__name">น้ำหวาน</span>
+        </button>
+        <button class="stories-carousel__item">
+            <div class="stories-carousel__ring">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&q=80" class="stories-carousel__avatar" alt="Story">
+                <span class="stories-carousel__count">5</span>
+            </div>
+            <span class="stories-carousel__name">เจนนี่</span>
+        </button>
+    </div>
+
+    <div class="agencies-carousel-wrapper">
+        <div class="agencies-carousel__track">
+            <div class="agencies-carousel__strip">
+                <a href="#" class="agencies-carousel__spotlight">
+                    <img src="https://images.unsplash.com/photo-1558507652-2d9626c4e67a?w=300&q=80" class="agencies-carousel__spotlight-image">
+                    <div class="agencies-carousel__spotlight-overlay"></div>
+                    <div class="agencies-carousel__spotlight-content">
+                        <img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo">
+                        <div>
+                            <div class="agencies-carousel__spotlight-name">VIP Agency 1</div>
+                            <div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 5.0 (รีวิว 120)</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="agencies-carousel__spotlight">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&q=80" class="agencies-carousel__spotlight-image">
+                    <div class="agencies-carousel__spotlight-overlay"></div>
+                    <div class="agencies-carousel__spotlight-content">
+                        <img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo">
+                        <div>
+                            <div class="agencies-carousel__spotlight-name">Super Model Club</div>
+                            <div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 4.9 (รีวิว 85)</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="agencies-carousel__strip">
+                <a href="#" class="agencies-carousel__spotlight">
+                    <img src="https://images.unsplash.com/photo-1558507652-2d9626c4e67a?w=300&q=80" class="agencies-carousel__spotlight-image">
+                    <div class="agencies-carousel__spotlight-overlay"></div>
+                    <div class="agencies-carousel__spotlight-content">
+                        <img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo">
+                        <div>
+                            <div class="agencies-carousel__spotlight-name">VIP Agency 1</div>
+                            <div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 5.0 (รีวิว 120)</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="agencies-carousel__spotlight">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&q=80" class="agencies-carousel__spotlight-image">
+                    <div class="agencies-carousel__spotlight-overlay"></div>
+                    <div class="agencies-carousel__spotlight-content">
+                        <img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo">
+                        <div>
+                            <div class="agencies-carousel__spotlight-name">Super Model Club</div>
+                            <div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 4.9 (รีวิว 85)</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
     <div class="auth-overlay" id="authOverlay" onclick="closeAuthModal(event)">
         <div class="auth-modal" id="authModal">
             <button class="close-modal" onclick="closeAuthModal(event, true)">&times;</button>
-            
             <form id="loginForm" class="auth-form" onsubmit="handleAuthSubmit(event, 'login')">
                 <div class="auth-header">
                     <div class="auth-header-icon"><span class="iconify" data-icon="heroicons:arrow-right-on-rectangle"></span></div>
                     <h2>ยินดีต้อนรับกลับ</h2>
                 </div>
-                <div class="input-group">
-                    <label>อีเมล</label>
-                    <input type="email" id="loginEmail" class="auth-input" required>
-                </div>
-                <div class="input-group">
-                    <label>รหัสผ่าน</label>
-                    <input type="password" id="loginPassword" class="auth-input" required>
-                </div>
+                <div class="input-group"><label>อีเมล</label><input type="email" id="loginEmail" class="auth-input" required></div>
+                <div class="input-group"><label>รหัสผ่าน</label><input type="password" id="loginPassword" class="auth-input" required></div>
                 <button type="submit" class="btn-gold-submit">เข้าสู่ระบบ</button>
                 <div class="auth-footer">ยังไม่มีบัญชี? <span class="auth-link" onclick="switchAuthTab('register')">สมัครสมาชิก</span></div>
             </form>
@@ -287,6 +437,7 @@
                 </div>
                 <div class="input-group"><label>อีเมล</label><input type="email" id="regEmail" class="auth-input" required></div>
                 <div class="input-group"><label>ชื่อผู้ใช้</label><input type="text" id="regUsername" class="auth-input" required></div>
+                <div class="input-group"><label>ชื่อที่แสดง</label><input type="text" id="regDisplayName" class="auth-input"></div>
                 <div class="input-group"><label>รหัสผ่าน</label><input type="password" id="regPassword" class="auth-input" required></div>
                 <div class="input-group"><label>ยืนยันรหัสผ่าน</label><input type="password" id="regConfirmPassword" class="auth-input" required></div>
                 <div class="input-group">
@@ -376,14 +527,12 @@
                     <div class="pro-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--dash-gold);"></span> <span id="pdLoc">พิกัด</span></div>
                 </div>
             </div>
-            
             <div class="pro-stats-box">
                 <div class="pro-stat-item"><div class="pro-stat-val" id="pdAge">-</div><div class="pro-stat-label">อายุ</div></div>
                 <div class="pro-stat-item"><div class="pro-stat-val" id="pdProps">-</div><div class="pro-stat-label">สัดส่วน</div></div>
                 <div class="pro-stat-item"><div class="pro-stat-val" id="pdHeight">-</div><div class="pro-stat-label">ส่วนสูง</div></div>
                 <div class="pro-stat-item"><div class="pro-stat-val" id="pdWeight">-</div><div class="pro-stat-label">น้ำหนัก</div></div>
             </div>
-            
             <div class="pro-section">
                 <h3 class="pro-sec-title"><span class="iconify" data-icon="heroicons:information-circle"></span> แนะนำตัว</h3>
                 <div class="pro-desc" id="pdDesc">-</div>
@@ -468,18 +617,16 @@
                 const username = document.getElementById('regUsername').value; const displayName = document.getElementById('regDisplayName').value || username;
                 const role = document.querySelector('input[name="member_type"]:checked').value;
                 const { data, error } = await supabaseClient.auth.signUp({ email: email, password: password, options: { data: { username: username, display_name: displayName, role: role } } });
-                if (error) { alert('❌ เกิดข้อผิดพลาด: ' + error.message); } else { alert('✅ สมัครสมาชิกสำเร็จ! ไปเช็คอีเมลเพื่อยืนยันตัวตนเลยครับ'); closeAuthModal(null, true); event.target.reset(); }
+                if (error) { alert('❌ เกิดข้อผิดพลาด: ' + error.message); } else { alert('✅ สมัครสมาชิกสำเร็จ!'); closeAuthModal(null, true); event.target.reset(); }
             }
             submitBtn.innerText = originalText;
         }
 
         async function handleLogout() { await supabaseClient.auth.signOut(); closeDashboard(); closeAgencyDashboard(); window.location.reload(); }
 
-        // ฟังก์ชันบันทึกข้อมูลเด็กเข้าฐานข้อมูล
         async function submitNewModel(event) {
             event.preventDefault();
             if(!currentUserSession) return alert("กรุณาเข้าสู่ระบบก่อนครับ");
-            
             const btn = document.getElementById('btnSubmitModel'); const originalText = btn.innerHTML; btn.innerHTML = 'กำลังบันทึก...';
             const newModelData = {
                 agency_id: currentUserSession.user.id,
@@ -493,56 +640,27 @@
                 cover_image: document.getElementById('mCover').value || 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=500&q=80',
                 description: document.getElementById('mDesc').value
             };
-
             const { data, error } = await supabaseClient.from('models').insert([newModelData]);
             if (error) alert('❌ Error: ' + error.message);
-            else {
-                alert('🎉 บันทึกโปรไฟล์สำเร็จ!'); document.getElementById('addModelForm').reset(); switchAgTab('overview');
-                fetchModels(); // รีเฟรชหน้าแรกให้การ์ดใหม่โผล่ขึ้นมาทันที!
-            }
+            else { alert('🎉 บันทึกโปรไฟล์สำเร็จ!'); document.getElementById('addModelForm').reset(); switchAgTab('overview'); fetchModels(); }
             btn.innerHTML = originalText;
         }
 
-        // 🆕 ฟังก์ชันดึงข้อมูลจากตารางมาโชว์ที่หน้าแรก (The Magic happens here!) 🆕
         async function fetchModels() {
             const grid = document.getElementById('modelsGrid');
             const { data, error } = await supabaseClient.from('models').select('*').eq('status', 'active').order('created_at', { ascending: false });
-            
             if (error) { grid.innerHTML = '<p style="text-align:center; color:red;">เกิดข้อผิดพลาดในการโหลดข้อมูล</p>'; return; }
-            if (data.length === 0) { grid.innerHTML = '<p style="text-align:center; width:100%; color:#888;">ยังไม่มีโปรไฟล์ในระบบครับ ลองเพิ่มโปรไฟล์ดูสิ!</p>'; return; }
-
+            if (data.length === 0) { grid.innerHTML = '<p style="text-align:center; width:100%; color:#888;">ยังไม่มีโปรไฟล์ในระบบครับ ลองเพิ่มโปรไฟล์ผ่านหน้าเอเจนซี่ได้เลย!</p>'; return; }
             let html = '';
             data.forEach(model => {
-                // แปลงข้อมูลเป็น JSON เพื่อส่งไปหน้า Profile Modal เวลากด
                 const modelJson = encodeURIComponent(JSON.stringify(model));
-                
-                html += `
-                <div class="card" onclick="viewProfile('${modelJson}')">
-                    <div class="card-image-box">
-                        <img src="${model.cover_image}">
-                        <span class="badge-image">New</span>
-                    </div>
-                    <div class="card-info">
-                        <div class="name-group">
-                            <span class="iconify verified-badge-small" data-icon="heroicons:check-badge-solid"></span>
-                            <span class="card-name">${model.name} <span class="card-age">${model.age || '-'}</span></span>
-                        </div>
-                        <div class="card-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent);"></span> ${model.location || 'ไม่ระบุพิกัด'}</div>
-                        <div class="card-stats-text">${model.proportions || '-'} • ${model.height || '-'}/${model.weight || '-'}</div>
-                        <div class="card-footer">
-                            <div class="price">฿${model.price ? model.price.toLocaleString() : 'สอบถาม'}</div>
-                            <div class="engagement"><span class="engage-item"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24;"></span> 5.0</span></div>
-                        </div>
-                    </div>
-                </div>`;
+                html += `<div class="card" onclick="viewProfile('${modelJson}')"><div class="card-image-box"><img src="${model.cover_image}"><span class="badge-image">New</span></div><div class="card-info"><div class="name-group"><span class="iconify verified-badge-small" data-icon="heroicons:check-badge-solid"></span><span class="card-name">${model.name} <span class="card-age">${model.age || '-'}</span></span></div><div class="card-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent);"></span> ${model.location || 'ไม่ระบุพิกัด'}</div><div class="card-stats-text">${model.proportions || '-'} • ${model.height || '-'}/${model.weight || '-'}</div><div class="card-footer"><div class="price">฿${model.price ? model.price.toLocaleString() : 'สอบถาม'}</div><div class="engagement"><span class="engage-item"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24;"></span> 5.0</span></div></div></div></div>`;
             });
             grid.innerHTML = html;
         }
 
-        // 🆕 ฟังก์ชันเปิดหน้า Modal แล้วเอาข้อมูลของเด็กคนที่กดมาใส่ 🆕
         function viewProfile(encodedJson) {
             const model = JSON.parse(decodeURIComponent(encodedJson));
-            
             document.getElementById('pdImage').src = model.cover_image;
             document.getElementById('pdName').innerText = model.name;
             document.getElementById('pdLoc').innerText = model.location || 'ไม่ระบุพิกัด';
@@ -552,13 +670,10 @@
             document.getElementById('pdWeight').innerText = model.weight || '-';
             document.getElementById('pdPrice').innerText = model.price ? model.price.toLocaleString() : '0';
             document.getElementById('pdDesc').innerText = model.description || 'ยังไม่มีคำแนะนำตัวค่ะ';
-            
             openProfile();
         }
 
-        // สั่งให้ดึงข้อมูลเด็กๆ ออกมาโชว์ทันทีที่เปิดเว็บ
         fetchModels();
-
     </script>
 </body>
 </html>
