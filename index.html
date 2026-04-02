@@ -72,7 +72,6 @@
         .stories-carousel__item:focus-visible { border-radius: 16px; box-shadow: 0 0 0 2px var(--dash-gold); outline: none; }
         .stories-carousel__name { color: var(--text-dark); font-size: 12px; font-weight: 500; max-width: 72px; overflow: hidden; text-align: center; text-overflow: ellipsis; transition: color .2s ease; white-space: nowrap; }
         .stories-carousel__item:hover .stories-carousel__name { color: var(--accent); }
-        .stories-carousel__count { align-items: center; background: var(--btn-gradient); border: 2px solid #fdf5f5; border-radius: 9px; box-shadow: 0 2px 4px #0000004d; color: var(--accent); display: flex; font-size: 10px; font-weight: 700; height: 18px; justify-content: center; line-height: 1; min-width: 18px; padding: 0 5px; position: absolute; right: 4px; top: 4px; z-index: 2; }
         .stories-carousel__skeleton-ring { height: 64px; position: relative; width: 64px; border-radius: 50%; padding: 2px; background: linear-gradient(135deg, var(--accent-light), var(--accent));}
         .stories-carousel__skeleton-avatar { border-radius: 50%; height: 100%; width: 100%; object-fit: cover; border: 2px solid #fdf5f5;}
         @media(min-width: 640px) { .stories-carousel__skeleton-container { gap: 16px; padding: 15px 20px; } }
@@ -181,11 +180,9 @@
         .form-group { margin-bottom: 15px; text-align: left; }
         .form-group label { display: block; margin-bottom: 8px; color: #aaa; font-size: 0.9rem;}
         .form-control { width: 100%; background: #111; border: 1px solid #333; color: #fff; padding: 12px 15px; border-radius: 8px; font-family: 'Prompt'; outline: none; transition: 0.2s;}
-        
         .form-file-upload { background: #111; border: 1px dashed #555; padding: 15px; border-radius: 8px; text-align: center; color: #888; cursor: pointer; transition: 0.2s; position: relative;}
         .form-file-upload:hover { border-color: var(--dash-gold); color: #fff;}
         .form-file-upload input[type="file"] { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; }
-        
         .gallery-preview { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; min-height: 80px;}
         .img-thumb-box { width: 80px; height: 100px; position: relative; border-radius: 8px; overflow: hidden; border: 2px solid #333; cursor: grab;}
         .img-thumb-box:active { cursor: grabbing; opacity: 0.8; transform: scale(1.05);}
@@ -194,7 +191,6 @@
         .img-thumb-box.cover { border-color: var(--dash-gold); }
         .btn-remove-img { position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,0.7); color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
         .btn-remove-img:hover { background: red; }
-
         .form-control:focus { border-color: var(--dash-gold); }
         .btn-primary { background: var(--dash-gold); color: #fff; border: none; padding: 12px 30px; border-radius: 8px; font-family: 'Prompt'; font-weight: 600; cursor: pointer; font-size: 1.1rem; width: 100%; margin-top: 20px;}
         .btn-primary:hover { background: var(--dash-gold-hover); }
@@ -213,31 +209,20 @@
         .btn-danger { background: transparent; color: #ff4d4f; border: 1px solid #ff4d4f; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-family: 'Prompt'; font-size: 0.8rem;}
         .btn-danger:hover { background: rgba(255, 77, 79, 0.1); }
 
-        /* 🚀 PROFILE DETAIL OVERLAY (Flexbox Design แก้แถบลอย) 🚀 */
-        .profile-overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: #0f0f0f; z-index: 4000; overflow-y: auto; 
-            opacity: 0; visibility: hidden; transition: all 0.3s ease; 
-            font-family: 'Prompt', sans-serif; 
-            display: flex; flex-direction: column; /* ให้กล่องด้านในจัดเรียงจากบนลงล่าง */
-        }
-        .profile-overlay.active { opacity: 1; visibility: visible; }
+        /* PROFILE DETAIL OVERLAY */
+        .profile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f0f0f; z-index: 4000; overflow-y: auto; opacity: 0; visibility: hidden; transition: all 0.3s ease; transform: translateY(20px); padding-bottom: 100px; font-family: 'Prompt', sans-serif; display: flex; flex-direction: column; }
+        .profile-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
         .btn-back-profile { position: absolute; top: 20px; left: 20px; width: 45px; height: 45px; border-radius: 50%; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 4010; transition: 0.2s; }
-        
         .profile-hero { width: 100%; height: 55vh; position: relative; flex-shrink: 0; }
         .profile-hero img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
         .hero-gradient { position: absolute; bottom: 0; left: 0; width: 100%; height: 70%; background: linear-gradient(to top, #0f0f0f 0%, transparent 100%); }
-        
         .profile-content { max-width: 600px; width: 100%; margin: -80px auto 0 auto; padding: 0 5%; position: relative; z-index: 4005; color: white; flex: 1 0 auto; padding-bottom: 30px;}
-        
         .pro-title-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;}
         .pro-name { font-size: 2.2rem; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 10px; line-height: 1; margin-bottom: 5px;}
-        
         .btn-pro-icon { width: 45px; height: 45px; border-radius: 50%; background: #161616; border: 1px solid #333; color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; }
         .btn-pro-icon:hover { border-color: #ff4d4f; }
         .heart-icon { transition: transform 0.2s; }
         .btn-pro-icon:active .heart-icon { transform: scale(1.3); }
-
         .verified-badge { font-size: 1.3rem; color: #10b981; }
         .pro-location { font-size: 0.95rem; color: #aaa; display: flex; align-items: center; gap: 5px; margin-bottom: 25px; }
         .pro-stats-box { background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px 10px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center; margin-bottom: 30px; }
@@ -251,14 +236,7 @@
         .pro-desc-title { font-weight: 500; color: #fff; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;}
         .pro-desc { font-size: 0.95rem; color: #aaa; line-height: 1.6; white-space: pre-line; }
         
-        /* 🚀 แถบจองคิว ล็อกติดขอบล่างของหน้าต่างโปรไฟล์ 🚀 */
-        .sticky-booking-bar { 
-            position: sticky; 
-            bottom: 0; left: 0; width: 100%; 
-            background: #161616; border-top: 1px solid #2a2a2a; 
-            padding: 15px 5%; display: flex; justify-content: center; z-index: 4020; 
-            margin-top: auto; 
-        }
+        .sticky-booking-bar { position: sticky; bottom: 0; left: 0; width: 100%; background: #161616; border-top: 1px solid #2a2a2a; padding: 15px 5%; display: flex; justify-content: center; z-index: 4020; margin-top: auto; }
         .sticky-booking-container { max-width: 600px; width: 100%; display: flex; justify-content: space-between; align-items: center; }
         .book-price-box { display: flex; flex-direction: column; }
         .book-label { font-size: 0.8rem; color: #888; margin-bottom: 2px;}
@@ -289,6 +267,7 @@
         .heart-btn-card { position: absolute; bottom: 12px; right: 12px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.3); display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; transition: 0.2s;}
         .heart-btn-card:hover { background: rgba(0,0,0,0.6); }
 
+        /* 📱 ปรับหน้าจอมือถือ (Bottom Navigation ใช้งานได้ 100%) 📱 */
         @media (max-width: 768px) {
             .nav-links, .nav-buttons { display: none !important; }
             .mobile-menu-btn { display: block; color: var(--text-dark); }
@@ -297,12 +276,19 @@
             .card-name { font-size: 1rem; }
             .price { font-size: 1.1rem; }
             .engage-item { gap: 2px; font-size: 0.8rem;}
-            .ag-sidebar { display: none; }
-            .ag-topbar { padding: 15px; }
-            .ag-stats-grid { grid-template-columns: 1fr 1fr; }
-            .form-grid { grid-template-columns: 1fr; }
             .auth-modal { padding: 25px 20px; border-radius: 0; min-height: 100vh; border: none;}
+            
+            /* เมนูหลังบ้านแบบแอพมือถือ */
+            .agency-dashboard { flex-direction: column; }
+            .ag-sidebar { order: 2; width: 100%; padding: 5px 0; border-right: none; border-top: 1px solid #222; background: #111; z-index: 5020;}
+            .ag-logo { display: none; }
+            .ag-nav { flex-direction: row; overflow-x: auto; padding: 0 5px; gap: 5px; justify-content: space-between; }
+            .ag-nav-item { flex-direction: column; padding: 8px 5px; font-size: 0.7rem; flex: 1; text-align: center; gap: 5px; border-left: none; border-radius: 8px;}
+            .ag-nav-item.active { border-left: none; border-bottom: 2px solid var(--dash-gold); background: rgba(181, 108, 94, 0.1);}
+            .ag-nav-icon { font-size: 1.4rem; margin: 0 auto; }
+            .ag-main { order: 1; padding-bottom: 10px;}
             .my-profiles-table { display: block; overflow-x: auto; white-space: nowrap; }
+            .form-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -512,7 +498,7 @@
             });
         }
 
-        // 💖 ฟังก์ชันเปลี่ยนสีปุ่มหัวใจ 💖
+        // 💖 ฟังก์ชันเปลี่ยนสีปุ่มหัวใจ
         function toggleHeart(btn, event) {
             if(event) event.stopPropagation(); 
             const icon = btn.querySelector('.iconify');
@@ -525,7 +511,7 @@
             }
         }
 
-        // 🌟 ระบบลากวางรูปภาพ 🌟
+        // 🌟 ระบบลากวางรูปภาพ
         let selectedFiles = []; 
         let dragStartIndex;
 
@@ -617,14 +603,17 @@
 
         async function handleAuthSubmit(event, type) {
             event.preventDefault();
+            
             if (type === 'register') {
                 const pwd = document.getElementById('regPassword').value;
                 const confirmPwd = document.getElementById('regConfirmPassword').value;
                 if(pwd.length < 6) { alert("รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร"); return; }
                 if (pwd !== confirmPwd) { alert('❌ รหัสผ่านไม่ตรงกันครับ'); return; }
             }
+
             const submitBtn = event.target.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerText; submitBtn.innerText = 'กำลังประมวลผล...';
+            
             if (type === 'login') {
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
@@ -640,12 +629,26 @@
             submitBtn.innerText = originalText;
         }
 
-        async function handleLogout() { await supabaseClient.auth.signOut(); updateUIAuth(null); closeDashboard(); closeAgencyDashboard(); fetchModels(); }
+        async function handleLogout() { 
+            await supabaseClient.auth.signOut(); 
+            updateUIAuth(null);
+            closeDashboard(); 
+            closeAgencyDashboard(); 
+            fetchModels();
+        }
 
+        // 🚨 เครื่องสแกนคำต้องห้าม 🚨
         async function submitNewModel(event) {
             event.preventDefault();
             if(!currentUserSession) return alert("กรุณาเข้าสู่ระบบก่อนครับ");
             if (selectedFiles.length === 0) { alert("กรุณาเลือกรูปภาพอย่างน้อย 1 รูปครับ"); return; }
+
+            const descText = document.getElementById('mDesc').value;
+            const linkRegex = /(http|https|www\.|lin\.ee|\.com|\.co|\.net|\.org)/i;
+            if (linkRegex.test(descText)) {
+                alert("❌ ไม่อนุญาตให้แนบลิงก์ เว็บไซต์ หรือช่องทางติดต่ออื่นในช่องคำแนะนำตัวครับ\n\n💡 กรุณาใส่เฉพาะคำอธิบาย และใช้ช่อง 'LINE ID' สำหรับการติดต่อเท่านั้นครับ");
+                return;
+            }
 
             const btn = document.getElementById('btnSubmitModel'); 
             const originalText = btn.innerHTML; 
@@ -664,7 +667,11 @@
                 }
             }
 
-            if(uploadedUrls.length === 0) { alert('❌ อัปโหลดรูปภาพล้มเหลวทั้งหมด'); btn.innerHTML = originalText; return; }
+            if(uploadedUrls.length === 0) {
+                alert('❌ อัปโหลดรูปภาพล้มเหลวทั้งหมด');
+                btn.innerHTML = originalText;
+                return;
+            }
 
             const newModelData = {
                 agency_id: currentUserSession.user.id,
@@ -676,7 +683,7 @@
                 location: document.getElementById('mLocation').value,
                 price: document.getElementById('mPrice').value,
                 line_id: document.getElementById('mLineId').value,
-                cover_image: uploadedUrls[0], 
+                cover_image: uploadedUrls[0],
                 gallery: uploadedUrls, 
                 description: document.getElementById('mDesc').value,
                 status: 'active'
@@ -697,7 +704,9 @@
         async function fetchMyProfiles() {
             const tbody = document.getElementById('myProfilesTableBody');
             if(!currentUserSession) return;
+
             const { data, error } = await supabaseClient.from('models').select('*').eq('agency_id', currentUserSession.user.id).order('created_at', { ascending: false });
+
             if (error) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">เกิดข้อผิดพลาดในการโหลด</td></tr>'; return; }
             if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#888;">คุณยังไม่มีโปรไฟล์น้องๆ ในระบบเลยครับ</td></tr>'; document.getElementById('statTotalProfiles').innerText = '0'; return; }
 
@@ -732,13 +741,12 @@
         }
 
         async function deleteModel(modelId, modelName) {
-            if(confirm(`⚠️ แน่ใจหรือไม่ว่าต้องการลบโปรไฟล์ของ "${modelName}" ?`)) {
+            if(confirm(`⚠️ คุณแน่ใจหรือไม่ว่าต้องการลบโปรไฟล์ของน้อง "${modelName}" ออกจากระบบอย่างถาวร?`)) {
                 const { error } = await supabaseClient.from('models').delete().eq('id', modelId);
-                if (error) alert('❌ ลบไม่สำเร็จ'); else { alert('✅ ลบโปรไฟล์เรียบร้อย'); fetchMyProfiles(); fetchModels(); }
+                if (error) alert('❌ ลบไม่สำเร็จ'); else { alert('✅ ลบโปรไฟล์เรียบร้อยแล้ว'); fetchMyProfiles(); fetchModels(); }
             }
         }
 
-        // 🌟 อัปเกรดฟังก์ชันดึงข้อมูล ให้สร้าง Stories ด้วย! 🌟
         async function fetchModels() {
             const grid = document.getElementById('modelsGrid');
             grid.innerHTML = '<div class="loading-text"><span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังดึงข้อมูลน้องๆ...</div>';
@@ -749,12 +757,11 @@
             if (data.length === 0) { grid.innerHTML = '<p style="text-align:center; width:100%; color:#888;">ยังไม่มีโปรไฟล์ในระบบครับ</p>'; document.getElementById('storiesContainer').innerHTML = ''; return; }
             
             let html = '';
-            let storiesHtml = ''; // ตัวแปรเก็บ HTML ของ Stories
+            let storiesHtml = '';
             
             data.forEach((model, index) => {
                 const modelJson = encodeURIComponent(JSON.stringify(model));
                 
-                // 1. สร้างการ์ดหน้าแรก
                 html += `
                 <div class="card" onclick="viewProfile('${modelJson}')">
                     <div class="card-image-box">
@@ -778,7 +785,6 @@
                     </div>
                 </div>`;
 
-                // 2. สร้างวงกลม Stories ด้านบนสุด (ดึงมาโชว์แค่ 15 คนล่าสุด)
                 if(index < 15) {
                     storiesHtml += `
                     <button class="stories-carousel__item" onclick="viewProfile('${modelJson}')">
@@ -791,11 +797,7 @@
             });
 
             grid.innerHTML = html;
-            
-            // เอา Stories ที่ปั้นเสร็จ ไปยัดใส่กล่องด้านบน
-            if(storiesHtml !== '') {
-                document.getElementById('storiesContainer').innerHTML = storiesHtml;
-            }
+            if(storiesHtml !== '') { document.getElementById('storiesContainer').innerHTML = storiesHtml; }
         }
 
         function viewProfile(encodedJson) {
@@ -811,8 +813,11 @@
             document.getElementById('pdPrice').innerText = model.price ? model.price.toLocaleString() : '0';
             document.getElementById('pdDesc').innerText = model.description || 'ยังไม่มีคำแนะนำตัวค่ะ';
             
-            let rawLine = model.line_id || ''; let lineUrl = rawLine;
-            if (!rawLine.startsWith('http')) { lineUrl = rawLine.startsWith('@') ? `https://line.me/R/ti/p/${rawLine}` : `https://line.me/ti/p/~${rawLine}`; }
+            let rawLine = model.line_id || '';
+            let lineUrl = rawLine;
+            if (!rawLine.startsWith('http')) {
+                lineUrl = rawLine.startsWith('@') ? `https://line.me/R/ti/p/${rawLine}` : `https://line.me/ti/p/~${rawLine}`;
+            }
             
             document.getElementById('btnBookNow').onclick = function() {
                 if(!rawLine) { alert('น้องคนนี้ยังไม่ได้ใส่ช่องทางการติดต่อไว้ครับ'); } 
@@ -821,7 +826,9 @@
             
             const modalHeartBtn = document.querySelector('#profileDetailModal .btn-pro-icon');
             const icon = modalHeartBtn.querySelector('.iconify');
-            icon.setAttribute('data-icon', 'mdi:cards-heart-outline'); icon.style.color = 'white'; modalHeartBtn.style.borderColor = '#333';
+            icon.setAttribute('data-icon', 'mdi:cards-heart-outline');
+            icon.style.color = 'white';
+            modalHeartBtn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
 
             openProfile();
         }
