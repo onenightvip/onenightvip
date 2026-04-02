@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
-        /* 🌟 คืนชีพสีสันเดิมของคุณ 🌟 */
+        /* 🌟 สีสันเดิมของคุณ Rose Gold 🌟 */
         :root {
             --accent: #b56c5e; 
             --accent-light: #e29f8c;
@@ -25,11 +25,10 @@
             --text-on-dark: #fdf5f5;
             --badge-green: #10b981;
             
-            /* ใช้สี accent เป็นสีหลักในแดชบอร์ด */
             --dash-bg: #0f0f0f;
             --dash-card: #1a1a1a;
             --dash-border: #333333;
-            --dash-gold: var(--accent); /* เปลี่ยนทองเป็น Rose Gold */
+            --dash-gold: var(--accent);
             --dash-gold-hover: #9c594c;
         }
 
@@ -70,7 +69,7 @@
         .sheet-links a { display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--text-dark); font-size: 1.1rem; font-weight: 500; padding: 12px 0; border-bottom: 1px solid rgba(181, 108, 94, 0.1); }
         .sheet-auth { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 5px; }
 
-        /* 🎯 AUTH MODALS (ดีไซน์ใหม่ แต่ใช้สี Rose Gold เดิม) */
+        /* 🎯 AUTH MODALS */
         .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.3s ease; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; padding: 20px; }
         .auth-overlay.active { opacity: 1; visibility: visible; }
         
@@ -99,7 +98,7 @@
         .auth-input::placeholder { color: #555; }
         .input-hint { font-size: 0.75rem; color: #777; margin-top: 2px;}
 
-        /* แก้ปัญหากรอบ Role Cards เท่ากัน 100% */
+        /* กรอบ Role Cards เท่ากัน 100% */
         .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 5px; align-items: stretch; }
         .role-card { background: var(--modal-input-bg); border: 1px solid rgba(181, 108, 94, 0.2); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; height: 100%; }
         .role-card:hover { border-color: #777; }
@@ -452,6 +451,7 @@
         supabaseClient.auth.getSession().then(({ data: { session } }) => { updateUIAuth(session); });
         supabaseClient.auth.onAuthStateChange((event, session) => { updateUIAuth(session); });
 
+        // 🚨 อัปเดตแจ้งเตือนให้ชัดเจนขึ้น 🚨
         async function handleAuthSubmit(event, type) {
             event.preventDefault();
             
@@ -478,11 +478,17 @@
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
                 const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-                if (!error) { 
+                
+                if (error) { 
+                    // เช็คว่า Error เกิดจากยังไม่ยืนยันอีเมลหรือเปล่า
+                    if (error.message.includes('Email not confirmed')) {
+                        alert('⚠️ กรุณายืนยันอีเมลก่อนเข้าสู่ระบบ!\n(เช็คลิงก์ในกล่องจดหมาย หรือโฟลเดอร์ Junk/Spam ของคุณครับ)');
+                    } else {
+                        alert('❌ เข้าสู่ระบบไม่สำเร็จ: รหัสผ่านหรืออีเมลไม่ถูกต้อง'); 
+                    }
+                } else { 
                     closeAuthModal(null, true); 
                     event.target.reset();
-                } else { 
-                    alert('❌ เข้าสู่ระบบไม่สำเร็จ: รหัสผ่านหรืออีเมลไม่ถูกต้อง'); 
                 }
             } else if (type === 'register') {
                 const email = document.getElementById('regEmail').value;
@@ -500,7 +506,8 @@
                 if (error) { 
                     alert('❌ เกิดข้อผิดพลาด: ' + error.message); 
                 } else { 
-                    alert('✅ สมัครสมาชิกสำเร็จ! ข้อมูลอยู่ในระบบแล้ว (อย่าลืมกดลิงก์ยืนยันในอีเมลของคุณก่อนเข้าสู่ระบบนะครับ!)'); 
+                    // แจ้งเตือนให้ไปกดยืนยันอีเมลชัดๆ!
+                    alert('✅ สมัครสมาชิกสำเร็จ!\n\nระบบได้ส่งลิงก์ไปที่อีเมลของคุณแล้ว กรุณากดยืนยันอีเมลก่อนเข้าสู่ระบบครับ\n(หากไม่พบอีเมล ลองเช็คในโฟลเดอร์ขยะ/Spam)'); 
                     closeAuthModal(null, true);
                     event.target.reset();
                     document.getElementById('mockCaptcha').classList.remove('checked');
@@ -514,6 +521,7 @@
             await supabaseClient.auth.signOut(); 
             closeDashboard(); 
             closeAgencyDashboard(); 
+            window.location.reload(); // รีเฟรชหน้าเว็บ 1 รอบหลังออกจากระบบ
         }
     </script>
 </body>
