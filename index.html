@@ -210,7 +210,16 @@
         .profile-hero img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
         .hero-gradient { position: absolute; bottom: 0; left: 0; width: 100%; height: 70%; background: linear-gradient(to top, #0f0f0f 0%, transparent 100%); }
         .profile-content { max-width: 600px; margin: -80px auto 0 auto; padding: 0 5%; position: relative; z-index: 4005; color: white; }
-        .pro-name { font-size: 2.2rem; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 10px; line-height: 1; margin-bottom: 8px;}
+        
+        .pro-title-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;}
+        .pro-name { font-size: 2.2rem; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 10px; line-height: 1; margin-bottom: 5px;}
+        
+        /* 💖 สไตล์ปุ่มหัวใจ 💖 */
+        .btn-pro-icon { width: 45px; height: 45px; border-radius: 50%; background: #161616; border: 1px solid #333; color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; }
+        .btn-pro-icon:hover { border-color: #ff4d4f; }
+        .heart-icon { transition: transform 0.2s; }
+        .btn-pro-icon:active .heart-icon { transform: scale(1.3); }
+
         .verified-badge { font-size: 1.3rem; color: #10b981; }
         .pro-location { font-size: 0.95rem; color: #aaa; display: flex; align-items: center; gap: 5px; margin-bottom: 25px; }
         .pro-stats-box { background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px 10px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center; margin-bottom: 30px; }
@@ -229,7 +238,7 @@
         .book-price-box { display: flex; flex-direction: column; }
         .book-label { font-size: 0.8rem; color: #888; margin-bottom: 2px;}
         .book-price { font-size: 1.6rem; font-weight: 600; color: var(--dash-gold); line-height: 1;}
-        .btn-booking { background: var(--btn-gradient); color: var(--accent); border: none; padding: 12px 35px; border-radius: 50px; font-size: 1.1rem; font-weight: 600; font-family: 'Prompt'; cursor: pointer; transition: 0.2s; }
+        .btn-booking { background: var(--btn-gradient); color: var(--accent); border: none; padding: 12px 35px; border-radius: 50px; font-size: 1.1rem; font-weight: 600; font-family: 'Prompt'; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 5px;}
         .btn-booking:hover { transform: scale(1.05); }
 
         /* Grid Cards หน้าแรก */
@@ -252,6 +261,10 @@
         .engage-item { display: flex; align-items: center; gap: 4px; }
         .badge-image { position: absolute; top: 12px; left: 12px; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: white; background: var(--btn-gradient); color: var(--accent); z-index: 10; border: 1px solid rgba(255,255,255,0.5);}
         .loading-text { text-align: center; width: 100%; padding: 50px; color: var(--text-muted); font-size: 1.2rem;}
+
+        /* 💖 สไตล์ปุ่มหัวใจในการ์ด */
+        .heart-btn-card { position: absolute; bottom: 12px; right: 12px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.3); display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; transition: 0.2s;}
+        .heart-btn-card:hover { background: rgba(0,0,0,0.6); }
 
         @media (max-width: 768px) {
             .nav-links, .nav-buttons { display: none !important; }
@@ -305,12 +318,12 @@
     <div class="agencies-carousel-wrapper">
         <div class="agencies-carousel__track">
             <div class="agencies-carousel__strip">
-                <a href="#" class="agencies-carousel__spotlight"><img src="https://images.unsplash.com/photo-1558507652-2d9626c4e67a?w=300&q=80" class="agencies-carousel__spotlight-image"><div class="agencies-carousel__spotlight-overlay"></div><div class="agencies-carousel__spotlight-content"><img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo"><div><div class="agencies-carousel__spotlight-name">VIP Agency 1</div><div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 5.0 (รีวิว 120)</div></div></div></a>
-                <a href="#" class="agencies-carousel__spotlight"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&q=80" class="agencies-carousel__spotlight-image"><div class="agencies-carousel__spotlight-overlay"></div><div class="agencies-carousel__spotlight-content"><img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo"><div><div class="agencies-carousel__spotlight-name">Super Model Club</div><div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 4.9 (รีวิว 85)</div></div></div></a>
+                <a href="#" class="agencies-carousel__spotlight"><img src="https://images.unsplash.com/photo-1558507652-2d9626c4e67a?w=300&q=80" class="agencies-carousel__spotlight-image"><div class="agencies-carousel__spotlight-overlay"></div><div class="agencies-carousel__spotlight-content"><img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo"><div><div class="agencies-carousel__spotlight-name">VIP Agency 1</div><div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 5.0</div></div></div></a>
+                <a href="#" class="agencies-carousel__spotlight"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&q=80" class="agencies-carousel__spotlight-image"><div class="agencies-carousel__spotlight-overlay"></div><div class="agencies-carousel__spotlight-content"><img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo"><div><div class="agencies-carousel__spotlight-name">Super Model Club</div><div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 4.9</div></div></div></a>
             </div>
             <div class="agencies-carousel__strip">
-                <a href="#" class="agencies-carousel__spotlight"><img src="https://images.unsplash.com/photo-1558507652-2d9626c4e67a?w=300&q=80" class="agencies-carousel__spotlight-image"><div class="agencies-carousel__spotlight-overlay"></div><div class="agencies-carousel__spotlight-content"><img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo"><div><div class="agencies-carousel__spotlight-name">VIP Agency 1</div><div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 5.0 (รีวิว 120)</div></div></div></a>
-                <a href="#" class="agencies-carousel__spotlight"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&q=80" class="agencies-carousel__spotlight-image"><div class="agencies-carousel__spotlight-overlay"></div><div class="agencies-carousel__spotlight-content"><img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo"><div><div class="agencies-carousel__spotlight-name">Super Model Club</div><div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 4.9 (รีวิว 85)</div></div></div></a>
+                <a href="#" class="agencies-carousel__spotlight"><img src="https://images.unsplash.com/photo-1558507652-2d9626c4e67a?w=300&q=80" class="agencies-carousel__spotlight-image"><div class="agencies-carousel__spotlight-overlay"></div><div class="agencies-carousel__spotlight-content"><img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo"><div><div class="agencies-carousel__spotlight-name">VIP Agency 1</div><div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 5.0</div></div></div></a>
+                <a href="#" class="agencies-carousel__spotlight"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&q=80" class="agencies-carousel__spotlight-image"><div class="agencies-carousel__spotlight-overlay"></div><div class="agencies-carousel__spotlight-content"><img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo"><div><div class="agencies-carousel__spotlight-name">Super Model Club</div><div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 4.9</div></div></div></a>
             </div>
         </div>
     </div>
@@ -379,7 +392,7 @@
 
             <div class="ag-content-pad ag-view" id="viewMyProfiles">
                 <h1 class="ag-welcome" style="margin-bottom: 5px;">จัดการโปรไฟล์น้องๆ</h1>
-                <p style="color: #888; margin-bottom: 20px;">รายชื่อเด็กในสังกัดของคุณทั้งหมด เปิด/ปิดรับงาน หรือลบได้ที่นี่</p>
+                <p style="color: #888; margin-bottom: 20px;">เปิด/ปิดรับงาน หรือลบโปรไฟล์ได้ที่นี่</p>
                 <table class="my-profiles-table">
                     <thead><tr><th>รูปภาพ</th><th>ข้อมูลน้อง</th><th>ราคา</th><th>สถานะ</th><th style="text-align: center;">จัดการ</th></tr></thead>
                     <tbody id="myProfilesTableBody"><tr><td colspan="5" style="text-align: center; color: #888;">กำลังโหลดข้อมูล...</td></tr></tbody>
@@ -401,9 +414,13 @@
                             </div>
                         </div>
                         <div class="form-panel">
-                            <h3><span class="iconify" data-icon="heroicons:currency-dollar"></span> บริการและรูปภาพ</h3>
-                            <div class="form-group"><label>พิกัดรับงาน</label><input type="text" id="mLocation" class="form-control" placeholder="เช่น กรุงเทพฯ, ลาดพร้าว"></div>
-                            <div class="form-group"><label>เรทราคาเริ่มต้น *</label><input type="number" id="mPrice" class="form-control" required placeholder="1500"></div>
+                            <h3><span class="iconify" data-icon="heroicons:currency-dollar"></span> บริการและช่องทางติดต่อ</h3>
+                            <div class="form-group"><label>LINE ID สำหรับจองคิว *</label><input type="text" id="mLineId" class="form-control" required placeholder="เช่น @vip_nongb หรือใส่ลิงก์ไลน์"></div>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <div class="form-group"><label>พิกัดรับงาน</label><input type="text" id="mLocation" class="form-control" placeholder="เช่น กรุงเทพฯ"></div>
+                                <div class="form-group"><label>เรทราคาเริ่มต้น *</label><input type="number" id="mPrice" class="form-control" required placeholder="1500"></div>
+                            </div>
                             <div class="form-group">
                                 <label>รูปภาพหน้าปก *</label>
                                 <div class="form-file-upload">
@@ -425,8 +442,16 @@
         <button class="btn-back-profile" onclick="closeProfile()"><span class="iconify" data-icon="heroicons:arrow-left"></span></button>
         <div class="profile-hero"><img id="pdImage" src=""><div class="hero-gradient"></div></div>
         <div class="profile-content">
-            <h1 class="pro-name"><span id="pdName">ชื่อน้อง</span> <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span></h1>
-            <div class="pro-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--dash-gold);"></span> <span id="pdLoc">พิกัด</span></div>
+            <div class="pro-title-row">
+                <div class="pro-name-group">
+                    <h1 class="pro-name"><span id="pdName">ชื่อน้อง</span> <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span></h1>
+                    <div class="pro-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--dash-gold);"></span> <span id="pdLoc">พิกัด</span></div>
+                </div>
+                <button class="btn-pro-icon" onclick="toggleHeart(this)">
+                    <span class="iconify heart-icon" data-icon="mdi:cards-heart-outline"></span>
+                </button>
+            </div>
+            
             <div class="pro-stats-box">
                 <div class="pro-stat-item"><div class="pro-stat-val" id="pdAge">-</div><div class="pro-stat-label">อายุ</div></div>
                 <div class="pro-stat-item"><div class="pro-stat-val" id="pdProps">-</div><div class="pro-stat-label">สัดส่วน</div></div>
@@ -447,7 +472,7 @@
                     <span class="book-label">เรทราคาเริ่มต้น</span>
                     <span class="book-price">฿<span id="pdPrice">0</span> <span style="font-size: 0.9rem; color: #888; font-weight: normal;">/ 1 ชม.</span></span>
                 </div>
-                <button class="btn-booking" onclick="alert('เด้งไปหน้าแอดไลน์!')">จองคิว</button>
+                <button class="btn-booking" id="btnBookNow"><span class="iconify" data-icon="bi:line" style="font-size: 1.2rem;"></span> จองคิว</button>
             </div>
         </div>
     </div>
@@ -465,6 +490,21 @@
             return str.replace(/[&<>"']/g, function(m) {
                 return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[m];
             });
+        }
+
+        // 💖 ฟังก์ชันเปลี่ยนสีปุ่มหัวใจ 💖
+        function toggleHeart(btn, event) {
+            if(event) event.stopPropagation(); // ป้องกันไม่ให้คลิกแล้วหน้าต่างโปรไฟล์เด้งขึ้นมา
+            const icon = btn.querySelector('.iconify');
+            if (icon.getAttribute('data-icon') === 'mdi:cards-heart-outline') {
+                icon.setAttribute('data-icon', 'mdi:cards-heart');
+                icon.style.color = '#ff4d4f'; // สีแดง
+                btn.style.borderColor = '#ff4d4f';
+            } else {
+                icon.setAttribute('data-icon', 'mdi:cards-heart-outline');
+                icon.style.color = 'white'; // กลับเป็นสีเดิม
+                btn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            }
         }
 
         function switchAuthTab(tab) { document.getElementById('loginForm').classList.toggle('active', tab === 'login'); document.getElementById('registerForm').classList.toggle('active', tab === 'register'); }
@@ -530,8 +570,6 @@
             if (type === 'register') {
                 const pwd = document.getElementById('regPassword').value;
                 const confirmPwd = document.getElementById('regConfirmPassword').value;
-                
-                // ✅ Form Validation
                 if(pwd.length < 6) { alert("รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร"); return; }
                 if (pwd !== confirmPwd) { alert('❌ รหัสผ่านและการยืนยันรหัสผ่านไม่ตรงกันครับ'); return; }
             }
@@ -554,7 +592,6 @@
             submitBtn.innerText = originalText;
         }
 
-        // 🔄 ปรับ UX ไม่รีโหลดหน้าเว็บแล้ว
         async function handleLogout() { 
             await supabaseClient.auth.signOut(); 
             updateUIAuth(null);
@@ -570,7 +607,6 @@
             const fileInput = document.getElementById('mCoverFile');
             const file = fileInput.files[0];
 
-            // ✅ File Validation
             if (!file) { alert("กรุณาเลือกรูปภาพหน้าปกครับ"); return; }
             if (!file.type.startsWith('image/')) { alert("❌ อนุญาตให้อัปโหลดเฉพาะไฟล์รูปภาพเท่านั้นครับ"); return; }
             if (file.size > 2 * 1024 * 1024) { alert("❌ ขนาดไฟล์ใหญ่เกินไป (ต้องไม่เกิน 2MB) กรุณาย่อรูปก่อนอัปโหลดครับ"); return; }
@@ -591,6 +627,7 @@
             const { data: publicUrlData } = supabaseClient.storage.from('profile_images').getPublicUrl(filePath);
             coverImageUrl = publicUrlData.publicUrl;
 
+            // 🌟 เพิ่ม Line ID เข้าไปใน Data 🌟
             const newModelData = {
                 agency_id: currentUserSession.user.id,
                 name: document.getElementById('mName').value,
@@ -600,6 +637,7 @@
                 weight: document.getElementById('mWeight').value || null,
                 location: document.getElementById('mLocation').value,
                 price: document.getElementById('mPrice').value,
+                line_id: document.getElementById('mLineId').value, // 👈 เก็บไอดีไลน์ตรงนี้
                 cover_image: coverImageUrl,
                 description: document.getElementById('mDesc').value,
                 status: 'active'
@@ -673,7 +711,30 @@
             let html = '';
             data.forEach(model => {
                 const modelJson = encodeURIComponent(JSON.stringify(model));
-                html += `<div class="card" onclick="viewProfile('${modelJson}')"><div class="card-image-box"><img src="${model.cover_image}"><span class="badge-image">New</span></div><div class="card-info"><div class="name-group"><span class="iconify verified-badge-small" data-icon="heroicons:check-badge-solid"></span><span class="card-name">${escapeHTML(model.name)} <span class="card-age">${model.age || '-'}</span></span></div><div class="card-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent);"></span> ${escapeHTML(model.location) || 'ไม่ระบุพิกัด'}</div><div class="card-stats-text">${escapeHTML(model.proportions) || '-'} • ${model.height || '-'}/${model.weight || '-'}</div><div class="card-footer"><div class="price">฿${model.price ? model.price.toLocaleString() : 'สอบถาม'}</div><div class="engagement"><span class="engage-item"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24;"></span> 5.0</span></div></div></div></div>`;
+                
+                // 💖 เพิ่มปุ่มหัวใจในการ์ดหน้าแรก (ซ้อนทับกรอบรูป) 💖
+                html += `
+                <div class="card" onclick="viewProfile('${modelJson}')">
+                    <div class="card-image-box">
+                        <img src="${model.cover_image}">
+                        <span class="badge-image">New</span>
+                        <button class="heart-btn-card" onclick="toggleHeart(this, event)">
+                            <span class="iconify heart-icon" data-icon="mdi:cards-heart-outline" style="color: white; font-size: 1.5rem;"></span>
+                        </button>
+                    </div>
+                    <div class="card-info">
+                        <div class="name-group">
+                            <span class="iconify verified-badge-small" data-icon="heroicons:check-badge-solid"></span>
+                            <span class="card-name">${escapeHTML(model.name)} <span class="card-age">${model.age || '-'}</span></span>
+                        </div>
+                        <div class="card-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent);"></span> ${escapeHTML(model.location) || 'ไม่ระบุพิกัด'}</div>
+                        <div class="card-stats-text">${escapeHTML(model.proportions) || '-'} • ${model.height || '-'}/${model.weight || '-'}</div>
+                        <div class="card-footer">
+                            <div class="price">฿${model.price ? model.price.toLocaleString() : 'สอบถาม'}</div>
+                            <div class="engagement"><span class="engage-item"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24;"></span> 5.0</span></div>
+                        </div>
+                    </div>
+                </div>`;
             });
             grid.innerHTML = html;
         }
@@ -690,6 +751,31 @@
             document.getElementById('pdWeight').innerText = model.weight || '-';
             document.getElementById('pdPrice').innerText = model.price ? model.price.toLocaleString() : '0';
             document.getElementById('pdDesc').innerText = model.description || 'ยังไม่มีคำแนะนำตัวค่ะ';
+            
+            // 🌟 ตั้งค่าปุ่มกดแอดไลน์ 🌟
+            let rawLine = model.line_id || '';
+            let lineUrl = rawLine;
+            // ถ้ายูสเซอร์ไม่ได้ใส่ลิงก์มาตรงๆ (พิมพ์มาแค่ ID)
+            if (!rawLine.startsWith('http')) {
+                // ถ้าขึ้นต้นด้วย @ ให้ใช้ลิงก์สำหรับ Line OA
+                lineUrl = rawLine.startsWith('@') ? `https://line.me/R/ti/p/${rawLine}` : `https://line.me/ti/p/~${rawLine}`;
+            }
+            
+            document.getElementById('btnBookNow').onclick = function() {
+                if(!rawLine) {
+                    alert('น้องคนนี้ยังไม่ได้ใส่ช่องทางการติดต่อไว้ครับ');
+                } else {
+                    window.open(lineUrl, '_blank'); // เด้งเปิดหน้าไลน์แท็บใหม่
+                }
+            };
+            
+            // รีเซ็ตปุ่มหัวใจในหน้าโปรไฟล์กลับเป็นสีขาวทุกครั้งที่เปิดคนใหม่
+            const modalHeartBtn = document.querySelector('#profileDetailModal .btn-pro-icon');
+            const icon = modalHeartBtn.querySelector('.iconify');
+            icon.setAttribute('data-icon', 'mdi:cards-heart-outline');
+            icon.style.color = 'white';
+            modalHeartBtn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+
             openProfile();
         }
 
