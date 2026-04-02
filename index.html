@@ -181,17 +181,28 @@
         .form-group { margin-bottom: 15px; text-align: left; }
         .form-group label { display: block; margin-bottom: 8px; color: #aaa; font-size: 0.9rem;}
         .form-control { width: 100%; background: #111; border: 1px solid #333; color: #fff; padding: 12px 15px; border-radius: 8px; font-family: 'Prompt'; outline: none; transition: 0.2s;}
-        
-        /* 🆕 ปรับปุ่มอัปโหลดไฟล์ให้สวยงาม 🆕 */
         .form-file-upload { background: #111; border: 1px dashed #555; padding: 15px; border-radius: 8px; text-align: center; color: #888; cursor: pointer; transition: 0.2s; position: relative;}
         .form-file-upload:hover { border-color: var(--dash-gold); color: #fff;}
         .form-file-upload input[type="file"] { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; }
-        
         .form-control:focus { border-color: var(--dash-gold); }
         .btn-primary { background: var(--dash-gold); color: #fff; border: none; padding: 12px 30px; border-radius: 8px; font-family: 'Prompt'; font-weight: 600; cursor: pointer; font-size: 1.1rem; width: 100%; margin-top: 20px;}
         .btn-primary:hover { background: var(--dash-gold-hover); }
 
-        /* ✨ PROFILE DETAIL OVERLAY ✨ */
+        /* 🆕 ตารางจัดการโปรไฟล์ของฉัน (My Profiles) 🆕 */
+        .my-profiles-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #161616; border-radius: 12px; overflow: hidden; border: 1px solid #222;}
+        .my-profiles-table th { background: #111; padding: 15px; text-align: left; color: #888; font-weight: 500; border-bottom: 1px solid #222;}
+        .my-profiles-table td { padding: 15px; border-bottom: 1px solid #222; vertical-align: middle;}
+        .my-profiles-table tr:last-child td { border-bottom: none; }
+        .mp-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
+        .mp-name { font-weight: 600; color: #fff; display: block; margin-bottom: 3px;}
+        .mp-info { font-size: 0.8rem; color: #666; }
+        .mp-status { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 50px; font-size: 0.8rem; font-weight: 500; cursor: pointer; border: 1px solid;}
+        .mp-status.active { background: rgba(16, 185, 129, 0.1); color: #10b981; border-color: #10b981;}
+        .mp-status.inactive { background: rgba(255, 77, 79, 0.1); color: #ff4d4f; border-color: #ff4d4f;}
+        .btn-danger { background: transparent; color: #ff4d4f; border: 1px solid #ff4d4f; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-family: 'Prompt'; font-size: 0.8rem;}
+        .btn-danger:hover { background: rgba(255, 77, 79, 0.1); }
+
+        /* PROFILE DETAIL OVERLAY */
         .profile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f0f0f; z-index: 4000; overflow-y: auto; opacity: 0; visibility: hidden; transition: all 0.3s ease; transform: translateY(20px); padding-bottom: 100px; font-family: 'Prompt', sans-serif; }
         .profile-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
         .btn-back-profile { position: absolute; top: 20px; left: 20px; width: 45px; height: 45px; border-radius: 50%; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 4010; transition: 0.2s; }
@@ -255,18 +266,17 @@
             .ag-stats-grid { grid-template-columns: 1fr 1fr; }
             .form-grid { grid-template-columns: 1fr; }
             .auth-modal { padding: 25px 20px; border-radius: 0; min-height: 100vh; border: none;}
+            
+            /* ปรับตารางมือถือให้เลื่อนได้ */
+            .my-profiles-table { display: block; overflow-x: auto; white-space: nowrap; }
         }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <div class="logo-container">
-            <img src="https://img2.pic.in.th/-190481cb09d161ee46.png" alt="ONENIGHTVIP" class="logo-img">
-        </div>
-        <div class="nav-links">
-            <a href="#" class="active">หน้าแรก</a><a href="#">เอเจนซี่</a><a href="#">กระดานผู้นำ</a>
-        </div>
+        <div class="logo-container"><img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="logo-img"></div>
+        <div class="nav-links"><a href="#" class="active">หน้าแรก</a><a href="#">เอเจนซี่</a><a href="#">กระดานผู้นำ</a></div>
         <div class="nav-buttons" id="desktopNavButtons">
             <button class="btn-outline" id="navBtnLogin" onclick="openAuthModal('login')">เข้าสู่ระบบ</button>
             <button class="btn-3d" id="navBtnReg" onclick="openAuthModal('register')">สมัครสมาชิก</button>
@@ -289,78 +299,20 @@
     </div>
 
     <div class="stories-carousel__skeleton-container">
-        <button class="stories-carousel__item">
-            <div class="stories-carousel__skeleton-ring">
-                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=100&q=80" class="stories-carousel__skeleton-avatar" alt="Story">
-                <span class="stories-carousel__count">3</span>
-            </div>
-            <span class="stories-carousel__name">น้อง A</span>
-        </button>
-        <button class="stories-carousel__item">
-            <div class="stories-carousel__skeleton-ring">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80" class="stories-carousel__skeleton-avatar" alt="Story">
-                <span class="stories-carousel__count">1</span>
-            </div>
-            <span class="stories-carousel__name">น้ำหวาน</span>
-        </button>
-        <button class="stories-carousel__item">
-            <div class="stories-carousel__skeleton-ring">
-                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&q=80" class="stories-carousel__skeleton-avatar" alt="Story">
-                <span class="stories-carousel__count">5</span>
-            </div>
-            <span class="stories-carousel__name">เจนนี่</span>
-        </button>
+        <button class="stories-carousel__item"><div class="stories-carousel__skeleton-ring"><img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=100&q=80" class="stories-carousel__skeleton-avatar"><span class="stories-carousel__count">3</span></div><span class="stories-carousel__name">น้อง A</span></button>
+        <button class="stories-carousel__item"><div class="stories-carousel__skeleton-ring"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80" class="stories-carousel__skeleton-avatar"><span class="stories-carousel__count">1</span></div><span class="stories-carousel__name">น้ำหวาน</span></button>
+        <button class="stories-carousel__item"><div class="stories-carousel__skeleton-ring"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&q=80" class="stories-carousel__skeleton-avatar"><span class="stories-carousel__count">5</span></div><span class="stories-carousel__name">เจนนี่</span></button>
     </div>
 
     <div class="agencies-carousel-wrapper">
         <div class="agencies-carousel__track">
             <div class="agencies-carousel__strip">
-                <a href="#" class="agencies-carousel__spotlight">
-                    <img src="https://images.unsplash.com/photo-1558507652-2d9626c4e67a?w=300&q=80" class="agencies-carousel__spotlight-image">
-                    <div class="agencies-carousel__spotlight-overlay"></div>
-                    <div class="agencies-carousel__spotlight-content">
-                        <img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo">
-                        <div>
-                            <div class="agencies-carousel__spotlight-name">VIP Agency 1</div>
-                            <div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 5.0 (รีวิว 120)</div>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="agencies-carousel__spotlight">
-                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&q=80" class="agencies-carousel__spotlight-image">
-                    <div class="agencies-carousel__spotlight-overlay"></div>
-                    <div class="agencies-carousel__spotlight-content">
-                        <img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo">
-                        <div>
-                            <div class="agencies-carousel__spotlight-name">Super Model Club</div>
-                            <div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 4.9 (รีวิว 85)</div>
-                        </div>
-                    </div>
-                </a>
+                <a href="#" class="agencies-carousel__spotlight"><img src="https://images.unsplash.com/photo-1558507652-2d9626c4e67a?w=300&q=80" class="agencies-carousel__spotlight-image"><div class="agencies-carousel__spotlight-overlay"></div><div class="agencies-carousel__spotlight-content"><img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo"><div><div class="agencies-carousel__spotlight-name">VIP Agency 1</div><div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 5.0 (รีวิว 120)</div></div></div></a>
+                <a href="#" class="agencies-carousel__spotlight"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&q=80" class="agencies-carousel__spotlight-image"><div class="agencies-carousel__spotlight-overlay"></div><div class="agencies-carousel__spotlight-content"><img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo"><div><div class="agencies-carousel__spotlight-name">Super Model Club</div><div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 4.9 (รีวิว 85)</div></div></div></a>
             </div>
             <div class="agencies-carousel__strip">
-                <a href="#" class="agencies-carousel__spotlight">
-                    <img src="https://images.unsplash.com/photo-1558507652-2d9626c4e67a?w=300&q=80" class="agencies-carousel__spotlight-image">
-                    <div class="agencies-carousel__spotlight-overlay"></div>
-                    <div class="agencies-carousel__spotlight-content">
-                        <img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo">
-                        <div>
-                            <div class="agencies-carousel__spotlight-name">VIP Agency 1</div>
-                            <div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 5.0 (รีวิว 120)</div>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="agencies-carousel__spotlight">
-                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&q=80" class="agencies-carousel__spotlight-image">
-                    <div class="agencies-carousel__spotlight-overlay"></div>
-                    <div class="agencies-carousel__spotlight-content">
-                        <img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo">
-                        <div>
-                            <div class="agencies-carousel__spotlight-name">Super Model Club</div>
-                            <div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 4.9 (รีวิว 85)</div>
-                        </div>
-                    </div>
-                </a>
+                <a href="#" class="agencies-carousel__spotlight"><img src="https://images.unsplash.com/photo-1558507652-2d9626c4e67a?w=300&q=80" class="agencies-carousel__spotlight-image"><div class="agencies-carousel__spotlight-overlay"></div><div class="agencies-carousel__spotlight-content"><img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo"><div><div class="agencies-carousel__spotlight-name">VIP Agency 1</div><div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 5.0 (รีวิว 120)</div></div></div></a>
+                <a href="#" class="agencies-carousel__spotlight"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&q=80" class="agencies-carousel__spotlight-image"><div class="agencies-carousel__spotlight-overlay"></div><div class="agencies-carousel__spotlight-content"><img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo"><div><div class="agencies-carousel__spotlight-name">Super Model Club</div><div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 4.9 (รีวิว 85)</div></div></div></a>
             </div>
         </div>
     </div>
@@ -370,21 +322,14 @@
         <div class="auth-modal" id="authModal">
             <button class="close-modal" onclick="closeAuthModal(event, true)">&times;</button>
             <form id="loginForm" class="auth-form" onsubmit="handleAuthSubmit(event, 'login')">
-                <div class="auth-header">
-                    <div class="auth-header-icon"><span class="iconify" data-icon="heroicons:arrow-right-on-rectangle"></span></div>
-                    <h2>ยินดีต้อนรับกลับ</h2>
-                </div>
+                <div class="auth-header"><div class="auth-header-icon"><span class="iconify" data-icon="heroicons:arrow-right-on-rectangle"></span></div><h2>ยินดีต้อนรับกลับ</h2></div>
                 <div class="input-group"><label>อีเมล</label><input type="email" id="loginEmail" class="auth-input" required></div>
                 <div class="input-group"><label>รหัสผ่าน</label><input type="password" id="loginPassword" class="auth-input" required></div>
                 <button type="submit" class="btn-gold-submit">เข้าสู่ระบบ</button>
                 <div class="auth-footer">ยังไม่มีบัญชี? <span class="auth-link" onclick="switchAuthTab('register')">สมัครสมาชิก</span></div>
             </form>
-
             <form id="registerForm" class="auth-form active" onsubmit="handleAuthSubmit(event, 'register')">
-                <div class="auth-header">
-                    <div class="auth-header-icon"><span class="iconify" data-icon="heroicons:user-plus"></span></div>
-                    <h2>เข้าร่วมกับเรา</h2>
-                </div>
+                <div class="auth-header"><div class="auth-header-icon"><span class="iconify" data-icon="heroicons:user-plus"></span></div><h2>เข้าร่วมกับเรา</h2></div>
                 <div class="input-group"><label>อีเมล</label><input type="email" id="regEmail" class="auth-input" required></div>
                 <div class="input-group"><label>ชื่อผู้ใช้</label><input type="text" id="regUsername" class="auth-input" required></div>
                 <div class="input-group"><label>ชื่อที่แสดง</label><input type="text" id="regDisplayName" class="auth-input"></div>
@@ -404,9 +349,7 @@
     </div>
 
     <div class="dashboard-overlay" id="vipDashboard">
-        <div class="dash-header">
-            <h2>จัดการบัญชี (นักท่องเที่ยว)</h2><button class="close-dash" onclick="closeDashboard()">&times;</button>
-        </div>
+        <div class="dash-header"><h2>จัดการบัญชี (นักท่องเที่ยว)</h2><button class="close-dash" onclick="closeDashboard()">&times;</button></div>
         <div class="dash-container"><p style="margin-top: 50px;">ยินดีต้อนรับนักท่องเที่ยว VIP</p></div>
     </div>
 
@@ -415,7 +358,8 @@
             <div class="ag-logo"><span class="iconify" data-icon="heroicons:star-solid"></span> VIP AGENCY</div>
             <div class="ag-nav">
                 <div class="ag-nav-item active" id="tabOverview" onclick="switchAgTab('overview')"><span class="iconify ag-nav-icon" data-icon="heroicons:squares-2x2"></span> ภาพรวม</div>
-                <div class="ag-nav-item" id="tabModels" onclick="switchAgTab('addModel')"><span class="iconify ag-nav-icon" data-icon="heroicons:users"></span> จัดการโปรไฟล์น้องๆ</div>
+                <div class="ag-nav-item" id="tabMyProfiles" onclick="switchAgTab('myProfiles')"><span class="iconify ag-nav-icon" data-icon="heroicons:users"></span> โปรไฟล์ของฉัน</div>
+                <div class="ag-nav-item" id="tabModels" onclick="switchAgTab('addModel')"><span class="iconify ag-nav-icon" data-icon="heroicons:user-plus"></span> สร้างโปรไฟล์ใหม่</div>
                 <div class="ag-nav-item"><span class="iconify ag-nav-icon" data-icon="heroicons:wallet"></span> กระเป๋าเงิน</div>
             </div>
         </div>
@@ -423,10 +367,7 @@
             <div class="ag-topbar">
                 <div class="ag-top-title" id="agTopTitle"><span class="iconify" data-icon="heroicons:window"></span> แดชบอร์ดเอเจนซี่</div>
                 <div class="ag-top-user">
-                    <div class="ag-user-profile">
-                        <div class="ag-avatar" id="agAvatarInitial">V</div>
-                        <span id="agUserName">VVIP</span>
-                    </div>
+                    <div class="ag-user-profile"><div class="ag-avatar" id="agAvatarInitial">V</div><span id="agUserName">VVIP</span></div>
                     <button class="btn-close-ag" onclick="closeAgencyDashboard()"><span class="iconify" data-icon="heroicons:x-mark"></span></button>
                 </div>
             </div>
@@ -434,9 +375,29 @@
             <div class="ag-content-pad ag-view active" id="viewOverview">
                 <h1 class="ag-welcome">ยินดีต้อนรับกลับ, <span id="agWelcomeName">VVIP</span></h1>
                 <div class="ag-stats-grid">
-                    <div class="ag-stat-card"><span class="iconify ag-stat-icon" data-icon="heroicons:users"></span><div class="ag-stat-val">1</div><div class="ag-stat-label">โปรไฟล์ทั้งหมด</div></div>
+                    <div class="ag-stat-card"><span class="iconify ag-stat-icon" data-icon="heroicons:users"></span><div class="ag-stat-val" id="statTotalProfiles">0</div><div class="ag-stat-label">โปรไฟล์ของฉัน</div></div>
                     <div class="ag-stat-card"><span class="iconify ag-stat-icon" data-icon="heroicons:eye"></span><div class="ag-stat-val">156</div><div class="ag-stat-label">ยอดเข้าชมเดือนนี้</div></div>
                 </div>
+            </div>
+
+            <div class="ag-content-pad ag-view" id="viewMyProfiles">
+                <h1 class="ag-welcome" style="margin-bottom: 5px;">จัดการโปรไฟล์น้องๆ</h1>
+                <p style="color: #888; margin-bottom: 20px;">รายชื่อเด็กในสังกัดของคุณทั้งหมด เปิด/ปิดรับงาน หรือลบได้ที่นี่</p>
+                
+                <table class="my-profiles-table">
+                    <thead>
+                        <tr>
+                            <th>รูปภาพ</th>
+                            <th>ข้อมูลน้อง</th>
+                            <th>ราคา</th>
+                            <th>สถานะ</th>
+                            <th style="text-align: center;">จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myProfilesTableBody">
+                        <tr><td colspan="5" style="text-align: center; color: #888;">กำลังโหลดข้อมูล...</td></tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="ag-content-pad ag-view" id="viewAddModel">
@@ -482,14 +443,12 @@
         <div class="profile-content">
             <h1 class="pro-name"><span id="pdName">ชื่อน้อง</span> <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span></h1>
             <div class="pro-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--dash-gold);"></span> <span id="pdLoc">พิกัด</span></div>
-            
             <div class="pro-stats-box">
                 <div class="pro-stat-item"><div class="pro-stat-val" id="pdAge">-</div><div class="pro-stat-label">อายุ</div></div>
                 <div class="pro-stat-item"><div class="pro-stat-val" id="pdProps">-</div><div class="pro-stat-label">สัดส่วน</div></div>
                 <div class="pro-stat-item"><div class="pro-stat-val" id="pdHeight">-</div><div class="pro-stat-label">ส่วนสูง</div></div>
                 <div class="pro-stat-item"><div class="pro-stat-val" id="pdWeight">-</div><div class="pro-stat-label">น้ำหนัก</div></div>
             </div>
-            
             <div class="pro-section">
                 <h3 class="pro-sec-title"><span class="iconify" data-icon="heroicons:information-circle"></span> แนะนำตัว</h3>
                 <div class="pro-desc-box">
@@ -509,13 +468,40 @@
         </div>
     </div>
 
+    <div class="header-extensions"><h2 style="color: var(--text-dark); text-align: center; margin-bottom: 20px; font-family: 'Prompt'; font-weight: 500;">เลือกลงทุนกับความสุขของคุณ</h2></div>
+    
     <main class="grid-container" id="modelsGrid">
         <div class="loading-text"><span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังดึงข้อมูลน้องๆ...</div>
     </main>
 
     <script>
         function switchAuthTab(tab) { document.getElementById('loginForm').classList.toggle('active', tab === 'login'); document.getElementById('registerForm').classList.toggle('active', tab === 'register'); }
-        function switchAgTab(tabName) { document.getElementById('viewOverview').classList.remove('active'); document.getElementById('viewAddModel').classList.remove('active'); document.getElementById('tabOverview').classList.remove('active'); document.getElementById('tabModels').classList.remove('active'); if(tabName === 'overview') { document.getElementById('viewOverview').classList.add('active'); document.getElementById('tabOverview').classList.add('active'); document.getElementById('agTopTitle').innerHTML = '<span class="iconify" data-icon="heroicons:window"></span> แดชบอร์ดเอเจนซี่'; } else if(tabName === 'addModel') { document.getElementById('viewAddModel').classList.add('active'); document.getElementById('tabModels').classList.add('active'); document.getElementById('agTopTitle').innerHTML = '<span class="iconify" data-icon="heroicons:user-plus"></span> จัดการโปรไฟล์'; } }
+        
+        // 🆕 อัปเดตสลับหน้า ให้มีแท็บ Manage Profiles 🆕
+        function switchAgTab(tabName) { 
+            document.getElementById('viewOverview').classList.remove('active'); 
+            document.getElementById('viewMyProfiles').classList.remove('active'); 
+            document.getElementById('viewAddModel').classList.remove('active'); 
+            document.getElementById('tabOverview').classList.remove('active'); 
+            document.getElementById('tabMyProfiles').classList.remove('active'); 
+            document.getElementById('tabModels').classList.remove('active'); 
+            
+            if(tabName === 'overview') { 
+                document.getElementById('viewOverview').classList.add('active'); 
+                document.getElementById('tabOverview').classList.add('active'); 
+                document.getElementById('agTopTitle').innerHTML = '<span class="iconify" data-icon="heroicons:window"></span> แดชบอร์ดเอเจนซี่'; 
+            } else if(tabName === 'myProfiles') { 
+                document.getElementById('viewMyProfiles').classList.add('active'); 
+                document.getElementById('tabMyProfiles').classList.add('active'); 
+                document.getElementById('agTopTitle').innerHTML = '<span class="iconify" data-icon="heroicons:users"></span> โปรไฟล์ของฉัน'; 
+                fetchMyProfiles(); // โหลดข้อมูลมาใส่ตาราง
+            } else if(tabName === 'addModel') { 
+                document.getElementById('viewAddModel').classList.add('active'); 
+                document.getElementById('tabModels').classList.add('active'); 
+                document.getElementById('agTopTitle').innerHTML = '<span class="iconify" data-icon="heroicons:user-plus"></span> สร้างโปรไฟล์ใหม่'; 
+            } 
+        }
+
         function openProfile() { document.getElementById('profileDetailModal').classList.add('active'); document.body.classList.add('modal-open'); }
         function closeProfile() { document.getElementById('profileDetailModal').classList.remove('active'); document.body.classList.remove('modal-open'); }
         function toggleMobileMenu() { document.getElementById('mobileOverlay').classList.toggle('active'); document.getElementById('mobileSheet').classList.toggle('active'); }
@@ -585,7 +571,6 @@
 
         async function handleLogout() { await supabaseClient.auth.signOut(); closeDashboard(); closeAgencyDashboard(); window.location.reload(); }
 
-        // 🌟 อัปเกรดฟังก์ชันส่งรูปขึ้น Storage ก่อน แล้วค่อยบันทึกลง Database 🌟
         async function submitNewModel(event) {
             event.preventDefault();
             if(!currentUserSession) return alert("กรุณาเข้าสู่ระบบก่อนครับ");
@@ -599,15 +584,11 @@
             const file = fileInput.files[0];
 
             if (file) {
-                // 1. สร้างชื่อไฟล์สุ่ม เพื่อไม่ให้ชื่อซ้ำกัน
                 const fileExt = file.name.split('.').pop();
                 const fileName = Math.random().toString(36).substring(2) + '_' + Date.now() + '.' + fileExt;
-                const filePath = currentUserSession.user.id + '/' + fileName; // เก็บแยกโฟลเดอร์ตาม ID คนอัปโหลด
+                const filePath = currentUserSession.user.id + '/' + fileName; 
 
-                // 2. อัปโหลดรูปขึ้น Storage ถังชื่อ profile_images
-                const { data: uploadData, error: uploadError } = await supabaseClient.storage
-                    .from('profile_images')
-                    .upload(filePath, file);
+                const { data: uploadData, error: uploadError } = await supabaseClient.storage.from('profile_images').upload(filePath, file);
 
                 if (uploadError) {
                     alert('❌ อัปโหลดรูปภาพไม่สำเร็จ: ' + uploadError.message);
@@ -615,15 +596,10 @@
                     return;
                 }
 
-                // 3. ดึงลิงก์ (URL) ของรูปที่เพิ่งอัปโหลดเสร็จมาเก็บไว้
-                const { data: publicUrlData } = supabaseClient.storage
-                    .from('profile_images')
-                    .getPublicUrl(filePath);
-
+                const { data: publicUrlData } = supabaseClient.storage.from('profile_images').getPublicUrl(filePath);
                 coverImageUrl = publicUrlData.publicUrl;
             }
 
-            // 4. เอาลิงก์รูป พร้อมข้อมูลอื่นๆ บันทึกลงตาราง models
             const newModelData = {
                 agency_id: currentUserSession.user.id,
                 name: document.getElementById('mName').value,
@@ -633,8 +609,9 @@
                 weight: document.getElementById('mWeight').value || null,
                 location: document.getElementById('mLocation').value,
                 price: document.getElementById('mPrice').value,
-                cover_image: coverImageUrl, // ใส่ลิงก์ที่ระบบเจนมาให้
-                description: document.getElementById('mDesc').value
+                cover_image: coverImageUrl,
+                description: document.getElementById('mDesc').value,
+                status: 'active'
             };
 
             const { data, error } = await supabaseClient.from('models').insert([newModelData]);
@@ -643,18 +620,72 @@
             else { 
                 alert('🎉 อัปโหลดและบันทึกโปรไฟล์สำเร็จ!'); 
                 document.getElementById('addModelForm').reset(); 
-                document.getElementById('fileNameDisplay').innerText = 'คลิกที่นี่เพื่อเลือกรูปภาพจากเครื่อง'; // รีเซ็ตข้อความปุ่มเลือกไฟล์
-                switchAgTab('overview'); 
+                document.getElementById('fileNameDisplay').innerText = 'คลิกที่นี่เพื่อเลือกรูปภาพจากเครื่อง';
+                switchAgTab('myProfiles'); // 👈 เด้งไปหน้าตารางเลย
                 fetchModels(); 
             }
             btn.innerHTML = originalText;
+        }
+
+        // 🆕 ฟังก์ชันดึงโปรไฟล์มาโชว์ในตาราง (เฉพาะของตัวเอง) 🆕
+        async function fetchMyProfiles() {
+            const tbody = document.getElementById('myProfilesTableBody');
+            if(!currentUserSession) return;
+
+            const { data, error } = await supabaseClient.from('models')
+                .select('*')
+                .eq('agency_id', currentUserSession.user.id) // ดึงเฉพาะไอดีตัวเอง
+                .order('created_at', { ascending: false });
+
+            if (error) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">เกิดข้อผิดพลาดในการโหลด</td></tr>'; return; }
+            if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#888;">คุณยังไม่มีโปรไฟล์น้องๆ ในระบบเลยครับ</td></tr>'; document.getElementById('statTotalProfiles').innerText = '0'; return; }
+
+            document.getElementById('statTotalProfiles').innerText = data.length; // อัปเดตตัวเลขสถิติ
+            let html = '';
+            data.forEach(model => {
+                const isActive = model.status === 'active';
+                const statusHtml = isActive 
+                    ? `<span class="mp-status active" onclick="toggleStatus(${model.id}, 'inactive')"><span class="iconify" data-icon="heroicons:eye"></span> เปิดรับงาน</span>`
+                    : `<span class="mp-status inactive" onclick="toggleStatus(${model.id}, 'active')"><span class="iconify" data-icon="heroicons:eye-slash"></span> ปิดรับงาน (พัก)</span>`;
+
+                html += `
+                <tr>
+                    <td><img src="${model.cover_image}" class="mp-img"></td>
+                    <td>
+                        <span class="mp-name">${model.name} (${model.age || '-'})</span>
+                        <span class="mp-info">${model.proportions || '-'} | พิกัด: ${model.location || '-'}</span>
+                    </td>
+                    <td style="color: var(--dash-gold); font-weight: 500;">฿${model.price ? model.price.toLocaleString() : '0'}</td>
+                    <td>${statusHtml}</td>
+                    <td style="text-align: center;">
+                        <button class="btn-danger" onclick="deleteModel(${model.id}, '${model.name}')"><span class="iconify" data-icon="heroicons:trash"></span> ลบ</button>
+                    </td>
+                </tr>`;
+            });
+            tbody.innerHTML = html;
+        }
+
+        // 🆕 ฟังก์ชัน สลับสถานะ (เปิด/ปิดรับงาน) 🆕
+        async function toggleStatus(modelId, newStatus) {
+            const { error } = await supabaseClient.from('models').update({ status: newStatus }).eq('id', modelId);
+            if (error) alert('❌ เปลี่ยนสถานะไม่สำเร็จ');
+            else { fetchMyProfiles(); fetchModels(); } // รีเฟรชตาราง และรีเฟรชหน้าแรก
+        }
+
+        // 🆕 ฟังก์ชัน ลบโปรไฟล์ 🆕
+        async function deleteModel(modelId, modelName) {
+            if(confirm(`⚠️ คุณแน่ใจหรือไม่ว่าต้องการลบโปรไฟล์ของน้อง "${modelName}" ออกจากระบบอย่างถาวร?`)) {
+                const { error } = await supabaseClient.from('models').delete().eq('id', modelId);
+                if (error) alert('❌ ลบไม่สำเร็จ');
+                else { alert('✅ ลบโปรไฟล์เรียบร้อยแล้ว'); fetchMyProfiles(); fetchModels(); }
+            }
         }
 
         async function fetchModels() {
             const grid = document.getElementById('modelsGrid');
             const { data, error } = await supabaseClient.from('models').select('*').eq('status', 'active').order('created_at', { ascending: false });
             if (error) { grid.innerHTML = '<p style="text-align:center; color:red;">เกิดข้อผิดพลาดในการโหลดข้อมูล</p>'; return; }
-            if (data.length === 0) { grid.innerHTML = '<p style="text-align:center; width:100%; color:#888;">ยังไม่มีโปรไฟล์ในระบบครับ ลองเพิ่มโปรไฟล์ผ่านหน้าเอเจนซี่ได้เลย!</p>'; return; }
+            if (data.length === 0) { grid.innerHTML = '<p style="text-align:center; width:100%; color:#888;">ยังไม่มีโปรไฟล์ในระบบครับ</p>'; return; }
             let html = '';
             data.forEach(model => {
                 const modelJson = encodeURIComponent(JSON.stringify(model));
