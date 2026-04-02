@@ -94,12 +94,7 @@
         .dash-container { max-width: 900px; margin: 30px auto; padding: 0 5%; display: flex; flex-direction: column; gap: 30px; text-align: center; color: #888;}
 
         /* PROFILE DETAIL OVERLAY */
-        .profile-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--dash-bg); z-index: 4000; overflow-y: auto;
-            opacity: 0; visibility: hidden; transition: all 0.3s ease;
-            transform: translateY(20px); padding-bottom: 90px; font-family: 'Prompt', sans-serif;
-        }
+        .profile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dash-bg); z-index: 4000; overflow-y: auto; opacity: 0; visibility: hidden; transition: all 0.3s ease; transform: translateY(20px); padding-bottom: 90px; font-family: 'Prompt', sans-serif; }
         .profile-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
         .btn-back-profile { position: absolute; top: 20px; left: 20px; width: 45px; height: 45px; border-radius: 50%; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 4010; transition: 0.2s; }
         .btn-back-profile:hover { background: rgba(0,0,0,0.8); }
@@ -167,6 +162,39 @@
             .pro-stat-item:nth-child(1), .pro-stat-item:nth-child(2) { border-bottom: 1px solid #333; padding-bottom: 10px; }
             .btn-booking { padding: 10px 20px; font-size: 1rem; }
         }
+
+        /* 👑 สไตล์เฉพาะของ Agency Dashboard 👑 */
+        .agency-dashboard { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0a0a; z-index: 5000; display: flex; opacity: 0; visibility: hidden; transition: all 0.3s ease; font-family: 'Prompt', sans-serif; color: #fff; }
+        .agency-dashboard.active { opacity: 1; visibility: visible; }
+        .ag-sidebar { width: 250px; background: #111; border-right: 1px solid #222; padding: 20px 0; display: flex; flex-direction: column; }
+        .ag-logo { padding: 0 20px 30px 20px; font-size: 1.2rem; font-weight: 600; color: var(--dash-gold); display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #222; margin-bottom: 20px;}
+        .ag-logo img { height: 30px; }
+        .ag-nav { display: flex; flex-direction: column; gap: 5px; padding: 0 10px; }
+        .ag-nav-item { padding: 12px 20px; color: #888; text-decoration: none; border-radius: 8px; display: flex; align-items: center; gap: 12px; transition: 0.2s; cursor: pointer; }
+        .ag-nav-item:hover, .ag-nav-item.active { background: rgba(212, 175, 55, 0.1); color: var(--dash-gold); border-left: 3px solid var(--dash-gold); }
+        .ag-nav-icon { font-size: 1.2rem; }
+        .ag-main { flex: 1; overflow-y: auto; background: linear-gradient(180deg, #151515 0%, #0a0a0a 100%); position: relative; }
+        .ag-topbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background: rgba(17,17,17,0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 5010; border-bottom: 1px solid #222;}
+        .ag-top-title { font-size: 1.2rem; font-weight: 500; display: flex; align-items: center; gap: 10px; }
+        .ag-top-user { display: flex; align-items: center; gap: 15px; }
+        .ag-lang { background: transparent; color: #fff; border: none; font-family: 'Prompt'; cursor: pointer; display: flex; align-items: center; gap: 5px;}
+        .ag-user-profile { display: flex; align-items: center; gap: 10px; cursor: pointer; background: #222; padding: 5px 15px 5px 5px; border-radius: 50px;}
+        .ag-avatar { width: 35px; height: 35px; border-radius: 50%; background: var(--dash-gold); color: #000; display: flex; justify-content: center; align-items: center; font-weight: bold; }
+        .ag-content-pad { padding: 40px; }
+        .ag-welcome { font-size: 2rem; font-weight: 600; margin-bottom: 10px; }
+        .ag-subtitle { color: #888; display: flex; align-items: center; gap: 10px; margin-bottom: 30px; }
+        .streak-fire { color: #ff8c00; }
+        .ag-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
+        .ag-stat-card { background: #161616; border: 1px solid #222; border-radius: 12px; padding: 25px; display: flex; flex-direction: column; justify-content: space-between; position: relative; transition: 0.3s; }
+        .ag-stat-card:hover { border-color: #444; transform: translateY(-3px); }
+        .ag-stat-icon { position: absolute; top: 20px; right: 20px; color: #444; font-size: 1.5rem; }
+        .ag-stat-val { font-size: 2.5rem; font-weight: 600; color: #fff; line-height: 1; margin-bottom: 5px; margin-top: 10px;}
+        .ag-stat-label { color: #888; font-size: 0.9rem; }
+        .ag-stat-trend { font-size: 0.8rem; color: #666; margin-top: 15px; border-top: 1px solid #222; padding-top: 10px; display: flex; justify-content: space-between;}
+        .ag-alert-box { background: rgba(212, 175, 55, 0.05); border: 1px dashed var(--dash-gold); border-radius: 12px; padding: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
+        .ag-alert-text { display: flex; align-items: center; gap: 15px; }
+        .ag-btn-gold { background: rgba(212, 175, 55, 0.2); color: var(--dash-gold); border: 1px solid var(--dash-gold); padding: 8px 20px; border-radius: 8px; cursor: pointer; font-family: 'Prompt'; font-weight: 500; }
+        .btn-close-ag { background: #333; color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; margin-left: 15px; }
     </style>
 </head>
 <body>
@@ -181,7 +209,7 @@
         <div class="nav-buttons" id="desktopNavButtons">
             <button class="btn-outline" id="navBtnLogin" onclick="openAuthModal('login')">เข้าสู่ระบบ</button>
             <button class="btn-3d" id="navBtnReg" onclick="openAuthModal('register')">สมัครสมาชิก</button>
-            <button class="btn-dash" id="navBtnDash" onclick="openDashboard()"><span class="iconify" data-icon="heroicons:user-circle"></span> แดชบอร์ด VIP</button>
+            <button class="btn-dash" id="navBtnDash" onclick="openDashboard()">บัญชีของฉัน</button>
             <button class="btn-logout" id="navBtnLogout" onclick="handleLogout()">ออกจากระบบ</button>
         </div>
         <button class="mobile-menu-btn" onclick="toggleMobileMenu()"><span class="iconify" data-icon="heroicons:bars-3-bottom-right"></span></button>
@@ -194,16 +222,66 @@
         <div class="sheet-auth" id="mobileAuthButtons">
             <button class="btn-outline" id="mobBtnLogin" onclick="toggleMobileMenu(); openAuthModal('login')">เข้าสู่ระบบ</button>
             <button class="btn-3d" id="mobBtnReg" onclick="toggleMobileMenu(); openAuthModal('register')">สมัครสมาชิก</button>
-            <button class="btn-dash" id="mobBtnDash" onclick="toggleMobileMenu(); openDashboard()" style="width: 100%; justify-content: center;">แดชบอร์ด VIP</button>
+            <button class="btn-dash" id="mobBtnDash" onclick="toggleMobileMenu(); openDashboard()" style="width: 100%; justify-content: center;">บัญชีของฉัน</button>
             <button class="btn-logout" id="mobBtnLogout" onclick="toggleMobileMenu(); handleLogout()" style="width: 100%; justify-content: center;">ออกจากระบบ</button>
         </div>
     </div>
 
     <div class="dashboard-overlay" id="vipDashboard">
         <div class="dash-header">
-            <h2>จัดการบัญชี VIP</h2><button class="close-dash" onclick="closeDashboard()">&times;</button>
+            <h2>จัดการบัญชี (นักท่องเที่ยว)</h2><button class="close-dash" onclick="closeDashboard()">&times;</button>
         </div>
-        <div class="dash-container"><p style="margin-top: 50px;">เนื้อหาแดชบอร์ดยังอยู่ครบครับ (ซ่อนโค้ดไว้เพื่อความสะอาดตาในไฟล์นี้)</p></div>
+        <div class="dash-container"><p style="margin-top: 50px;">ยินดีต้อนรับนักท่องเที่ยว VIP (เนื้อหาแดชบอร์ดยังอยู่ครบ)</p></div>
+    </div>
+
+    <div class="agency-dashboard" id="agencyDashboard">
+        <div class="ag-sidebar">
+            <div class="ag-logo"><span class="iconify" data-icon="heroicons:star-solid"></span> VIP AGENCY</div>
+            <div class="ag-nav">
+                <div class="ag-nav-item active"><span class="iconify ag-nav-icon" data-icon="heroicons:squares-2x2"></span> ภาพรวม</div>
+                <div class="ag-nav-item"><span class="iconify ag-nav-icon" data-icon="heroicons:users"></span> โปรไฟล์น้องๆ</div>
+                <div class="ag-nav-item"><span class="iconify ag-nav-icon" data-icon="heroicons:wallet"></span> กระเป๋าเงิน</div>
+            </div>
+        </div>
+        <div class="ag-main">
+            <div class="ag-topbar">
+                <div class="ag-top-title"><span class="iconify" data-icon="heroicons:window"></span> แดชบอร์ดเอเจนซี่</div>
+                <div class="ag-top-user">
+                    <div class="ag-user-profile">
+                        <div class="ag-avatar" id="agAvatarInitial">V</div>
+                        <span id="agUserName">VVIP</span>
+                    </div>
+                    <button class="btn-close-ag" onclick="closeAgencyDashboard()"><span class="iconify" data-icon="heroicons:x-mark"></span></button>
+                </div>
+            </div>
+            <div class="ag-content-pad">
+                <h1 class="ag-welcome">ยินดีต้อนรับกลับ, <span id="agWelcomeName">VVIP</span></h1>
+                <div class="ag-subtitle"><span class="streak-fire"><span class="iconify" data-icon="noto:fire"></span> เข้าสู่ระบบติดต่อกันวันที่ 1</span></div>
+                
+                <div class="ag-stats-grid">
+                    <div class="ag-stat-card">
+                        <span class="iconify ag-stat-icon" data-icon="heroicons:users"></span>
+                        <div class="ag-stat-val">1</div>
+                        <div class="ag-stat-label">โปรไฟล์ทั้งหมด</div>
+                    </div>
+                    <div class="ag-stat-card">
+                        <span class="iconify ag-stat-icon" data-icon="heroicons:eye"></span>
+                        <div class="ag-stat-val">156</div>
+                        <div class="ag-stat-label">ยอดเข้าชมเดือนนี้</div>
+                    </div>
+                </div>
+
+                <div style="background: #161616; border: 1px solid #222; border-radius: 12px; padding: 25px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="color: #888; font-size: 0.9rem; margin-bottom: 5px;">ยอดเหรียญคงเหลือ</div>
+                        <div style="font-size: 2.5rem; font-weight: 600; color: var(--dash-gold); display: flex; align-items: center; gap: 10px;">
+                            <span class="iconify" data-icon="mingcute:coin-2-fill"></span> <span id="dashCoinBalance">0</span>
+                        </div>
+                    </div>
+                    <button class="ag-btn-gold" style="padding: 12px 30px; background: var(--dash-gold); color: #000;"><span class="iconify" data-icon="heroicons:plus-circle"></span> เติมเหรียญ</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="auth-overlay" id="authOverlay" onclick="closeAuthModal(event)">
@@ -220,135 +298,84 @@
 
     <div class="profile-overlay" id="profileDetailModal">
         <button class="btn-back-profile" onclick="closeProfile()"><span class="iconify" data-icon="heroicons:arrow-left"></span></button>
-        
-        <div class="profile-hero">
-            <img src="https://ryensvsewntmflahpacp.supabase.co/storage/v1/object/public/profile_images/S__12541966_0.jpg" alt="น้อง B">
-            <div class="hero-gradient"></div>
-        </div>
-        
+        <div class="profile-hero"><img src="https://ryensvsewntmflahpacp.supabase.co/storage/v1/object/public/profile_images/S__12541966_0.jpg"><div class="hero-gradient"></div></div>
         <div class="profile-content">
-            <div class="pro-title-row">
-                <div class="pro-name-group">
-                    <h1 class="pro-name">น้อง B <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span></h1>
-                    <div class="pro-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--dash-gold);"></span> กรุงเทพฯ, ลาดพร้าว</div>
-                </div>
-                <div class="pro-action-btns">
-                    <button class="btn-pro-icon" onclick="toggleProHeart(this)"><span class="iconify heart-icon" data-icon="mdi:cards-heart-outline"></span></button>
-                    <button class="btn-pro-icon"><span class="iconify" data-icon="heroicons:share"></span></button>
-                </div>
-            </div>
-            <div class="pro-stats-box">
-                <div class="pro-stat-item"><div class="pro-stat-val">24</div><div class="pro-stat-label">อายุ (ปี)</div></div>
-                <div class="pro-stat-item"><div class="pro-stat-val">34-24-36</div><div class="pro-stat-label">สัดส่วน</div></div>
-                <div class="pro-stat-item"><div class="pro-stat-val">157</div><div class="pro-stat-label">ส่วนสูง (ซม.)</div></div>
-                <div class="pro-stat-item"><div class="pro-stat-val">49</div><div class="pro-stat-label">น้ำหนัก (กก.)</div></div>
-            </div>
-            <div class="pro-section">
-                <h3 class="pro-sec-title"><span class="iconify" data-icon="heroicons:sparkles"></span> บริการที่รับ (Services)</h3>
-                <div class="tags-container">
-                    <span class="service-tag">ฟีลแฟน 100%</span><span class="service-tag">ทานข้าว/ดูหนัง</span><span class="service-tag">นวดผ่อนคลาย</span><span class="service-tag">ปาร์ตี้ส่วนตัว</span>
-                </div>
-            </div>
-            <div class="pro-section">
-                <h3 class="pro-sec-title"><span class="iconify" data-icon="heroicons:information-circle"></span> แนะนำตัว</h3>
-                <div class="pro-desc">สวัสดีค่ะ น้อง B นะคะ ตัวเล็กสเปคใครรึเปล่า เฟรนด์ลี่ คุยเก่ง ยิ้มง่าย เอาใจเก่งมากค่ะ ทำตัวเนียนเหมือนแฟนจริงควงไปไม่อายใครแน่นอนค่ะ รับรองว่าอยู่ด้วยแล้วไม่มีเหงา ใครชอบสายอ้อน ทักมาจองคิวได้เลยนะคะ 💖</div>
-            </div>
-            <div class="pro-section">
-                <h3 class="pro-sec-title"><span class="iconify" data-icon="heroicons:star-solid" style="color:#fbbf24"></span> รีวิวจากลูกค้า VIP (4.8/5)</h3>
-                <div class="review-card">
-                    <div class="review-head"><div class="review-user"><span class="iconify" data-icon="heroicons:user-circle" style="font-size: 1.5rem; color:#888;"></span> หนุ่มโสด VIP</div><div class="review-stars">★★★★★</div></div>
-                    <div class="review-text">ตัวจริงน่ารักมากครับ ตรงปก 100% คุยเก่ง ฟีลแฟนดีมาก บริการประทับใจสุดๆ ไว้จะมาใช้บริการอีกแน่นอนครับ</div>
-                </div>
-            </div>
-        </div>
-        <div class="sticky-booking-bar">
-            <div class="book-price-box">
-                <span class="book-label">เรทราคาเริ่มต้น</span><span class="book-price">฿1,000 <span style="font-size: 0.9rem; color: #888; font-weight: normal;">/ 1 ชม.</span></span>
-            </div>
-            <button class="btn-booking" onclick="alert('เด้งไปหน้าแอดไลน์ หรือ ระบบจ่ายเงิน!')">
-                <span class="iconify" data-icon="logos:line" style="font-size: 1.2rem; filter: brightness(0) invert(1);"></span> จองคิวน้อง B
-            </button>
+            <h1 class="pro-name">น้อง B <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span></h1>
         </div>
     </div>
 
-    <div class="header-extensions">
-        <h2 style="color: var(--text-dark); text-align: center; margin-bottom: 20px; font-family: 'Prompt'; font-weight: 500;">เลือกลงทุนกับความสุขของคุณ</h2>
-    </div>
+    <div class="header-extensions"><h2 style="color: var(--text-dark); text-align: center; margin-bottom: 20px; font-family: 'Prompt'; font-weight: 500;">เลือกลงทุนกับความสุขของคุณ</h2></div>
     <main class="grid-container">
-        
         <div class="card" onclick="openProfile()">
-            <div class="card-image-box">
-                <img src="https://ryensvsewntmflahpacp.supabase.co/storage/v1/object/public/profile_images/S__12541966_0.jpg">
-                <span class="badge-image">New</span>
-                <button class="heart-btn" onclick="event.stopPropagation(); toggleHeart(this)"><span class="iconify heart-icon" data-icon="mdi:cards-heart-outline" style="color: white; font-size: 1.5rem;"></span></button>
-            </div>
-            <div class="card-info">
-                <div class="name-group">
-                    <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span>
-                    <span class="card-name">น้อง B <span class="card-age">24</span></span>
-                </div>
-                <div class="card-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent); font-size: 1rem;"></span> กรุงเทพฯ, ลาดพร้าว</div>
-                <div class="card-stats-text">34-24-36 • 157/49</div>
-                <div class="card-footer">
-                    <div class="price">฿1,000</div>
-                    <div class="engagement">
-                        <span class="engage-item"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24; font-size: 1.1rem;"></span> 4.8</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card" onclick="openProfile()">
-            <div class="card-image-box">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80">
-                <button class="heart-btn" onclick="event.stopPropagation(); toggleHeart(this)"><span class="iconify heart-icon" data-icon="mdi:cards-heart-outline" style="color: white; font-size: 1.5rem;"></span></button>
-            </div>
-            <div class="card-info">
-                <div class="name-group">
-                    <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span>
-                    <span class="card-name">น้ำหวาน <span class="card-age">22</span></span>
-                </div>
-                <div class="card-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent); font-size: 1rem;"></span> กรุงเทพฯ, บึงกุ่ม</div>
-                <div class="card-stats-text">34B-25-35 • 160/45</div>
-                <div class="card-footer">
-                    <div class="price">฿1,200</div>
-                    <div class="engagement">
-                        <span class="engage-item"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24; font-size: 1.1rem;"></span> 5.0</span>
-                    </div>
-                </div>
-            </div>
+            <div class="card-image-box"><img src="https://ryensvsewntmflahpacp.supabase.co/storage/v1/object/public/profile_images/S__12541966_0.jpg"></div>
+            <div class="card-info"><div class="name-group"><span class="card-name">น้อง B 24</span></div></div>
         </div>
     </main>
 
     <script>
-        const profileModal = document.getElementById('profileDetailModal');
-        function openProfile() { profileModal.classList.add('active'); document.body.classList.add('modal-open'); }
-        function closeProfile() { profileModal.classList.remove('active'); document.body.classList.remove('modal-open'); }
-        function toggleHeart(button) { let icon = button.querySelector('.heart-icon'); if (icon.getAttribute('data-icon') === 'mdi:cards-heart-outline') { icon.setAttribute('data-icon', 'mdi:cards-heart'); icon.style.color = '#ff4d4f'; } else { icon.setAttribute('data-icon', 'mdi:cards-heart-outline'); icon.style.color = 'white'; } }
-        function toggleProHeart(button) { let icon = button.querySelector('.heart-icon'); if (icon.getAttribute('data-icon') === 'mdi:cards-heart-outline') { icon.setAttribute('data-icon', 'mdi:cards-heart'); icon.style.color = '#ff4d4f'; button.style.borderColor = '#ff4d4f'; } else { icon.setAttribute('data-icon', 'mdi:cards-heart-outline'); icon.style.color = 'white'; button.style.borderColor = 'var(--dash-border)'; } }
+        // ควบคุม Modal ต่างๆ
+        function openProfile() { document.getElementById('profileDetailModal').classList.add('active'); document.body.classList.add('modal-open'); }
+        function closeProfile() { document.getElementById('profileDetailModal').classList.remove('active'); document.body.classList.remove('modal-open'); }
         function toggleMobileMenu() { document.getElementById('mobileOverlay').classList.toggle('active'); document.getElementById('mobileSheet').classList.toggle('active'); }
-        const authOverlay = document.getElementById('authOverlay');
-        function openAuthModal(tab) { authOverlay.classList.add('active'); }
-        function closeAuthModal(e, force) { if(force || e.target === authOverlay) authOverlay.classList.remove('active'); }
-        function openDashboard() { document.getElementById('vipDashboard').classList.add('active'); }
-        function closeDashboard() { document.getElementById('vipDashboard').classList.remove('active'); }
+        function openAuthModal() { document.getElementById('authOverlay').classList.add('active'); }
+        function closeAuthModal(e, force) { if(force || e.target === document.getElementById('authOverlay')) document.getElementById('authOverlay').classList.remove('active'); }
+        function openDashboard() { document.getElementById('vipDashboard').classList.add('active'); document.body.classList.add('modal-open');}
+        function closeDashboard() { document.getElementById('vipDashboard').classList.remove('active'); document.body.classList.remove('modal-open');}
+        function openAgencyDashboard() { document.getElementById('agencyDashboard').classList.add('active'); document.body.classList.add('modal-open');}
+        function closeAgencyDashboard() { document.getElementById('agencyDashboard').classList.remove('active'); document.body.classList.remove('modal-open');}
 
+        // เชื่อม Supabase
         const SUPABASE_URL = 'https://ryensvsewntmflahpacp.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_rYAnbJukdoUm6ilIeK0j_w_IO6R_i8L';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+        // 🚨 ฟังก์ชันแยกคน (Traffic Cop) 🚨
         function updateUIAuth(session) {
             const isLoggedIn = session !== null;
+            
+            // สลับปุ่มซ่อน/โชว์
             document.getElementById('navBtnLogin').style.display = isLoggedIn ? 'none' : 'block';
             document.getElementById('navBtnReg').style.display = isLoggedIn ? 'none' : 'block';
             document.getElementById('navBtnDash').style.display = isLoggedIn ? 'flex' : 'none';
             document.getElementById('navBtnLogout').style.display = isLoggedIn ? 'flex' : 'none';
+            
             document.getElementById('mobBtnLogin').style.display = isLoggedIn ? 'none' : 'block';
             document.getElementById('mobBtnReg').style.display = isLoggedIn ? 'none' : 'block';
             document.getElementById('mobBtnDash').style.display = isLoggedIn ? 'flex' : 'none';
             document.getElementById('mobBtnLogout').style.display = isLoggedIn ? 'flex' : 'none';
+
+            if (isLoggedIn && session.user) {
+                // ดึง Role และชื่อ มาจาก Database
+                const userRole = session.user.user_metadata.role;
+                const displayName = session.user.user_metadata.display_name || 'VIP';
+
+                const navBtnDash = document.getElementById('navBtnDash');
+                const mobBtnDash = document.getElementById('mobBtnDash');
+
+                // 🚪 เช็คเงื่อนไขแยกประเภทผู้ใช้
+                if (userRole === 'sideline' || userRole === 'VVIP' || userRole === 'Owner') {
+                    // กลุ่มคนขาย/แอดมิน -> ให้ปุ่มพาไปหน้า Agency สีดำทอง
+                    navBtnDash.onclick = openAgencyDashboard;
+                    mobBtnDash.onclick = () => { toggleMobileMenu(); openAgencyDashboard(); };
+                    navBtnDash.innerHTML = '<span class="iconify" data-icon="heroicons:briefcase"></span> จัดการหลังบ้าน';
+                    mobBtnDash.innerText = 'จัดการหลังบ้าน';
+
+                    // เปลี่ยนชื่อในหน้า Agency ให้ตรงกับชื่อที่สมัคร
+                    document.getElementById('agUserName').innerText = displayName;
+                    document.getElementById('agWelcomeName').innerText = displayName;
+                    document.getElementById('agAvatarInitial').innerText = displayName.charAt(0).toUpperCase();
+
+                } else {
+                    // กลุ่มลูกค้า/นักท่องเที่ยว -> ให้ปุ่มพาไปหน้า Dashboard ธรรมดา
+                    navBtnDash.onclick = openDashboard;
+                    mobBtnDash.onclick = () => { toggleMobileMenu(); openDashboard(); };
+                    navBtnDash.innerHTML = '<span class="iconify" data-icon="heroicons:user-circle"></span> บัญชีของฉัน';
+                    mobBtnDash.innerText = 'บัญชีของฉัน';
+                }
+            }
         }
 
+        // ระบบจัดการล็อกอิน
         supabaseClient.auth.getSession().then(({ data: { session } }) => { updateUIAuth(session); });
         supabaseClient.auth.onAuthStateChange((event, session) => { updateUIAuth(session); });
 
@@ -357,9 +384,9 @@
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
             const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-            if (!error) { closeAuthModal(null, true); updateUIAuth(data.session); }
+            if (!error) { closeAuthModal(null, true); } else { alert('รหัสผ่านผิดครับ'); }
         }
-        async function handleLogout() { await supabaseClient.auth.signOut(); }
+        async function handleLogout() { await supabaseClient.auth.signOut(); closeDashboard(); closeAgencyDashboard(); }
     </script>
 </body>
 </html>
