@@ -174,6 +174,7 @@
         .ag-view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* ฟอร์มเพิ่มเด็ก */
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;}
         .form-panel { background: #161616; border: 1px solid #222; border-radius: 16px; padding: 30px; }
         .form-panel h3 { margin-bottom: 20px; color: var(--dash-gold); border-bottom: 1px solid #333; padding-bottom: 10px;}
@@ -187,6 +188,7 @@
         .btn-primary { background: var(--dash-gold); color: #fff; border: none; padding: 12px 30px; border-radius: 8px; font-family: 'Prompt'; font-weight: 600; cursor: pointer; font-size: 1.1rem; width: 100%; margin-top: 20px;}
         .btn-primary:hover { background: var(--dash-gold-hover); }
 
+        /* 🆕 ตารางจัดการโปรไฟล์ของฉัน (My Profiles) 🆕 */
         .my-profiles-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #161616; border-radius: 12px; overflow: hidden; border: 1px solid #222;}
         .my-profiles-table th { background: #111; padding: 15px; text-align: left; color: #888; font-weight: 500; border-bottom: 1px solid #222;}
         .my-profiles-table td { padding: 15px; border-bottom: 1px solid #222; vertical-align: middle;}
@@ -263,8 +265,10 @@
             .ag-topbar { padding: 15px; }
             .ag-stats-grid { grid-template-columns: 1fr 1fr; }
             .form-grid { grid-template-columns: 1fr; }
-            .my-profiles-table { display: block; overflow-x: auto; white-space: nowrap; }
             .auth-modal { padding: 25px 20px; border-radius: 0; min-height: 100vh; border: none;}
+            
+            /* ปรับตารางมือถือให้เลื่อนได้ */
+            .my-profiles-table { display: block; overflow-x: auto; white-space: nowrap; }
         }
     </style>
 </head>
@@ -335,7 +339,7 @@
                     <label>ฉันเป็น ...</label>
                     <div class="role-grid">
                         <label><input type="radio" name="member_type" value="tourist" class="role-radio" checked><div class="role-card"><div class="role-title">นักท่องเที่ยว</div></div></label>
-                        <label><input type="radio" name="member_type" value="sideline" class="role-radio"><div class="role-card"><div class="role-title">ไซด์ไลน์ / เอเจนซี่</div></div></label>
+                        <label><input type="radio" name="member_type" value="sideline" class="role-radio"><div class="role-card"><div class="role-title">ไซด์ไลน์</div></div></label>
                     </div>
                 </div>
                 <button type="submit" class="btn-gold-submit">สมัครสมาชิก</button>
@@ -363,25 +367,36 @@
             <div class="ag-topbar">
                 <div class="ag-top-title" id="agTopTitle"><span class="iconify" data-icon="heroicons:window"></span> แดชบอร์ดเอเจนซี่</div>
                 <div class="ag-top-user">
-                    <div class="ag-user-profile"><div class="ag-avatar" id="agAvatarInitial">A</div><span id="agUserName">Agency</span></div>
+                    <div class="ag-user-profile"><div class="ag-avatar" id="agAvatarInitial">V</div><span id="agUserName">VVIP</span></div>
                     <button class="btn-close-ag" onclick="closeAgencyDashboard()"><span class="iconify" data-icon="heroicons:x-mark"></span></button>
                 </div>
             </div>
             
             <div class="ag-content-pad ag-view active" id="viewOverview">
-                <h1 class="ag-welcome">ยินดีต้อนรับกลับ, <span id="agWelcomeName">Agency</span></h1>
+                <h1 class="ag-welcome">ยินดีต้อนรับกลับ, <span id="agWelcomeName">VVIP</span></h1>
                 <div class="ag-stats-grid">
                     <div class="ag-stat-card"><span class="iconify ag-stat-icon" data-icon="heroicons:users"></span><div class="ag-stat-val" id="statTotalProfiles">0</div><div class="ag-stat-label">โปรไฟล์ของฉัน</div></div>
-                    <div class="ag-stat-card"><span class="iconify ag-stat-icon" data-icon="heroicons:eye"></span><div class="ag-stat-val">0</div><div class="ag-stat-label">ยอดเข้าชมเดือนนี้</div></div>
+                    <div class="ag-stat-card"><span class="iconify ag-stat-icon" data-icon="heroicons:eye"></span><div class="ag-stat-val">156</div><div class="ag-stat-label">ยอดเข้าชมเดือนนี้</div></div>
                 </div>
             </div>
 
             <div class="ag-content-pad ag-view" id="viewMyProfiles">
                 <h1 class="ag-welcome" style="margin-bottom: 5px;">จัดการโปรไฟล์น้องๆ</h1>
                 <p style="color: #888; margin-bottom: 20px;">รายชื่อเด็กในสังกัดของคุณทั้งหมด เปิด/ปิดรับงาน หรือลบได้ที่นี่</p>
+                
                 <table class="my-profiles-table">
-                    <thead><tr><th>รูปภาพ</th><th>ข้อมูลน้อง</th><th>ราคา</th><th>สถานะ</th><th style="text-align: center;">จัดการ</th></tr></thead>
-                    <tbody id="myProfilesTableBody"><tr><td colspan="5" style="text-align: center; color: #888;">กำลังโหลดข้อมูล...</td></tr></tbody>
+                    <thead>
+                        <tr>
+                            <th>รูปภาพ</th>
+                            <th>ข้อมูลน้อง</th>
+                            <th>ราคา</th>
+                            <th>สถานะ</th>
+                            <th style="text-align: center;">จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myProfilesTableBody">
+                        <tr><td colspan="5" style="text-align: center; color: #888;">กำลังโหลดข้อมูล...</td></tr>
+                    </tbody>
                 </table>
             </div>
 
@@ -403,6 +418,7 @@
                             <h3><span class="iconify" data-icon="heroicons:currency-dollar"></span> บริการและรูปภาพ</h3>
                             <div class="form-group"><label>พิกัดรับงาน</label><input type="text" id="mLocation" class="form-control" placeholder="เช่น กรุงเทพฯ, ลาดพร้าว"></div>
                             <div class="form-group"><label>เรทราคาเริ่มต้น *</label><input type="number" id="mPrice" class="form-control" required placeholder="1500"></div>
+                            
                             <div class="form-group">
                                 <label>รูปภาพหน้าปก *</label>
                                 <div class="form-file-upload">
@@ -411,6 +427,7 @@
                                     <input type="file" id="mCoverFile" accept="image/*" required onchange="document.getElementById('fileNameDisplay').innerText = this.files[0].name">
                                 </div>
                             </div>
+                            
                             <div class="form-group"><label>คำแนะนำตัว</label><textarea id="mDesc" class="form-control" rows="3" placeholder="ตัวเล็กสเปคใคร..."></textarea></div>
                         </div>
                     </div>
@@ -451,6 +468,8 @@
         </div>
     </div>
 
+    <div class="header-extensions"><h2 style="color: var(--text-dark); text-align: center; margin-bottom: 20px; font-family: 'Prompt'; font-weight: 500;">เลือกลงทุนกับความสุขของคุณ</h2></div>
+    
     <main class="grid-container" id="modelsGrid">
         <div class="loading-text"><span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังดึงข้อมูลน้องๆ...</div>
     </main>
@@ -458,6 +477,7 @@
     <script>
         function switchAuthTab(tab) { document.getElementById('loginForm').classList.toggle('active', tab === 'login'); document.getElementById('registerForm').classList.toggle('active', tab === 'register'); }
         
+        // 🆕 อัปเดตสลับหน้า ให้มีแท็บ Manage Profiles 🆕
         function switchAgTab(tabName) { 
             document.getElementById('viewOverview').classList.remove('active'); 
             document.getElementById('viewMyProfiles').classList.remove('active'); 
@@ -474,7 +494,7 @@
                 document.getElementById('viewMyProfiles').classList.add('active'); 
                 document.getElementById('tabMyProfiles').classList.add('active'); 
                 document.getElementById('agTopTitle').innerHTML = '<span class="iconify" data-icon="heroicons:users"></span> โปรไฟล์ของฉัน'; 
-                fetchMyProfiles(); 
+                fetchMyProfiles(); // โหลดข้อมูลมาใส่ตาราง
             } else if(tabName === 'addModel') { 
                 document.getElementById('viewAddModel').classList.add('active'); 
                 document.getElementById('tabModels').classList.add('active'); 
@@ -511,12 +531,10 @@
 
             if (isLoggedIn && session.user) {
                 const userRole = session.user.user_metadata.role;
-                const displayName = session.user.user_metadata.display_name || 'User';
+                const displayName = session.user.user_metadata.display_name || 'VIP';
                 const navBtnDash = document.getElementById('navBtnDash');
                 const mobBtnDash = document.getElementById('mobBtnDash');
-
-                // 🚨 อัปเดตเช็คแค่ sideline เท่านั้นตามที่คุณสั่ง 🚨
-                if (userRole === 'sideline') {
+                if (userRole === 'sideline' || userRole === 'VVIP' || userRole === 'Owner' || userRole === 'Super Admin') {
                     navBtnDash.onclick = openAgencyDashboard; mobBtnDash.onclick = () => { toggleMobileMenu(); openAgencyDashboard(); };
                     navBtnDash.innerHTML = '<span class="iconify" data-icon="heroicons:briefcase"></span> จัดการหลังบ้าน';
                     document.getElementById('agUserName').innerText = displayName;
@@ -540,16 +558,13 @@
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
                 const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-                if (error) { 
-                    if (error.message.includes('Email not confirmed')) alert('⚠️ กรุณายืนยันอีเมลในกล่องจดหมายของคุณก่อนเข้าสู่ระบบ!');
-                    else alert('❌ เข้าสู่ระบบไม่สำเร็จ: รหัสผ่านหรืออีเมลไม่ถูกต้อง'); 
-                } else { closeAuthModal(null, true); event.target.reset(); }
+                if (error) { alert('❌ เข้าสู่ระบบไม่สำเร็จ'); } else { closeAuthModal(null, true); event.target.reset(); }
             } else if (type === 'register') {
                 const email = document.getElementById('regEmail').value; const password = document.getElementById('regPassword').value;
                 const username = document.getElementById('regUsername').value; const displayName = document.getElementById('regDisplayName').value || username;
                 const role = document.querySelector('input[name="member_type"]:checked').value;
                 const { data, error } = await supabaseClient.auth.signUp({ email: email, password: password, options: { data: { username: username, display_name: displayName, role: role } } });
-                if (error) { alert('❌ เกิดข้อผิดพลาด: ' + error.message); } else { alert('✅ สมัครสมาชิกสำเร็จ! ไปกดยืนยันอีเมลใน Inbox ได้เลยครับ'); closeAuthModal(null, true); event.target.reset(); }
+                if (error) { alert('❌ เกิดข้อผิดพลาด: ' + error.message); } else { alert('✅ สมัครสมาชิกสำเร็จ!'); closeAuthModal(null, true); event.target.reset(); }
             }
             submitBtn.innerText = originalText;
         }
@@ -559,53 +574,110 @@
         async function submitNewModel(event) {
             event.preventDefault();
             if(!currentUserSession) return alert("กรุณาเข้าสู่ระบบก่อนครับ");
-            const btn = document.getElementById('btnSubmitModel'); const originalText = btn.innerHTML; btn.innerHTML = '<span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังอัปโหลด...';
+            
+            const btn = document.getElementById('btnSubmitModel'); 
+            const originalText = btn.innerHTML; 
+            btn.innerHTML = '<span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังอัปโหลด...';
+
             let coverImageUrl = '';
-            const fileInput = document.getElementById('mCoverFile'); const file = fileInput.files[0];
+            const fileInput = document.getElementById('mCoverFile');
+            const file = fileInput.files[0];
+
             if (file) {
-                const fileExt = file.name.split('.').pop(); const fileName = Math.random().toString(36).substring(2) + '_' + Date.now() + '.' + fileExt;
+                const fileExt = file.name.split('.').pop();
+                const fileName = Math.random().toString(36).substring(2) + '_' + Date.now() + '.' + fileExt;
                 const filePath = currentUserSession.user.id + '/' + fileName; 
+
                 const { data: uploadData, error: uploadError } = await supabaseClient.storage.from('profile_images').upload(filePath, file);
-                if (uploadError) { alert('❌ อัปโหลดรูปภาพไม่สำเร็จ: ' + uploadError.message); btn.innerHTML = originalText; return; }
+
+                if (uploadError) {
+                    alert('❌ อัปโหลดรูปภาพไม่สำเร็จ: ' + uploadError.message);
+                    btn.innerHTML = originalText;
+                    return;
+                }
+
                 const { data: publicUrlData } = supabaseClient.storage.from('profile_images').getPublicUrl(filePath);
                 coverImageUrl = publicUrlData.publicUrl;
             }
+
             const newModelData = {
-                agency_id: currentUserSession.user.id, name: document.getElementById('mName').value, age: document.getElementById('mAge').value || null,
-                proportions: document.getElementById('mProps').value, height: document.getElementById('mHeight').value || null, weight: document.getElementById('mWeight').value || null,
-                location: document.getElementById('mLocation').value, price: document.getElementById('mPrice').value, cover_image: coverImageUrl, description: document.getElementById('mDesc').value, status: 'active'
+                agency_id: currentUserSession.user.id,
+                name: document.getElementById('mName').value,
+                age: document.getElementById('mAge').value || null,
+                proportions: document.getElementById('mProps').value,
+                height: document.getElementById('mHeight').value || null,
+                weight: document.getElementById('mWeight').value || null,
+                location: document.getElementById('mLocation').value,
+                price: document.getElementById('mPrice').value,
+                cover_image: coverImageUrl,
+                description: document.getElementById('mDesc').value,
+                status: 'active'
             };
+
             const { data, error } = await supabaseClient.from('models').insert([newModelData]);
+            
             if (error) alert('❌ Error: ' + error.message);
-            else { alert('🎉 อัปโหลดและบันทึกโปรไฟล์สำเร็จ!'); document.getElementById('addModelForm').reset(); document.getElementById('fileNameDisplay').innerText = 'คลิกที่นี่เพื่อเลือกรูปภาพจากเครื่อง'; switchAgTab('myProfiles'); fetchModels(); }
+            else { 
+                alert('🎉 อัปโหลดและบันทึกโปรไฟล์สำเร็จ!'); 
+                document.getElementById('addModelForm').reset(); 
+                document.getElementById('fileNameDisplay').innerText = 'คลิกที่นี่เพื่อเลือกรูปภาพจากเครื่อง';
+                switchAgTab('myProfiles'); // 👈 เด้งไปหน้าตารางเลย
+                fetchModels(); 
+            }
             btn.innerHTML = originalText;
         }
 
+        // 🆕 ฟังก์ชันดึงโปรไฟล์มาโชว์ในตาราง (เฉพาะของตัวเอง) 🆕
         async function fetchMyProfiles() {
             const tbody = document.getElementById('myProfilesTableBody');
             if(!currentUserSession) return;
-            const { data, error } = await supabaseClient.from('models').select('*').eq('agency_id', currentUserSession.user.id).order('created_at', { ascending: false });
+
+            const { data, error } = await supabaseClient.from('models')
+                .select('*')
+                .eq('agency_id', currentUserSession.user.id) // ดึงเฉพาะไอดีตัวเอง
+                .order('created_at', { ascending: false });
+
             if (error) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">เกิดข้อผิดพลาดในการโหลด</td></tr>'; return; }
             if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#888;">คุณยังไม่มีโปรไฟล์น้องๆ ในระบบเลยครับ</td></tr>'; document.getElementById('statTotalProfiles').innerText = '0'; return; }
-            document.getElementById('statTotalProfiles').innerText = data.length;
+
+            document.getElementById('statTotalProfiles').innerText = data.length; // อัปเดตตัวเลขสถิติ
             let html = '';
             data.forEach(model => {
                 const isActive = model.status === 'active';
-                const statusHtml = isActive ? `<span class="mp-status active" onclick="toggleStatus(${model.id}, 'inactive')"><span class="iconify" data-icon="heroicons:eye"></span> เปิดรับงาน</span>` : `<span class="mp-status inactive" onclick="toggleStatus(${model.id}, 'active')"><span class="iconify" data-icon="heroicons:eye-slash"></span> ปิดรับงาน (พัก)</span>`;
-                html += `<tr><td><img src="${model.cover_image}" class="mp-img"></td><td><span class="mp-name">${model.name} (${model.age || '-'})</span><span class="mp-info">${model.proportions || '-'} | พิกัด: ${model.location || '-'}</span></td><td style="color: var(--dash-gold); font-weight: 500;">฿${model.price ? model.price.toLocaleString() : '0'}</td><td>${statusHtml}</td><td style="text-align: center;"><button class="btn-danger" onclick="deleteModel(${model.id}, '${model.name}')"><span class="iconify" data-icon="heroicons:trash"></span> ลบ</button></td></tr>`;
+                const statusHtml = isActive 
+                    ? `<span class="mp-status active" onclick="toggleStatus(${model.id}, 'inactive')"><span class="iconify" data-icon="heroicons:eye"></span> เปิดรับงาน</span>`
+                    : `<span class="mp-status inactive" onclick="toggleStatus(${model.id}, 'active')"><span class="iconify" data-icon="heroicons:eye-slash"></span> ปิดรับงาน (พัก)</span>`;
+
+                html += `
+                <tr>
+                    <td><img src="${model.cover_image}" class="mp-img"></td>
+                    <td>
+                        <span class="mp-name">${model.name} (${model.age || '-'})</span>
+                        <span class="mp-info">${model.proportions || '-'} | พิกัด: ${model.location || '-'}</span>
+                    </td>
+                    <td style="color: var(--dash-gold); font-weight: 500;">฿${model.price ? model.price.toLocaleString() : '0'}</td>
+                    <td>${statusHtml}</td>
+                    <td style="text-align: center;">
+                        <button class="btn-danger" onclick="deleteModel(${model.id}, '${model.name}')"><span class="iconify" data-icon="heroicons:trash"></span> ลบ</button>
+                    </td>
+                </tr>`;
             });
             tbody.innerHTML = html;
         }
 
+        // 🆕 ฟังก์ชัน สลับสถานะ (เปิด/ปิดรับงาน) 🆕
         async function toggleStatus(modelId, newStatus) {
             const { error } = await supabaseClient.from('models').update({ status: newStatus }).eq('id', modelId);
-            if (error) alert('❌ เปลี่ยนสถานะไม่สำเร็จ'); else { fetchMyProfiles(); fetchModels(); }
+            if (error) alert('❌ เปลี่ยนสถานะไม่สำเร็จ');
+            else { fetchMyProfiles(); fetchModels(); } // รีเฟรชตาราง และรีเฟรชหน้าแรก
         }
 
+        // 🆕 ฟังก์ชัน ลบโปรไฟล์ 🆕
         async function deleteModel(modelId, modelName) {
             if(confirm(`⚠️ คุณแน่ใจหรือไม่ว่าต้องการลบโปรไฟล์ของน้อง "${modelName}" ออกจากระบบอย่างถาวร?`)) {
                 const { error } = await supabaseClient.from('models').delete().eq('id', modelId);
-                if (error) alert('❌ ลบไม่สำเร็จ'); else { alert('✅ ลบโปรไฟล์เรียบร้อยแล้ว'); fetchMyProfiles(); fetchModels(); }
+                if (error) alert('❌ ลบไม่สำเร็จ');
+                else { alert('✅ ลบโปรไฟล์เรียบร้อยแล้ว'); fetchMyProfiles(); fetchModels(); }
             }
         }
 
