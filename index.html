@@ -188,7 +188,7 @@
 
     <div class="auth-overlay" id="authOverlay" onclick="closeAuthModal(event)">
         <div class="auth-modal" id="authModal">
-            <button class="close-modal" onclick="closeAuthModal(force=true)">&times;</button>
+            <button class="close-modal" onclick="closeAuthModal(event, true)">&times;</button>
             
             <div class="auth-tabs">
                 <button class="tab-btn active" id="loginTabBtn" onclick="switchAuthTab('login')">เข้าสู่ระบบ</button>
@@ -297,12 +297,12 @@
     </main>
 
     <script>
-        // 1. นำ URL และ กุญแจ (Anon Key) ของคุณมาใส่ตรงนี้
+        // 1. นำ URL และ กุญแจ (Anon Key) มาใส่
         const SUPABASE_URL = 'https://ryensvsewntmflahpacp.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_rYAnbJukdoUm6ilIeK0j_w_IO6R_i8L';
         
-        // เริ่มต้นการเชื่อมต่อ
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // 🚨 แก้ไขจุดนี้: เปลี่ยนชื่อตัวแปรเป็น supabaseClient เพื่อไม่ให้ชนกับไลบรารี
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // UI Functions
         function toggleHeart(button) {
@@ -353,22 +353,20 @@
         async function handleAuthSubmit(event, type) {
             event.preventDefault(); // ป้องกันหน้าเว็บรีเฟรช
 
-            // เปลี่ยนข้อความปุ่มระหว่างรอโหลด
             const submitBtn = event.target.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerText;
             submitBtn.innerText = 'กำลังประมวลผล...';
             submitBtn.disabled = true;
 
             if (type === 'register') {
-                // ดึงค่าจากช่องกรอกข้อมูลสมัครสมาชิก
                 const email = document.getElementById('regEmail').value;
                 const password = document.getElementById('regPassword').value;
                 const username = document.getElementById('regUsername').value;
                 const displayName = document.getElementById('regDisplayName').value;
                 const role = document.querySelector('input[name="member_type"]:checked').value;
 
-                // ยิงคำสั่งสร้างบัญชีไปที่ Supabase
-                const { data, error } = await supabase.auth.signUp({
+                // 🚨 ใช้ supabaseClient แทน
+                const { data, error } = await supabaseClient.auth.signUp({
                     email: email,
                     password: password,
                     options: {
@@ -383,18 +381,17 @@
                 if (error) {
                     alert('❌ เกิดข้อผิดพลาด: ' + error.message);
                 } else {
-                    alert('✅ สมัครสมาชิกสำเร็จ! กรุณาเช็คอีเมลของคุณเพื่อยืนยันตัวตน');
-                    closeAuthModal(force=true);
-                    event.target.reset(); // ล้างข้อมูลในช่อง
+                    alert('✅ สมัครสมาชิกสำเร็จ! ข้อมูลถูกส่งเข้าโกดังแล้วครับ');
+                    closeAuthModal(null, true);
+                    event.target.reset(); 
                 }
 
             } else if (type === 'login') {
-                // ดึงค่าจากช่องกรอกข้อมูลเข้าสู่ระบบ
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
 
-                // ยิงคำสั่งล็อกอินไปที่ Supabase
-                const { data, error } = await supabase.auth.signInWithPassword({
+                // 🚨 ใช้ supabaseClient แทน
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
                     email: email,
                     password: password
                 });
@@ -403,12 +400,11 @@
                     alert('❌ เข้าสู่ระบบไม่สำเร็จ: รหัสผ่านหรืออีเมลไม่ถูกต้อง');
                 } else {
                     alert('✅ เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับระดับ VIP');
-                    closeAuthModal(force=true);
+                    closeAuthModal(null, true);
                     event.target.reset();
                 }
             }
 
-            // คืนค่าปุ่มกลับมาเหมือนเดิม
             submitBtn.innerText = originalText;
             submitBtn.disabled = false;
         }
