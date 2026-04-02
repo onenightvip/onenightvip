@@ -43,7 +43,9 @@
 
         /* Navbar */
         .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: var(--bg-glass); backdrop-filter: blur(15px); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 100; }
-        .logo-img { height: 50px; width: auto; filter: drop-shadow(2px 4px 6px rgba(181, 108, 94, 0.2)); }
+        /* ปรับแต่งความสูงโลโก้เล็กน้อยเพื่อให้แสดงผลสวยงาม */
+        .logo-img { height: 50px; width: auto; object-fit: contain; filter: drop-shadow(2px 4px 6px rgba(181, 108, 94, 0.1)); }
+        
         .nav-links { display: flex; gap: 25px; }
         .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; }
         .nav-links a.active { color: var(--accent); }
@@ -69,7 +71,7 @@
         .lang-btn.active { background: rgba(181, 108, 94, 0.1); border-color: var(--accent); color: var(--accent); }
         .sheet-auth { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 5px; }
 
-        /* Auth Modal & Dashboard (ซ่อนไว้ให้โค้ดสั้น) */
+        /* Auth Modal & Dashboard */
         .auth-overlay, .dashboard-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
         .auth-overlay { background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; padding: 20px; }
         .dashboard-overlay { background: var(--dash-bg); z-index: 3000; overflow-y: auto; color: #fff; padding-bottom: 50px; }
@@ -90,74 +92,44 @@
         .dash-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; border-bottom: 1px solid var(--dash-border); background: rgba(15, 15, 15, 0.9); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 3010; }
         .dash-header h2 { font-size: 1.5rem; display: flex; align-items: center; gap: 10px; color: var(--dash-gold); }
         .close-dash { background: #333; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; justify-content: center; align-items: center; }
-        .dash-container { max-width: 900px; margin: 30px auto; padding: 0 5%; display: flex; flex-direction: column; gap: 30px; text-align: center; color: #888;} /* ย่อ Dashboard ชั่วคราว */
+        .dash-container { max-width: 900px; margin: 30px auto; padding: 0 5%; display: flex; flex-direction: column; gap: 30px; text-align: center; color: #888;}
 
-        /* =========================================
-           🎯 PROFILE DETAIL OVERLAY (หน้ารายละเอียดน้องๆ)
-           ========================================= */
+        /* PROFILE DETAIL OVERLAY */
         .profile-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--dash-bg); z-index: 4000; overflow-y: auto;
             opacity: 0; visibility: hidden; transition: all 0.3s ease;
-            transform: translateY(20px); /* เอฟเฟกต์เด้งขึ้น */
-            padding-bottom: 90px; /* เว้นที่ให้ปุ่มจองด้านล่าง */
-            font-family: 'Prompt', sans-serif;
+            transform: translateY(20px); padding-bottom: 90px; font-family: 'Prompt', sans-serif;
         }
         .profile-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
-        
-        /* ปุ่มกลับ */
         .btn-back-profile { position: absolute; top: 20px; left: 20px; width: 45px; height: 45px; border-radius: 50%; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 4010; transition: 0.2s; }
         .btn-back-profile:hover { background: rgba(0,0,0,0.8); }
-
-        /* รูปใหญ่ (Hero Image) */
         .profile-hero { width: 100%; height: 60vh; position: relative; }
         .profile-hero img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
         .hero-gradient { position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, var(--dash-bg) 0%, transparent 100%); }
-
-        /* เนื้อหาโปรไฟล์ */
         .profile-content { max-width: 800px; margin: -50px auto 0 auto; padding: 0 5%; position: relative; z-index: 4005; color: white; }
-        
-        /* หัวข้อชื่อ */
         .pro-title-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; }
         .pro-name-group { display: flex; flex-direction: column; gap: 5px; }
         .pro-name { font-size: 2.2rem; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 10px; line-height: 1; }
         .pro-location { font-size: 1rem; color: #aaa; display: flex; align-items: center; gap: 5px; }
-        
-        /* ปุ่มหัวใจในหน้าโปรไฟล์ */
         .pro-action-btns { display: flex; gap: 15px; }
         .btn-pro-icon { width: 45px; height: 45px; border-radius: 50%; background: var(--dash-card); border: 1px solid var(--dash-border); color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; }
-        
-        /* กล่องสัดส่วนและข้อมูล */
         .pro-stats-box { background: var(--dash-card); border: 1px solid var(--dash-border); border-radius: 20px; padding: 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; text-align: center; margin-bottom: 25px; }
         .pro-stat-item { border-right: 1px solid #333; }
         .pro-stat-item:last-child { border-right: none; }
         .pro-stat-val { font-size: 1.2rem; font-weight: 600; color: var(--dash-gold); }
         .pro-stat-label { font-size: 0.85rem; color: #888; margin-top: 5px; }
-
-        /* ป้ายบริการ (Service Tags) */
         .pro-section { margin-bottom: 30px; }
         .pro-sec-title { font-size: 1.2rem; font-weight: 500; color: #fff; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--dash-border); padding-bottom: 10px; }
         .tags-container { display: flex; flex-wrap: wrap; gap: 10px; }
         .service-tag { background: rgba(212, 175, 55, 0.1); color: var(--dash-gold); border: 1px solid rgba(212, 175, 55, 0.3); padding: 6px 15px; border-radius: 20px; font-size: 0.9rem; }
-        
-        /* คำอธิบายตัวตน */
         .pro-desc { font-size: 1rem; color: #ccc; line-height: 1.6; background: #151515; padding: 20px; border-radius: 15px; border-left: 4px solid var(--dash-gold); }
-
-        /* รีวิว */
         .review-card { background: var(--dash-card); border-radius: 15px; padding: 15px; border: 1px solid var(--dash-border); margin-bottom: 15px; }
         .review-head { display: flex; justify-content: space-between; margin-bottom: 10px; }
         .review-user { font-weight: 500; color: #ddd; display: flex; align-items: center; gap: 5px; }
         .review-stars { color: #fbbf24; }
         .review-text { font-size: 0.95rem; color: #aaa; }
-
-        /* 🌟 แถบปุ่มจอง (Sticky Bottom Bar) */
-        .sticky-booking-bar {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(15px);
-            border-top: 1px solid var(--dash-border); padding: 15px 5%;
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 4020; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        .sticky-booking-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(15px); border-top: 1px solid var(--dash-border); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 4020; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .profile-overlay.active .sticky-booking-bar { transform: translateY(0); }
         .book-price-box { display: flex; flex-direction: column; }
         .book-label { font-size: 0.85rem; color: #888; }
@@ -201,7 +173,9 @@
 <body>
 
     <nav class="navbar">
-        <div class="logo-container"><img src="logo.png" alt="ONE NIGHT VIP" class="logo-img"></div>
+        <div class="logo-container">
+            <img src="https://img2.pic.in.th/-190481cb09d161ee46.png" alt="ONENIGHTVIP" class="logo-img">
+        </div>
         <div class="nav-links">
             <a href="#" class="active">หน้าแรก</a><a href="#">เอเจนซี่</a><a href="#">กระดานผู้นำ</a>
         </div>
@@ -246,15 +220,11 @@
     </div>
 
     <div class="profile-overlay" id="profileDetailModal">
-        <button class="btn-back-profile" onclick="closeProfile()">
-            <span class="iconify" data-icon="heroicons:arrow-left"></span>
-        </button>
-
+        <button class="btn-back-profile" onclick="closeProfile()"><span class="iconify" data-icon="heroicons:arrow-left"></span></button>
         <div class="profile-hero">
             <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1000&q=80" alt="น้อง B">
             <div class="hero-gradient"></div>
         </div>
-
         <div class="profile-content">
             <div class="pro-title-row">
                 <div class="pro-name-group">
@@ -266,74 +236,40 @@
                     <button class="btn-pro-icon"><span class="iconify" data-icon="heroicons:share"></span></button>
                 </div>
             </div>
-
             <div class="pro-stats-box">
-                <div class="pro-stat-item">
-                    <div class="pro-stat-val">24</div>
-                    <div class="pro-stat-label">อายุ (ปี)</div>
-                </div>
-                <div class="pro-stat-item">
-                    <div class="pro-stat-val">34-24-36</div>
-                    <div class="pro-stat-label">สัดส่วน</div>
-                </div>
-                <div class="pro-stat-item">
-                    <div class="pro-stat-val">157</div>
-                    <div class="pro-stat-label">ส่วนสูง (ซม.)</div>
-                </div>
-                <div class="pro-stat-item">
-                    <div class="pro-stat-val">49</div>
-                    <div class="pro-stat-label">น้ำหนัก (กก.)</div>
-                </div>
+                <div class="pro-stat-item"><div class="pro-stat-val">24</div><div class="pro-stat-label">อายุ (ปี)</div></div>
+                <div class="pro-stat-item"><div class="pro-stat-val">34-24-36</div><div class="pro-stat-label">สัดส่วน</div></div>
+                <div class="pro-stat-item"><div class="pro-stat-val">157</div><div class="pro-stat-label">ส่วนสูง (ซม.)</div></div>
+                <div class="pro-stat-item"><div class="pro-stat-val">49</div><div class="pro-stat-label">น้ำหนัก (กก.)</div></div>
             </div>
-
             <div class="pro-section">
                 <h3 class="pro-sec-title"><span class="iconify" data-icon="heroicons:sparkles"></span> บริการที่รับ (Services)</h3>
                 <div class="tags-container">
-                    <span class="service-tag">ฟีลแฟน 100%</span>
-                    <span class="service-tag">ทานข้าว/ดูหนัง</span>
-                    <span class="service-tag">นวดผ่อนคลาย</span>
-                    <span class="service-tag">ปาร์ตี้ส่วนตัว</span>
+                    <span class="service-tag">ฟีลแฟน 100%</span><span class="service-tag">ทานข้าว/ดูหนัง</span><span class="service-tag">นวดผ่อนคลาย</span><span class="service-tag">ปาร์ตี้ส่วนตัว</span>
                 </div>
             </div>
-
             <div class="pro-section">
                 <h3 class="pro-sec-title"><span class="iconify" data-icon="heroicons:information-circle"></span> แนะนำตัว</h3>
-                <div class="pro-desc">
-                    สวัสดีค่ะ น้อง B นะคะ ตัวเล็กสเปคใครรึเปล่า เฟรนด์ลี่ คุยเก่ง ยิ้มง่าย เอาใจเก่งมากค่ะ ทำตัวเนียนเหมือนแฟนจริงควงไปไม่อายใครแน่นอนค่ะ รับรองว่าอยู่ด้วยแล้วไม่มีเหงา ใครชอบสายอ้อน ทักมาจองคิวได้เลยนะคะ 💖
-                </div>
+                <div class="pro-desc">สวัสดีค่ะ น้อง B นะคะ ตัวเล็กสเปคใครรึเปล่า เฟรนด์ลี่ คุยเก่ง ยิ้มง่าย เอาใจเก่งมากค่ะ ทำตัวเนียนเหมือนแฟนจริงควงไปไม่อายใครแน่นอนค่ะ รับรองว่าอยู่ด้วยแล้วไม่มีเหงา ใครชอบสายอ้อน ทักมาจองคิวได้เลยนะคะ 💖</div>
             </div>
-
             <div class="pro-section">
-                <h3 class="pro-sec-title">
-                    <span class="iconify" data-icon="heroicons:star-solid" style="color:#fbbf24"></span> รีวิวจากลูกค้า VIP (4.8/5)
-                </h3>
+                <h3 class="pro-sec-title"><span class="iconify" data-icon="heroicons:star-solid" style="color:#fbbf24"></span> รีวิวจากลูกค้า VIP (4.8/5)</h3>
                 <div class="review-card">
-                    <div class="review-head">
-                        <div class="review-user"><span class="iconify" data-icon="heroicons:user-circle" style="font-size: 1.5rem; color:#888;"></span> หนุ่มโสด VIP</div>
-                        <div class="review-stars">★★★★★</div>
-                    </div>
+                    <div class="review-head"><div class="review-user"><span class="iconify" data-icon="heroicons:user-circle" style="font-size: 1.5rem; color:#888;"></span> หนุ่มโสด VIP</div><div class="review-stars">★★★★★</div></div>
                     <div class="review-text">ตัวจริงน่ารักมากครับ ตรงปก 100% คุยเก่ง ฟีลแฟนดีมาก บริการประทับใจสุดๆ ไว้จะมาใช้บริการอีกแน่นอนครับ</div>
-                </div>
-                <div class="review-card">
-                    <div class="review-head">
-                        <div class="review-user"><span class="iconify" data-icon="heroicons:user-circle" style="font-size: 1.5rem; color:#888;"></span> พี่ K ใจดี</div>
-                        <div class="review-stars">★★★★★</div>
-                    </div>
-                    <div class="review-text">น้องเอาใจเก่งมากครับ เวลาผ่านไปไวมาก คุ้มค่าเกินราคาจริงๆ แนะนำเลยครับสำหรับคนชอบแนวอ้อนๆ</div>
                 </div>
             </div>
         </div>
-
         <div class="sticky-booking-bar">
             <div class="book-price-box">
-                <span class="book-label">เรทราคาเริ่มต้น</span>
-                <span class="book-price">฿1,000 <span style="font-size: 0.9rem; color: #888; font-weight: normal;">/ 1 ชม.</span></span>
+                <span class="book-label">เรทราคาเริ่มต้น</span><span class="book-price">฿1,000 <span style="font-size: 0.9rem; color: #888; font-weight: normal;">/ 1 ชม.</span></span>
             </div>
             <button class="btn-booking" onclick="alert('เด้งไปหน้าแอดไลน์ หรือ ระบบจ่ายเงิน!')">
                 <span class="iconify" data-icon="logos:line" style="font-size: 1.2rem; filter: brightness(0) invert(1);"></span> จองคิวน้อง B
             </button>
         </div>
     </div>
+
     <div class="header-extensions">
         <h2 style="color: var(--text-dark); text-align: center; margin-bottom: 20px; font-family: 'Prompt'; font-weight: 500;">เลือกลงทุนกับความสุขของคุณ</h2>
     </div>
@@ -359,7 +295,6 @@
                 </div>
             </div>
         </div>
-
         <div class="card" onclick="openProfile()">
             <div class="card-image-box">
                 <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80">
@@ -383,42 +318,11 @@
     </main>
 
     <script>
-        // 🟢 ฟังก์ชันเปิด/ปิด หน้าโปรไฟล์
         const profileModal = document.getElementById('profileDetailModal');
-        
-        function openProfile() {
-            profileModal.classList.add('active');
-            document.body.classList.add('modal-open');
-        }
-
-        function closeProfile() {
-            profileModal.classList.remove('active');
-            document.body.classList.remove('modal-open');
-        }
-
-        // กดหัวใจในการ์ดหน้าแรก
-        function toggleHeart(button) {
-            let icon = button.querySelector('.heart-icon');
-            if (icon.getAttribute('data-icon') === 'mdi:cards-heart-outline') {
-                icon.setAttribute('data-icon', 'mdi:cards-heart'); icon.style.color = '#ff4d4f'; 
-            } else {
-                icon.setAttribute('data-icon', 'mdi:cards-heart-outline'); icon.style.color = 'white'; 
-            }
-        }
-        
-        // กดหัวใจในหน้าโปรไฟล์
-        function toggleProHeart(button) {
-            let icon = button.querySelector('.heart-icon');
-            if (icon.getAttribute('data-icon') === 'mdi:cards-heart-outline') {
-                icon.setAttribute('data-icon', 'mdi:cards-heart'); icon.style.color = '#ff4d4f'; 
-                button.style.borderColor = '#ff4d4f';
-            } else {
-                icon.setAttribute('data-icon', 'mdi:cards-heart-outline'); icon.style.color = 'white'; 
-                button.style.borderColor = 'var(--dash-border)';
-            }
-        }
-
-        // ฟังก์ชัน UI ทั่วไป
+        function openProfile() { profileModal.classList.add('active'); document.body.classList.add('modal-open'); }
+        function closeProfile() { profileModal.classList.remove('active'); document.body.classList.remove('modal-open'); }
+        function toggleHeart(button) { let icon = button.querySelector('.heart-icon'); if (icon.getAttribute('data-icon') === 'mdi:cards-heart-outline') { icon.setAttribute('data-icon', 'mdi:cards-heart'); icon.style.color = '#ff4d4f'; } else { icon.setAttribute('data-icon', 'mdi:cards-heart-outline'); icon.style.color = 'white'; } }
+        function toggleProHeart(button) { let icon = button.querySelector('.heart-icon'); if (icon.getAttribute('data-icon') === 'mdi:cards-heart-outline') { icon.setAttribute('data-icon', 'mdi:cards-heart'); icon.style.color = '#ff4d4f'; button.style.borderColor = '#ff4d4f'; } else { icon.setAttribute('data-icon', 'mdi:cards-heart-outline'); icon.style.color = 'white'; button.style.borderColor = 'var(--dash-border)'; } }
         function toggleMobileMenu() { document.getElementById('mobileOverlay').classList.toggle('active'); document.getElementById('mobileSheet').classList.toggle('active'); }
         const authOverlay = document.getElementById('authOverlay');
         function openAuthModal(tab) { authOverlay.classList.add('active'); }
@@ -426,7 +330,6 @@
         function openDashboard() { document.getElementById('vipDashboard').classList.add('active'); }
         function closeDashboard() { document.getElementById('vipDashboard').classList.remove('active'); }
 
-        // การเชื่อม Supabase
         const SUPABASE_URL = 'https://ryensvsewntmflahpacp.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_rYAnbJukdoUm6ilIeK0j_w_IO6R_i8L';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
