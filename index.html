@@ -43,7 +43,6 @@
 
         /* Navbar */
         .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: var(--bg-glass); backdrop-filter: blur(15px); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 100; }
-        /* ปรับแต่งความสูงโลโก้เล็กน้อยเพื่อให้แสดงผลสวยงาม */
         .logo-img { height: 50px; width: auto; object-fit: contain; filter: drop-shadow(2px 4px 6px rgba(181, 108, 94, 0.1)); }
         
         .nav-links { display: flex; gap: 25px; }
@@ -71,7 +70,7 @@
         .lang-btn.active { background: rgba(181, 108, 94, 0.1); border-color: var(--accent); color: var(--accent); }
         .sheet-auth { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 5px; }
 
-        /* Auth Modal & Dashboard */
+        /* Auth & Dash Modals */
         .auth-overlay, .dashboard-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
         .auth-overlay { background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; padding: 20px; }
         .dashboard-overlay { background: var(--dash-bg); z-index: 3000; overflow-y: auto; color: #fff; padding-bottom: 50px; }
@@ -221,10 +220,12 @@
 
     <div class="profile-overlay" id="profileDetailModal">
         <button class="btn-back-profile" onclick="closeProfile()"><span class="iconify" data-icon="heroicons:arrow-left"></span></button>
+        
         <div class="profile-hero">
-            <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1000&q=80" alt="น้อง B">
+            <img src="https://ryensvsewntmflahpacp.supabase.co/storage/v1/object/public/profile_images/S__12541966_0.jpg" alt="น้อง B">
             <div class="hero-gradient"></div>
         </div>
+        
         <div class="profile-content">
             <div class="pro-title-row">
                 <div class="pro-name-group">
@@ -274,9 +275,10 @@
         <h2 style="color: var(--text-dark); text-align: center; margin-bottom: 20px; font-family: 'Prompt'; font-weight: 500;">เลือกลงทุนกับความสุขของคุณ</h2>
     </div>
     <main class="grid-container">
+        
         <div class="card" onclick="openProfile()">
             <div class="card-image-box">
-                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=500&q=80">
+                <img src="https://ryensvsewntmflahpacp.supabase.co/storage/v1/object/public/profile_images/S__12541966_0.jpg">
                 <span class="badge-image">New</span>
                 <button class="heart-btn" onclick="event.stopPropagation(); toggleHeart(this)"><span class="iconify heart-icon" data-icon="mdi:cards-heart-outline" style="color: white; font-size: 1.5rem;"></span></button>
             </div>
@@ -295,6 +297,7 @@
                 </div>
             </div>
         </div>
+
         <div class="card" onclick="openProfile()">
             <div class="card-image-box">
                 <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80">
