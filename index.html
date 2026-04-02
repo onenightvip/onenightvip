@@ -39,7 +39,7 @@
         }
         body.modal-open { overflow: hidden; }
 
-        /* Navbar & Menu (คงเดิม) */
+        /* Navbar & Menu */
         .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: var(--bg-glass); backdrop-filter: blur(15px); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 100; }
         .logo-img { height: 50px; width: auto; object-fit: contain; filter: drop-shadow(2px 4px 6px rgba(181, 108, 94, 0.1)); }
         .nav-links { display: flex; gap: 25px; }
@@ -64,87 +64,35 @@
         .sheet-links a { display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--text-dark); font-size: 1.1rem; font-weight: 500; padding: 12px 0; border-bottom: 1px solid rgba(181, 108, 94, 0.1); }
         .sheet-auth { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(181, 108, 94, 0.1); }
 
-        /* =========================================
-           ✨ 1. STORIES CAROUSEL (IG Style - Adapted Theme)
-           ========================================= */
-        .stories-carousel__container {
-            display: flex; gap: 16px; overflow-x: auto; padding: 25px 5%;
-            max-width: 1400px; margin: 0 auto; scrollbar-width: none;
-        }
-        .stories-carousel__container::-webkit-scrollbar { display: none; }
-        .stories-carousel__item {
-            align-items: center; background: transparent; border: none; cursor: pointer;
-            display: flex; flex-direction: column; flex-shrink: 0; gap: 8px; padding: 4px; position: relative;
-            transition: transform .2s cubic-bezier(.34,1.56,.64,1);
-        }
-        .stories-carousel__item:hover { transform: scale(1.05); }
-        .stories-carousel__ring {
-            height: 72px; width: 72px; border-radius: 50%; padding: 3px;
-            background: linear-gradient(135deg, var(--accent-light), var(--accent));
-            position: relative;
-        }
-        .stories-carousel__avatar {
-            height: 100%; width: 100%; border-radius: 50%;
-            border: 3px solid #fdf5f5; object-fit: cover; background: #fff;
-        }
-        .stories-carousel__name {
-            color: var(--text-dark); font-size: 13px; font-weight: 500;
-            max-width: 76px; overflow: hidden; text-align: center; text-overflow: ellipsis; white-space: nowrap;
-            transition: color .2s ease;
-        }
+        /* ✨ STORIES CAROUSEL ✨ */
+        .stories-carousel__skeleton-container { display: flex; gap: 12px; overflow-x: auto; padding: 15px 16px; max-width: 1400px; margin: 0 auto; scrollbar-width: none; }
+        .stories-carousel__skeleton-container::-webkit-scrollbar { display: none; }
+        .stories-carousel__item { align-items: center; background: transparent; border: none; cursor: pointer; display: flex; flex-direction: column; flex-shrink: 0; gap: 8px; padding: 4px; position: relative; }
+        @media(hover: hover) { .stories-carousel__item { transition: transform .2s cubic-bezier(.34,1.56,.64,1); } .stories-carousel__item:hover { transform: scale(1.05); } }
+        .stories-carousel__item:focus-visible { border-radius: 16px; box-shadow: 0 0 0 2px var(--dash-gold); outline: none; }
+        .stories-carousel__name { color: var(--text-dark); font-size: 12px; font-weight: 500; max-width: 72px; overflow: hidden; text-align: center; text-overflow: ellipsis; transition: color .2s ease; white-space: nowrap; }
         .stories-carousel__item:hover .stories-carousel__name { color: var(--accent); }
-        .stories-carousel__count {
-            align-items: center; background: var(--btn-gradient);
-            border: 2px solid #fdf5f5; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            color: var(--accent); display: flex; font-size: 10px; font-weight: 700;
-            height: 20px; justify-content: center; min-width: 20px; padding: 0 5px;
-            position: absolute; right: 2px; top: 2px;
-        }
+        .stories-carousel__count { align-items: center; background: var(--btn-gradient); border: 2px solid #fdf5f5; border-radius: 9px; box-shadow: 0 2px 4px #0000004d; color: var(--accent); display: flex; font-size: 10px; font-weight: 700; height: 18px; justify-content: center; line-height: 1; min-width: 18px; padding: 0 5px; position: absolute; right: 4px; top: 4px; z-index: 2; }
+        .stories-carousel__skeleton-ring { height: 64px; position: relative; width: 64px; border-radius: 50%; padding: 2px; background: linear-gradient(135deg, var(--accent-light), var(--accent));}
+        .stories-carousel__skeleton-avatar { border-radius: 50%; height: 100%; width: 100%; object-fit: cover; border: 2px solid #fdf5f5;}
+        @media(min-width: 640px) { .stories-carousel__skeleton-container { gap: 16px; padding: 15px 20px; } }
+        @media(min-width: 1024px) { .stories-carousel__skeleton-container { gap: 20px; padding: 15px 24px; } }
 
-        /* =========================================
-           ✨ 2. AGENCIES CAROUSEL (Marquee Style - Adapted Theme)
-           ========================================= */
-        .agencies-carousel-wrapper {
-            overflow: hidden; padding: 15px 0 25px 0; background: rgba(255,255,255,0.4);
-            border-top: 1px solid rgba(181, 108, 94, 0.1); border-bottom: 1px solid rgba(181, 108, 94, 0.1);
-        }
+        /* ✨ AGENCIES CAROUSEL ✨ */
+        .agencies-carousel-wrapper { overflow: hidden; padding: 15px 0 25px 0; background: rgba(255,255,255,0.4); border-top: 1px solid rgba(181, 108, 94, 0.1); border-bottom: 1px solid rgba(181, 108, 94, 0.1); }
         @keyframes marquee { 0% { transform: translate(0) } to { transform: translate(-50%) } }
-        .agencies-carousel__track {
-            animation: marquee 40s linear infinite; display: flex; width: max-content;
-        }
+        .agencies-carousel__track { animation: marquee 40s linear infinite; display: flex; width: max-content; }
         .agencies-carousel-wrapper:hover .agencies-carousel__track { animation-play-state: paused; }
         .agencies-carousel__strip { display: flex; gap: 15px; padding-right: 15px; }
-        
-        .agencies-carousel__spotlight {
-            border: 1px solid rgba(181, 108, 94, 0.2); border-radius: 14px; display: block; flex-shrink: 0;
-            height: 100px; overflow: hidden; position: relative; text-decoration: none; width: 240px;
-            background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.03); transition: all .25s ease;
-        }
-        .agencies-carousel__spotlight:hover {
-            border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(181, 108, 94, 0.15);
-        }
-        .agencies-carousel__spotlight-image {
-            height: 100%; width: 100%; object-fit: cover; position: absolute; transition: transform .4s ease; opacity: 0.9;
-        }
+        .agencies-carousel__spotlight { border: 1px solid rgba(181, 108, 94, 0.2); border-radius: 14px; display: block; flex-shrink: 0; height: 100px; overflow: hidden; position: relative; text-decoration: none; width: 240px; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.03); transition: all .25s ease; }
+        .agencies-carousel__spotlight:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(181, 108, 94, 0.15); }
+        .agencies-carousel__spotlight-image { height: 100%; width: 100%; object-fit: cover; position: absolute; transition: transform .4s ease; opacity: 0.9; }
         .agencies-carousel__spotlight:hover .agencies-carousel__spotlight-image { transform: scale(1.06); opacity: 1;}
-        /* ไล่สี Gradient จากใสไปสีเนื้อ เพื่อให้อ่านตัวหนังสือชัด */
-        .agencies-carousel__spotlight-overlay {
-            background: linear-gradient(180deg,transparent,transparent 25%,rgba(253, 245, 245, 0.6) 55%,rgba(253, 245, 245, 0.95));
-            inset: 0; position: absolute;
-        }
-        .agencies-carousel__spotlight-content {
-            align-items: flex-end; bottom: 0; display: flex; gap: 10px; left: 0; padding: 10px 12px; position: absolute; right: 0; z-index: 1;
-        }
-        .agencies-carousel__spotlight-logo {
-            border: 1.5px solid var(--accent-light); border-radius: 8px; flex-shrink: 0; height: 32px; width: 32px; object-fit: cover; background: #fff;
-        }
-        .agencies-carousel__spotlight-name {
-            color: var(--text-dark); font-size: .9rem; font-weight: 600; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-        }
-        .agencies-carousel__spotlight-count {
-            align-items: center; color: var(--accent); display: flex; font-size: .7rem; font-weight: 500; gap: 3px;
-        }
-
+        .agencies-carousel__spotlight-overlay { background: linear-gradient(180deg,transparent,transparent 25%,rgba(253, 245, 245, 0.6) 55%,rgba(253, 245, 245, 0.95)); inset: 0; position: absolute; }
+        .agencies-carousel__spotlight-content { align-items: flex-end; bottom: 0; display: flex; gap: 10px; left: 0; padding: 10px 12px; position: absolute; right: 0; z-index: 1; }
+        .agencies-carousel__spotlight-logo { border: 1.5px solid var(--accent-light); border-radius: 8px; flex-shrink: 0; height: 32px; width: 32px; object-fit: cover; background: #fff; }
+        .agencies-carousel__spotlight-name { color: var(--text-dark); font-size: .9rem; font-weight: 600; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .agencies-carousel__spotlight-count { align-items: center; color: var(--accent); display: flex; font-size: .7rem; font-weight: 500; gap: 3px; }
 
         /* AUTH MODALS */
         .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.3s ease; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; padding: 20px; }
@@ -175,7 +123,6 @@
         .role-radio:checked + .role-card .role-icon { color: var(--dash-gold); }
         .role-title { font-size: 1rem; font-weight: 600; color: #ddd; }
         .role-radio:checked + .role-card .role-title { color: var(--dash-gold); }
-        .role-desc { font-size: 0.7rem; color: #777; line-height: 1.3; }
         .check-group { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
         .auth-check { width: 18px; height: 18px; cursor: pointer; accent-color: var(--dash-gold); background: var(--modal-input-bg); border: 1px solid rgba(181, 108, 94, 0.2);}
         .check-group label { color: #ddd; font-size: 0.85rem; cursor: pointer; display: flex; gap: 5px;}
@@ -234,44 +181,48 @@
         .form-group { margin-bottom: 15px; text-align: left; }
         .form-group label { display: block; margin-bottom: 8px; color: #aaa; font-size: 0.9rem;}
         .form-control { width: 100%; background: #111; border: 1px solid #333; color: #fff; padding: 12px 15px; border-radius: 8px; font-family: 'Prompt'; outline: none; transition: 0.2s;}
+        
+        /* 🆕 ปรับปุ่มอัปโหลดไฟล์ให้สวยงาม 🆕 */
+        .form-file-upload { background: #111; border: 1px dashed #555; padding: 15px; border-radius: 8px; text-align: center; color: #888; cursor: pointer; transition: 0.2s; position: relative;}
+        .form-file-upload:hover { border-color: var(--dash-gold); color: #fff;}
+        .form-file-upload input[type="file"] { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; }
+        
         .form-control:focus { border-color: var(--dash-gold); }
         .btn-primary { background: var(--dash-gold); color: #fff; border: none; padding: 12px 30px; border-radius: 8px; font-family: 'Prompt'; font-weight: 600; cursor: pointer; font-size: 1.1rem; width: 100%; margin-top: 20px;}
         .btn-primary:hover { background: var(--dash-gold-hover); }
 
-        /* PROFILE DETAIL OVERLAY */
-        .profile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dash-bg); z-index: 4000; overflow-y: auto; opacity: 0; visibility: hidden; transition: all 0.3s ease; transform: translateY(20px); padding-bottom: 90px; font-family: 'Prompt', sans-serif; }
+        /* ✨ PROFILE DETAIL OVERLAY ✨ */
+        .profile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f0f0f; z-index: 4000; overflow-y: auto; opacity: 0; visibility: hidden; transition: all 0.3s ease; transform: translateY(20px); padding-bottom: 100px; font-family: 'Prompt', sans-serif; }
         .profile-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
         .btn-back-profile { position: absolute; top: 20px; left: 20px; width: 45px; height: 45px; border-radius: 50%; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 4010; transition: 0.2s; }
-        .profile-hero { width: 100%; height: 60vh; position: relative; }
+        .profile-hero { width: 100%; height: 55vh; position: relative; }
         .profile-hero img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-        .hero-gradient { position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, var(--dash-bg) 0%, transparent 100%); }
-        .profile-content { max-width: 800px; margin: -50px auto 0 auto; padding: 0 5%; position: relative; z-index: 4005; color: white; }
-        .pro-title-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; }
-        .pro-name-group { display: flex; flex-direction: column; gap: 5px; }
-        .pro-name { font-size: 2.2rem; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 10px; line-height: 1; }
-        .verified-badge { font-size: 1.3rem; color: var(--badge-green); }
-        .pro-location { font-size: 1rem; color: #aaa; display: flex; align-items: center; gap: 5px; }
-        .pro-action-btns { display: flex; gap: 15px; }
-        .btn-pro-icon { width: 45px; height: 45px; border-radius: 50%; background: var(--dash-card); border: 1px solid var(--dash-border); color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; }
-        .pro-stats-box { background: var(--dash-card); border: 1px solid var(--dash-border); border-radius: 20px; padding: 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; text-align: center; margin-bottom: 25px; }
-        .pro-stat-item { border-right: 1px solid #333; }
+        .hero-gradient { position: absolute; bottom: 0; left: 0; width: 100%; height: 70%; background: linear-gradient(to top, #0f0f0f 0%, transparent 100%); }
+        .profile-content { max-width: 600px; margin: -80px auto 0 auto; padding: 0 5%; position: relative; z-index: 4005; color: white; }
+        .pro-name { font-size: 2.2rem; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 10px; line-height: 1; margin-bottom: 8px;}
+        .verified-badge { font-size: 1.3rem; color: #10b981; }
+        .pro-location { font-size: 0.95rem; color: #aaa; display: flex; align-items: center; gap: 5px; margin-bottom: 25px; }
+        .pro-stats-box { background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px 10px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center; margin-bottom: 30px; }
+        .pro-stat-item { border-right: 1px solid #2a2a2a; display: flex; flex-direction: column; justify-content: center;}
         .pro-stat-item:last-child { border-right: none; }
-        .pro-stat-val { font-size: 1.2rem; font-weight: 600; color: var(--dash-gold); }
-        .pro-stat-label { font-size: 0.85rem; color: #888; margin-top: 5px; }
-        .pro-section { margin-bottom: 30px; }
-        .pro-sec-title { font-size: 1.2rem; font-weight: 500; color: #fff; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--dash-border); padding-bottom: 10px; }
-        .tags-container { display: flex; flex-wrap: wrap; gap: 10px; }
-        .service-tag { background: rgba(181, 108, 94, 0.1); color: var(--dash-gold); border: 1px solid rgba(181, 108, 94, 0.3); padding: 6px 15px; border-radius: 20px; font-size: 0.9rem; }
-        .pro-desc { font-size: 1rem; color: #ccc; line-height: 1.6; background: #151515; padding: 20px; border-radius: 15px; border-left: 4px solid var(--dash-gold); }
-        .sticky-booking-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(15px); border-top: 1px solid var(--dash-border); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 4020; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .pro-stat-val { font-size: 1.1rem; font-weight: 600; color: var(--dash-gold); margin-bottom: 5px; line-height: 1.2;}
+        .pro-stat-label { font-size: 0.8rem; color: #888; }
+        .pro-section { margin-bottom: 25px; }
+        .pro-sec-title { font-size: 1.1rem; font-weight: 500; color: #fff; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .pro-desc-box { background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; border-left: 4px solid var(--dash-gold); }
+        .pro-desc-title { font-weight: 500; color: #fff; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;}
+        .pro-desc { font-size: 0.95rem; color: #aaa; line-height: 1.6; white-space: pre-line; }
+        .sticky-booking-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #161616; border-top: 1px solid #2a2a2a; padding: 15px 5%; display: flex; justify-content: center; z-index: 4020; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .profile-overlay.active .sticky-booking-bar { transform: translateY(0); }
+        .sticky-booking-container { max-width: 600px; width: 100%; display: flex; justify-content: space-between; align-items: center; }
         .book-price-box { display: flex; flex-direction: column; }
-        .book-label { font-size: 0.85rem; color: #888; }
-        .book-price { font-size: 1.5rem; font-weight: 600; color: var(--dash-gold); }
-        .btn-booking { background: var(--btn-gradient); color: var(--accent); border: 1px solid rgba(255,255,255,0.5); padding: 12px 30px; border-radius: 50px; font-size: 1.1rem; font-weight: 600; font-family: 'Prompt'; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); display: flex; align-items: center; gap: 8px; }
+        .book-label { font-size: 0.8rem; color: #888; margin-bottom: 2px;}
+        .book-price { font-size: 1.6rem; font-weight: 600; color: var(--dash-gold); line-height: 1;}
+        .btn-booking { background: var(--btn-gradient); color: var(--accent); border: none; padding: 12px 35px; border-radius: 50px; font-size: 1.1rem; font-weight: 600; font-family: 'Prompt'; cursor: pointer; transition: 0.2s; }
+        .btn-booking:hover { transform: scale(1.05); }
 
         /* Grid Cards หน้าแรก */
-        .header-extensions { padding: 0 5%; max-width: 1400px; margin: 0 auto; margin-top: 20px;}
+        .header-extensions { padding: 20px 5%; max-width: 1400px; margin: 0 auto; }
         .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 10px 5% 50px 5%; max-width: 1400px; margin: 0 auto; align-items: stretch; }
         .card { background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); border-radius: 20px; padding: 15px; border: 1px solid rgba(255,255,255,0.6); box-shadow: 8px 8px 20px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.2s; display: flex; flex-direction: column; height: 100%;}
         .card:hover { transform: translateY(-5px); }
@@ -289,7 +240,6 @@
         .engagement { font-size: 0.9rem; display: flex; align-items: center; gap: 12px; color: var(--text-dark); }
         .engage-item { display: flex; align-items: center; gap: 4px; }
         .badge-image { position: absolute; top: 12px; left: 12px; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: white; background: var(--btn-gradient); color: var(--accent); z-index: 10; border: 1px solid rgba(255,255,255,0.5);}
-        
         .loading-text { text-align: center; width: 100%; padding: 50px; color: var(--text-muted); font-size: 1.2rem;}
 
         @media (max-width: 768px) {
@@ -338,24 +288,24 @@
         </div>
     </div>
 
-    <div class="stories-carousel__container">
+    <div class="stories-carousel__skeleton-container">
         <button class="stories-carousel__item">
-            <div class="stories-carousel__ring">
-                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=100&q=80" class="stories-carousel__avatar" alt="Story">
+            <div class="stories-carousel__skeleton-ring">
+                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=100&q=80" class="stories-carousel__skeleton-avatar" alt="Story">
                 <span class="stories-carousel__count">3</span>
             </div>
             <span class="stories-carousel__name">น้อง A</span>
         </button>
         <button class="stories-carousel__item">
-            <div class="stories-carousel__ring">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80" class="stories-carousel__avatar" alt="Story">
+            <div class="stories-carousel__skeleton-ring">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80" class="stories-carousel__skeleton-avatar" alt="Story">
                 <span class="stories-carousel__count">1</span>
             </div>
             <span class="stories-carousel__name">น้ำหวาน</span>
         </button>
         <button class="stories-carousel__item">
-            <div class="stories-carousel__ring">
-                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&q=80" class="stories-carousel__avatar" alt="Story">
+            <div class="stories-carousel__skeleton-ring">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&q=80" class="stories-carousel__skeleton-avatar" alt="Story">
                 <span class="stories-carousel__count">5</span>
             </div>
             <span class="stories-carousel__name">เจนนี่</span>
@@ -507,11 +457,20 @@
                             <h3><span class="iconify" data-icon="heroicons:currency-dollar"></span> บริการและรูปภาพ</h3>
                             <div class="form-group"><label>พิกัดรับงาน</label><input type="text" id="mLocation" class="form-control" placeholder="เช่น กรุงเทพฯ, ลาดพร้าว"></div>
                             <div class="form-group"><label>เรทราคาเริ่มต้น *</label><input type="number" id="mPrice" class="form-control" required placeholder="1500"></div>
-                            <div class="form-group"><label>ลิงก์รูปหน้าปก</label><input type="text" id="mCover" class="form-control" placeholder="https://..."></div>
+                            
+                            <div class="form-group">
+                                <label>รูปภาพหน้าปก *</label>
+                                <div class="form-file-upload">
+                                    <span class="iconify" data-icon="heroicons:photo" style="font-size: 2rem; margin-bottom: 10px;"></span>
+                                    <p id="fileNameDisplay">คลิกที่นี่เพื่อเลือกรูปภาพจากเครื่อง</p>
+                                    <input type="file" id="mCoverFile" accept="image/*" required onchange="document.getElementById('fileNameDisplay').innerText = this.files[0].name">
+                                </div>
+                            </div>
+                            
                             <div class="form-group"><label>คำแนะนำตัว</label><textarea id="mDesc" class="form-control" rows="3" placeholder="ตัวเล็กสเปคใคร..."></textarea></div>
                         </div>
                     </div>
-                    <button type="submit" class="btn-primary" id="btnSubmitModel"><span class="iconify" data-icon="heroicons:plus-circle"></span> บันทึกโปรไฟล์ลงระบบ</button>
+                    <button type="submit" class="btn-primary" id="btnSubmitModel"><span class="iconify" data-icon="heroicons:arrow-up-tray"></span> อัปโหลดและบันทึกโปรไฟล์</button>
                 </form>
             </div>
         </div>
@@ -521,33 +480,35 @@
         <button class="btn-back-profile" onclick="closeProfile()"><span class="iconify" data-icon="heroicons:arrow-left"></span></button>
         <div class="profile-hero"><img id="pdImage" src=""><div class="hero-gradient"></div></div>
         <div class="profile-content">
-            <div class="pro-title-row">
-                <div class="pro-name-group">
-                    <h1 class="pro-name"><span id="pdName">ชื่อน้อง</span> <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span></h1>
-                    <div class="pro-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--dash-gold);"></span> <span id="pdLoc">พิกัด</span></div>
-                </div>
-            </div>
+            <h1 class="pro-name"><span id="pdName">ชื่อน้อง</span> <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span></h1>
+            <div class="pro-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--dash-gold);"></span> <span id="pdLoc">พิกัด</span></div>
+            
             <div class="pro-stats-box">
                 <div class="pro-stat-item"><div class="pro-stat-val" id="pdAge">-</div><div class="pro-stat-label">อายุ</div></div>
                 <div class="pro-stat-item"><div class="pro-stat-val" id="pdProps">-</div><div class="pro-stat-label">สัดส่วน</div></div>
                 <div class="pro-stat-item"><div class="pro-stat-val" id="pdHeight">-</div><div class="pro-stat-label">ส่วนสูง</div></div>
                 <div class="pro-stat-item"><div class="pro-stat-val" id="pdWeight">-</div><div class="pro-stat-label">น้ำหนัก</div></div>
             </div>
+            
             <div class="pro-section">
                 <h3 class="pro-sec-title"><span class="iconify" data-icon="heroicons:information-circle"></span> แนะนำตัว</h3>
-                <div class="pro-desc" id="pdDesc">-</div>
+                <div class="pro-desc-box">
+                    <div class="pro-desc-title"><span class="iconify" data-icon="noto:crown"></span> <span id="pdName2">ชื่อน้อง</span> แท้ 💯%</div>
+                    <div class="pro-desc" id="pdDesc">-</div>
+                </div>
             </div>
         </div>
         <div class="sticky-booking-bar">
-            <div class="book-price-box">
-                <span class="book-label">เรทราคาเริ่มต้น</span><span class="book-price">฿<span id="pdPrice">0</span> <span style="font-size: 0.9rem; color: #888; font-weight: normal;">/ 1 ชม.</span></span>
+            <div class="sticky-booking-container">
+                <div class="book-price-box">
+                    <span class="book-label">เรทราคาเริ่มต้น</span>
+                    <span class="book-price">฿<span id="pdPrice">0</span> <span style="font-size: 0.9rem; color: #888; font-weight: normal;">/ 1 ชม.</span></span>
+                </div>
+                <button class="btn-booking" onclick="alert('เด้งไปหน้าแอดไลน์!')">จองคิว</button>
             </div>
-            <button class="btn-booking" onclick="alert('เด้งไปหน้าแอดไลน์!')"><span class="iconify" data-icon="logos:line" style="font-size: 1.2rem; filter: brightness(0) invert(1);"></span> จองคิว</button>
         </div>
     </div>
 
-    <div class="header-extensions"><h2 style="color: var(--text-dark); text-align: center; margin-bottom: 20px; font-family: 'Prompt'; font-weight: 500;">เลือกลงทุนกับความสุขของคุณ</h2></div>
-    
     <main class="grid-container" id="modelsGrid">
         <div class="loading-text"><span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังดึงข้อมูลน้องๆ...</div>
     </main>
@@ -624,10 +585,45 @@
 
         async function handleLogout() { await supabaseClient.auth.signOut(); closeDashboard(); closeAgencyDashboard(); window.location.reload(); }
 
+        // 🌟 อัปเกรดฟังก์ชันส่งรูปขึ้น Storage ก่อน แล้วค่อยบันทึกลง Database 🌟
         async function submitNewModel(event) {
             event.preventDefault();
             if(!currentUserSession) return alert("กรุณาเข้าสู่ระบบก่อนครับ");
-            const btn = document.getElementById('btnSubmitModel'); const originalText = btn.innerHTML; btn.innerHTML = 'กำลังบันทึก...';
+            
+            const btn = document.getElementById('btnSubmitModel'); 
+            const originalText = btn.innerHTML; 
+            btn.innerHTML = '<span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังอัปโหลด...';
+
+            let coverImageUrl = '';
+            const fileInput = document.getElementById('mCoverFile');
+            const file = fileInput.files[0];
+
+            if (file) {
+                // 1. สร้างชื่อไฟล์สุ่ม เพื่อไม่ให้ชื่อซ้ำกัน
+                const fileExt = file.name.split('.').pop();
+                const fileName = Math.random().toString(36).substring(2) + '_' + Date.now() + '.' + fileExt;
+                const filePath = currentUserSession.user.id + '/' + fileName; // เก็บแยกโฟลเดอร์ตาม ID คนอัปโหลด
+
+                // 2. อัปโหลดรูปขึ้น Storage ถังชื่อ profile_images
+                const { data: uploadData, error: uploadError } = await supabaseClient.storage
+                    .from('profile_images')
+                    .upload(filePath, file);
+
+                if (uploadError) {
+                    alert('❌ อัปโหลดรูปภาพไม่สำเร็จ: ' + uploadError.message);
+                    btn.innerHTML = originalText;
+                    return;
+                }
+
+                // 3. ดึงลิงก์ (URL) ของรูปที่เพิ่งอัปโหลดเสร็จมาเก็บไว้
+                const { data: publicUrlData } = supabaseClient.storage
+                    .from('profile_images')
+                    .getPublicUrl(filePath);
+
+                coverImageUrl = publicUrlData.publicUrl;
+            }
+
+            // 4. เอาลิงก์รูป พร้อมข้อมูลอื่นๆ บันทึกลงตาราง models
             const newModelData = {
                 agency_id: currentUserSession.user.id,
                 name: document.getElementById('mName').value,
@@ -637,12 +633,20 @@
                 weight: document.getElementById('mWeight').value || null,
                 location: document.getElementById('mLocation').value,
                 price: document.getElementById('mPrice').value,
-                cover_image: document.getElementById('mCover').value || 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=500&q=80',
+                cover_image: coverImageUrl, // ใส่ลิงก์ที่ระบบเจนมาให้
                 description: document.getElementById('mDesc').value
             };
+
             const { data, error } = await supabaseClient.from('models').insert([newModelData]);
+            
             if (error) alert('❌ Error: ' + error.message);
-            else { alert('🎉 บันทึกโปรไฟล์สำเร็จ!'); document.getElementById('addModelForm').reset(); switchAgTab('overview'); fetchModels(); }
+            else { 
+                alert('🎉 อัปโหลดและบันทึกโปรไฟล์สำเร็จ!'); 
+                document.getElementById('addModelForm').reset(); 
+                document.getElementById('fileNameDisplay').innerText = 'คลิกที่นี่เพื่อเลือกรูปภาพจากเครื่อง'; // รีเซ็ตข้อความปุ่มเลือกไฟล์
+                switchAgTab('overview'); 
+                fetchModels(); 
+            }
             btn.innerHTML = originalText;
         }
 
@@ -663,6 +667,7 @@
             const model = JSON.parse(decodeURIComponent(encodedJson));
             document.getElementById('pdImage').src = model.cover_image;
             document.getElementById('pdName').innerText = model.name;
+            document.getElementById('pdName2').innerText = model.name;
             document.getElementById('pdLoc').innerText = model.location || 'ไม่ระบุพิกัด';
             document.getElementById('pdAge').innerText = model.age || '-';
             document.getElementById('pdProps').innerText = model.proportions || '-';
