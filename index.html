@@ -181,14 +181,25 @@
         .form-group { margin-bottom: 15px; text-align: left; }
         .form-group label { display: block; margin-bottom: 8px; color: #aaa; font-size: 0.9rem;}
         .form-control { width: 100%; background: #111; border: 1px solid #333; color: #fff; padding: 12px 15px; border-radius: 8px; font-family: 'Prompt'; outline: none; transition: 0.2s;}
-        .form-file-upload { background: #111; border: 1px dashed #555; padding: 15px; border-radius: 8px; text-align: center; color: #888; cursor: pointer; transition: 0.2s; position: relative;}
-        .form-file-upload:hover { border-color: var(--dash-gold); color: #fff;}
-        .form-file-upload input[type="file"] { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; }
         .form-control:focus { border-color: var(--dash-gold); }
         .btn-primary { background: var(--dash-gold); color: #fff; border: none; padding: 12px 30px; border-radius: 8px; font-family: 'Prompt'; font-weight: 600; cursor: pointer; font-size: 1.1rem; width: 100%; margin-top: 20px;}
         .btn-primary:hover { background: var(--dash-gold-hover); }
 
-        /* ตารางจัดการโปรไฟล์ของฉัน */
+        /* 🆕 ระบบอัปโหลดและลากรูปภาพ 🆕 */
+        .form-file-upload { background: #111; border: 1px dashed #555; padding: 15px; border-radius: 8px; text-align: center; color: #888; cursor: pointer; transition: 0.2s; position: relative;}
+        .form-file-upload:hover { border-color: var(--dash-gold); color: #fff;}
+        .form-file-upload input[type="file"] { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; }
+        
+        .gallery-preview { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; min-height: 80px;}
+        .img-thumb-box { width: 80px; height: 100px; position: relative; border-radius: 8px; overflow: hidden; border: 2px solid #333; cursor: grab;}
+        .img-thumb-box:active { cursor: grabbing; opacity: 0.8; transform: scale(1.05);}
+        .img-thumb-box img { width: 100%; height: 100%; object-fit: cover; pointer-events: none;}
+        .cover-badge { position: absolute; bottom: 0; left: 0; width: 100%; background: var(--dash-gold); color: #000; font-size: 0.6rem; font-weight: bold; text-align: center; padding: 2px 0;}
+        .img-thumb-box.cover { border-color: var(--dash-gold); }
+        .btn-remove-img { position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,0.7); color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+        .btn-remove-img:hover { background: red; }
+
+        /* ตารางจัดการโปรไฟล์ */
         .my-profiles-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #161616; border-radius: 12px; overflow: hidden; border: 1px solid #222;}
         .my-profiles-table th { background: #111; padding: 15px; text-align: left; color: #888; font-weight: 500; border-bottom: 1px solid #222;}
         .my-profiles-table td { padding: 15px; border-bottom: 1px solid #222; vertical-align: middle;}
@@ -214,7 +225,6 @@
         .pro-title-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;}
         .pro-name { font-size: 2.2rem; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 10px; line-height: 1; margin-bottom: 5px;}
         
-        /* 💖 สไตล์ปุ่มหัวใจ 💖 */
         .btn-pro-icon { width: 45px; height: 45px; border-radius: 50%; background: #161616; border: 1px solid #333; color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; }
         .btn-pro-icon:hover { border-color: #ff4d4f; }
         .heart-icon { transition: transform 0.2s; }
@@ -261,8 +271,6 @@
         .engage-item { display: flex; align-items: center; gap: 4px; }
         .badge-image { position: absolute; top: 12px; left: 12px; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: white; background: var(--btn-gradient); color: var(--accent); z-index: 10; border: 1px solid rgba(255,255,255,0.5);}
         .loading-text { text-align: center; width: 100%; padding: 50px; color: var(--text-muted); font-size: 1.2rem;}
-
-        /* 💖 สไตล์ปุ่มหัวใจในการ์ด */
         .heart-btn-card { position: absolute; bottom: 12px; right: 12px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.3); display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; transition: 0.2s;}
         .heart-btn-card:hover { background: rgba(0,0,0,0.6); }
 
@@ -416,19 +424,21 @@
                         <div class="form-panel">
                             <h3><span class="iconify" data-icon="heroicons:currency-dollar"></span> บริการและช่องทางติดต่อ</h3>
                             <div class="form-group"><label>LINE ID สำหรับจองคิว *</label><input type="text" id="mLineId" class="form-control" required placeholder="เช่น @vip_nongb หรือใส่ลิงก์ไลน์"></div>
-                            
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                                 <div class="form-group"><label>พิกัดรับงาน</label><input type="text" id="mLocation" class="form-control" placeholder="เช่น กรุงเทพฯ"></div>
                                 <div class="form-group"><label>เรทราคาเริ่มต้น *</label><input type="number" id="mPrice" class="form-control" required placeholder="1500"></div>
                             </div>
+                            
                             <div class="form-group">
-                                <label>รูปภาพหน้าปก *</label>
-                                <div class="form-file-upload">
+                                <label>อัปโหลดรูปภาพ (สูงสุด 6 รูป ลากสลับตำแหน่งเพื่อเลือกหน้าปกได้) *</label>
+                                <div class="form-file-upload" id="uploadZone">
                                     <span class="iconify" data-icon="heroicons:photo" style="font-size: 2rem; margin-bottom: 10px;"></span>
-                                    <p id="fileNameDisplay">คลิกที่นี่เพื่อเลือกรูปภาพ (ไม่เกิน 2MB)</p>
-                                    <input type="file" id="mCoverFile" accept="image/*" required onchange="document.getElementById('fileNameDisplay').innerText = this.files[0].name">
+                                    <p>คลิกเลือก หรือ ลากรูปมาวางที่นี่ (รูปแรกจะเป็นหน้าปก)</p>
+                                    <input type="file" id="mGalleryFiles" accept="image/*" multiple required onchange="handleFileSelect(event)">
                                 </div>
+                                <div class="gallery-preview" id="galleryPreview"></div>
                             </div>
+                            
                             <div class="form-group"><label>คำแนะนำตัว</label><textarea id="mDesc" class="form-control" rows="3" placeholder="ตัวเล็กสเปคใคร..."></textarea></div>
                         </div>
                     </div>
@@ -447,9 +457,7 @@
                     <h1 class="pro-name"><span id="pdName">ชื่อน้อง</span> <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span></h1>
                     <div class="pro-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--dash-gold);"></span> <span id="pdLoc">พิกัด</span></div>
                 </div>
-                <button class="btn-pro-icon" onclick="toggleHeart(this)">
-                    <span class="iconify heart-icon" data-icon="mdi:cards-heart-outline"></span>
-                </button>
+                <button class="btn-pro-icon" onclick="toggleHeart(this)"><span class="iconify heart-icon" data-icon="mdi:cards-heart-outline"></span></button>
             </div>
             
             <div class="pro-stats-box">
@@ -484,27 +492,80 @@
     </main>
 
     <script>
-        // 🛡️ ป้องกัน XSS
-        function escapeHTML(str) {
-            if(!str) return '';
-            return str.replace(/[&<>"']/g, function(m) {
-                return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[m];
-            });
-        }
+        function escapeHTML(str) { if(!str) return ''; return str.replace(/[&<>"']/g, function(m) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[m]; }); }
 
-        // 💖 ฟังก์ชันเปลี่ยนสีปุ่มหัวใจ 💖
         function toggleHeart(btn, event) {
-            if(event) event.stopPropagation(); // ป้องกันไม่ให้คลิกแล้วหน้าต่างโปรไฟล์เด้งขึ้นมา
+            if(event) event.stopPropagation();
             const icon = btn.querySelector('.iconify');
             if (icon.getAttribute('data-icon') === 'mdi:cards-heart-outline') {
                 icon.setAttribute('data-icon', 'mdi:cards-heart');
-                icon.style.color = '#ff4d4f'; // สีแดง
-                btn.style.borderColor = '#ff4d4f';
+                icon.style.color = '#ff4d4f'; btn.style.borderColor = '#ff4d4f';
             } else {
                 icon.setAttribute('data-icon', 'mdi:cards-heart-outline');
-                icon.style.color = 'white'; // กลับเป็นสีเดิม
-                btn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                icon.style.color = 'white'; btn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
             }
+        }
+
+        // 🌟 ระบบลากวางรูปภาพ (Drag & Drop Gallery) 🌟
+        let selectedFiles = []; // อาร์เรย์เก็บไฟล์ที่เลือก
+        let dragStartIndex;
+
+        function handleFileSelect(event) {
+            const files = Array.from(event.target.files);
+            
+            // เช็คว่าเกิน 6 รูปไหม
+            if (selectedFiles.length + files.length > 6) {
+                alert("อัปโหลดได้สูงสุด 6 รูปเท่านั้นครับ");
+                return;
+            }
+
+            files.forEach(file => {
+                if (file.type.startsWith('image/') && file.size <= 2 * 1024 * 1024) {
+                    selectedFiles.push({
+                        id: Math.random().toString(36).substring(2),
+                        file: file,
+                        preview: URL.createObjectURL(file)
+                    });
+                } else {
+                    alert(`ไฟล์ ${file.name} ข้ามไปเพราะไม่ใช่รูปภาพหรือขนาดเกิน 2MB`);
+                }
+            });
+            renderGalleryPreview();
+        }
+
+        function renderGalleryPreview() {
+            const container = document.getElementById('galleryPreview');
+            container.innerHTML = '';
+            
+            selectedFiles.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = `img-thumb-box ${index === 0 ? 'cover' : ''}`;
+                div.draggable = true;
+                div.innerHTML = `
+                    <img src="${item.preview}">
+                    ${index === 0 ? '<div class="cover-badge">หน้าปก</div>' : ''}
+                    <button type="button" class="btn-remove-img" onclick="removeImage(${index})"><span class="iconify" data-icon="heroicons:x-mark"></span></button>
+                `;
+                
+                // Event ลากวาง
+                div.addEventListener('dragstart', () => dragStartIndex = index);
+                div.addEventListener('dragover', (e) => e.preventDefault());
+                div.addEventListener('drop', () => {
+                    const draggedItem = selectedFiles.splice(dragStartIndex, 1)[0];
+                    selectedFiles.splice(index, 0, draggedItem);
+                    renderGalleryPreview();
+                });
+                
+                container.appendChild(div);
+            });
+
+            // ปิดช่อง input ชั่วคราวถ้าครบ 6 รูป
+            document.getElementById('mGalleryFiles').disabled = selectedFiles.length >= 6;
+        }
+
+        function removeImage(index) {
+            selectedFiles.splice(index, 1);
+            renderGalleryPreview();
         }
 
         function switchAuthTab(tab) { document.getElementById('loginForm').classList.toggle('active', tab === 'login'); document.getElementById('registerForm').classList.toggle('active', tab === 'register'); }
@@ -566,17 +627,14 @@
 
         async function handleAuthSubmit(event, type) {
             event.preventDefault();
-            
             if (type === 'register') {
                 const pwd = document.getElementById('regPassword').value;
                 const confirmPwd = document.getElementById('regConfirmPassword').value;
                 if(pwd.length < 6) { alert("รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร"); return; }
-                if (pwd !== confirmPwd) { alert('❌ รหัสผ่านและการยืนยันรหัสผ่านไม่ตรงกันครับ'); return; }
+                if (pwd !== confirmPwd) { alert('❌ รหัสผ่านไม่ตรงกันครับ'); return; }
             }
-
             const submitBtn = event.target.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerText; submitBtn.innerText = 'กำลังประมวลผล...';
-            
             if (type === 'login') {
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
@@ -592,42 +650,41 @@
             submitBtn.innerText = originalText;
         }
 
-        async function handleLogout() { 
-            await supabaseClient.auth.signOut(); 
-            updateUIAuth(null);
-            closeDashboard(); 
-            closeAgencyDashboard(); 
-            fetchModels();
-        }
+        async function handleLogout() { await supabaseClient.auth.signOut(); updateUIAuth(null); closeDashboard(); closeAgencyDashboard(); fetchModels(); }
 
+        // 🌟 อัปเกรดฟังก์ชันส่งรูปขึ้น Storage หลายๆ รูปพร้อมกัน 🌟
         async function submitNewModel(event) {
             event.preventDefault();
             if(!currentUserSession) return alert("กรุณาเข้าสู่ระบบก่อนครับ");
             
-            const fileInput = document.getElementById('mCoverFile');
-            const file = fileInput.files[0];
-
-            if (!file) { alert("กรุณาเลือกรูปภาพหน้าปกครับ"); return; }
-            if (!file.type.startsWith('image/')) { alert("❌ อนุญาตให้อัปโหลดเฉพาะไฟล์รูปภาพเท่านั้นครับ"); return; }
-            if (file.size > 2 * 1024 * 1024) { alert("❌ ขนาดไฟล์ใหญ่เกินไป (ต้องไม่เกิน 2MB) กรุณาย่อรูปก่อนอัปโหลดครับ"); return; }
+            if (selectedFiles.length === 0) { alert("กรุณาเลือกรูปภาพอย่างน้อย 1 รูปครับ"); return; }
 
             const btn = document.getElementById('btnSubmitModel'); 
             const originalText = btn.innerHTML; 
             btn.innerHTML = '<span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังอัปโหลด...';
 
-            let coverImageUrl = '';
-            const fileExt = file.name.split('.').pop();
-            const fileName = Math.random().toString(36).substring(2) + '_' + Date.now() + '.' + fileExt;
-            const filePath = currentUserSession.user.id + '/' + fileName; 
+            let uploadedUrls = [];
+            
+            // Loop อัปโหลดทีละรูป
+            for (let item of selectedFiles) {
+                const fileExt = item.file.name.split('.').pop();
+                const fileName = Math.random().toString(36).substring(2) + '_' + Date.now() + '.' + fileExt;
+                const filePath = currentUserSession.user.id + '/' + fileName; 
 
-            const { data: uploadData, error: uploadError } = await supabaseClient.storage.from('profile_images').upload(filePath, file);
+                const { data: uploadData, error: uploadError } = await supabaseClient.storage.from('profile_images').upload(filePath, item.file);
+                
+                if (!uploadError) {
+                    const { data: publicUrlData } = supabaseClient.storage.from('profile_images').getPublicUrl(filePath);
+                    uploadedUrls.push(publicUrlData.publicUrl);
+                }
+            }
 
-            if (uploadError) { alert('❌ อัปโหลดรูปภาพไม่สำเร็จ: ' + uploadError.message); btn.innerHTML = originalText; return; }
+            if(uploadedUrls.length === 0) {
+                alert('❌ อัปโหลดรูปภาพล้มเหลวทั้งหมด');
+                btn.innerHTML = originalText;
+                return;
+            }
 
-            const { data: publicUrlData } = supabaseClient.storage.from('profile_images').getPublicUrl(filePath);
-            coverImageUrl = publicUrlData.publicUrl;
-
-            // 🌟 เพิ่ม Line ID เข้าไปใน Data 🌟
             const newModelData = {
                 agency_id: currentUserSession.user.id,
                 name: document.getElementById('mName').value,
@@ -637,8 +694,9 @@
                 weight: document.getElementById('mWeight').value || null,
                 location: document.getElementById('mLocation').value,
                 price: document.getElementById('mPrice').value,
-                line_id: document.getElementById('mLineId').value, // 👈 เก็บไอดีไลน์ตรงนี้
-                cover_image: coverImageUrl,
+                line_id: document.getElementById('mLineId').value,
+                cover_image: uploadedUrls[0], // รูปแรกเป็นหน้าปก
+                gallery: uploadedUrls, // เก็บเป็น Array ทุกรูป
                 description: document.getElementById('mDesc').value,
                 status: 'active'
             };
@@ -649,7 +707,8 @@
             else { 
                 alert('🎉 อัปโหลดและบันทึกโปรไฟล์สำเร็จ!'); 
                 document.getElementById('addModelForm').reset(); 
-                document.getElementById('fileNameDisplay').innerText = 'คลิกที่นี่เพื่อเลือกรูปภาพจากเครื่อง';
+                selectedFiles = []; // ล้างอาเรย์รูป
+                renderGalleryPreview(); // ล้างหน้าจอ preview
                 switchAgTab('myProfiles'); 
                 fetchModels(); 
             }
@@ -711,8 +770,6 @@
             let html = '';
             data.forEach(model => {
                 const modelJson = encodeURIComponent(JSON.stringify(model));
-                
-                // 💖 เพิ่มปุ่มหัวใจในการ์ดหน้าแรก (ซ้อนทับกรอบรูป) 💖
                 html += `
                 <div class="card" onclick="viewProfile('${modelJson}')">
                     <div class="card-image-box">
@@ -752,29 +809,17 @@
             document.getElementById('pdPrice').innerText = model.price ? model.price.toLocaleString() : '0';
             document.getElementById('pdDesc').innerText = model.description || 'ยังไม่มีคำแนะนำตัวค่ะ';
             
-            // 🌟 ตั้งค่าปุ่มกดแอดไลน์ 🌟
-            let rawLine = model.line_id || '';
-            let lineUrl = rawLine;
-            // ถ้ายูสเซอร์ไม่ได้ใส่ลิงก์มาตรงๆ (พิมพ์มาแค่ ID)
-            if (!rawLine.startsWith('http')) {
-                // ถ้าขึ้นต้นด้วย @ ให้ใช้ลิงก์สำหรับ Line OA
-                lineUrl = rawLine.startsWith('@') ? `https://line.me/R/ti/p/${rawLine}` : `https://line.me/ti/p/~${rawLine}`;
-            }
+            let rawLine = model.line_id || ''; let lineUrl = rawLine;
+            if (!rawLine.startsWith('http')) { lineUrl = rawLine.startsWith('@') ? `https://line.me/R/ti/p/${rawLine}` : `https://line.me/ti/p/~${rawLine}`; }
             
             document.getElementById('btnBookNow').onclick = function() {
-                if(!rawLine) {
-                    alert('น้องคนนี้ยังไม่ได้ใส่ช่องทางการติดต่อไว้ครับ');
-                } else {
-                    window.open(lineUrl, '_blank'); // เด้งเปิดหน้าไลน์แท็บใหม่
-                }
+                if(!rawLine) { alert('น้องคนนี้ยังไม่ได้ใส่ช่องทางการติดต่อไว้ครับ'); } 
+                else { window.open(lineUrl, '_blank'); }
             };
             
-            // รีเซ็ตปุ่มหัวใจในหน้าโปรไฟล์กลับเป็นสีขาวทุกครั้งที่เปิดคนใหม่
             const modalHeartBtn = document.querySelector('#profileDetailModal .btn-pro-icon');
             const icon = modalHeartBtn.querySelector('.iconify');
-            icon.setAttribute('data-icon', 'mdi:cards-heart-outline');
-            icon.style.color = 'white';
-            modalHeartBtn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            icon.setAttribute('data-icon', 'mdi:cards-heart-outline'); icon.style.color = 'white'; modalHeartBtn.style.borderColor = '#333';
 
             openProfile();
         }
