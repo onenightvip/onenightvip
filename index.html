@@ -81,7 +81,7 @@
         @media(min-width: 640px) { .stories-carousel__skeleton-container { gap: 16px; padding: 15px 20px; } }
         @media(min-width: 1024px) { .stories-carousel__skeleton-container { gap: 20px; padding: 15px 24px; } }
 
-        /* ✨ AGENCIES CAROUSEL (ป้ายเลื่อนที่หายไป เอากลับมาแล้ว!) ✨ */
+        /* ✨ AGENCIES CAROUSEL ✨ */
         .agencies-carousel-wrapper { overflow: hidden; padding: 15px 0 25px 0; background: rgba(255,255,255,0.4); border-top: 1px solid rgba(181, 108, 94, 0.1); border-bottom: 1px solid rgba(181, 108, 94, 0.1); }
         @keyframes marquee { 0% { transform: translate(0) } to { transform: translate(-50%) } }
         .agencies-carousel__track { animation: marquee 40s linear infinite; display: flex; width: max-content; }
@@ -96,6 +96,18 @@
         .agencies-carousel__spotlight-logo { border: 1.5px solid var(--accent-light); border-radius: 8px; flex-shrink: 0; height: 32px; width: 32px; object-fit: cover; background: #fff; }
         .agencies-carousel__spotlight-name { color: var(--text-dark); font-size: .9rem; font-weight: 600; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .agencies-carousel__spotlight-count { align-items: center; color: var(--accent); display: flex; font-size: .7rem; font-weight: 500; gap: 3px; }
+
+        /* 🚀 ระบบค้นหาและฟิลเตอร์ 🚀 */
+        .search-filter-container { max-width: 1400px; margin: 20px auto 0 auto; padding: 0 5%; display: flex; flex-direction: column; gap: 15px; }
+        .search-box { position: relative; width: 100%; max-width: 500px; margin: 0 auto; }
+        .search-input { width: 100%; padding: 12px 20px 12px 45px; border-radius: 50px; border: 1px solid rgba(181, 108, 94, 0.3); background: rgba(255,255,255,0.8); backdrop-filter: blur(5px); font-family: 'Prompt'; font-size: 1rem; color: var(--text-dark); outline: none; transition: 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.05);}
+        .search-input:focus { border-color: var(--accent); box-shadow: 0 4px 20px rgba(181, 108, 94, 0.15); background: #fff;}
+        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--accent); font-size: 1.2rem; }
+        
+        .filter-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .chip { padding: 6px 15px; border-radius: 50px; background: rgba(255,255,255,0.6); border: 1px solid rgba(181, 108, 94, 0.2); color: var(--text-dark); font-size: 0.85rem; cursor: pointer; transition: 0.2s; font-family: 'Prompt';}
+        .chip:hover { background: rgba(255,255,255,0.9); border-color: var(--accent); }
+        .chip.active { background: var(--btn-gradient); border-color: var(--accent); font-weight: 500; }
 
         /* AUTH MODALS */
         .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.3s ease; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; padding: 20px; }
@@ -206,8 +218,7 @@
         .profile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f0f0f; z-index: 4000; overflow-y: auto; opacity: 0; visibility: hidden; transition: all 0.3s ease; font-family: 'Prompt', sans-serif; display: flex; flex-direction: column; }
         .profile-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
         .btn-back-profile { position: absolute; top: 20px; left: 20px; width: 45px; height: 45px; border-radius: 50%; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 4010; transition: 0.2s; }
-        
-        .profile-hero { width: 100%; height: 55vh; position: relative; flex-shrink: 0; overflow: hidden; }
+        .profile-hero { width: 100%; height: 60vh; position: relative; flex-shrink: 0; overflow: hidden; }
         .hero-gallery { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; width: 100%; height: 100%; scroll-behavior: smooth; }
         .hero-gallery::-webkit-scrollbar { display: none; }
         .hero-gallery img { width: 100%; height: 100%; object-fit: cover; object-position: top; flex-shrink: 0; scroll-snap-align: start; }
@@ -219,8 +230,7 @@
         .gallery-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); transition: 0.3s; }
         .gallery-dot.active { background: var(--dash-gold); width: 20px; border-radius: 4px; }
         .hero-gradient { position: absolute; bottom: 0; left: 0; width: 100%; height: 70%; background: linear-gradient(to top, #0f0f0f 0%, transparent 100%); pointer-events: none;}
-        
-        .profile-content { max-width: 600px; width: 100%; margin: -80px auto 0 auto; padding: 0 5%; position: relative; z-index: 4005; color: white; flex: 1 0 auto; padding-bottom: 30px;}
+        .profile-content { max-width: 600px; width: 100%; margin: -60px auto 0 auto; padding: 0 5%; position: relative; z-index: 4005; color: white; flex: 1 0 auto; padding-bottom: 30px;}
         .pro-title-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;}
         .pro-name { font-size: 2.2rem; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 10px; line-height: 1; margin-bottom: 5px;}
         .btn-pro-icon { width: 45px; height: 45px; border-radius: 50%; background: #161616; border: 1px solid #333; color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; }
@@ -239,7 +249,6 @@
         .pro-desc-box { background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; border-left: 4px solid var(--dash-gold); }
         .pro-desc-title { font-weight: 500; color: #fff; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;}
         .pro-desc { font-size: 0.95rem; color: #aaa; line-height: 1.6; white-space: pre-line; }
-        
         .sticky-booking-bar { position: sticky; bottom: 0; left: 0; width: 100%; background: #161616; border-top: 1px solid #2a2a2a; padding: 15px 5%; display: flex; justify-content: center; z-index: 4020; margin-top: auto; }
         .sticky-booking-container { max-width: 600px; width: 100%; display: flex; justify-content: space-between; align-items: center; }
         .book-price-box { display: flex; flex-direction: column; }
@@ -247,18 +256,6 @@
         .book-price { font-size: 1.6rem; font-weight: 600; color: var(--dash-gold); line-height: 1;}
         .btn-booking { background: var(--btn-gradient); color: var(--accent); border: none; padding: 12px 35px; border-radius: 50px; font-size: 1.1rem; font-weight: 600; font-family: 'Prompt'; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 5px;}
         .btn-booking:hover { transform: scale(1.05); }
-
-        /* 🚀 ระบบค้นหาและฟิลเตอร์ 🚀 */
-        .search-filter-container { max-width: 1400px; margin: 20px auto 0 auto; padding: 0 5%; display: flex; flex-direction: column; gap: 15px; }
-        .search-box { position: relative; width: 100%; max-width: 500px; margin: 0 auto; }
-        .search-input { width: 100%; padding: 12px 20px 12px 45px; border-radius: 50px; border: 1px solid rgba(181, 108, 94, 0.3); background: rgba(255,255,255,0.8); backdrop-filter: blur(5px); font-family: 'Prompt'; font-size: 1rem; color: var(--text-dark); outline: none; transition: 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.05);}
-        .search-input:focus { border-color: var(--accent); box-shadow: 0 4px 20px rgba(181, 108, 94, 0.15); background: #fff;}
-        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--accent); font-size: 1.2rem; }
-        
-        .filter-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-        .chip { padding: 6px 15px; border-radius: 50px; background: rgba(255,255,255,0.6); border: 1px solid rgba(181, 108, 94, 0.2); color: var(--text-dark); font-size: 0.85rem; cursor: pointer; transition: 0.2s; font-family: 'Prompt';}
-        .chip:hover { background: rgba(255,255,255,0.9); border-color: var(--accent); }
-        .chip.active { background: var(--btn-gradient); border-color: var(--accent); font-weight: 500; }
 
         /* Grid Cards หน้าแรก */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 10px 5% 50px 5%; max-width: 1400px; margin: 0 auto; align-items: stretch; margin-top: 10px;}
@@ -278,19 +275,8 @@
         .engagement { font-size: 0.9rem; display: flex; align-items: center; gap: 12px; color: var(--text-dark); }
         .engage-item { display: flex; align-items: center; gap: 4px; }
         .badge-image { position: absolute; top: 12px; left: 12px; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: white; background: var(--btn-gradient); color: var(--accent); z-index: 10; border: 1px solid rgba(255,255,255,0.5);}
-        
         .heart-btn-card { position: absolute; bottom: 12px; right: 12px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.3); display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; transition: 0.2s;}
         .heart-btn-card:hover { background: rgba(0,0,0,0.6); }
-
-        /* 🚀 SKELETON LOADING (แอนิเมชันตอนโหลด) 🚀 */
-        .skeleton-card { background: rgba(255,255,255,0.6); border-radius: 20px; padding: 15px; border: 1px solid rgba(255,255,255,0.4); height: 100%; display: flex; flex-direction: column;}
-        .skel-img { width: 100%; height: 380px; border-radius: 12px; margin-bottom: 15px;}
-        .skel-text-l { height: 24px; width: 60%; border-radius: 4px; margin-bottom: 8px;}
-        .skel-text-s { height: 16px; width: 40%; border-radius: 4px; margin-bottom: 12px;}
-        .skel-text-full { height: 16px; width: 80%; border-radius: 4px; margin-bottom: 15px; flex: 1;}
-        .skel-footer { display: flex; justify-content: space-between; border-top: 1px dashed rgba(181, 108, 94, 0.3); padding-top: 12px;}
-        .skel-price { height: 24px; width: 30%; border-radius: 4px;}
-        .skel-rate { height: 20px; width: 20%; border-radius: 4px;}
         
         .no-results { grid-column: 1 / -1; text-align: center; padding: 50px; color: var(--text-muted); font-size: 1.1rem; background: rgba(255,255,255,0.5); border-radius: 20px;}
 
@@ -343,8 +329,7 @@
         </div>
     </div>
 
-    <div class="stories-carousel__skeleton-container" id="storiesContainer">
-        </div>
+    <div class="stories-carousel__skeleton-container" id="storiesContainer"></div>
 
     <div class="agencies-carousel-wrapper">
         <div class="agencies-carousel__track">
@@ -386,14 +371,13 @@
                 <div class="auth-header"><div class="auth-header-icon"><span class="iconify" data-icon="heroicons:user-plus"></span></div><h2>เข้าร่วมกับเรา</h2></div>
                 <div class="input-group"><label>อีเมล</label><input type="email" id="regEmail" class="auth-input" required></div>
                 <div class="input-group"><label>ชื่อผู้ใช้</label><input type="text" id="regUsername" class="auth-input" required></div>
-                <div class="input-group"><label>ชื่อที่แสดง</label><input type="text" id="regDisplayName" class="auth-input"></div>
-                <div class="input-group"><label>รหัสผ่าน</label><input type="password" id="regPassword" class="auth-input" required></div>
-                <div class="input-group"><label>ยืนยันรหัสผ่าน</label><input type="password" id="regConfirmPassword" class="auth-input" required></div>
+                <div class="input-group"><label>รหัสผ่าน</label><input type="password" id="regPassword" class="auth-input" required minlength="6"></div>
+                <div class="input-group"><label>ยืนยันรหัสผ่าน</label><input type="password" id="regConfirmPassword" class="auth-input" required minlength="6"></div>
                 <div class="input-group">
                     <label>ฉันเป็น ...</label>
                     <div class="role-grid">
                         <label><input type="radio" name="member_type" value="tourist" class="role-radio" checked><div class="role-card"><div class="role-title">นักท่องเที่ยว</div></div></label>
-                        <label><input type="radio" name="member_type" value="sideline" class="role-radio"><div class="role-card"><div class="role-title">ไซด์ไลน์</div></div></label>
+                        <label><input type="radio" name="member_type" value="agency" class="role-radio"><div class="role-card"><div class="role-title">เอเจนซี่</div></div></label>
                     </div>
                 </div>
                 <button type="submit" class="btn-gold-submit">สมัครสมาชิก</button>
@@ -408,7 +392,7 @@
     </div>
 
     <div class="agency-dashboard" id="agencyDashboard">
-         <div class="ag-sidebar">
+        <div class="ag-sidebar">
             <div class="ag-logo"><span class="iconify" data-icon="heroicons:star-solid"></span> VIP AGENCY</div>
             <div class="ag-nav">
                 <div class="ag-nav-item active" id="tabOverview" onclick="switchAgTab('overview')"><span class="iconify ag-nav-icon" data-icon="heroicons:squares-2x2"></span> ภาพรวม</div>
@@ -430,7 +414,7 @@
                 <h1 class="ag-welcome">ยินดีต้อนรับกลับ, <span id="agWelcomeName">VVIP</span></h1>
                 <div class="ag-stats-grid">
                     <div class="ag-stat-card"><span class="iconify ag-stat-icon" data-icon="heroicons:users"></span><div class="ag-stat-val" id="statTotalProfiles">0</div><div class="ag-stat-label">โปรไฟล์ของฉัน</div></div>
-                    <div class="ag-stat-card"><span class="iconify ag-stat-icon" data-icon="heroicons:eye"></span><div class="ag-stat-val">156</div><div class="ag-stat-label">ยอดเข้าชมเดือนนี้</div></div>
+                    <div class="ag-stat-card"><span class="iconify ag-stat-icon" data-icon="heroicons:eye"></span><div class="ag-stat-val">0</div><div class="ag-stat-label">ยอดเข้าชมเดือนนี้</div></div>
                 </div>
             </div>
 
@@ -532,9 +516,7 @@
     <script>
         function escapeHTML(str) {
             if(!str) return '';
-            return str.replace(/[&<>"']/g, function(m) {
-                return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[m];
-            });
+            return str.replace(/[&<>"']/g, function(m) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[m]; });
         }
 
         const SUPABASE_URL = 'https://ryensvsewntmflahpacp.supabase.co';
@@ -542,10 +524,9 @@
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         
         let currentUserSession = null;
-        let allModelsData = []; // เก็บข้อมูลน้องๆ ทั้งหมดไว้ในแรม เพื่อทำฟิลเตอร์ไวๆ
-        let userFavorites = []; // เก็บไอดีน้องที่ยูสเซอร์คนนี้เคยกดหัวใจ
+        let allModelsData = []; 
+        let userFavorites = []; 
 
-        // 🌟 อัปเดต UI เมื่อมีการ Log In 🌟
         function updateUIAuth(session) {
             currentUserSession = session;
             const isLoggedIn = session !== null;
@@ -557,17 +538,14 @@
             document.getElementById('mobBtnReg').style.display = isLoggedIn ? 'none' : 'block';
             document.getElementById('mobBtnDash').style.display = isLoggedIn ? 'flex' : 'none';
             document.getElementById('mobBtnLogout').style.display = isLoggedIn ? 'flex' : 'none';
-
-            // ถ้าล็อกอินแล้ว ให้โชว์ปุ่มฟิลเตอร์ "❤️ น้องที่ถูกใจ"
             document.getElementById('btnFilterFav').style.display = isLoggedIn ? 'inline-block' : 'none';
 
             if (isLoggedIn && session.user) {
-                fetchUserFavorites(); // โหลดข้อมูลหัวใจของคนๆ นี้
-                
+                fetchUserFavorites(); 
                 const userRole = session.user.user_metadata.role;
                 const displayName = session.user.user_metadata.display_name || 'VIP';
                 const navBtnDash = document.getElementById('navBtnDash');
-                if (userRole === 'sideline' || userRole === 'VVIP' || userRole === 'Owner') {
+                if (userRole === 'sideline' || userRole === 'agency' || userRole === 'admin') {
                     navBtnDash.onclick = openAgencyDashboard; 
                     navBtnDash.innerHTML = '<span class="iconify" data-icon="heroicons:briefcase"></span> จัดการหลังบ้าน';
                 } else {
@@ -575,99 +553,68 @@
                     navBtnDash.innerHTML = '<span class="iconify" data-icon="heroicons:user-circle"></span> บัญชีของฉัน';
                 }
             } else {
-                userFavorites = []; // เคลียร์ความจำตอนล็อกเอาท์
+                userFavorites = []; 
+                handleSearch(); // รีเฟรชหน้าแรกให้หัวใจหายแดง
             }
         }
 
-        // 💖 ระบบ Favorite ของจริง (DB) 💖
         async function fetchUserFavorites() {
             if(!currentUserSession) return;
             const { data, error } = await supabaseClient.from('favorites').select('model_id').eq('user_id', currentUserSession.user.id);
             if(!error && data) {
                 userFavorites = data.map(f => f.model_id);
-                renderGrid(allModelsData); // วาดการ์ดใหม่ ให้หัวใจแดงเฉพาะคนที่เคยกด
+                handleSearch();
             }
         }
 
         async function toggleHeartReal(modelId, btn, event) {
             if(event) event.stopPropagation(); 
-            if(!currentUserSession) {
-                alert("กรุณาเข้าสู่ระบบก่อนเก็บน้องๆ ไว้ในรายการโปรดนะครับ ❤️");
-                openAuthModal('login');
-                return;
-            }
+            if(!currentUserSession) { alert("กรุณาเข้าสู่ระบบก่อนเก็บน้องๆ ไว้ในรายการโปรดนะครับ ❤️"); openAuthModal('login'); return; }
 
             const icon = btn.querySelector('.iconify');
             const isLiked = userFavorites.includes(modelId);
 
             if (isLiked) {
-                // ยกเลิกถูกใจ (Delete from DB)
-                icon.setAttribute('data-icon', 'mdi:cards-heart-outline');
-                icon.style.color = 'white'; btn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-                userFavorites = userFavorites.filter(id => id !== modelId); // ลบออกจากแรม
+                icon.setAttribute('data-icon', 'mdi:cards-heart-outline'); icon.style.color = 'white'; btn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                userFavorites = userFavorites.filter(id => id !== modelId);
                 await supabaseClient.from('favorites').delete().match({ user_id: currentUserSession.user.id, model_id: modelId });
             } else {
-                // กดถูกใจ (Insert to DB)
-                icon.setAttribute('data-icon', 'mdi:cards-heart');
-                icon.style.color = '#ff4d4f'; btn.style.borderColor = '#ff4d4f';
-                userFavorites.push(modelId); // เพิ่มในแรม
+                icon.setAttribute('data-icon', 'mdi:cards-heart'); icon.style.color = '#ff4d4f'; btn.style.borderColor = '#ff4d4f';
+                userFavorites.push(modelId);
                 await supabaseClient.from('favorites').insert([{ user_id: currentUserSession.user.id, model_id: modelId }]);
             }
         }
 
-        // 🚀 ระบบค้นหาและฟิลเตอร์ 🚀
         let currentFilter = 'all';
-        
         function setFilter(filterType, btnElement) {
             currentFilter = filterType;
-            // สลับสีปุ่ม
             document.querySelectorAll('.filter-chips .chip').forEach(c => c.classList.remove('active'));
             btnElement.classList.add('active');
-            handleSearch(); // สั่งให้กรองข้อมูลใหม่
+            handleSearch(); 
         }
 
         function handleSearch() {
             const searchText = document.getElementById('searchInput').value.toLowerCase();
-            
-            // กรองข้อมูลในแรม
             let filteredData = allModelsData.filter(model => {
-                // กรองข้อความค้นหา (ชื่อ หรือ พิกัด)
                 const matchSearch = model.name.toLowerCase().includes(searchText) || (model.location && model.location.toLowerCase().includes(searchText));
-                
-                // กรองปุ่มชิป
                 let matchFilter = true;
                 if (currentFilter === 'new') {
-                    // สมมติว่า "ใหม่" คือโพสต์มาไม่เกิน 7 วัน
-                    const postDate = new Date(model.created_at);
-                    const now = new Date();
-                    const diffTime = Math.abs(now - postDate);
-                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-                    matchFilter = diffDays <= 7;
-                } else if (currentFilter === 'budget') {
-                    matchFilter = model.price < 2000;
-                } else if (currentFilter === 'favorite') {
-                    matchFilter = userFavorites.includes(model.id);
-                }
-
+                    const diffTime = Math.abs(new Date() - new Date(model.created_at));
+                    matchFilter = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) <= 7;
+                } else if (currentFilter === 'budget') { matchFilter = model.price < 2000; } 
+                else if (currentFilter === 'favorite') { matchFilter = userFavorites.includes(model.id); }
                 return matchSearch && matchFilter;
             });
-
             renderGrid(filteredData);
         }
 
-        // ฟังก์ชันวาดการ์ดหน้าแรก (แยกออกมาเพื่อให้ Search เรียกใช้ซ้ำได้)
         function renderGrid(dataToRender) {
             const grid = document.getElementById('modelsGrid');
-            
-            if (dataToRender.length === 0) { 
-                grid.innerHTML = '<div class="no-results"><span class="iconify" data-icon="heroicons:face-frown" style="font-size:3rem; margin-bottom:10px;"></span><br>ไม่พบน้องๆ ที่ตรงกับเงื่อนไขการค้นหาครับ 🥲</div>'; 
-                return; 
-            }
+            if (dataToRender.length === 0) { grid.innerHTML = '<div class="no-results"><span class="iconify" data-icon="heroicons:face-frown" style="font-size:3rem; margin-bottom:10px;"></span><br>ไม่พบน้องๆ ที่ตรงกับเงื่อนไขการค้นหาครับ 🥲</div>'; return; }
             
             let html = '';
             dataToRender.forEach(model => {
                 const modelJson = encodeURIComponent(JSON.stringify(model));
-                // เช็คว่าไอดีของเด็กคนนี้ อยู่ในกระเป๋าหัวใจของเราไหม
                 const isFav = userFavorites.includes(model.id);
                 const heartIcon = isFav ? 'mdi:cards-heart' : 'mdi:cards-heart-outline';
                 const heartColor = isFav ? '#ff4d4f' : 'white';
@@ -699,50 +646,29 @@
             grid.innerHTML = html;
         }
 
-        // ดึงข้อมูลครั้งแรกตอนเปิดเว็บ
         async function fetchModels() {
-            // โชว์ Skeleton รอ
-            const grid = document.getElementById('modelsGrid');
-            grid.innerHTML = '<div class="skeleton-card"><div class="skel-img skel-anim"></div><div class="skel-text-l skel-anim"></div><div class="skel-text-s skel-anim"></div><div class="skel-text-full skel-anim"></div><div class="skel-footer"><div class="skel-price skel-anim"></div><div class="skel-rate skel-anim"></div></div></div>'.repeat(6);
-            
             const { data, error } = await supabaseClient.from('models').select('*').eq('status', 'active').order('created_at', { ascending: false });
+            if (error || !data) { document.getElementById('modelsGrid').innerHTML = '<p style="text-align:center; color:red;">โหลดข้อมูลไม่สำเร็จ</p>'; return; }
             
-            if (error || !data) { grid.innerHTML = '<p style="text-align:center; color:red;">โหลดข้อมูลไม่สำเร็จ</p>'; return; }
+            allModelsData = data; 
             
-            allModelsData = data; // เก็บใส่แรม
-            
-            // วาด Stories (วงกลมด้านบน)
             let storiesHtml = '';
             data.slice(0, 15).forEach((model) => {
                 const modelJson = encodeURIComponent(JSON.stringify(model));
-                storiesHtml += `
-                <button class="stories-carousel__item" onclick="viewProfile('${modelJson}')">
-                    <div class="stories-carousel__skeleton-ring">
-                        <img src="${model.cover_image}" class="stories-carousel__skeleton-avatar" alt="Story">
-                    </div>
-                    <span class="stories-carousel__name">${escapeHTML(model.name)}</span>
-                </button>`;
+                storiesHtml += `<button class="stories-carousel__item" onclick="viewProfile('${modelJson}')"><div class="stories-carousel__skeleton-ring"><img src="${model.cover_image}" class="stories-carousel__skeleton-avatar" alt="Story"></div><span class="stories-carousel__name">${escapeHTML(model.name)}</span></button>`;
             });
             if(storiesHtml !== '') { document.getElementById('storiesContainer').innerHTML = storiesHtml; }
 
-            // วาดการ์ด (อิงตามฟิลเตอร์ปัจจุบัน)
             handleSearch();
         }
 
-        // เปิดดูโปรไฟล์
         function viewProfile(encodedJson) {
             const model = JSON.parse(decodeURIComponent(encodedJson));
-            
-            const galleryContainer = document.getElementById('pdGallery');
-            const indicatorsContainer = document.getElementById('pdIndicators');
+            const galleryContainer = document.getElementById('pdGallery'); const indicatorsContainer = document.getElementById('pdIndicators');
             galleryContainer.innerHTML = ''; indicatorsContainer.innerHTML = '';
             
             const images = (model.gallery && model.gallery.length > 0) ? model.gallery : [model.cover_image];
-            
-            images.forEach((imgUrl, idx) => {
-                galleryContainer.innerHTML += `<img src="${imgUrl}">`;
-                indicatorsContainer.innerHTML += `<div class="gallery-dot ${idx === 0 ? 'active' : ''}"></div>`;
-            });
+            images.forEach((imgUrl, idx) => { galleryContainer.innerHTML += `<img src="${imgUrl}">`; indicatorsContainer.innerHTML += `<div class="gallery-dot ${idx === 0 ? 'active' : ''}"></div>`; });
             
             galleryContainer.onscroll = () => {
                 const index = Math.round(galleryContainer.scrollLeft / galleryContainer.clientWidth);
@@ -753,45 +679,26 @@
             if(images.length <= 1) { navButtons.forEach(btn => btn.style.display = 'none'); indicatorsContainer.style.display = 'none'; } 
             else { navButtons.forEach(btn => btn.style.display = 'flex'); indicatorsContainer.style.display = 'flex'; }
 
-            document.getElementById('pdName').innerText = model.name;
-            document.getElementById('pdName2').innerText = model.name;
-            document.getElementById('pdLoc').innerText = model.location || 'ไม่ระบุพิกัด';
-            document.getElementById('pdAge').innerText = model.age || '-';
-            document.getElementById('pdProps').innerText = model.proportions || '-';
-            document.getElementById('pdHeight').innerText = model.height || '-';
-            document.getElementById('pdWeight').innerText = model.weight || '-';
-            document.getElementById('pdPrice').innerText = model.price ? model.price.toLocaleString() : '0';
+            document.getElementById('pdName').innerText = model.name; document.getElementById('pdName2').innerText = model.name;
+            document.getElementById('pdLoc').innerText = model.location || 'ไม่ระบุพิกัด'; document.getElementById('pdAge').innerText = model.age || '-';
+            document.getElementById('pdProps').innerText = model.proportions || '-'; document.getElementById('pdHeight').innerText = model.height || '-';
+            document.getElementById('pdWeight').innerText = model.weight || '-'; document.getElementById('pdPrice').innerText = model.price ? model.price.toLocaleString() : '0';
             document.getElementById('pdDesc').innerText = model.description || 'ยังไม่มีคำแนะนำตัวค่ะ';
             
             let rawLine = model.line_id || ''; let lineUrl = rawLine;
             if (!rawLine.startsWith('http')) { lineUrl = rawLine.startsWith('@') ? `https://line.me/R/ti/p/${rawLine}` : `https://line.me/ti/p/~${rawLine}`; }
+            document.getElementById('btnBookNow').onclick = function() { if(!rawLine) { alert('น้องคนนี้ยังไม่ได้ใส่ช่องทางการติดต่อไว้ครับ'); } else { window.open(lineUrl, '_blank'); } };
             
-            document.getElementById('btnBookNow').onclick = function() {
-                if(!rawLine) { alert('น้องคนนี้ยังไม่ได้ใส่ช่องทางการติดต่อไว้ครับ'); } else { window.open(lineUrl, '_blank'); }
-            };
-            
-            // เช็คสถานะปุ่มหัวใจในหน้าโปรไฟล์
-            const modalHeartBtn = document.getElementById('btnProHeart');
-            const icon = modalHeartBtn.querySelector('.iconify');
+            const modalHeartBtn = document.getElementById('btnProHeart'); const icon = modalHeartBtn.querySelector('.iconify');
             const isFav = userFavorites.includes(model.id);
-            
-            icon.setAttribute('data-icon', isFav ? 'mdi:cards-heart' : 'mdi:cards-heart-outline');
-            icon.style.color = isFav ? '#ff4d4f' : 'white';
-            modalHeartBtn.style.borderColor = isFav ? '#ff4d4f' : 'rgba(255, 255, 255, 0.3)';
-            
-            // ผูก Event ปุ่มหัวใจในโปรไฟล์ใหม่
+            icon.setAttribute('data-icon', isFav ? 'mdi:cards-heart' : 'mdi:cards-heart-outline'); icon.style.color = isFav ? '#ff4d4f' : 'white'; modalHeartBtn.style.borderColor = isFav ? '#ff4d4f' : 'rgba(255, 255, 255, 0.3)';
             modalHeartBtn.onclick = function() { toggleHeartReal(model.id, this, null); };
 
             openProfile();
         }
 
-        window.scrollGallery = function(dir) {
-            const galleryContainer = document.getElementById('pdGallery');
-            const width = galleryContainer.clientWidth;
-            galleryContainer.scrollBy({ left: dir * width, behavior: 'smooth' });
-        };
+        window.scrollGallery = function(dir) { const galleryContainer = document.getElementById('pdGallery'); const width = galleryContainer.clientWidth; galleryContainer.scrollBy({ left: dir * width, behavior: 'smooth' }); };
 
-        // --- โค้ด Auth & Agency Dashboard --- 
         function switchAuthTab(tab) { document.getElementById('loginForm').classList.toggle('active', tab === 'login'); document.getElementById('registerForm').classList.toggle('active', tab === 'register'); }
         function switchAgTab(tabName) { document.getElementById('viewOverview').classList.remove('active'); document.getElementById('viewMyProfiles').classList.remove('active'); document.getElementById('viewAddModel').classList.remove('active'); document.getElementById('tabOverview').classList.remove('active'); document.getElementById('tabMyProfiles').classList.remove('active'); document.getElementById('tabModels').classList.remove('active'); if(tabName === 'overview') { document.getElementById('viewOverview').classList.add('active'); document.getElementById('tabOverview').classList.add('active'); document.getElementById('agTopTitle').innerHTML = '<span class="iconify" data-icon="heroicons:window"></span> แดชบอร์ดเอเจนซี่'; } else if(tabName === 'myProfiles') { document.getElementById('viewMyProfiles').classList.add('active'); document.getElementById('tabMyProfiles').classList.add('active'); document.getElementById('agTopTitle').innerHTML = '<span class="iconify" data-icon="heroicons:users"></span> โปรไฟล์ของฉัน'; fetchMyProfiles(); } else if(tabName === 'addModel') { document.getElementById('viewAddModel').classList.add('active'); document.getElementById('tabModels').classList.add('active'); document.getElementById('agTopTitle').innerHTML = '<span class="iconify" data-icon="heroicons:user-plus"></span> สร้างโปรไฟล์ใหม่'; } }
         function openProfile() { document.getElementById('profileDetailModal').classList.add('active'); document.body.classList.add('modal-open'); }
@@ -809,12 +716,16 @@
 
         async function handleAuthSubmit(event, type) {
             event.preventDefault();
-            const submitBtn = event.target.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerText; submitBtn.innerText = 'กำลังประมวลผล...';
+            if (type === 'register') {
+                const pwd = document.getElementById('regPassword').value; const confirmPwd = document.getElementById('regConfirmPassword').value;
+                if(pwd.length < 6) { alert("รหัสผ่านต้องอย่างน้อย 6 ตัวอักษร"); return; }
+                if (pwd !== confirmPwd) { alert('❌ รหัสผ่านไม่ตรงกัน'); return; }
+            }
+            const submitBtn = event.target.querySelector('button[type="submit"]'); const originalText = submitBtn.innerText; submitBtn.innerText = 'กำลังประมวลผล...';
             if (type === 'login') {
                 const email = document.getElementById('loginEmail').value; const password = document.getElementById('loginPassword').value;
-                const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-                if (error) { alert('❌ เข้าสู่ระบบไม่สำเร็จ'); } else { closeAuthModal(null, true); event.target.reset(); fetchModels(); }
+                const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                if (error) { alert('❌ เข้าสู่ระบบไม่สำเร็จ'); } else { closeAuthModal(null, true); event.target.reset(); }
             } else if (type === 'register') {
                 const email = document.getElementById('regEmail').value; const password = document.getElementById('regPassword').value; const username = document.getElementById('regUsername').value; const role = document.querySelector('input[name="member_type"]:checked').value;
                 const { error } = await supabaseClient.auth.signUp({ email: email, password: password, options: { data: { username: username, display_name: username, role: role } } });
@@ -823,13 +734,12 @@
             submitBtn.innerText = originalText;
         }
 
-        async function handleLogout() { await supabaseClient.auth.signOut(); updateUIAuth(null); closeDashboard(); closeAgencyDashboard(); fetchModels(); }
+        async function handleLogout() { await supabaseClient.auth.signOut(); updateUIAuth(null); closeDashboard(); closeAgencyDashboard(); }
 
-        // --- ระบบ Upload รูป ---
         let selectedFiles = []; let dragStartIndex;
         function handleFileSelect(event) {
             const files = Array.from(event.target.files);
-            if (selectedFiles.length + files.length > 6) { alert("อัปโหลดได้สูงสุด 6 รูปเท่านั้นครับ"); return; }
+            if (selectedFiles.length + files.length > 6) { alert("สูงสุด 6 รูปครับ"); return; }
             files.forEach(f => { if (f.type.startsWith('image/') && f.size <= 2*1024*1024) selectedFiles.push({ id: Math.random().toString(36), file: f, preview: URL.createObjectURL(f) }); });
             renderGalleryPreview();
         }
@@ -877,14 +787,13 @@
             let html = '';
             data.forEach(m => {
                 const sHtml = m.status === 'active' ? `<span class="mp-status active" onclick="toggleStatus(${m.id}, 'inactive')"><span class="iconify" data-icon="heroicons:eye"></span></span>` : `<span class="mp-status inactive" onclick="toggleStatus(${m.id}, 'active')"><span class="iconify" data-icon="heroicons:eye-slash"></span></span>`;
-                html += `<tr><td><img src="${m.cover_image}" class="mp-img"></td><td><span class="mp-name">${escapeHTML(m.name)}</span></td><td>฿${m.price}</td><td>${sHtml}</td><td><button class="btn-danger" onclick="deleteModel(${m.id})">ลบ</button></td></tr>`;
+                html += `<tr><td><img src="${m.cover_image}" class="mp-img"></td><td><span class="mp-name">${escapeHTML(m.name)}</span></td><td>฿${m.price}</td><td>${sHtml}</td><td><button class="btn-danger" onclick="deleteModel(${m.id}, '${escapeHTML(m.name)}')">ลบ</button></td></tr>`;
             });
             tbody.innerHTML = html || '<tr><td colspan="5" align="center">ไม่มีข้อมูล</td></tr>';
         }
         async function toggleStatus(id, stat) { await supabaseClient.from('models').update({ status: stat }).eq('id', id); fetchMyProfiles(); fetchModels(); }
-        async function deleteModel(id) { if(confirm('ลบจริงไหม?')) { await supabaseClient.from('models').delete().eq('id', id); fetchMyProfiles(); fetchModels(); } }
+        async function deleteModel(id, name) { if(confirm(`ลบน้อง ${name}?`)) { await supabaseClient.from('models').delete().eq('id', id); fetchMyProfiles(); fetchModels(); } }
 
-        // ลุยเลย! ดึงข้อมูลทันทีที่เปิดเว็บ
         fetchModels();
     </script>
 </body>
