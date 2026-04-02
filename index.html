@@ -28,7 +28,7 @@
             --dash-bg: #0f0f0f;
             --dash-card: #1a1a1a;
             --dash-border: #333333;
-            --dash-gold: var(--accent);
+            --dash-gold: var(--accent); /* กลับมาใช้สี Rose Gold ครับ */
             --dash-gold-hover: #9c594c;
         }
 
@@ -163,12 +163,48 @@
         /* PROFILE DETAIL OVERLAY */
         .profile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dash-bg); z-index: 4000; overflow-y: auto; opacity: 0; visibility: hidden; transition: all 0.3s ease; transform: translateY(20px); padding-bottom: 90px; font-family: 'Prompt', sans-serif; }
         .profile-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
+        
+        /* 🚨 แก้ไข justify(Content -> justify-content ตรงนี้ 🚨 */
         .btn-back-profile { position: absolute; top: 20px; left: 20px; width: 45px; height: 45px; border-radius: 50%; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 4010; transition: 0.2s; }
+        
         .profile-hero { width: 100%; height: 60vh; position: relative; }
         .profile-hero img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
         .hero-gradient { position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, var(--dash-bg) 0%, transparent 100%); }
         .profile-content { max-width: 800px; margin: -50px auto 0 auto; padding: 0 5%; position: relative; z-index: 4005; color: white; }
-        .pro-name { font-size: 2.2rem; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 10px; line-height: 1; margin-bottom: 20px;}
+        .pro-title-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; }
+        .pro-name-group { display: flex; flex-direction: column; gap: 5px; }
+        .pro-name { font-size: 2.2rem; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 10px; line-height: 1; }
+        .verified-badge { font-size: 1.3rem; color: var(--badge-green); }
+        .pro-location { font-size: 1rem; color: #aaa; display: flex; align-items: center; gap: 5px; }
+        .pro-action-btns { display: flex; gap: 15px; }
+        
+        /* 🚨 แก้ไข justify(Content -> justify-content ตรงนี้ 🚨 */
+        .btn-pro-icon { width: 45px; height: 45px; border-radius: 50%; background: var(--dash-card); border: 1px solid var(--dash-border); color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; }
+        
+        .pro-stats-box { background: var(--dash-card); border: 1px solid var(--dash-border); border-radius: 20px; padding: 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; text-align: center; margin-bottom: 25px; }
+        .pro-stat-item { border-right: 1px solid #333; }
+        .pro-stat-item:last-child { border-right: none; }
+        .pro-stat-val { font-size: 1.2rem; font-weight: 600; color: var(--dash-gold); }
+        .pro-stat-label { font-size: 0.85rem; color: #888; margin-top: 5px; }
+        .pro-section { margin-bottom: 30px; }
+        .pro-sec-title { font-size: 1.2rem; font-weight: 500; color: #fff; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--dash-border); padding-bottom: 10px; }
+        .tags-container { display: flex; flex-wrap: wrap; gap: 10px; }
+        .service-tag { background: rgba(181, 108, 94, 0.1); color: var(--dash-gold); border: 1px solid rgba(181, 108, 94, 0.3); padding: 6px 15px; border-radius: 20px; font-size: 0.9rem; }
+        .pro-desc { font-size: 1rem; color: #ccc; line-height: 1.6; background: #151515; padding: 20px; border-radius: 15px; border-left: 4px solid var(--dash-gold); }
+        .review-card { background: var(--dash-card); border-radius: 15px; padding: 15px; border: 1px solid var(--dash-border); margin-bottom: 15px; }
+        .review-head { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .review-user { font-weight: 500; color: #ddd; display: flex; align-items: center; gap: 5px; }
+        .review-stars { color: #fbbf24; }
+        .review-text { font-size: 0.95rem; color: #aaa; }
+        
+        /* 🚨 แก้ไข justify(Content -> justify-content ตรงนี้ 🚨 */
+        .sticky-booking-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(15px); border-top: 1px solid var(--dash-border); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 4020; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        
+        .profile-overlay.active .sticky-booking-bar { transform: translateY(0); }
+        .book-price-box { display: flex; flex-direction: column; }
+        .book-label { font-size: 0.85rem; color: #888; }
+        .book-price { font-size: 1.5rem; font-weight: 600; color: var(--dash-gold); }
+        .btn-booking { background: var(--btn-gradient); color: var(--accent); border: 1px solid rgba(255,255,255,0.5); padding: 12px 30px; border-radius: 50px; font-size: 1.1rem; font-weight: 600; font-family: 'Prompt'; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); display: flex; align-items: center; gap: 8px; }
 
         /* Grid Cards หน้าแรก */
         .header-extensions { padding: 20px 5%; max-width: 1400px; margin: 0 auto; }
@@ -178,17 +214,30 @@
         .card-image-box { position: relative; width: 100%; height: 380px; border-radius: 12px; overflow: hidden; margin-bottom: 15px; flex-shrink: 0;}
         .card-image-box img { width: 100%; height: 100%; object-fit: cover; }
         .card-info { text-align: left; flex: 1; display: flex; flex-direction: column;}
+        .name-group { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
         .card-name { font-size: 1.2rem; font-weight: 600; color: var(--text-dark); }
+        .card-age { font-size: 1.1rem; color: var(--text-muted); font-weight: normal; margin-left: 4px; }
+        .verified-badge-small { font-size: 1.1rem; color: var(--badge-green); }
+        .card-location { font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; margin-bottom: 8px; }
         .card-stats-text { font-size: 0.9rem; color: var(--text-dark); margin-bottom: 12px; font-weight: 500; flex: 1;}
+        
+        /* 🚨 แก้ไข justify(Content -> justify-content ตรงนี้ 🚨 */
         .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed rgba(181, 108, 94, 0.3); padding-top: 12px; flex-shrink: 0;}
+        
+        .price { font-size: 1.25rem; font-weight: bold; color: var(--accent); }
+        .engagement { font-size: 0.9rem; display: flex; align-items: center; gap: 12px; color: var(--text-dark); }
+        .engage-item { display: flex; align-items: center; gap: 4px; }
         .badge-image { position: absolute; top: 12px; left: 12px; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: white; background: var(--btn-gradient); color: var(--accent); z-index: 10; border: 1px solid rgba(255,255,255,0.5);}
         .heart-btn { position: absolute; bottom: 12px; right: 12px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.3); display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; }
         
         @media (max-width: 768px) {
             .nav-links, .nav-buttons { display: none !important; }
-            .mobile-menu-btn { display: block; }
+            .mobile-menu-btn { display: block; color: var(--text-dark); }
             .grid-container { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; padding: 10px 3% 30px 3%; }
             .card-image-box { height: 220px; }
+            .card-name { font-size: 1rem; }
+            .price { font-size: 1.1rem; }
+            .engage-item { gap: 2px; font-size: 0.8rem;}
             .ag-sidebar { display: none; }
             .ag-topbar { padding: 15px; }
             .ag-stats-grid { grid-template-columns: 1fr 1fr; }
@@ -362,7 +411,42 @@
         <button class="btn-back-profile" onclick="closeProfile()"><span class="iconify" data-icon="heroicons:arrow-left"></span></button>
         <div class="profile-hero"><img src="https://ryensvsewntmflahpacp.supabase.co/storage/v1/object/public/profile_images/S__12541966_0.jpg"><div class="hero-gradient"></div></div>
         <div class="profile-content">
-            <h1 class="pro-name">น้อง B <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid" style="color:var(--badge-green);"></span></h1>
+            <div class="pro-title-row">
+                <div class="pro-name-group">
+                    <h1 class="pro-name">น้อง B <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid" style="color:var(--badge-green);"></span></h1>
+                    <div class="pro-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--dash-gold);"></span> กรุงเทพฯ, ลาดพร้าว</div>
+                </div>
+                <div class="pro-action-btns">
+                    <button class="btn-pro-icon"><span class="iconify heart-icon" data-icon="mdi:cards-heart-outline"></span></button>
+                </div>
+            </div>
+            
+            <div class="pro-stats-box">
+                <div class="pro-stat-item"><div class="pro-stat-val">24</div><div class="pro-stat-label">อายุ</div></div>
+                <div class="pro-stat-item"><div class="pro-stat-val">34-24-36</div><div class="pro-stat-label">สัดส่วน</div></div>
+                <div class="pro-stat-item"><div class="pro-stat-val">157</div><div class="pro-stat-label">ส่วนสูง</div></div>
+                <div class="pro-stat-item"><div class="pro-stat-val">49</div><div class="pro-stat-label">น้ำหนัก</div></div>
+            </div>
+
+            <div class="pro-section">
+                <h3 class="pro-sec-title"><span class="iconify" data-icon="heroicons:sparkles"></span> บริการที่รับ</h3>
+                <div class="tags-container">
+                    <span class="service-tag">ฟีลแฟน 100%</span><span class="service-tag">ทานข้าว/ดูหนัง</span><span class="service-tag">ปาร์ตี้ส่วนตัว</span>
+                </div>
+            </div>
+            
+            <div class="pro-section">
+                <h3 class="pro-sec-title"><span class="iconify" data-icon="heroicons:information-circle"></span> แนะนำตัว</h3>
+                <div class="pro-desc">สวัสดีค่ะ น้อง B นะคะ ตัวเล็กสเปคใครรึเปล่า เฟรนด์ลี่ คุยเก่ง ยิ้มง่าย เอาใจเก่งมากค่ะ ทำตัวเนียนเหมือนแฟนจริงควงไปไม่อายใครแน่นอนค่ะ รับรองว่าอยู่ด้วยแล้วไม่มีเหงา ใครชอบสายอ้อน ทักมาจองคิวได้เลยนะคะ 💖</div>
+            </div>
+        </div>
+        <div class="sticky-booking-bar">
+            <div class="book-price-box">
+                <span class="book-label">เรทราคาเริ่มต้น</span><span class="book-price">฿1,000 <span style="font-size: 0.9rem; color: #888; font-weight: normal;">/ 1 ชม.</span></span>
+            </div>
+            <button class="btn-booking" onclick="alert('เด้งไปหน้าแอดไลน์ หรือ ระบบจ่ายเงิน!')">
+                <span class="iconify" data-icon="logos:line" style="font-size: 1.2rem; filter: brightness(0) invert(1);"></span> จองคิวน้อง B
+            </button>
         </div>
     </div>
 
@@ -374,12 +458,36 @@
                 <span class="badge-image">New</span>
             </div>
             <div class="card-info">
-                <div class="card-name" style="margin-bottom: 10px;">น้อง B <span style="color:#888; font-weight:normal;">24</span></div>
+                <div class="name-group">
+                    <span class="iconify verified-badge-small" data-icon="heroicons:check-badge-solid"></span>
+                    <span class="card-name">น้อง B <span class="card-age">24</span></span>
+                </div>
+                <div class="card-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent); font-size: 1rem;"></span> กรุงเทพฯ, ลาดพร้าว</div>
                 <div class="card-stats-text">34-24-36 • 157/49</div>
                 <div class="card-footer">
-                    <div class="price" style="font-size: 1.1rem;">฿1,000</div>
+                    <div class="price">฿1,000</div>
                     <div class="engagement">
                         <span class="engage-item"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24;"></span> 4.8</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" onclick="openProfile()">
+            <div class="card-image-box">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80">
+            </div>
+            <div class="card-info">
+                <div class="name-group">
+                    <span class="iconify verified-badge-small" data-icon="heroicons:check-badge-solid"></span>
+                    <span class="card-name">น้ำหวาน <span class="card-age">22</span></span>
+                </div>
+                <div class="card-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent); font-size: 1rem;"></span> กรุงเทพฯ, บึงกุ่ม</div>
+                <div class="card-stats-text">34B-25-35 • 160/45</div>
+                <div class="card-footer">
+                    <div class="price">฿1,200</div>
+                    <div class="engagement">
+                        <span class="engage-item"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24;"></span> 5.0</span>
                     </div>
                 </div>
             </div>
