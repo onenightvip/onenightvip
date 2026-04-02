@@ -74,6 +74,11 @@
         .stories-carousel__item:hover .stories-carousel__name { color: var(--accent); }
         .stories-carousel__skeleton-ring { height: 64px; position: relative; width: 64px; border-radius: 50%; padding: 2px; background: linear-gradient(135deg, var(--accent-light), var(--accent));}
         .stories-carousel__skeleton-avatar { border-radius: 50%; height: 100%; width: 100%; object-fit: cover; border: 2px solid #fdf5f5;}
+        
+        /* 🚀 แอนิเมชัน Skeleton สำหรับ Stories 🚀 */
+        .skeleton-anim { background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%); background-size: 200% 100%; animation: skeletonShimmer 1.5s infinite; }
+        @keyframes skeletonShimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
         @media(min-width: 640px) { .stories-carousel__skeleton-container { gap: 16px; padding: 15px 20px; } }
         @media(min-width: 1024px) { .stories-carousel__skeleton-container { gap: 20px; padding: 15px 24px; } }
 
@@ -198,27 +203,22 @@
         .btn-danger { background: transparent; color: #ff4d4f; border: 1px solid #ff4d4f; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-family: 'Prompt'; font-size: 0.8rem;}
         .btn-danger:hover { background: rgba(255, 77, 79, 0.1); }
 
-        /* 🚀 PROFILE DETAIL OVERLAY (พร้อมระบบ Gallery เลื่อนรูป) 🚀 */
+        /* PROFILE DETAIL OVERLAY */
         .profile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f0f0f; z-index: 4000; overflow-y: auto; opacity: 0; visibility: hidden; transition: all 0.3s ease; font-family: 'Prompt', sans-serif; display: flex; flex-direction: column; }
         .profile-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
         .btn-back-profile { position: absolute; top: 20px; left: 20px; width: 45px; height: 45px; border-radius: 50%; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 4010; transition: 0.2s; }
         
         .profile-hero { width: 100%; height: 60vh; position: relative; flex-shrink: 0; overflow: hidden; }
-        
-        /* 🔥 Gallery Container ในหน้าโปรไฟล์ 🔥 */
         .hero-gallery { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; width: 100%; height: 100%; scroll-behavior: smooth; }
         .hero-gallery::-webkit-scrollbar { display: none; }
         .hero-gallery img { width: 100%; height: 100%; object-fit: cover; object-position: top; flex-shrink: 0; scroll-snap-align: start; }
-        
         .gallery-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 4002; display: flex; justify-content: center; align-items: center; font-size: 1.2rem;}
         .gallery-nav:hover { background: var(--dash-gold); color: #000; }
         .gallery-nav.prev { left: 15px; }
         .gallery-nav.next { right: 15px; }
-        
         .gallery-indicators { position: absolute; bottom: 90px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 4002; }
         .gallery-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); transition: 0.3s; }
         .gallery-dot.active { background: var(--dash-gold); width: 20px; border-radius: 4px; }
-        
         .hero-gradient { position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, #0f0f0f 0%, transparent 100%); pointer-events: none;}
         
         .profile-content { max-width: 600px; width: 100%; margin: -60px auto 0 auto; padding: 0 5%; position: relative; z-index: 4005; color: white; flex: 1 0 auto; padding-bottom: 30px;}
@@ -249,10 +249,22 @@
         .btn-booking { background: var(--btn-gradient); color: var(--accent); border: none; padding: 12px 35px; border-radius: 50px; font-size: 1.1rem; font-weight: 600; font-family: 'Prompt'; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 5px;}
         .btn-booking:hover { transform: scale(1.05); }
 
+        /* 🚀 ระบบค้นหาและฟิลเตอร์ 🚀 */
+        .search-filter-container { max-width: 1400px; margin: 20px auto 0 auto; padding: 0 5%; display: flex; flex-direction: column; gap: 15px; }
+        .search-box { position: relative; width: 100%; max-width: 500px; margin: 0 auto; }
+        .search-input { width: 100%; padding: 12px 20px 12px 45px; border-radius: 50px; border: 1px solid rgba(181, 108, 94, 0.3); background: rgba(255,255,255,0.8); backdrop-filter: blur(5px); font-family: 'Prompt'; font-size: 1rem; color: var(--text-dark); outline: none; transition: 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.05);}
+        .search-input:focus { border-color: var(--accent); box-shadow: 0 4px 20px rgba(181, 108, 94, 0.15); background: #fff;}
+        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--accent); font-size: 1.2rem; }
+        
+        .filter-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .chip { padding: 6px 15px; border-radius: 50px; background: rgba(255,255,255,0.6); border: 1px solid rgba(181, 108, 94, 0.2); color: var(--text-dark); font-size: 0.85rem; cursor: pointer; transition: 0.2s; font-family: 'Prompt';}
+        .chip:hover { background: rgba(255,255,255,0.9); border-color: var(--accent); }
+        .chip.active { background: var(--btn-gradient); border-color: var(--accent); font-weight: 500; }
+
         /* Grid Cards หน้าแรก */
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 10px 5% 50px 5%; max-width: 1400px; margin: 0 auto; align-items: stretch; margin-top: 20px;}
-        .card { background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); border-radius: 20px; padding: 15px; border: 1px solid rgba(255,255,255,0.6); box-shadow: 8px 8px 20px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.2s; display: flex; flex-direction: column; height: 100%;}
-        .card:hover { transform: translateY(-5px); }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 10px 5% 50px 5%; max-width: 1400px; margin: 0 auto; align-items: stretch; margin-top: 10px;}
+        .card { background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border-radius: 20px; padding: 15px; border: 1px solid rgba(255,255,255,0.6); box-shadow: 8px 8px 20px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.2s; display: flex; flex-direction: column; height: 100%;}
+        .card:hover { transform: translateY(-5px); box-shadow: 8px 15px 25px rgba(181, 108, 94, 0.15);}
         .card-image-box { position: relative; width: 100%; height: 380px; border-radius: 12px; overflow: hidden; margin-bottom: 15px; flex-shrink: 0;}
         .card-image-box img { width: 100%; height: 100%; object-fit: cover; }
         .card-info { text-align: left; flex: 1; display: flex; flex-direction: column;}
@@ -267,20 +279,32 @@
         .engagement { font-size: 0.9rem; display: flex; align-items: center; gap: 12px; color: var(--text-dark); }
         .engage-item { display: flex; align-items: center; gap: 4px; }
         .badge-image { position: absolute; top: 12px; left: 12px; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: white; background: var(--btn-gradient); color: var(--accent); z-index: 10; border: 1px solid rgba(255,255,255,0.5);}
-        .loading-text { text-align: center; width: 100%; padding: 50px; color: var(--text-muted); font-size: 1.2rem;}
+        
         .heart-btn-card { position: absolute; bottom: 12px; right: 12px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.3); display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; transition: 0.2s;}
         .heart-btn-card:hover { background: rgba(0,0,0,0.6); }
+
+        /* 🚀 SKELETON LOADING (แอนิเมชันตอนโหลด) 🚀 */
+        .skeleton-card { background: rgba(255,255,255,0.6); border-radius: 20px; padding: 15px; border: 1px solid rgba(255,255,255,0.4); height: 100%; display: flex; flex-direction: column;}
+        .skel-img { width: 100%; height: 380px; border-radius: 12px; margin-bottom: 15px;}
+        .skel-text-l { height: 24px; width: 60%; border-radius: 4px; margin-bottom: 8px;}
+        .skel-text-s { height: 16px; width: 40%; border-radius: 4px; margin-bottom: 12px;}
+        .skel-text-full { height: 16px; width: 80%; border-radius: 4px; margin-bottom: 15px; flex: 1;}
+        .skel-footer { display: flex; justify-content: space-between; border-top: 1px dashed rgba(181, 108, 94, 0.3); padding-top: 12px;}
+        .skel-price { height: 24px; width: 30%; border-radius: 4px;}
+        .skel-rate { height: 20px; width: 20%; border-radius: 4px;}
+        .skel-anim { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: skeletonShimmer 1.5s infinite; }
+        
+        .no-results { grid-column: 1 / -1; text-align: center; padding: 50px; color: var(--text-muted); font-size: 1.1rem; background: rgba(255,255,255,0.5); border-radius: 20px;}
 
         @media (max-width: 768px) {
             .nav-links, .nav-buttons { display: none !important; }
             .mobile-menu-btn { display: block; color: var(--text-dark); }
             .grid-container { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; padding: 10px 3% 30px 3%; }
-            .card-image-box { height: 220px; }
+            .card-image-box, .skel-img { height: 220px; }
             .card-name { font-size: 1rem; }
             .price { font-size: 1.1rem; }
             .engage-item { gap: 2px; font-size: 0.8rem;}
             .auth-modal { padding: 25px 20px; border-radius: 0; min-height: 100vh; border: none;}
-            
             .agency-dashboard { flex-direction: column; }
             .ag-sidebar { order: 2; width: 100%; padding: 5px 0; border-right: none; border-top: 1px solid #222; background: #111; z-index: 5020;}
             .ag-logo { display: none; }
@@ -291,8 +315,6 @@
             .ag-main { order: 1; padding-bottom: 10px;}
             .my-profiles-table { display: block; overflow-x: auto; white-space: nowrap; }
             .form-grid { grid-template-columns: 1fr; }
-            
-            /* ซ่อนปุ่มลูกศรในมือถือ (ให้ใช้การใช้นิ้วปัดแทน) */
             .gallery-nav { display: none; }
         }
     </style>
@@ -326,16 +348,16 @@
     <div class="stories-carousel__skeleton-container" id="storiesContainer">
         </div>
 
-    <div class="agencies-carousel-wrapper">
-        <div class="agencies-carousel__track">
-            <div class="agencies-carousel__strip">
-                <a href="#" class="agencies-carousel__spotlight"><img src="https://images.unsplash.com/photo-1558507652-2d9626c4e67a?w=300&q=80" class="agencies-carousel__spotlight-image"><div class="agencies-carousel__spotlight-overlay"></div><div class="agencies-carousel__spotlight-content"><img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo"><div><div class="agencies-carousel__spotlight-name">VIP Agency 1</div><div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 5.0</div></div></div></a>
-                <a href="#" class="agencies-carousel__spotlight"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&q=80" class="agencies-carousel__spotlight-image"><div class="agencies-carousel__spotlight-overlay"></div><div class="agencies-carousel__spotlight-content"><img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo"><div><div class="agencies-carousel__spotlight-name">Super Model Club</div><div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 4.9</div></div></div></a>
-            </div>
-            <div class="agencies-carousel__strip">
-                <a href="#" class="agencies-carousel__spotlight"><img src="https://images.unsplash.com/photo-1558507652-2d9626c4e67a?w=300&q=80" class="agencies-carousel__spotlight-image"><div class="agencies-carousel__spotlight-overlay"></div><div class="agencies-carousel__spotlight-content"><img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo"><div><div class="agencies-carousel__spotlight-name">VIP Agency 1</div><div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 5.0</div></div></div></a>
-                <a href="#" class="agencies-carousel__spotlight"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&q=80" class="agencies-carousel__spotlight-image"><div class="agencies-carousel__spotlight-overlay"></div><div class="agencies-carousel__spotlight-content"><img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="agencies-carousel__spotlight-logo"><div><div class="agencies-carousel__spotlight-name">Super Model Club</div><div class="agencies-carousel__spotlight-count"><span class="iconify" data-icon="heroicons:star-solid"></span> 4.9</div></div></div></a>
-            </div>
+    <div class="search-filter-container">
+        <div class="search-box">
+            <span class="iconify search-icon" data-icon="heroicons:magnifying-glass"></span>
+            <input type="text" class="search-input" id="searchInput" placeholder="ค้นหาชื่อน้อง, พิกัด..." onkeyup="handleSearch()">
+        </div>
+        <div class="filter-chips">
+            <button class="chip active" onclick="setFilter('all', this)">ทั้งหมด</button>
+            <button class="chip" onclick="setFilter('new', this)">🔥 มาใหม่</button>
+            <button class="chip" onclick="setFilter('budget', this)">💸 ต่ำกว่า 2,000</button>
+            <button class="chip" id="btnFilterFav" onclick="setFilter('favorite', this)" style="display:none;">❤️ น้องที่ถูกใจ</button>
         </div>
     </div>
 
@@ -403,7 +425,6 @@
 
             <div class="ag-content-pad ag-view" id="viewMyProfiles">
                 <h1 class="ag-welcome" style="margin-bottom: 5px;">จัดการโปรไฟล์น้องๆ</h1>
-                <p style="color: #888; margin-bottom: 20px;">เปิด/ปิดรับงาน หรือลบโปรไฟล์ได้ที่นี่</p>
                 <table class="my-profiles-table">
                     <thead><tr><th>รูปภาพ</th><th>ข้อมูลน้อง</th><th>ราคา</th><th>สถานะ</th><th style="text-align: center;">จัดการ</th></tr></thead>
                     <tbody id="myProfilesTableBody"><tr><td colspan="5" style="text-align: center; color: #888;">กำลังโหลดข้อมูล...</td></tr></tbody>
@@ -416,36 +437,33 @@
                     <div class="form-grid">
                         <div class="form-panel">
                             <h3><span class="iconify" data-icon="heroicons:user"></span> ข้อมูลพื้นฐาน</h3>
-                            <div class="form-group"><label>ชื่อน้อง / นามแฝง *</label><input type="text" id="mName" class="form-control" required placeholder="เช่น น้องน้ำหวาน"></div>
+                            <div class="form-group"><label>ชื่อน้อง / นามแฝง *</label><input type="text" id="mName" class="form-control" required></div>
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                                <div class="form-group"><label>อายุ</label><input type="number" id="mAge" class="form-control" placeholder="22"></div>
-                                <div class="form-group"><label>สัดส่วน</label><input type="text" id="mProps" class="form-control" placeholder="34-24-35"></div>
-                                <div class="form-group"><label>ส่วนสูง</label><input type="number" id="mHeight" class="form-control" placeholder="160"></div>
-                                <div class="form-group"><label>น้ำหนัก</label><input type="number" id="mWeight" class="form-control" placeholder="45"></div>
+                                <div class="form-group"><label>อายุ</label><input type="number" id="mAge" class="form-control"></div>
+                                <div class="form-group"><label>สัดส่วน</label><input type="text" id="mProps" class="form-control"></div>
+                                <div class="form-group"><label>ส่วนสูง</label><input type="number" id="mHeight" class="form-control"></div>
+                                <div class="form-group"><label>น้ำหนัก</label><input type="number" id="mWeight" class="form-control"></div>
                             </div>
                         </div>
                         <div class="form-panel">
                             <h3><span class="iconify" data-icon="heroicons:currency-dollar"></span> บริการและช่องทางติดต่อ</h3>
-                            <div class="form-group"><label>LINE ID สำหรับจองคิว *</label><input type="text" id="mLineId" class="form-control" required placeholder="เช่น @vip_nongb หรือใส่ลิงก์ไลน์"></div>
+                            <div class="form-group"><label>LINE ID สำหรับจองคิว *</label><input type="text" id="mLineId" class="form-control" required></div>
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                                <div class="form-group"><label>พิกัดรับงาน</label><input type="text" id="mLocation" class="form-control" placeholder="เช่น กรุงเทพฯ"></div>
-                                <div class="form-group"><label>เรทราคาเริ่มต้น *</label><input type="number" id="mPrice" class="form-control" required placeholder="1500"></div>
+                                <div class="form-group"><label>พิกัดรับงาน</label><input type="text" id="mLocation" class="form-control"></div>
+                                <div class="form-group"><label>เรทราคาเริ่มต้น *</label><input type="number" id="mPrice" class="form-control" required></div>
                             </div>
-                            
                             <div class="form-group">
-                                <label>อัปโหลดรูปภาพ (สูงสุด 6 รูป ลากสลับตำแหน่งเพื่อเลือกหน้าปกได้) *</label>
+                                <label>อัปโหลดรูปภาพ (สูงสุด 6 รูป) *</label>
                                 <div class="form-file-upload" id="uploadZone">
-                                    <span class="iconify" data-icon="heroicons:photo" style="font-size: 2rem; margin-bottom: 10px;"></span>
-                                    <p>คลิกเลือก หรือ ลากรูปมาวางที่นี่ (รูปแรกจะเป็นหน้าปก)</p>
+                                    <p id="fileNameDisplay">คลิกที่นี่เพื่อเลือกรูปภาพ</p>
                                     <input type="file" id="mGalleryFiles" accept="image/*" multiple required onchange="handleFileSelect(event)">
                                 </div>
                                 <div class="gallery-preview" id="galleryPreview"></div>
                             </div>
-                            
-                            <div class="form-group"><label>คำแนะนำตัว</label><textarea id="mDesc" class="form-control" rows="3" placeholder="ตัวเล็กสเปคใคร..."></textarea></div>
+                            <div class="form-group"><label>คำแนะนำตัว</label><textarea id="mDesc" class="form-control" rows="3"></textarea></div>
                         </div>
                     </div>
-                    <button type="submit" class="btn-primary" id="btnSubmitModel"><span class="iconify" data-icon="heroicons:arrow-up-tray"></span> อัปโหลดและบันทึกโปรไฟล์</button>
+                    <button type="submit" class="btn-primary" id="btnSubmitModel"><span class="iconify" data-icon="heroicons:arrow-up-tray"></span> บันทึกโปรไฟล์</button>
                 </form>
             </div>
         </div>
@@ -453,24 +471,20 @@
 
     <div class="profile-overlay" id="profileDetailModal">
         <button class="btn-back-profile" onclick="closeProfile()"><span class="iconify" data-icon="heroicons:arrow-left"></span></button>
-        
         <div class="profile-hero">
-            <div class="hero-gallery" id="pdGallery">
-                </div>
+            <div class="hero-gallery" id="pdGallery"></div>
             <button class="gallery-nav prev" onclick="scrollGallery(-1)"><span class="iconify" data-icon="heroicons:chevron-left"></span></button>
             <button class="gallery-nav next" onclick="scrollGallery(1)"><span class="iconify" data-icon="heroicons:chevron-right"></span></button>
-            
             <div class="hero-gradient"></div>
             <div class="gallery-indicators" id="pdIndicators"></div>
         </div>
-
         <div class="profile-content">
             <div class="pro-title-row">
                 <div class="pro-name-group">
                     <h1 class="pro-name"><span id="pdName">ชื่อน้อง</span> <span class="iconify verified-badge" data-icon="heroicons:check-badge-solid"></span></h1>
                     <div class="pro-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--dash-gold);"></span> <span id="pdLoc">พิกัด</span></div>
                 </div>
-                <button class="btn-pro-icon" onclick="toggleHeart(this)"><span class="iconify heart-icon" data-icon="mdi:cards-heart-outline"></span></button>
+                <button class="btn-pro-icon" id="btnProHeart"><span class="iconify heart-icon" data-icon="mdi:cards-heart-outline"></span></button>
             </div>
             
             <div class="pro-stats-box">
@@ -499,7 +513,9 @@
     </div>
     
     <main class="grid-container" id="modelsGrid">
-        <div class="loading-text"><span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังดึงข้อมูลน้องๆ...</div>
+        <div class="skeleton-card"><div class="skel-img skel-anim"></div><div class="skel-text-l skel-anim"></div><div class="skel-text-s skel-anim"></div><div class="skel-text-full skel-anim"></div><div class="skel-footer"><div class="skel-price skel-anim"></div><div class="skel-rate skel-anim"></div></div></div>
+        <div class="skeleton-card"><div class="skel-img skel-anim"></div><div class="skel-text-l skel-anim"></div><div class="skel-text-s skel-anim"></div><div class="skel-text-full skel-anim"></div><div class="skel-footer"><div class="skel-price skel-anim"></div><div class="skel-rate skel-anim"></div></div></div>
+        <div class="skeleton-card"><div class="skel-img skel-anim"></div><div class="skel-text-l skel-anim"></div><div class="skel-text-s skel-anim"></div><div class="skel-text-full skel-anim"></div><div class="skel-footer"><div class="skel-price skel-anim"></div><div class="skel-rate skel-anim"></div></div></div>
     </main>
 
     <script>
@@ -510,74 +526,15 @@
             });
         }
 
-        function toggleHeart(btn, event) {
-            if(event) event.stopPropagation(); 
-            const icon = btn.querySelector('.iconify');
-            if (icon.getAttribute('data-icon') === 'mdi:cards-heart-outline') {
-                icon.setAttribute('data-icon', 'mdi:cards-heart');
-                icon.style.color = '#ff4d4f'; btn.style.borderColor = '#ff4d4f';
-            } else {
-                icon.setAttribute('data-icon', 'mdi:cards-heart-outline');
-                icon.style.color = 'white'; btn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-            }
-        }
-
-        let selectedFiles = []; 
-        let dragStartIndex;
-
-        function handleFileSelect(event) {
-            const files = Array.from(event.target.files);
-            if (selectedFiles.length + files.length > 6) { alert("อัปโหลดได้สูงสุด 6 รูปเท่านั้นครับ"); return; }
-            files.forEach(file => {
-                if (file.type.startsWith('image/') && file.size <= 2 * 1024 * 1024) {
-                    selectedFiles.push({ id: Math.random().toString(36).substring(2), file: file, preview: URL.createObjectURL(file) });
-                } else { alert(`ไฟล์ ${file.name} ข้ามไปเพราะไม่ใช่รูปภาพหรือขนาดเกิน 2MB`); }
-            });
-            renderGalleryPreview();
-        }
-
-        function renderGalleryPreview() {
-            const container = document.getElementById('galleryPreview');
-            container.innerHTML = '';
-            selectedFiles.forEach((item, index) => {
-                const div = document.createElement('div');
-                div.className = `img-thumb-box ${index === 0 ? 'cover' : ''}`;
-                div.draggable = true;
-                div.innerHTML = `<img src="${item.preview}">${index === 0 ? '<div class="cover-badge">หน้าปก</div>' : ''}<button type="button" class="btn-remove-img" onclick="removeImage(${index})"><span class="iconify" data-icon="heroicons:x-mark"></span></button>`;
-                div.addEventListener('dragstart', () => dragStartIndex = index);
-                div.addEventListener('dragover', (e) => e.preventDefault());
-                div.addEventListener('drop', () => { const draggedItem = selectedFiles.splice(dragStartIndex, 1)[0]; selectedFiles.splice(index, 0, draggedItem); renderGalleryPreview(); });
-                container.appendChild(div);
-            });
-            document.getElementById('mGalleryFiles').disabled = selectedFiles.length >= 6;
-        }
-
-        function removeImage(index) { selectedFiles.splice(index, 1); renderGalleryPreview(); }
-
-        function switchAuthTab(tab) { document.getElementById('loginForm').classList.toggle('active', tab === 'login'); document.getElementById('registerForm').classList.toggle('active', tab === 'register'); }
-        function switchAgTab(tabName) { 
-            document.getElementById('viewOverview').classList.remove('active'); document.getElementById('viewMyProfiles').classList.remove('active'); document.getElementById('viewAddModel').classList.remove('active'); 
-            document.getElementById('tabOverview').classList.remove('active'); document.getElementById('tabMyProfiles').classList.remove('active'); document.getElementById('tabModels').classList.remove('active'); 
-            if(tabName === 'overview') { document.getElementById('viewOverview').classList.add('active'); document.getElementById('tabOverview').classList.add('active'); document.getElementById('agTopTitle').innerHTML = '<span class="iconify" data-icon="heroicons:window"></span> แดชบอร์ดเอเจนซี่'; } 
-            else if(tabName === 'myProfiles') { document.getElementById('viewMyProfiles').classList.add('active'); document.getElementById('tabMyProfiles').classList.add('active'); document.getElementById('agTopTitle').innerHTML = '<span class="iconify" data-icon="heroicons:users"></span> โปรไฟล์ของฉัน'; fetchMyProfiles(); } 
-            else if(tabName === 'addModel') { document.getElementById('viewAddModel').classList.add('active'); document.getElementById('tabModels').classList.add('active'); document.getElementById('agTopTitle').innerHTML = '<span class="iconify" data-icon="heroicons:user-plus"></span> สร้างโปรไฟล์ใหม่'; } 
-        }
-
-        function openProfile() { document.getElementById('profileDetailModal').classList.add('active'); document.body.classList.add('modal-open'); }
-        function closeProfile() { document.getElementById('profileDetailModal').classList.remove('active'); document.body.classList.remove('modal-open'); }
-        function toggleMobileMenu() { document.getElementById('mobileOverlay').classList.toggle('active'); document.getElementById('mobileSheet').classList.toggle('active'); }
-        function openAuthModal(tab = 'register') { document.getElementById('authOverlay').classList.add('active'); switchAuthTab(tab); }
-        function closeAuthModal(e, force) { if(force || e.target === document.getElementById('authOverlay')) document.getElementById('authOverlay').classList.remove('active'); }
-        function openDashboard() { document.getElementById('vipDashboard').classList.add('active'); document.body.classList.add('modal-open');}
-        function closeDashboard() { document.getElementById('vipDashboard').classList.remove('active'); document.body.classList.remove('modal-open');}
-        function openAgencyDashboard() { document.getElementById('agencyDashboard').classList.add('active'); document.body.classList.add('modal-open'); switchAgTab('overview');}
-        function closeAgencyDashboard() { document.getElementById('agencyDashboard').classList.remove('active'); document.body.classList.remove('modal-open');}
-
         const SUPABASE_URL = 'https://ryensvsewntmflahpacp.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_rYAnbJukdoUm6ilIeK0j_w_IO6R_i8L';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
         let currentUserSession = null;
+        let allModelsData = []; // เก็บข้อมูลน้องๆ ทั้งหมดไว้ในแรม เพื่อทำฟิลเตอร์ไวๆ
+        let userFavorites = []; // เก็บไอดีน้องที่ยูสเซอร์คนนี้เคยกดหัวใจ
 
+        // 🌟 อัปเดต UI เมื่อมีการ Log In 🌟
         function updateUIAuth(session) {
             currentUserSession = session;
             const isLoggedIn = session !== null;
@@ -590,185 +547,128 @@
             document.getElementById('mobBtnDash').style.display = isLoggedIn ? 'flex' : 'none';
             document.getElementById('mobBtnLogout').style.display = isLoggedIn ? 'flex' : 'none';
 
+            // ถ้าล็อกอินแล้ว ให้โชว์ปุ่มฟิลเตอร์ "❤️ น้องที่ถูกใจ"
+            document.getElementById('btnFilterFav').style.display = isLoggedIn ? 'inline-block' : 'none';
+
             if (isLoggedIn && session.user) {
+                fetchUserFavorites(); // โหลดข้อมูลหัวใจของคนๆ นี้
+                
                 const userRole = session.user.user_metadata.role;
                 const displayName = session.user.user_metadata.display_name || 'VIP';
                 const navBtnDash = document.getElementById('navBtnDash');
-                const mobBtnDash = document.getElementById('mobBtnDash');
-                if (userRole === 'sideline' || userRole === 'VVIP' || userRole === 'Owner' || userRole === 'Super Admin') {
-                    navBtnDash.onclick = openAgencyDashboard; mobBtnDash.onclick = () => { toggleMobileMenu(); openAgencyDashboard(); };
+                if (userRole === 'sideline' || userRole === 'VVIP' || userRole === 'Owner') {
+                    navBtnDash.onclick = openAgencyDashboard; 
                     navBtnDash.innerHTML = '<span class="iconify" data-icon="heroicons:briefcase"></span> จัดการหลังบ้าน';
-                    document.getElementById('agUserName').innerText = escapeHTML(displayName);
-                    document.getElementById('agWelcomeName').innerText = escapeHTML(displayName);
-                    document.getElementById('agAvatarInitial').innerText = escapeHTML(displayName).charAt(0).toUpperCase();
                 } else {
-                    navBtnDash.onclick = openDashboard; mobBtnDash.onclick = () => { toggleMobileMenu(); openDashboard(); };
+                    navBtnDash.onclick = openDashboard; 
                     navBtnDash.innerHTML = '<span class="iconify" data-icon="heroicons:user-circle"></span> บัญชีของฉัน';
                 }
+            } else {
+                userFavorites = []; // เคลียร์ความจำตอนล็อกเอาท์
             }
         }
 
-        supabaseClient.auth.getSession().then(({ data: { session } }) => { updateUIAuth(session); });
-        supabaseClient.auth.onAuthStateChange((event, session) => { updateUIAuth(session); });
-
-        async function handleAuthSubmit(event, type) {
-            event.preventDefault();
-            if (type === 'register') {
-                const pwd = document.getElementById('regPassword').value;
-                const confirmPwd = document.getElementById('regConfirmPassword').value;
-                if(pwd.length < 6) { alert("รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร"); return; }
-                if (pwd !== confirmPwd) { alert('❌ รหัสผ่านไม่ตรงกันครับ'); return; }
-            }
-            const submitBtn = event.target.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerText; submitBtn.innerText = 'กำลังประมวลผล...';
-            if (type === 'login') {
-                const email = document.getElementById('loginEmail').value;
-                const password = document.getElementById('loginPassword').value;
-                const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-                if (error) { alert('❌ เข้าสู่ระบบไม่สำเร็จ'); } else { closeAuthModal(null, true); event.target.reset(); fetchModels(); }
-            } else if (type === 'register') {
-                const email = document.getElementById('regEmail').value; const password = document.getElementById('regPassword').value;
-                const username = document.getElementById('regUsername').value; const displayName = document.getElementById('regDisplayName').value || username;
-                const role = document.querySelector('input[name="member_type"]:checked').value;
-                const { data, error } = await supabaseClient.auth.signUp({ email: email, password: password, options: { data: { username: username, display_name: displayName, role: role } } });
-                if (error) { alert('❌ เกิดข้อผิดพลาด: ' + error.message); } else { alert('✅ สมัครสมาชิกสำเร็จ!'); closeAuthModal(null, true); event.target.reset(); }
-            }
-            submitBtn.innerText = originalText;
-        }
-
-        async function handleLogout() { await supabaseClient.auth.signOut(); updateUIAuth(null); closeDashboard(); closeAgencyDashboard(); fetchModels(); }
-
-        async function submitNewModel(event) {
-            event.preventDefault();
-            if(!currentUserSession) return alert("กรุณาเข้าสู่ระบบก่อนครับ");
-            if (selectedFiles.length === 0) { alert("กรุณาเลือกรูปภาพอย่างน้อย 1 รูปครับ"); return; }
-
-            const descText = document.getElementById('mDesc').value;
-            const linkRegex = /(http|https|www\.|lin\.ee|\.com|\.co|\.net|\.org)/i;
-            if (linkRegex.test(descText)) {
-                alert("❌ ไม่อนุญาตให้แนบลิงก์ เว็บไซต์ หรือช่องทางติดต่ออื่นในช่องคำแนะนำตัวครับ\n\n💡 กรุณาใส่เฉพาะคำอธิบาย และใช้ช่อง 'LINE ID' สำหรับการติดต่อเท่านั้นครับ");
-                return;
-            }
-
-            const btn = document.getElementById('btnSubmitModel'); 
-            const originalText = btn.innerHTML; 
-            btn.innerHTML = '<span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังอัปโหลด...';
-
-            let uploadedUrls = [];
-            for (let item of selectedFiles) {
-                const fileExt = item.file.name.split('.').pop();
-                const fileName = Math.random().toString(36).substring(2) + '_' + Date.now() + '.' + fileExt;
-                const filePath = currentUserSession.user.id + '/' + fileName; 
-
-                const { data: uploadData, error: uploadError } = await supabaseClient.storage.from('profile_images').upload(filePath, item.file);
-                if (!uploadError) {
-                    const { data: publicUrlData } = supabaseClient.storage.from('profile_images').getPublicUrl(filePath);
-                    uploadedUrls.push(publicUrlData.publicUrl);
-                }
-            }
-
-            if(uploadedUrls.length === 0) {
-                alert('❌ อัปโหลดรูปภาพล้มเหลวทั้งหมด');
-                btn.innerHTML = originalText;
-                return;
-            }
-
-            const newModelData = {
-                agency_id: currentUserSession.user.id,
-                name: document.getElementById('mName').value,
-                age: document.getElementById('mAge').value || null,
-                proportions: document.getElementById('mProps').value,
-                height: document.getElementById('mHeight').value || null,
-                weight: document.getElementById('mWeight').value || null,
-                location: document.getElementById('mLocation').value,
-                price: document.getElementById('mPrice').value,
-                line_id: document.getElementById('mLineId').value,
-                cover_image: uploadedUrls[0],
-                gallery: uploadedUrls, 
-                description: document.getElementById('mDesc').value,
-                status: 'active'
-            };
-
-            const { data, error } = await supabaseClient.from('models').insert([newModelData]);
-            
-            if (error) alert('❌ Error: ' + error.message);
-            else { 
-                alert('🎉 อัปโหลดและบันทึกโปรไฟล์สำเร็จ!'); 
-                document.getElementById('addModelForm').reset(); 
-                selectedFiles = []; renderGalleryPreview(); 
-                switchAgTab('myProfiles'); fetchModels(); 
-            }
-            btn.innerHTML = originalText;
-        }
-
-        async function fetchMyProfiles() {
-            const tbody = document.getElementById('myProfilesTableBody');
+        // 💖 ระบบ Favorite ของจริง (DB) 💖
+        async function fetchUserFavorites() {
             if(!currentUserSession) return;
-
-            const { data, error } = await supabaseClient.from('models').select('*').eq('agency_id', currentUserSession.user.id).order('created_at', { ascending: false });
-
-            if (error) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">เกิดข้อผิดพลาดในการโหลด</td></tr>'; return; }
-            if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#888;">คุณยังไม่มีโปรไฟล์น้องๆ ในระบบเลยครับ</td></tr>'; document.getElementById('statTotalProfiles').innerText = '0'; return; }
-
-            document.getElementById('statTotalProfiles').innerText = data.length;
-            let html = '';
-            data.forEach(model => {
-                const isActive = model.status === 'active';
-                const statusHtml = isActive 
-                    ? `<span class="mp-status active" onclick="toggleStatus(${model.id}, 'inactive')"><span class="iconify" data-icon="heroicons:eye"></span> เปิดรับงาน</span>`
-                    : `<span class="mp-status inactive" onclick="toggleStatus(${model.id}, 'active')"><span class="iconify" data-icon="heroicons:eye-slash"></span> ปิดรับงาน (พัก)</span>`;
-
-                html += `
-                <tr>
-                    <td><img src="${model.cover_image}" class="mp-img"></td>
-                    <td>
-                        <span class="mp-name">${escapeHTML(model.name)} (${model.age || '-'})</span>
-                        <span class="mp-info">${escapeHTML(model.proportions) || '-'} | พิกัด: ${escapeHTML(model.location) || '-'}</span>
-                    </td>
-                    <td style="color: var(--dash-gold); font-weight: 500;">฿${model.price ? model.price.toLocaleString() : '0'}</td>
-                    <td>${statusHtml}</td>
-                    <td style="text-align: center;">
-                        <button class="btn-danger" onclick="deleteModel(${model.id}, '${escapeHTML(model.name)}')"><span class="iconify" data-icon="heroicons:trash"></span> ลบ</button>
-                    </td>
-                </tr>`;
-            });
-            tbody.innerHTML = html;
-        }
-
-        async function toggleStatus(modelId, newStatus) {
-            const { error } = await supabaseClient.from('models').update({ status: newStatus }).eq('id', modelId);
-            if (error) alert('❌ เปลี่ยนสถานะไม่สำเร็จ'); else { fetchMyProfiles(); fetchModels(); }
-        }
-
-        async function deleteModel(modelId, modelName) {
-            if(confirm(`⚠️ คุณแน่ใจหรือไม่ว่าต้องการลบโปรไฟล์ของน้อง "${modelName}" ออกจากระบบอย่างถาวร?`)) {
-                const { error } = await supabaseClient.from('models').delete().eq('id', modelId);
-                if (error) alert('❌ ลบไม่สำเร็จ'); else { alert('✅ ลบโปรไฟล์เรียบร้อยแล้ว'); fetchMyProfiles(); fetchModels(); }
+            const { data, error } = await supabaseClient.from('favorites').select('model_id').eq('user_id', currentUserSession.user.id);
+            if(!error && data) {
+                userFavorites = data.map(f => f.model_id);
+                renderGrid(allModelsData); // วาดการ์ดใหม่ ให้หัวใจแดงเฉพาะคนที่เคยกด
             }
         }
 
-        async function fetchModels() {
+        async function toggleHeartReal(modelId, btn, event) {
+            if(event) event.stopPropagation(); 
+            if(!currentUserSession) {
+                alert("กรุณาเข้าสู่ระบบก่อนเก็บน้องๆ ไว้ในรายการโปรดนะครับ ❤️");
+                openAuthModal('login');
+                return;
+            }
+
+            const icon = btn.querySelector('.iconify');
+            const isLiked = userFavorites.includes(modelId);
+
+            if (isLiked) {
+                // ยกเลิกถูกใจ (Delete from DB)
+                icon.setAttribute('data-icon', 'mdi:cards-heart-outline');
+                icon.style.color = 'white'; btn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                userFavorites = userFavorites.filter(id => id !== modelId); // ลบออกจากแรม
+                await supabaseClient.from('favorites').delete().match({ user_id: currentUserSession.user.id, model_id: modelId });
+            } else {
+                // กดถูกใจ (Insert to DB)
+                icon.setAttribute('data-icon', 'mdi:cards-heart');
+                icon.style.color = '#ff4d4f'; btn.style.borderColor = '#ff4d4f';
+                userFavorites.push(modelId); // เพิ่มในแรม
+                await supabaseClient.from('favorites').insert([{ user_id: currentUserSession.user.id, model_id: modelId }]);
+            }
+        }
+
+        // 🚀 ระบบค้นหาและฟิลเตอร์ 🚀
+        let currentFilter = 'all';
+        
+        function setFilter(filterType, btnElement) {
+            currentFilter = filterType;
+            // สลับสีปุ่ม
+            document.querySelectorAll('.filter-chips .chip').forEach(c => c.classList.remove('active'));
+            btnElement.classList.add('active');
+            handleSearch(); // สั่งให้กรองข้อมูลใหม่
+        }
+
+        function handleSearch() {
+            const searchText = document.getElementById('searchInput').value.toLowerCase();
+            
+            // กรองข้อมูลในแรม
+            let filteredData = allModelsData.filter(model => {
+                // กรองข้อความค้นหา (ชื่อ หรือ พิกัด)
+                const matchSearch = model.name.toLowerCase().includes(searchText) || (model.location && model.location.toLowerCase().includes(searchText));
+                
+                // กรองปุ่มชิป
+                let matchFilter = true;
+                if (currentFilter === 'new') {
+                    // สมมติว่า "ใหม่" คือโพสต์มาไม่เกิน 7 วัน
+                    const postDate = new Date(model.created_at);
+                    const now = new Date();
+                    const diffTime = Math.abs(now - postDate);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+                    matchFilter = diffDays <= 7;
+                } else if (currentFilter === 'budget') {
+                    matchFilter = model.price < 2000;
+                } else if (currentFilter === 'favorite') {
+                    matchFilter = userFavorites.includes(model.id);
+                }
+
+                return matchSearch && matchFilter;
+            });
+
+            renderGrid(filteredData);
+        }
+
+        // ฟังก์ชันวาดการ์ดหน้าแรก (แยกออกมาเพื่อให้ Search เรียกใช้ซ้ำได้)
+        function renderGrid(dataToRender) {
             const grid = document.getElementById('modelsGrid');
-            grid.innerHTML = '<div class="loading-text"><span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังดึงข้อมูลน้องๆ...</div>';
             
-            const { data, error } = await supabaseClient.from('models').select('*').eq('status', 'active').order('created_at', { ascending: false }).limit(20);
-            
-            if (error) { grid.innerHTML = '<p style="text-align:center; color:red;">เกิดข้อผิดพลาดในการโหลดข้อมูล</p>'; return; }
-            if (data.length === 0) { grid.innerHTML = '<p style="text-align:center; width:100%; color:#888;">ยังไม่มีโปรไฟล์ในระบบครับ</p>'; document.getElementById('storiesContainer').innerHTML = ''; return; }
+            if (dataToRender.length === 0) { 
+                grid.innerHTML = '<div class="no-results"><span class="iconify" data-icon="heroicons:face-frown" style="font-size:3rem; margin-bottom:10px;"></span><br>ไม่พบน้องๆ ที่ตรงกับเงื่อนไขการค้นหาครับ 🥲</div>'; 
+                return; 
+            }
             
             let html = '';
-            let storiesHtml = '';
-            
-            data.forEach((model, index) => {
+            dataToRender.forEach(model => {
                 const modelJson = encodeURIComponent(JSON.stringify(model));
-                
+                // เช็คว่าไอดีของเด็กคนนี้ อยู่ในกระเป๋าหัวใจของเราไหม
+                const isFav = userFavorites.includes(model.id);
+                const heartIcon = isFav ? 'mdi:cards-heart' : 'mdi:cards-heart-outline';
+                const heartColor = isFav ? '#ff4d4f' : 'white';
+                const heartBorder = isFav ? '#ff4d4f' : 'rgba(255, 255, 255, 0.3)';
+
                 html += `
                 <div class="card" onclick="viewProfile('${modelJson}')">
                     <div class="card-image-box">
                         <img src="${model.cover_image}">
                         <span class="badge-image">New</span>
-                        <button class="heart-btn-card" onclick="toggleHeart(this, event)">
-                            <span class="iconify heart-icon" data-icon="mdi:cards-heart-outline" style="color: white; font-size: 1.5rem;"></span>
+                        <button class="heart-btn-card" style="border-color: ${heartBorder};" onclick="toggleHeartReal(${model.id}, this, event)">
+                            <span class="iconify heart-icon" data-icon="${heartIcon}" style="color: ${heartColor}; font-size: 1.5rem;"></span>
                         </button>
                     </div>
                     <div class="card-info">
@@ -784,32 +684,48 @@
                         </div>
                     </div>
                 </div>`;
-
-                if(index < 15) {
-                    storiesHtml += `
-                    <button class="stories-carousel__item" onclick="viewProfile('${modelJson}')">
-                        <div class="stories-carousel__skeleton-ring">
-                            <img src="${model.cover_image}" class="stories-carousel__skeleton-avatar" alt="Story">
-                        </div>
-                        <span class="stories-carousel__name">${escapeHTML(model.name)}</span>
-                    </button>`;
-                }
             });
-
             grid.innerHTML = html;
-            if(storiesHtml !== '') { document.getElementById('storiesContainer').innerHTML = storiesHtml; }
         }
 
+        // ดึงข้อมูลครั้งแรกตอนเปิดเว็บ
+        async function fetchModels() {
+            // โชว์ Skeleton รอ
+            const grid = document.getElementById('modelsGrid');
+            grid.innerHTML = '<div class="skeleton-card"><div class="skel-img skel-anim"></div><div class="skel-text-l skel-anim"></div><div class="skel-text-s skel-anim"></div><div class="skel-text-full skel-anim"></div><div class="skel-footer"><div class="skel-price skel-anim"></div><div class="skel-rate skel-anim"></div></div></div>'.repeat(6);
+            
+            const { data, error } = await supabaseClient.from('models').select('*').eq('status', 'active').order('created_at', { ascending: false });
+            
+            if (error || !data) { grid.innerHTML = '<p style="text-align:center; color:red;">โหลดข้อมูลไม่สำเร็จ</p>'; return; }
+            
+            allModelsData = data; // เก็บใส่แรม
+            
+            // วาด Stories (วงกลมด้านบน)
+            let storiesHtml = '';
+            data.slice(0, 15).forEach((model) => {
+                const modelJson = encodeURIComponent(JSON.stringify(model));
+                storiesHtml += `
+                <button class="stories-carousel__item" onclick="viewProfile('${modelJson}')">
+                    <div class="stories-carousel__skeleton-ring">
+                        <img src="${model.cover_image}" class="stories-carousel__skeleton-avatar" alt="Story">
+                    </div>
+                    <span class="stories-carousel__name">${escapeHTML(model.name)}</span>
+                </button>`;
+            });
+            if(storiesHtml !== '') { document.getElementById('storiesContainer').innerHTML = storiesHtml; }
+
+            // วาดการ์ด (อิงตามฟิลเตอร์ปัจจุบัน)
+            handleSearch();
+        }
+
+        // เปิดดูโปรไฟล์
         function viewProfile(encodedJson) {
             const model = JSON.parse(decodeURIComponent(encodedJson));
             
-            // 🌟 สร้าง HTML สำหรับ Gallery 🌟
             const galleryContainer = document.getElementById('pdGallery');
             const indicatorsContainer = document.getElementById('pdIndicators');
-            galleryContainer.innerHTML = '';
-            indicatorsContainer.innerHTML = '';
+            galleryContainer.innerHTML = ''; indicatorsContainer.innerHTML = '';
             
-            // เช็คว่ามีอาร์เรย์รูป gallery ไหม ถ้าไม่มี (เช่น ข้อมูลเก่า) ให้ใช้รูป cover รูปเดียว
             const images = (model.gallery && model.gallery.length > 0) ? model.gallery : [model.cover_image];
             
             images.forEach((imgUrl, idx) => {
@@ -817,23 +733,14 @@
                 indicatorsContainer.innerHTML += `<div class="gallery-dot ${idx === 0 ? 'active' : ''}"></div>`;
             });
             
-            // อัปเดตจุดไข่ปลาเวลาปัดรูป
             galleryContainer.onscroll = () => {
                 const index = Math.round(galleryContainer.scrollLeft / galleryContainer.clientWidth);
-                document.querySelectorAll('.gallery-dot').forEach((dot, i) => {
-                    dot.className = i === index ? 'gallery-dot active' : 'gallery-dot';
-                });
+                document.querySelectorAll('.gallery-dot').forEach((dot, i) => { dot.className = i === index ? 'gallery-dot active' : 'gallery-dot'; });
             };
             
-            // ซ่อนปุ่มลูกศรถ้ามีแค่รูปเดียว
             const navButtons = document.querySelectorAll('.gallery-nav');
-            if(images.length <= 1) {
-                navButtons.forEach(btn => btn.style.display = 'none');
-                indicatorsContainer.style.display = 'none';
-            } else {
-                navButtons.forEach(btn => btn.style.display = 'flex');
-                indicatorsContainer.style.display = 'flex';
-            }
+            if(images.length <= 1) { navButtons.forEach(btn => btn.style.display = 'none'); indicatorsContainer.style.display = 'none'; } 
+            else { navButtons.forEach(btn => btn.style.display = 'flex'); indicatorsContainer.style.display = 'flex'; }
 
             document.getElementById('pdName').innerText = model.name;
             document.getElementById('pdName2').innerText = model.name;
@@ -845,36 +752,128 @@
             document.getElementById('pdPrice').innerText = model.price ? model.price.toLocaleString() : '0';
             document.getElementById('pdDesc').innerText = model.description || 'ยังไม่มีคำแนะนำตัวค่ะ';
             
-            let rawLine = model.line_id || '';
-            let lineUrl = rawLine;
-            if (!rawLine.startsWith('http')) {
-                lineUrl = rawLine.startsWith('@') ? `https://line.me/R/ti/p/${rawLine}` : `https://line.me/ti/p/~${rawLine}`;
-            }
+            let rawLine = model.line_id || ''; let lineUrl = rawLine;
+            if (!rawLine.startsWith('http')) { lineUrl = rawLine.startsWith('@') ? `https://line.me/R/ti/p/${rawLine}` : `https://line.me/ti/p/~${rawLine}`; }
             
             document.getElementById('btnBookNow').onclick = function() {
-                if(!rawLine) {
-                    alert('น้องคนนี้ยังไม่ได้ใส่ช่องทางการติดต่อไว้ครับ');
-                } else {
-                    window.open(lineUrl, '_blank');
-                }
+                if(!rawLine) { alert('น้องคนนี้ยังไม่ได้ใส่ช่องทางการติดต่อไว้ครับ'); } else { window.open(lineUrl, '_blank'); }
             };
             
-            const modalHeartBtn = document.querySelector('#profileDetailModal .btn-pro-icon');
+            // เช็คสถานะปุ่มหัวใจในหน้าโปรไฟล์
+            const modalHeartBtn = document.getElementById('btnProHeart');
             const icon = modalHeartBtn.querySelector('.iconify');
-            icon.setAttribute('data-icon', 'mdi:cards-heart-outline');
-            icon.style.color = 'white';
-            modalHeartBtn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            const isFav = userFavorites.includes(model.id);
+            
+            icon.setAttribute('data-icon', isFav ? 'mdi:cards-heart' : 'mdi:cards-heart-outline');
+            icon.style.color = isFav ? '#ff4d4f' : 'white';
+            modalHeartBtn.style.borderColor = isFav ? '#ff4d4f' : 'rgba(255, 255, 255, 0.3)';
+            
+            // ผูก Event ปุ่มหัวใจในโปรไฟล์ใหม่
+            modalHeartBtn.onclick = function() { toggleHeartReal(model.id, this, null); };
 
             openProfile();
         }
-        
-        // ฟังก์ชันกดปุ่มลูกศรเพื่อเลื่อนรูป
+
         window.scrollGallery = function(dir) {
             const galleryContainer = document.getElementById('pdGallery');
             const width = galleryContainer.clientWidth;
             galleryContainer.scrollBy({ left: dir * width, behavior: 'smooth' });
         };
 
+        // --- โค้ด Auth & Agency Dashboard --- 
+        function switchAuthTab(tab) { document.getElementById('loginForm').classList.toggle('active', tab === 'login'); document.getElementById('registerForm').classList.toggle('active', tab === 'register'); }
+        function switchAgTab(tabName) { document.getElementById('viewOverview').classList.remove('active'); document.getElementById('viewMyProfiles').classList.remove('active'); document.getElementById('viewAddModel').classList.remove('active'); document.getElementById('tabOverview').classList.remove('active'); document.getElementById('tabMyProfiles').classList.remove('active'); document.getElementById('tabModels').classList.remove('active'); if(tabName === 'overview') { document.getElementById('viewOverview').classList.add('active'); document.getElementById('tabOverview').classList.add('active'); document.getElementById('agTopTitle').innerHTML = '<span class="iconify" data-icon="heroicons:window"></span> แดชบอร์ดเอเจนซี่'; } else if(tabName === 'myProfiles') { document.getElementById('viewMyProfiles').classList.add('active'); document.getElementById('tabMyProfiles').classList.add('active'); document.getElementById('agTopTitle').innerHTML = '<span class="iconify" data-icon="heroicons:users"></span> โปรไฟล์ของฉัน'; fetchMyProfiles(); } else if(tabName === 'addModel') { document.getElementById('viewAddModel').classList.add('active'); document.getElementById('tabModels').classList.add('active'); document.getElementById('agTopTitle').innerHTML = '<span class="iconify" data-icon="heroicons:user-plus"></span> สร้างโปรไฟล์ใหม่'; } }
+        function openProfile() { document.getElementById('profileDetailModal').classList.add('active'); document.body.classList.add('modal-open'); }
+        function closeProfile() { document.getElementById('profileDetailModal').classList.remove('active'); document.body.classList.remove('modal-open'); }
+        function toggleMobileMenu() { document.getElementById('mobileOverlay').classList.toggle('active'); document.getElementById('mobileSheet').classList.toggle('active'); }
+        function openAuthModal(tab = 'register') { document.getElementById('authOverlay').classList.add('active'); switchAuthTab(tab); }
+        function closeAuthModal(e, force) { if(force || e.target === document.getElementById('authOverlay')) document.getElementById('authOverlay').classList.remove('active'); }
+        function openDashboard() { document.getElementById('vipDashboard').classList.add('active'); document.body.classList.add('modal-open');}
+        function closeDashboard() { document.getElementById('vipDashboard').classList.remove('active'); document.body.classList.remove('modal-open');}
+        function openAgencyDashboard() { document.getElementById('agencyDashboard').classList.add('active'); document.body.classList.add('modal-open'); switchAgTab('overview');}
+        function closeAgencyDashboard() { document.getElementById('agencyDashboard').classList.remove('active'); document.body.classList.remove('modal-open');}
+
+        supabaseClient.auth.getSession().then(({ data: { session } }) => { updateUIAuth(session); });
+        supabaseClient.auth.onAuthStateChange((event, session) => { updateUIAuth(session); });
+
+        async function handleAuthSubmit(event, type) {
+            event.preventDefault();
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerText; submitBtn.innerText = 'กำลังประมวลผล...';
+            if (type === 'login') {
+                const email = document.getElementById('loginEmail').value; const password = document.getElementById('loginPassword').value;
+                const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                if (error) { alert('❌ เข้าสู่ระบบไม่สำเร็จ'); } else { closeAuthModal(null, true); event.target.reset(); fetchModels(); }
+            } else if (type === 'register') {
+                const email = document.getElementById('regEmail').value; const password = document.getElementById('regPassword').value; const username = document.getElementById('regUsername').value; const role = document.querySelector('input[name="member_type"]:checked').value;
+                const { error } = await supabaseClient.auth.signUp({ email: email, password: password, options: { data: { username: username, display_name: username, role: role } } });
+                if (error) { alert('❌ เกิดข้อผิดพลาด: ' + error.message); } else { alert('✅ สมัครสมาชิกสำเร็จ!'); closeAuthModal(null, true); event.target.reset(); }
+            }
+            submitBtn.innerText = originalText;
+        }
+
+        async function handleLogout() { await supabaseClient.auth.signOut(); updateUIAuth(null); closeDashboard(); closeAgencyDashboard(); fetchModels(); }
+
+        // --- ระบบ Upload รูป ---
+        let selectedFiles = []; let dragStartIndex;
+        function handleFileSelect(event) {
+            const files = Array.from(event.target.files);
+            if (selectedFiles.length + files.length > 6) { alert("อัปโหลดได้สูงสุด 6 รูปเท่านั้นครับ"); return; }
+            files.forEach(f => { if (f.type.startsWith('image/') && f.size <= 2*1024*1024) selectedFiles.push({ id: Math.random().toString(36), file: f, preview: URL.createObjectURL(f) }); });
+            renderGalleryPreview();
+        }
+        function renderGalleryPreview() {
+            const container = document.getElementById('galleryPreview'); container.innerHTML = '';
+            selectedFiles.forEach((item, index) => {
+                const div = document.createElement('div'); div.className = `img-thumb-box ${index === 0 ? 'cover' : ''}`; div.draggable = true;
+                div.innerHTML = `<img src="${item.preview}">${index === 0 ? '<div class="cover-badge">หน้าปก</div>' : ''}<button type="button" class="btn-remove-img" onclick="removeImage(${index})"><span class="iconify" data-icon="heroicons:x-mark"></span></button>`;
+                div.addEventListener('dragstart', () => dragStartIndex = index); div.addEventListener('dragover', (e) => e.preventDefault());
+                div.addEventListener('drop', () => { const draggedItem = selectedFiles.splice(dragStartIndex, 1)[0]; selectedFiles.splice(index, 0, draggedItem); renderGalleryPreview(); });
+                container.appendChild(div);
+            });
+            document.getElementById('mGalleryFiles').disabled = selectedFiles.length >= 6;
+        }
+        function removeImage(index) { selectedFiles.splice(index, 1); renderGalleryPreview(); }
+
+        async function submitNewModel(event) {
+            event.preventDefault();
+            if(!currentUserSession || selectedFiles.length === 0) return;
+            const descText = document.getElementById('mDesc').value;
+            if (/(http|https|www\.|lin\.ee|\.com|\.co|\.net|\.org)/i.test(descText)) { alert("❌ ไม่อนุญาตให้แนบลิงก์ในคำแนะนำตัวครับ"); return; }
+            
+            const btn = document.getElementById('btnSubmitModel'); const originalText = btn.innerHTML; btn.innerHTML = 'กำลังอัปโหลด...';
+            let uploadedUrls = [];
+            for (let item of selectedFiles) {
+                const fExt = item.file.name.split('.').pop(); const fName = currentUserSession.user.id + '/' + Math.random().toString(36).substring(2) + '.' + fExt; 
+                const { error } = await supabaseClient.storage.from('profile_images').upload(fName, item.file);
+                if (!error) uploadedUrls.push(supabaseClient.storage.from('profile_images').getPublicUrl(fName).data.publicUrl);
+            }
+            if(uploadedUrls.length === 0) { alert('❌ ล้มเหลว'); btn.innerHTML = originalText; return; }
+
+            const { error } = await supabaseClient.from('models').insert([{
+                agency_id: currentUserSession.user.id, name: document.getElementById('mName').value, age: document.getElementById('mAge').value || null, proportions: document.getElementById('mProps').value, height: document.getElementById('mHeight').value || null, weight: document.getElementById('mWeight').value || null, location: document.getElementById('mLocation').value, price: document.getElementById('mPrice').value, line_id: document.getElementById('mLineId').value, cover_image: uploadedUrls[0], gallery: uploadedUrls, description: document.getElementById('mDesc').value, status: 'active'
+            }]);
+            
+            if (error) alert('❌ Error: ' + error.message);
+            else { alert('🎉 บันทึกสำเร็จ!'); document.getElementById('addModelForm').reset(); selectedFiles = []; renderGalleryPreview(); switchAgTab('myProfiles'); fetchModels(); }
+            btn.innerHTML = originalText;
+        }
+
+        async function fetchMyProfiles() {
+            const tbody = document.getElementById('myProfilesTableBody');
+            const { data, error } = await supabaseClient.from('models').select('*').eq('agency_id', currentUserSession.user.id).order('created_at', { ascending: false });
+            if (error) return; document.getElementById('statTotalProfiles').innerText = data.length;
+            let html = '';
+            data.forEach(m => {
+                const sHtml = m.status === 'active' ? `<span class="mp-status active" onclick="toggleStatus(${m.id}, 'inactive')"><span class="iconify" data-icon="heroicons:eye"></span></span>` : `<span class="mp-status inactive" onclick="toggleStatus(${m.id}, 'active')"><span class="iconify" data-icon="heroicons:eye-slash"></span></span>`;
+                html += `<tr><td><img src="${m.cover_image}" class="mp-img"></td><td><span class="mp-name">${escapeHTML(m.name)}</span></td><td>฿${m.price}</td><td>${sHtml}</td><td><button class="btn-danger" onclick="deleteModel(${m.id})">ลบ</button></td></tr>`;
+            });
+            tbody.innerHTML = html || '<tr><td colspan="5" align="center">ไม่มีข้อมูล</td></tr>';
+        }
+        async function toggleStatus(id, stat) { await supabaseClient.from('models').update({ status: stat }).eq('id', id); fetchMyProfiles(); fetchModels(); }
+        async function deleteModel(id) { if(confirm('ลบจริงไหม?')) { await supabaseClient.from('models').delete().eq('id', id); fetchMyProfiles(); fetchModels(); } }
+
+        // ลุยเลย! ดึงข้อมูลทันทีที่เปิดเว็บ
         fetchModels();
     </script>
 </body>
