@@ -72,7 +72,6 @@
         .stories-carousel__item:focus-visible { border-radius: 16px; box-shadow: 0 0 0 2px var(--dash-gold); outline: none; }
         .stories-carousel__name { color: var(--text-dark); font-size: 12px; font-weight: 500; max-width: 72px; overflow: hidden; text-align: center; text-overflow: ellipsis; transition: color .2s ease; white-space: nowrap; }
         .stories-carousel__item:hover .stories-carousel__name { color: var(--accent); }
-        .stories-carousel__count { align-items: center; background: var(--btn-gradient); border: 2px solid #fdf5f5; border-radius: 9px; box-shadow: 0 2px 4px #0000004d; color: var(--accent); display: flex; font-size: 10px; font-weight: 700; height: 18px; justify-content: center; line-height: 1; min-width: 18px; padding: 0 5px; position: absolute; right: 4px; top: 4px; z-index: 2; }
         .stories-carousel__skeleton-ring { height: 64px; position: relative; width: 64px; border-radius: 50%; padding: 2px; background: linear-gradient(135deg, var(--accent-light), var(--accent));}
         .stories-carousel__skeleton-avatar { border-radius: 50%; height: 100%; width: 100%; object-fit: cover; border: 2px solid #fdf5f5;}
         @media(min-width: 640px) { .stories-carousel__skeleton-container { gap: 16px; padding: 15px 20px; } }
@@ -126,13 +125,6 @@
         .check-group { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
         .auth-check { width: 18px; height: 18px; cursor: pointer; accent-color: var(--dash-gold); background: var(--modal-input-bg); border: 1px solid rgba(181, 108, 94, 0.2);}
         .check-group label { color: #ddd; font-size: 0.85rem; cursor: pointer; display: flex; gap: 5px;}
-        .captcha-box { background: rgba(181, 108, 94, 0.05); border: 1px solid rgba(181, 108, 94, 0.2); border-radius: 8px; padding: 15px; display: flex; justify-content: space-between; align-items: center; margin-top: 5px; }
-        .captcha-left { display: flex; align-items: center; gap: 15px; }
-        .captcha-check { width: 24px; height: 24px; border: 2px solid #555; border-radius: 4px; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: 0.2s; }
-        .captcha-check.checked { background: #10b981; border-color: #10b981; }
-        .captcha-text { font-size: 0.9rem; color: #ddd; }
-        .captcha-logo { display: flex; flex-direction: column; align-items: flex-end; }
-        .captcha-logo-text { font-size: 0.6rem; color: #777; margin-top: 2px; }
         .btn-gold-submit { margin-top: 20px; width: 100%; padding: 14px; font-size: 1.1rem; font-weight: 600; background: var(--btn-gradient); color: var(--accent); border: 1px solid rgba(255,255,255,0.5); border-radius: 50px; cursor: pointer; font-family: 'Prompt'; transition: 0.2s; box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);}
         .btn-gold-submit:hover { transform: scale(1.02); }
         .auth-footer { text-align: center; margin-top: 20px; font-size: 0.9rem; color: #888; }
@@ -181,11 +173,7 @@
         .form-group { margin-bottom: 15px; text-align: left; }
         .form-group label { display: block; margin-bottom: 8px; color: #aaa; font-size: 0.9rem;}
         .form-control { width: 100%; background: #111; border: 1px solid #333; color: #fff; padding: 12px 15px; border-radius: 8px; font-family: 'Prompt'; outline: none; transition: 0.2s;}
-        .form-control:focus { border-color: var(--dash-gold); }
-        .btn-primary { background: var(--dash-gold); color: #fff; border: none; padding: 12px 30px; border-radius: 8px; font-family: 'Prompt'; font-weight: 600; cursor: pointer; font-size: 1.1rem; width: 100%; margin-top: 20px;}
-        .btn-primary:hover { background: var(--dash-gold-hover); }
-
-        /* 🆕 ระบบอัปโหลดและลากรูปภาพ 🆕 */
+        
         .form-file-upload { background: #111; border: 1px dashed #555; padding: 15px; border-radius: 8px; text-align: center; color: #888; cursor: pointer; transition: 0.2s; position: relative;}
         .form-file-upload:hover { border-color: var(--dash-gold); color: #fff;}
         .form-file-upload input[type="file"] { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; }
@@ -198,6 +186,10 @@
         .img-thumb-box.cover { border-color: var(--dash-gold); }
         .btn-remove-img { position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,0.7); color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
         .btn-remove-img:hover { background: red; }
+
+        .form-control:focus { border-color: var(--dash-gold); }
+        .btn-primary { background: var(--dash-gold); color: #fff; border: none; padding: 12px 30px; border-radius: 8px; font-family: 'Prompt'; font-weight: 600; cursor: pointer; font-size: 1.1rem; width: 100%; margin-top: 20px;}
+        .btn-primary:hover { background: var(--dash-gold-hover); }
 
         /* ตารางจัดการโปรไฟล์ */
         .my-profiles-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #161616; border-radius: 12px; overflow: hidden; border: 1px solid #222;}
@@ -317,11 +309,8 @@
         </div>
     </div>
 
-    <div class="stories-carousel__skeleton-container">
-        <button class="stories-carousel__item"><div class="stories-carousel__skeleton-ring"><img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=100&q=80" class="stories-carousel__skeleton-avatar"><span class="stories-carousel__count">3</span></div><span class="stories-carousel__name">น้อง A</span></button>
-        <button class="stories-carousel__item"><div class="stories-carousel__skeleton-ring"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80" class="stories-carousel__skeleton-avatar"><span class="stories-carousel__count">1</span></div><span class="stories-carousel__name">น้ำหวาน</span></button>
-        <button class="stories-carousel__item"><div class="stories-carousel__skeleton-ring"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&q=80" class="stories-carousel__skeleton-avatar"><span class="stories-carousel__count">5</span></div><span class="stories-carousel__name">เจนนี่</span></button>
-    </div>
+    <div class="stories-carousel__skeleton-container" id="storiesContainer">
+        </div>
 
     <div class="agencies-carousel-wrapper">
         <div class="agencies-carousel__track">
@@ -492,10 +481,15 @@
     </main>
 
     <script>
-        function escapeHTML(str) { if(!str) return ''; return str.replace(/[&<>"']/g, function(m) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[m]; }); }
+        function escapeHTML(str) {
+            if(!str) return '';
+            return str.replace(/[&<>"']/g, function(m) {
+                return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[m];
+            });
+        }
 
         function toggleHeart(btn, event) {
-            if(event) event.stopPropagation();
+            if(event) event.stopPropagation(); 
             const icon = btn.querySelector('.iconify');
             if (icon.getAttribute('data-icon') === 'mdi:cards-heart-outline') {
                 icon.setAttribute('data-icon', 'mdi:cards-heart');
@@ -506,29 +500,16 @@
             }
         }
 
-        // 🌟 ระบบลากวางรูปภาพ (Drag & Drop Gallery) 🌟
-        let selectedFiles = []; // อาร์เรย์เก็บไฟล์ที่เลือก
+        let selectedFiles = []; 
         let dragStartIndex;
 
         function handleFileSelect(event) {
             const files = Array.from(event.target.files);
-            
-            // เช็คว่าเกิน 6 รูปไหม
-            if (selectedFiles.length + files.length > 6) {
-                alert("อัปโหลดได้สูงสุด 6 รูปเท่านั้นครับ");
-                return;
-            }
-
+            if (selectedFiles.length + files.length > 6) { alert("อัปโหลดได้สูงสุด 6 รูปเท่านั้นครับ"); return; }
             files.forEach(file => {
                 if (file.type.startsWith('image/') && file.size <= 2 * 1024 * 1024) {
-                    selectedFiles.push({
-                        id: Math.random().toString(36).substring(2),
-                        file: file,
-                        preview: URL.createObjectURL(file)
-                    });
-                } else {
-                    alert(`ไฟล์ ${file.name} ข้ามไปเพราะไม่ใช่รูปภาพหรือขนาดเกิน 2MB`);
-                }
+                    selectedFiles.push({ id: Math.random().toString(36).substring(2), file: file, preview: URL.createObjectURL(file) });
+                } else { alert(`ไฟล์ ${file.name} ข้ามไปเพราะไม่ใช่รูปภาพหรือขนาดเกิน 2MB`); }
             });
             renderGalleryPreview();
         }
@@ -536,37 +517,20 @@
         function renderGalleryPreview() {
             const container = document.getElementById('galleryPreview');
             container.innerHTML = '';
-            
             selectedFiles.forEach((item, index) => {
                 const div = document.createElement('div');
                 div.className = `img-thumb-box ${index === 0 ? 'cover' : ''}`;
                 div.draggable = true;
-                div.innerHTML = `
-                    <img src="${item.preview}">
-                    ${index === 0 ? '<div class="cover-badge">หน้าปก</div>' : ''}
-                    <button type="button" class="btn-remove-img" onclick="removeImage(${index})"><span class="iconify" data-icon="heroicons:x-mark"></span></button>
-                `;
-                
-                // Event ลากวาง
+                div.innerHTML = `<img src="${item.preview}">${index === 0 ? '<div class="cover-badge">หน้าปก</div>' : ''}<button type="button" class="btn-remove-img" onclick="removeImage(${index})"><span class="iconify" data-icon="heroicons:x-mark"></span></button>`;
                 div.addEventListener('dragstart', () => dragStartIndex = index);
                 div.addEventListener('dragover', (e) => e.preventDefault());
-                div.addEventListener('drop', () => {
-                    const draggedItem = selectedFiles.splice(dragStartIndex, 1)[0];
-                    selectedFiles.splice(index, 0, draggedItem);
-                    renderGalleryPreview();
-                });
-                
+                div.addEventListener('drop', () => { const draggedItem = selectedFiles.splice(dragStartIndex, 1)[0]; selectedFiles.splice(index, 0, draggedItem); renderGalleryPreview(); });
                 container.appendChild(div);
             });
-
-            // ปิดช่อง input ชั่วคราวถ้าครบ 6 รูป
             document.getElementById('mGalleryFiles').disabled = selectedFiles.length >= 6;
         }
 
-        function removeImage(index) {
-            selectedFiles.splice(index, 1);
-            renderGalleryPreview();
-        }
+        function removeImage(index) { selectedFiles.splice(index, 1); renderGalleryPreview(); }
 
         function switchAuthTab(tab) { document.getElementById('loginForm').classList.toggle('active', tab === 'login'); document.getElementById('registerForm').classList.toggle('active', tab === 'register'); }
         function switchAgTab(tabName) { 
@@ -652,11 +616,9 @@
 
         async function handleLogout() { await supabaseClient.auth.signOut(); updateUIAuth(null); closeDashboard(); closeAgencyDashboard(); fetchModels(); }
 
-        // 🌟 อัปเกรดฟังก์ชันส่งรูปขึ้น Storage หลายๆ รูปพร้อมกัน 🌟
         async function submitNewModel(event) {
             event.preventDefault();
             if(!currentUserSession) return alert("กรุณาเข้าสู่ระบบก่อนครับ");
-            
             if (selectedFiles.length === 0) { alert("กรุณาเลือกรูปภาพอย่างน้อย 1 รูปครับ"); return; }
 
             const btn = document.getElementById('btnSubmitModel'); 
@@ -664,26 +626,19 @@
             btn.innerHTML = '<span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังอัปโหลด...';
 
             let uploadedUrls = [];
-            
-            // Loop อัปโหลดทีละรูป
             for (let item of selectedFiles) {
                 const fileExt = item.file.name.split('.').pop();
                 const fileName = Math.random().toString(36).substring(2) + '_' + Date.now() + '.' + fileExt;
                 const filePath = currentUserSession.user.id + '/' + fileName; 
 
                 const { data: uploadData, error: uploadError } = await supabaseClient.storage.from('profile_images').upload(filePath, item.file);
-                
                 if (!uploadError) {
                     const { data: publicUrlData } = supabaseClient.storage.from('profile_images').getPublicUrl(filePath);
                     uploadedUrls.push(publicUrlData.publicUrl);
                 }
             }
 
-            if(uploadedUrls.length === 0) {
-                alert('❌ อัปโหลดรูปภาพล้มเหลวทั้งหมด');
-                btn.innerHTML = originalText;
-                return;
-            }
+            if(uploadedUrls.length === 0) { alert('❌ อัปโหลดรูปภาพล้มเหลวทั้งหมด'); btn.innerHTML = originalText; return; }
 
             const newModelData = {
                 agency_id: currentUserSession.user.id,
@@ -695,8 +650,8 @@
                 location: document.getElementById('mLocation').value,
                 price: document.getElementById('mPrice').value,
                 line_id: document.getElementById('mLineId').value,
-                cover_image: uploadedUrls[0], // รูปแรกเป็นหน้าปก
-                gallery: uploadedUrls, // เก็บเป็น Array ทุกรูป
+                cover_image: uploadedUrls[0], // รูปหน้าปกคือรูปแรกสุด
+                gallery: uploadedUrls, 
                 description: document.getElementById('mDesc').value,
                 status: 'active'
             };
@@ -707,10 +662,8 @@
             else { 
                 alert('🎉 อัปโหลดและบันทึกโปรไฟล์สำเร็จ!'); 
                 document.getElementById('addModelForm').reset(); 
-                selectedFiles = []; // ล้างอาเรย์รูป
-                renderGalleryPreview(); // ล้างหน้าจอ preview
-                switchAgTab('myProfiles'); 
-                fetchModels(); 
+                selectedFiles = []; renderGalleryPreview(); 
+                switchAgTab('myProfiles'); fetchModels(); 
             }
             btn.innerHTML = originalText;
         }
@@ -759,6 +712,7 @@
             }
         }
 
+        // 🌟 อัปเกรด fetchModels ให้สร้าง Stories ด้วย 🌟
         async function fetchModels() {
             const grid = document.getElementById('modelsGrid');
             grid.innerHTML = '<div class="loading-text"><span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังดึงข้อมูลน้องๆ...</div>';
@@ -767,9 +721,14 @@
             
             if (error) { grid.innerHTML = '<p style="text-align:center; color:red;">เกิดข้อผิดพลาดในการโหลดข้อมูล</p>'; return; }
             if (data.length === 0) { grid.innerHTML = '<p style="text-align:center; width:100%; color:#888;">ยังไม่มีโปรไฟล์ในระบบครับ</p>'; return; }
+            
             let html = '';
-            data.forEach(model => {
+            let storiesHtml = ''; // ตัวแปรเก็บ HTML ของ Stories
+            
+            data.forEach((model, index) => {
                 const modelJson = encodeURIComponent(JSON.stringify(model));
+                
+                // 1. สร้างการ์ดหน้าแรก
                 html += `
                 <div class="card" onclick="viewProfile('${modelJson}')">
                     <div class="card-image-box">
@@ -792,8 +751,25 @@
                         </div>
                     </div>
                 </div>`;
+
+                // 2. สร้างวงกลม Stories ด้านบนสุด (เอาแค่ 10 คนล่าสุด)
+                if(index < 10) {
+                    storiesHtml += `
+                    <button class="stories-carousel__item" onclick="viewProfile('${modelJson}')">
+                        <div class="stories-carousel__skeleton-ring">
+                            <img src="${model.cover_image}" class="stories-carousel__skeleton-avatar">
+                        </div>
+                        <span class="stories-carousel__name">${escapeHTML(model.name)}</span>
+                    </button>`;
+                }
             });
+
             grid.innerHTML = html;
+            
+            // เอา Stories ที่ปั้นเสร็จ ไปยัดใส่กล่องด้านบน
+            if(storiesHtml !== '') {
+                document.getElementById('storiesContainer').innerHTML = storiesHtml;
+            }
         }
 
         function viewProfile(encodedJson) {
