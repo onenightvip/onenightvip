@@ -13,12 +13,9 @@
         :root {
             --accent: #b56c5e; 
             --accent-light: #e29f8c;
-            
-            /* 🔒 ล็อกสีปุ่มเรืองแสง (Glow Button) เป็นสีพีชสว่าง ห้ามเปลี่ยน! 🔒 */
             --btn-glow-bg: linear-gradient(145deg, #ffefe8, #ffd8c9); 
             --btn-glow-text: #b26c5e; 
             --btn-glow-shadow: rgba(255, 216, 201, 0.8); 
-            
             --text-dark: #8c5a5a;
             --text-muted: #b87a7a;
             --bg-glass: rgba(255, 255, 255, 0.6);
@@ -26,8 +23,7 @@
             --modal-input-bg: #1a1a1a;
             --badge-green: #10b981;
             --dash-bg: #0f0f0f;
-            /* 🔥 แก้สีเหลือง/ทอง กลับมาเป็นสีพีชละมุนธีมหลักของเว็บ 🔥 */
-            --dash-gold: var(--accent); 
+            --dash-gold: var(--accent); /* คงสีพีชละมุนไว้ตามที่คุณสั่งครับ 🔒 */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -96,7 +92,7 @@
         .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 10px 5% 50px 5%; max-width: 1400px; margin: 0 auto; align-items: stretch; margin-top: 10px;}
         .card { background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border-radius: 20px; padding: 15px; border: 1px solid rgba(255,255,255,0.6); box-shadow: 8px 8px 20px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.2s; display: flex; flex-direction: column; height: 100%;}
         .card:hover { transform: translateY(-5px); box-shadow: 8px 15px 25px rgba(181, 108, 94, 0.15);}
-        .card-image-box { position: relative; width: 100%; height: 380px; border-radius: 12px; overflow: hidden; margin-bottom: 15px; flex-shrink: 0;}
+        .card-image-box { position: relative; width: 100%; height: 380px; border-radius: 12px; overflow: hidden; margin-bottom: 15px; flex-shrink: 0; background:#000;}
         .card-image-box img { width: 100%; height: 100%; object-fit: cover; }
         .card-info { text-align: left; flex: 1; display: flex; flex-direction: column;}
         .name-group { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
@@ -175,31 +171,57 @@
         .upload-text { color: #888; font-size: 0.85rem; line-height: 1.5;}
         .gallery-preview { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 15px; }
         .img-thumb-box { width: 90px; height: 120px; position: relative; border-radius: 8px; overflow: hidden; border: 2px solid #333; background: #000; display:flex; justify-content:center; align-items:center;}
-        .img-thumb-box img { width: 100%; height: 100%; object-fit: cover; }
-        .img-thumb-box video { width: 100%; height: 100%; object-fit: cover; }
-        .btn-remove-img { position: absolute; top: 4px; right: 4px; background: rgba(0,0,0,0.8); color: white; border: 1px solid #444; border-radius: 50%; width: 22px; height: 22px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+        .img-thumb-box img, .img-thumb-box video { width: 100%; height: 100%; object-fit: cover; }
+        .vid-icon-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 2rem; color: rgba(255,255,255,0.8); pointer-events: none; }
+        .btn-remove-img { position: absolute; top: 4px; right: 4px; background: rgba(0,0,0,0.8); color: white; border: 1px solid #444; border-radius: 50%; width: 22px; height: 22px; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index:10;}
         .char-counter { text-align: right; color: #666; font-size: 0.8rem; margin-top: 5px;}
 
-        /* PROFILE DETAIL OVERLAY */
+        /* 🔥 PREMIUM PROFILE DETAIL OVERLAY 🔥 */
         .profile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f0f0f; z-index: 4000; overflow-y: auto; opacity: 0; visibility: hidden; transition: all 0.3s ease; font-family: 'Prompt', sans-serif; display: flex; flex-direction: column; }
         .profile-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
         .btn-back-profile { position: absolute; top: 20px; left: 20px; width: 45px; height: 45px; border-radius: 50%; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 4010; transition: 0.2s; }
+        
         .profile-hero { width: 100%; height: 55vh; position: relative; flex-shrink: 0; background: #000;}
-        .profile-hero img { width: 100%; height: 100%; object-fit: cover; object-position: center;}
-        .pro-thumb-container { display: flex; gap: 10px; padding: 15px 5%; overflow-x: auto; scrollbar-width: none; background: #0f0f0f; margin-top: -10px; position: relative; z-index: 4005;}
-        .pro-thumb-item { width: 70px; height: 70px; border-radius: 8px; overflow: hidden; cursor: pointer; border: 2px solid transparent; opacity: 0.5; transition: 0.2s; flex-shrink: 0;}
+        .profile-hero img, .profile-hero video { width: 100%; height: 100%; object-fit: cover; object-position: center;}
+        .hero-gradient { position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(0deg, #0f0f0f 0%, transparent 100%); pointer-events: none;}
+        
+        .pro-thumb-container { display: flex; gap: 10px; padding: 15px 5%; overflow-x: auto; scrollbar-width: none; background: #0f0f0f; margin-top: -20px; position: relative; z-index: 4005;}
+        .pro-thumb-item { width: 70px; height: 70px; border-radius: 8px; overflow: hidden; cursor: pointer; border: 2px solid transparent; opacity: 0.5; transition: 0.2s; flex-shrink: 0; position: relative; background: #000;}
         .pro-thumb-item.active { border-color: var(--dash-gold); opacity: 1; }
-        .pro-thumb-item img { width: 100%; height: 100%; object-fit: cover; }
+        .pro-thumb-item img, .pro-thumb-item video { width: 100%; height: 100%; object-fit: cover; }
+        
         .profile-content { max-width: 600px; width: 100%; margin: 10px auto 0 auto; padding: 0 5%; position: relative; z-index: 4005; color: white; flex: 1 0 auto; padding-bottom: 30px;}
-        .pro-title-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;}
+        .pro-title-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;}
         .pro-name { font-size: 2.2rem; font-weight: 600; color: #fff; line-height: 1; margin-bottom: 5px;}
-        .pro-stats-box { background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px 10px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center; margin-bottom: 30px; }
-        .pro-desc-box { background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; border-left: 4px solid var(--dash-gold); }
-        .sticky-booking-bar { position: sticky; bottom: 0; left: 0; width: 100%; background: #161616; border-top: 1px solid #2a2a2a; padding: 15px 5%; display: flex; justify-content: center; z-index: 4020; margin-top: auto; }
+        .pro-slogan { font-size: 1rem; color: var(--dash-gold); margin-bottom: 5px; font-weight: 400; font-style: italic;}
+        .pro-location { color: #888; font-size: 0.9rem; display: flex; align-items: center; gap: 4px; }
+        
+        /* สถิติ 6 ช่องแบบพรีเมียม */
+        .pro-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 25px; }
+        .pro-stat-item { background: #161616; border: 1px solid #2a2a2a; border-radius: 12px; padding: 12px 5px; text-align: center; }
+        .pro-stat-val { font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 2px;}
+        .pro-stat-label { font-size: 0.75rem; color: #888;}
+        
+        /* โซเชียลมีเดีย */
+        .pro-socials { display: flex; gap: 10px; margin-bottom: 25px;}
+        .btn-social { background: #161616; border: 1px solid #2a2a2a; color: #fff; padding: 8px 20px; border-radius: 50px; display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 0.9rem; transition: 0.2s;}
+        .btn-social:hover { border-color: var(--dash-gold); color: var(--dash-gold); }
+
+        .pro-section { margin-bottom: 25px;}
+        .pro-sec-title { font-size: 1.1rem; color: #fff; margin-bottom: 12px; font-weight: 500; display: flex; align-items: center; gap: 8px;}
+        .pro-desc-box { background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; border-left: 4px solid var(--dash-gold); line-height: 1.6; color: #ccc; white-space: pre-wrap; font-size: 0.95rem;}
+        
+        .sticky-booking-bar { position: sticky; bottom: 0; left: 0; width: 100%; background: rgba(22,22,22,0.95); backdrop-filter: blur(10px); border-top: 1px solid #2a2a2a; padding: 15px 5%; display: flex; justify-content: center; z-index: 4020; margin-top: auto; }
         .sticky-booking-container { max-width: 600px; width: 100%; display: flex; justify-content: space-between; align-items: center; }
+        .book-label { display: block; font-size: 0.8rem; color: #888; }
+        .book-price { font-size: 1.5rem; font-weight: bold; color: var(--dash-gold); }
         
         .review-card { background: #161616; border: 1px solid #2a2a2a; border-radius: 12px; padding: 15px; margin-top: 15px;}
-        .review-stars { color: #fbbf24; font-size: 1rem;}
+        .review-header { display: flex; justify-content: space-between; margin-bottom: 5px;}
+        .review-user { font-weight: 500; font-size: 0.95rem; color: #fff;}
+        .review-date { font-size: 0.8rem; color: #666;}
+        .review-stars { color: #fbbf24; font-size: 1rem; margin-bottom: 8px;}
+        .review-text { color: #aaa; font-size: 0.9rem;}
         .star-rating { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; font-size: 1.8rem; cursor: pointer; }
         .star-rating .iconify { color: #444; transition: 0.2s;}
         .star-rating .iconify:hover, .star-rating .iconify:hover ~ .iconify { color: #fbbf24; }
@@ -281,22 +303,45 @@
 
     <div class="profile-overlay" id="profileDetailModal">
         <button class="btn-back-profile" onclick="closeProfile()"><span class="iconify" data-icon="heroicons:arrow-left"></span></button>
-        <div class="profile-hero"><img id="pdMainImage" src=""><div class="hero-gradient"></div></div>
+        
+        <div class="profile-hero">
+            <img id="pdMainImage" src="">
+            <video id="pdMainVideo" controls playsinline style="display:none;"></video>
+            <div class="hero-gradient"></div>
+        </div>
+        
         <div class="pro-thumb-container" id="pdThumbList"></div>
+        
         <div class="profile-content">
             <div class="pro-title-row">
-                <div class="pro-name-group"><h1 class="pro-name" id="pdName">ชื่อน้อง</h1><div class="pro-location"><span class="iconify" style="color: var(--dash-gold);" data-icon="mdi:map-marker"></span> <span id="pdLoc">พิกัด</span></div></div>
-                <button class="btn-pro-icon" id="btnProHeart"><span class="iconify heart-icon" data-icon="mdi:cards-heart-outline"></span></button>
+                <div class="pro-name-group">
+                    <h1 class="pro-name" id="pdName">ชื่อน้อง</h1>
+                    <div class="pro-slogan" id="pdSlogan"></div> <div class="pro-location"><span class="iconify" style="color: var(--dash-gold);" data-icon="mdi:map-marker"></span> <span id="pdLoc">พิกัด</span></div>
+                </div>
+                <button class="btn-pro-icon" id="btnProHeart" style="background:rgba(255,255,255,0.1); border:1px solid #333; width:45px; height:45px; border-radius:50%; display:flex; justify-content:center; align-items:center; cursor:pointer;"><span class="iconify heart-icon" data-icon="mdi:cards-heart-outline" style="font-size:1.5rem;"></span></button>
             </div>
-            <div class="pro-stats-box">
+            
+            <div class="pro-socials" id="pdSocialsContainer">
+                <a href="#" target="_blank" class="btn-social" id="pdTeleBtn"><span class="iconify" data-icon="logos:telegram" style="font-size:1.2rem;"></span> Telegram</a>
+                <a href="#" target="_blank" class="btn-social" id="pdTwitBtn"><span class="iconify" data-icon="ri:twitter-x-fill" style="font-size:1.2rem;"></span> Twitter</a>
+            </div>
+
+            <div class="pro-stats-grid">
                 <div class="pro-stat-item"><div class="pro-stat-val" id="pdAge">-</div><div class="pro-stat-label">อายุ</div></div>
                 <div class="pro-stat-item"><div class="pro-stat-val" id="pdProps">-</div><div class="pro-stat-label">สัดส่วน</div></div>
-                <div class="pro-stat-item"><div class="pro-stat-val" id="pdHeight">-</div><div class="pro-stat-label">ส่วนสูง</div></div>
-                <div class="pro-stat-item"><div class="pro-stat-val" id="pdWeight">-</div><div class="pro-stat-label">น้ำหนัก</div></div>
+                <div class="pro-stat-item"><div class="pro-stat-val" id="pdCup">-</div><div class="pro-stat-label">หน้าอก</div></div>
+                <div class="pro-stat-item"><div class="pro-stat-val" id="pdHeight">-</div><div class="pro-stat-label">ส่วนสูง (ซม.)</div></div>
+                <div class="pro-stat-item"><div class="pro-stat-val" id="pdWeight">-</div><div class="pro-stat-label">น้ำหนัก (กก.)</div></div>
+                <div class="pro-stat-item"><div class="pro-stat-val" id="pdLang" style="font-size:0.9rem;">-</div><div class="pro-stat-label">ภาษา</div></div>
             </div>
-            <div class="pro-section"><h3 class="pro-sec-title">คำแนะนำตัว</h3><div class="pro-desc-box"><div class="pro-desc" id="pdDesc">-</div></div></div>
+
             <div class="pro-section">
-                <h3 class="pro-sec-title">รีวิวจากลูกค้า (<span id="pdReviewCount">0</span>)</h3>
+                <h3 class="pro-sec-title"><span class="iconify" data-icon="heroicons:document-text" style="color:var(--dash-gold);"></span> คำอธิบาย</h3>
+                <div class="pro-desc-box"><div class="pro-desc" id="pdDesc">-</div></div>
+            </div>
+            
+            <div class="pro-section">
+                <h3 class="pro-sec-title"><span class="iconify" data-icon="heroicons:star" style="color:var(--dash-gold);"></span> รีวิวจากลูกค้า (<span id="pdReviewCount">0</span>)</h3>
                 <div id="pleaseLoginReview" style="background:#1a1a1a; border-radius:12px; padding:15px; text-align:center;"><p style="color: #888; font-size: 0.9rem; margin-bottom: 10px;">กรุณาล็อกอินเพื่อรีวิวน้องๆ</p></div>
                 <form id="reviewForm" style="display:none; background:#1a1a1a; border-radius:12px; padding:15px;" onsubmit="submitReview(event)">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
@@ -348,7 +393,6 @@
 
             <div class="ag-content-pad ag-view" id="ag-profiles">
                 <h2>จัดการโปรไฟล์</h2>
-                <p style="color:#888; font-size:0.9rem; margin-bottom:15px;">กดปุ่ม "🚀 ดัน 50฿" เพื่อให้น้องไปอยู่หน้าแรกแถวบนสุด (อยู่ได้ 24 ชม.)</p>
                 <table class="my-profiles-table">
                     <thead><tr><th>รูป</th><th>ชื่อ</th><th>ราคา</th><th>สถานะ (Verified)</th><th>ดันโปรไฟล์</th><th>จัดการ</th></tr></thead>
                     <tbody id="myProfilesTableBody"></tbody>
@@ -368,7 +412,7 @@
                             <div class="form-grid-3"><div class="form-group"><label>จังหวัด <span class="req">*</span></label><select id="mProv" class="form-input" required><option value="กรุงเทพมหานคร">กรุงเทพมหานคร</option><option value="นนทบุรี">นนทบุรี</option><option value="ปทุมธานี">ปทุมธานี</option><option value="สมุทรปราการ">สมุทรปราการ</option><option value="ชลบุรี">ชลบุรี</option><option value="เชียงใหม่">เชียงใหม่</option><option value="ภูเก็ต">ภูเก็ต</option></select></div><div class="form-group"><label>เขต <span class="req">*</span></label><input type="text" id="mDist" class="form-input" placeholder="ระบุเขต/อำเภอ" required></div><div class="form-group"><label>สถานที่</label><input type="text" id="mVenue" class="form-input" placeholder="คอนโด, รร..."></div></div>
                             <div class="form-grid-3"><div class="form-group"><label>เพศ <span class="req">*</span></label><select id="mGen" class="form-input" required><option value="หญิง">หญิง</option><option value="ชาย">ชาย</option><option value="ยังไม่ได้แปลงเพศ">ยังไม่ได้แปลงเพศ</option><option value="แปลงเพศแล้ว">แปลงเพศแล้ว</option></select></div><div class="form-group"><label>ส่วนสูง (ซม.) <span class="req">*</span></label><input type="number" id="mHeight" class="form-input" required></div><div class="form-group"><label>น้ำหนัก (กก.) <span class="req">*</span></label><input type="number" id="mWeight" class="form-input" required></div></div>
                             <div class="form-grid-5"><div class="form-group"><label>รอบอก (นิ้ว) <span class="req">*</span></label><input type="number" id="mChest" class="form-input" onkeyup="calcCup()" required></div><div class="form-group"><label>ขนาดคัพ</label><select id="mCup" class="form-input"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option></select></div><div class="form-group"><label>ประเภทหน้าอก</label><select id="mBreastType" class="form-input"><option value="แท้">นมแท้</option><option value="ทำ">นมทำ</option></select></div><div class="form-group"><label>เอว (นิ้ว) <span class="req">*</span></label><input type="number" id="mWaist" class="form-input" required></div><div class="form-group"><label>สะโพก (นิ้ว) <span class="req">*</span></label><input type="number" id="mHips" class="form-input" required></div></div>
-                            <div class="form-grid-3"><div class="form-group"><label>LINE ID <span class="req">*</span></label><input type="text" id="mLineId" class="form-input" required></div><div class="form-group"><label>Telegram</label><input type="text" id="mTele" class="form-input"></div><div class="form-group"><label>X (Twitter)</label><input type="text" id="mTwit" class="form-input"></div></div>
+                            <div class="form-grid-3"><div class="form-group"><label>LINE ID <span class="req">*</span></label><input type="text" id="mLineId" class="form-input" required></div><div class="form-group"><label>Telegram</label><input type="text" id="mTele" class="form-input" placeholder="@username"></div><div class="form-group"><label>X (Twitter)</label><input type="text" id="mTwit" class="form-input" placeholder="@username"></div></div>
                             <div class="form-grid-1"><div class="form-group"><label>คำอธิบาย</label><textarea id="mDesc" class="form-input" rows="6" maxlength="3000" onkeyup="countChars(this)" style="resize:none;"></textarea><div class="char-counter"><span id="charNum">0</span>/3000</div></div></div>
                         </div>
                     </div>
@@ -411,7 +455,6 @@
 
             <div class="ag-content-pad ag-view" id="admin-approve">
                 <h2>อนุมัติโปรไฟล์ (Approve / Verify)</h2>
-                <p style="color:#888; font-size:0.9rem; margin-bottom:15px;">ตรวจสอบและอนุมัติโปรไฟล์ให้แสดงป้าย Verified ✅ หน้าเว็บหลัก</p>
                 <table class="my-profiles-table">
                     <thead><tr><th>รูปน้อง</th><th>ชื่อน้อง</th><th>เอเจนซี่ที่ลง</th><th>จัดการ</th></tr></thead>
                     <tbody id="adminApproveTableBody"></tbody>
@@ -420,7 +463,6 @@
 
             <div class="ag-content-pad ag-view" id="admin-wallet">
                 <h2 style="color:var(--dash-gold);">จัดการเครดิต (Wallet)</h2>
-                <p style="color:#888; font-size:0.9rem; margin-bottom:15px;">เติมเงินเข้ากระเป๋าเอเจนซี่ (เฉพาะ Super Admin เท่านั้น)</p>
                 <table class="my-profiles-table">
                     <thead><tr><th>ชื่อเอเจนซี่</th><th>เครดิตปัจจุบัน</th><th>เติมเครดิต (บวกเพิ่ม)</th></tr></thead>
                     <tbody id="adminWalletTableBody"></tbody>
@@ -429,11 +471,9 @@
 
             <div class="ag-content-pad ag-view" id="admin-system">
                 <h2 style="color:#888;">ตั้งค่าระบบ (Developer)</h2>
-                <p style="color:#666; font-size:0.9rem;">พื้นที่สำหรับแก้ไข Source Code (ยังไม่เปิดใช้งานในเฟสนี้)</p>
             </div>
             <div class="ag-content-pad ag-view" id="admin-audit">
                 <h2 style="color:#888;">บันทึกการใช้งาน (Audit Logs)</h2>
-                <p style="color:#666; font-size:0.9rem;">(ยังไม่เปิดใช้งานในเฟสนี้)</p>
             </div>
         </div>
     </div>
@@ -468,6 +508,9 @@
             if(!chest) return;
             if(chest <= 32) cup.value = 'A'; else if(chest <= 34) cup.value = 'B'; else if(chest <= 36) cup.value = 'C'; else if(chest <= 38) cup.value = 'D'; else if(chest <= 40) cup.value = 'E'; else cup.value = 'F';
         }
+
+        // ฟังก์ชันแยกเช็คไฟล์ว่าเป็น Video หรือไม่
+        const isVideoFile = (url) => url.match(/\.(mp4|webm|mov|quicktime|ogg)$/i);
 
         function updateUIAuth(session) {
             currentUserSession = session; const isLoggedIn = session !== null;
@@ -538,9 +581,6 @@
             if(dashId === 'adminDashboard') document.getElementById('adminTitle').innerHTML = btn.innerHTML; 
         }
 
-        // ==========================================
-        // 👑 ฟังก์ชันของ SUPER ADMIN 👑
-        // ==========================================
         async function fetchAdminData(role) {
             if(role === 'Super Admin' || role === 'Admin') {
                 const {data: pendingModels} = await supabaseClient.from('models').select('id, name, cover_image, user_profiles(display_name)').eq('is_verified', false);
@@ -579,29 +619,15 @@
         async function approveModelAdmin(modelId) {
             const {error} = await supabaseClient.from('models').update({is_verified: true}).eq('id', modelId);
             if(error) alert('Error: ' + error.message);
-            else { 
-                alert('✅ อนุมัติเรียบร้อย! น้องได้รับป้าย Verified แล้ว'); 
-                fetchAdminData(currentUserSession.user.user_metadata.role); 
-                fetchModels(); 
-            }
+            else { alert('✅ อนุมัติเรียบร้อย! น้องได้รับป้าย Verified แล้ว'); fetchAdminData(currentUserSession.user.user_metadata.role); fetchModels(); }
         }
 
         async function topUpAgencyAdmin(agencyId, currentBalance) {
-            const inputVal = document.getElementById(`topup_${agencyId}`).value;
-            const amount = parseInt(inputVal);
+            const inputVal = document.getElementById(`topup_${agencyId}`).value; const amount = parseInt(inputVal);
             if(!amount || amount <= 0) { alert('กรุณาใส่จำนวนเงินที่ถูกต้อง'); return; }
-            
-            const newBalance = currentBalance + amount;
-            const {error} = await supabaseClient.from('user_profiles').update({wallet_balance: newBalance}).eq('id', agencyId);
-            
-            if(error) alert('Error: ' + error.message);
-            else { 
-                alert(`💰 เติมเงิน ${amount} บาท สำเร็จ!`); 
-                document.getElementById(`topup_${agencyId}`).value = '';
-                fetchAdminData('Super Admin'); 
-            }
+            const newBalance = currentBalance + amount; const {error} = await supabaseClient.from('user_profiles').update({wallet_balance: newBalance}).eq('id', agencyId);
+            if(error) alert('Error: ' + error.message); else { alert(`💰 เติมเงิน ${amount} บาท สำเร็จ!`); document.getElementById(`topup_${agencyId}`).value = ''; fetchAdminData('Super Admin'); }
         }
-        // ==========================================
 
 
         let mediaFiles = []; 
@@ -626,7 +652,7 @@
             const container = document.getElementById('galleryPreview'); container.innerHTML = '';
             document.getElementById('mediaCountText').innerText = mediaFiles.length;
             mediaFiles.forEach((item, idx) => {
-                let innerHtml = item.type === 'video' ? `<video src="${item.url}" muted></video>` : `<img src="${item.url}">`;
+                let innerHtml = item.type === 'video' ? `<video src="${item.url}"></video><div class="vid-icon-overlay"><span class="iconify" data-icon="heroicons:play-circle-solid"></span></div>` : `<img src="${item.url}">`;
                 container.innerHTML += `<div class="img-thumb-box">${innerHtml}<button type="button" class="btn-remove-img" onclick="mediaFiles.splice(${idx},1); renderPremiumGallery();"><span class="iconify" data-icon="heroicons:x-mark"></span></button></div>`;
             });
         }
@@ -713,7 +739,6 @@
                 const ratingAvg = model.rating_avg > 0 ? parseFloat(model.rating_avg).toFixed(1) : 'New';
                 const isBoosted = model.boost_expires_at && new Date(model.boost_expires_at) > now;
                 const badgeHtml = isBoosted ? '<span class="badge-hot"><span class="iconify" data-icon="heroicons:fire-solid"></span> HOT</span>' : '<span class="badge-image">New</span>';
-                
                 const verifiedBadgeHtml = model.is_verified ? '<span class="iconify verified-badge-small" data-icon="heroicons:check-badge-solid"></span>' : '';
 
                 html += `<div class="card" onclick="viewProfile('${modelJson}')"><div class="card-image-box"><img src="${model.cover_image}" loading="lazy">${badgeHtml}<button class="heart-btn-card" style="border-color: ${heartBorder};" onclick="toggleHeartReal(${model.id}, this, event)"><span class="iconify heart-icon" data-icon="${heartIcon}" style="color: ${heartColor}; font-size: 1.5rem;"></span></button></div><div class="card-info"><div class="name-group">${verifiedBadgeHtml}<span class="card-name">${escapeHTML(model.name)}</span></div><div class="card-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent);"></span> ${escapeHTML(model.location)}</div><div class="card-footer"><div class="price">฿${model.price}</div><div class="engagement"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24;"></span> ${ratingAvg}</div></div></div></div>`;
@@ -726,30 +751,95 @@
             if (error || !data) return; allModelsData = data; handleSearch();
         }
 
-        window.setMainImage = function(url, thumbElement) { document.getElementById('pdMainImage').src = url; document.querySelectorAll('.pro-thumb-item').forEach(el => el.classList.remove('active')); thumbElement.classList.add('active'); };
+        // 🔥 ระบบแสดงรูปภาพ/วิดีโอ ในหน้าโปรไฟล์ (Main View) 🔥
+        window.setMainMedia = function(url, isVideo, thumbElement) {
+            const imgEl = document.getElementById('pdMainImage');
+            const vidEl = document.getElementById('pdMainVideo');
+            
+            if (isVideo) {
+                imgEl.style.display = 'none';
+                vidEl.style.display = 'block';
+                vidEl.src = url;
+                vidEl.play(); // สั่งเล่นวิดีโออัตโนมัติ
+            } else {
+                vidEl.style.display = 'none';
+                vidEl.pause(); // หยุดเล่นถ้าย้ายกลับไปดูรูป
+                imgEl.style.display = 'block';
+                imgEl.src = url;
+            }
+            
+            document.querySelectorAll('.pro-thumb-item').forEach(el => el.classList.remove('active'));
+            if(thumbElement) thumbElement.classList.add('active');
+        };
         
         function viewProfile(encodedJson) {
             const model = JSON.parse(decodeURIComponent(encodedJson)); currentProfileId = model.id; 
             const images = (model.gallery && model.gallery.length > 0) ? model.gallery : [model.cover_image];
-            document.getElementById('pdMainImage').src = images[0]; 
+            
+            // เซ็ตสื่อหลักอันแรก (เช็คว่าเป็นวิดีโอไหม)
+            setMainMedia(images[0], isVideoFile(images[0]), null);
+            
+            // สร้าง Thumbnail ด้านล่าง
             const thumbList = document.getElementById('pdThumbList'); thumbList.innerHTML = '';
-            if (images.length > 1) { images.forEach((imgUrl, idx) => { thumbList.innerHTML += `<div class="pro-thumb-item ${idx === 0 ? 'active' : ''}" onclick="setMainImage('${imgUrl}', this)"><img src="${imgUrl}"></div>`; }); thumbList.style.display = 'flex'; } else { thumbList.style.display = 'none'; }
+            if (images.length > 1) { 
+                images.forEach((url, idx) => { 
+                    const isVid = isVideoFile(url) ? true : false;
+                    const innerHtml = isVid ? `<video src="${url}"></video><div class="vid-icon-overlay" style="font-size:1rem;"><span class="iconify" data-icon="heroicons:play-circle-solid"></span></div>` : `<img src="${url}">`;
+                    thumbList.innerHTML += `<div class="pro-thumb-item ${idx === 0 ? 'active' : ''}" onclick="setMainMedia('${url}', ${isVid}, this)">${innerHtml}</div>`; 
+                }); 
+                thumbList.style.display = 'flex'; 
+            } else { thumbList.style.display = 'none'; }
             
+            // ใส่ข้อมูลใหม่ๆ เข้าไปใน Modal
             document.getElementById('pdName').innerText = model.name; 
-            document.getElementById('pdLoc').innerText = model.location; 
-            document.getElementById('pdAge').innerText = model.age || '-'; document.getElementById('pdProps').innerText = model.proportions || '-';
-            document.getElementById('pdHeight').innerText = model.height || '-'; document.getElementById('pdWeight').innerText = model.weight || '-';
-            document.getElementById('pdPrice').innerText = model.price; document.getElementById('pdDesc').innerText = model.description || '-';
             
+            // สโลแกน
+            const slg = document.getElementById('pdSlogan');
+            if(model.slogan) { slg.innerText = `"${model.slogan}"`; slg.style.display = 'block'; } else { slg.style.display = 'none'; }
+            
+            document.getElementById('pdLoc').innerText = model.location; 
+            document.getElementById('pdAge').innerText = model.age || '-'; 
+            document.getElementById('pdProps').innerText = model.proportions || '-';
+            
+            // คัพ และ แท้/ทำ
+            const cupTxt = model.cup_size ? `${model.cup_size} (${model.breast_type || 'ไม่ระบุ'})` : '-';
+            document.getElementById('pdCup').innerText = cupTxt;
+            
+            document.getElementById('pdHeight').innerText = model.height || '-'; 
+            document.getElementById('pdWeight').innerText = model.weight || '-';
+            document.getElementById('pdLang').innerText = model.languages || '-';
+            
+            document.getElementById('pdPrice').innerText = model.price; 
+            document.getElementById('pdDesc').innerText = model.description || '-';
+            
+            // ปุ่มจอง
             let rawLine = model.line_id || ''; let lineUrl = rawLine; if (!rawLine.startsWith('http')) { lineUrl = rawLine.startsWith('@') ? `https://line.me/R/ti/p/${rawLine}` : `https://line.me/ti/p/~${rawLine}`; }
             document.getElementById('btnBookNow').onclick = function() { window.open(lineUrl, '_blank'); };
+            
+            // Social Links (โชว์/ซ่อน อัตโนมัติ)
+            const teleBtn = document.getElementById('pdTeleBtn');
+            const twitBtn = document.getElementById('pdTwitBtn');
+            const socContainer = document.getElementById('pdSocialsContainer');
+            
+            let hasSocials = false;
+            if(model.telegram_id) { teleBtn.style.display = 'flex'; teleBtn.href = `https://t.me/${model.telegram_id.replace('@','')}`; hasSocials = true; } else { teleBtn.style.display = 'none'; }
+            if(model.twitter_id) { twitBtn.style.display = 'flex'; twitBtn.href = `https://x.com/${model.twitter_id.replace('@','')}`; hasSocials = true; } else { twitBtn.style.display = 'none'; }
+            socContainer.style.display = hasSocials ? 'flex' : 'none';
+
+            // ปุ่มหัวใจ
             const modalHeartBtn = document.getElementById('btnProHeart'); const icon = modalHeartBtn.querySelector('.iconify'); const isFav = userFavorites.includes(model.id);
             icon.setAttribute('data-icon', isFav ? 'mdi:cards-heart' : 'mdi:cards-heart-outline'); icon.style.color = isFav ? '#ff4d4f' : 'white'; modalHeartBtn.style.borderColor = isFav ? '#ff4d4f' : 'rgba(255, 255, 255, 0.3)';
             modalHeartBtn.onclick = function() { toggleHeartReal(model.id, this, null); };
+            
             loadReviews(model.id); document.getElementById('profileDetailModal').classList.add('active'); document.body.classList.add('modal-open');
         }
 
-        function closeProfile() { document.getElementById('profileDetailModal').classList.remove('active'); document.body.classList.remove('modal-open'); }
+        function closeProfile() { 
+            document.getElementById('profileDetailModal').classList.remove('active'); 
+            document.body.classList.remove('modal-open'); 
+            document.getElementById('pdMainVideo').pause(); // ปิดวิดีโอเวลาปิดหน้าต่าง
+        }
+
         function switchAuthTab(tab) { document.getElementById('loginForm').classList.toggle('active', tab === 'login'); document.getElementById('registerForm').classList.toggle('active', tab === 'register'); }
         function openAuthModal(tab = 'register') { document.getElementById('authOverlay').classList.add('active'); switchAuthTab(tab); }
         function closeAuthModal(e, force) { if(force || e.target === document.getElementById('authOverlay')) document.getElementById('authOverlay').classList.remove('active'); }
