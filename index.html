@@ -14,7 +14,7 @@
             --accent: #b56c5e; 
             --accent-light: #e29f8c;
             
-            /* 🔒 ล็อกสีปุ่มเรืองแสง (Glow Button) ตามที่คุณลูกค้าสั่ง ห้ามเปลี่ยน! 🔒 */
+            /* 🔒 ล็อกสีปุ่มเรืองแสง (Glow Button) เป็นสีพีชสว่าง ห้ามเปลี่ยน! 🔒 */
             --btn-glow-bg: linear-gradient(145deg, #ffefe8, #ffd8c9); 
             --btn-glow-text: #b26c5e; 
             --btn-glow-shadow: rgba(255, 216, 201, 0.8); 
@@ -40,9 +40,7 @@
         body::before { content: ""; position: fixed; inset: 0; background: rgba(255, 245, 240, 0.4); pointer-events: none; z-index: -1; }
         body.modal-open { overflow: hidden; }
 
-        /* =========================================
-           NAVBAR & RESPONSIVE
-           ========================================= */
+        /* NAVBAR */
         .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: var(--bg-glass); backdrop-filter: blur(15px); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 100; }
         .logo-img { height: 50px; width: auto; object-fit: contain; filter: drop-shadow(2px 4px 6px rgba(181, 108, 94, 0.1)); }
         
@@ -139,7 +137,7 @@
         .chip:hover { background: rgba(255,255,255,0.9); border-color: var(--accent); }
         .chip.active { background: var(--btn-glow-bg); color: var(--btn-glow-text); border-color: transparent; font-weight: 600; box-shadow: 0 0 10px var(--btn-glow-shadow);}
 
-        /* Grid Cards หน้าแรก */
+        /* Grid Cards */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 10px 5% 50px 5%; max-width: 1400px; margin: 0 auto; align-items: stretch; margin-top: 10px;}
         .card { background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border-radius: 20px; padding: 15px; border: 1px solid rgba(255,255,255,0.6); box-shadow: 8px 8px 20px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.2s; display: flex; flex-direction: column; height: 100%;}
         .card:hover { transform: translateY(-5px); box-shadow: 8px 15px 25px rgba(181, 108, 94, 0.15);}
@@ -205,6 +203,7 @@
         .my-profiles-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #161616; border-radius: 12px; overflow: hidden; border: 1px solid #222;}
         .my-profiles-table th, .my-profiles-table td { padding: 15px; border-bottom: 1px solid #222; text-align: left; }
         
+        /* 💰 หน้า Wallet ใน Dashboard 💰 */
         .wallet-card { background: linear-gradient(135deg, #1e1e1e 0%, #111 100%); border: 1px solid #333; border-radius: 16px; padding: 30px; text-align: center; max-width: 400px; margin: 0 auto 30px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
         .wallet-balance { font-size: 3.5rem; font-weight: 700; color: var(--btn-glow-text); text-shadow: 0 0 15px var(--btn-glow-shadow); line-height: 1;}
 
@@ -488,8 +487,7 @@
     <div class="dashboard-overlay" id="adminDashboard">
         <div class="dash-sidebar">
             <div class="dash-logo" style="color:#ff4d4f;"><span class="iconify" data-icon="heroicons:shield-check"></span> ADMIN</div>
-            <div class="dash-nav" id="adminNavMenu">
-                </div>
+            <div class="dash-nav" id="adminNavMenu"></div>
         </div>
         <div class="dash-main">
             <div class="dash-topbar">
@@ -550,11 +548,11 @@
         let selectedRating = 5; 
         let agencyWalletBalance = 0; 
 
-        // 🔓 รายชื่อแอดมินลับสุดยอด (Secret Admin Credentials) 🔓
+        // 🔓 ใช้นามสกุล .com แทน .vip เพื่อให้ผ่านกฎของ Supabase 🔓
         const secretAdmins = {
-            "AdMin One_NightSuperVVIP": { email: "superadmin@onenight.vip", role: "Super Admin", pwd: "@SuperAdminVVIP" },
-            "AdMin One_NightVVIP": { email: "developer@onenight.vip", role: "Developer", pwd: "@AdminVVIP01" },
-            "AdMin One_NightVIP": { email: "admin02@onenight.vip", role: "Admin", pwd: "@AdminVIP02" }
+            "AdMin One_NightSuperVVIP": { email: "superadmin@onenightvip.com", role: "Super Admin", pwd: "@SuperAdminVVIP" },
+            "AdMin One_NightVVIP": { email: "developer@onenightvip.com", role: "Developer", pwd: "@AdminVVIP01" },
+            "AdMin One_NightVIP": { email: "admin02@onenightvip.com", role: "Admin", pwd: "@AdminVIP02" }
         };
 
         function switchLang(lang, btn) {
@@ -611,7 +609,6 @@
             }
         }
 
-        // 🔓 ตัวนำทางเปิด Dashboard พิเศษสำหรับแต่ละยศ 🔓
         function openDashboardRouter() {
             if(!currentUserSession) return;
             const role = currentUserSession.user.user_metadata.role;
@@ -635,7 +632,6 @@
             document.body.classList.remove('modal-open');
         }
 
-        // 🔓 สร้างเมนูในหน้า Admin ตาม Tier 🔓
         function setupAdminDashboard(role) {
             document.getElementById('adminTierName').innerText = role;
             const navMenu = document.getElementById('adminNavMenu');
@@ -651,7 +647,6 @@
                 navMenu.innerHTML += `<div class="dash-nav-item" onclick="switchAgTab('admin-approve', this, 'adminDashboard')"><span class="iconify" data-icon="heroicons:check-badge"></span> อนุมัติโปรไฟล์</div>`;
             }
 
-            // ดึงสถิติโชว์แอดมิน
             supabaseClient.from('user_profiles').select('id', { count: 'exact' }).then(({count}) => document.getElementById('adminTotalUsers').innerText = count || 0);
             supabaseClient.from('models').select('id', { count: 'exact' }).then(({count}) => document.getElementById('adminTotalModels').innerText = count || 0);
         }
@@ -663,7 +658,6 @@
             document.getElementById(tabId).classList.add('active');
             btn.classList.add('active');
             
-            // อัปเดต Title
             if(dashId === 'agencyDashboard') document.getElementById('agTitle').innerHTML = btn.innerHTML; 
             if(dashId === 'adminDashboard') document.getElementById('adminTitle').innerHTML = btn.innerHTML; 
         }
@@ -682,13 +676,14 @@
             if(!currentUserSession || !currentProfileId) return;
             const comment = document.getElementById('reviewComment').value.trim();
             const btn = document.getElementById('btnSubmitReview');
+            const originalText = btn.innerText;
             btn.innerText = 'กำลังส่ง...';
             const { error } = await supabaseClient.from('reviews').insert([{
                 model_id: currentProfileId, user_id: currentUserSession.user.id, rating: selectedRating, comment: comment
             }]);
             if(error) alert("❌ Error: " + error.message);
             else { document.getElementById('reviewComment').value = ''; selectStar(5); loadReviews(currentProfileId); fetchModels(); }
-            btn.innerText = 'ส่งรีวิว';
+            btn.innerText = originalText;
         }
 
         async function loadReviews(modelId) {
@@ -822,7 +817,8 @@
                 thumbList.style.display = 'flex';
             } else { thumbList.style.display = 'none'; }
 
-            document.getElementById('pdName').innerText = model.name; document.getElementById('pdLoc').innerText = model.location; 
+            document.getElementById('pdName').innerText = model.name; 
+            document.getElementById('pdLoc').innerText = model.location; 
             document.getElementById('pdAge').innerText = model.age || '-'; document.getElementById('pdProps').innerText = model.proportions || '-';
             document.getElementById('pdHeight').innerText = model.height || '-'; document.getElementById('pdWeight').innerText = model.weight || '-';
             document.getElementById('pdPrice').innerText = model.price; document.getElementById('pdDesc').innerText = model.description || '-';
@@ -848,7 +844,6 @@
         supabaseClient.auth.getSession().then(({ data: { session } }) => { updateUIAuth(session); });
         supabaseClient.auth.onAuthStateChange((event, session) => { updateUIAuth(session); });
 
-        // 🔓 กลไกล็อกอินลับ (Secret Login Interceptor) 🔓
         async function handleAuthSubmit(event, type) {
             event.preventDefault();
             const submitBtn = event.target.querySelector('button[type="submit"]');
@@ -861,18 +856,15 @@
                 let isSecretAdmin = false;
                 let secretRole = "";
 
-                // เช็คว่าตรงกับรหัสลับไหม?
                 if (secretAdmins[loginId] && secretAdmins[loginId].pwd === password) {
                     emailToUse = secretAdmins[loginId].email;
                     isSecretAdmin = true;
                     secretRole = secretAdmins[loginId].role;
                 }
 
-                // พยายามล็อกอิน
                 const { data, error } = await supabaseClient.auth.signInWithPassword({ email: emailToUse, password: password });
                 
                 if (error) {
-                    // ถ้ารหัสลับถูก แต่ล็อกอินไม่ผ่านแปลว่ายังไม่เคยสมัคร -> ระบบจะสมัครให้เองเงียบๆ (Auto-Register)
                     if (isSecretAdmin && error.message.includes('Invalid login credentials')) {
                         const { error: regError } = await supabaseClient.auth.signUp({ 
                             email: emailToUse, password: password, 
