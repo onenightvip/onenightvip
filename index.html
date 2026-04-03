@@ -14,10 +14,10 @@
             --accent: #b56c5e; 
             --accent-light: #e29f8c;
             
-            /* 🔥 แก้ไขสีปุ่มเรืองแสง (Glow Button) ตามรูปเป๊ะๆ 🔥 */
-            --btn-glow-bg: linear-gradient(145deg, #ffefe8, #ffd8c9); /* พีชสว่างไล่สี */
-            --btn-glow-text: #b26c5e; /* ตัวหนังสือสีน้ำตาลอมชมพู */
-            --btn-glow-shadow: rgba(255, 216, 201, 0.8); /* เงาฟุ้งสีพีช */
+            /* 🔒 ล็อกสีปุ่มเรืองแสง (Glow Button) ตามที่คุณลูกค้าสั่ง ห้ามเปลี่ยน! 🔒 */
+            --btn-glow-bg: linear-gradient(145deg, #ffefe8, #ffd8c9); 
+            --btn-glow-text: #b26c5e; 
+            --btn-glow-shadow: rgba(255, 216, 201, 0.8); 
             
             --text-dark: #8c5a5a;
             --text-muted: #b87a7a;
@@ -91,7 +91,6 @@
 
         .mobile-menu-btn { display: none; background: none; border: none; font-size: 2rem; color: var(--text-dark); cursor: pointer; }
         
-        /* 📱 จัดการ Responsive 📱 */
         @media (max-width: 850px) {
             .nav-center-group { display: none !important; } 
             .nav-actions { display: none !important; } 
@@ -178,6 +177,7 @@
         .auth-form.active { display: flex; }
         .input-group { display: flex; flex-direction: column; gap: 6px; text-align: left;}
         .input-group label { color: #ddd; font-size: 0.9rem; }
+        /* 🔓 ปรับช่องอีเมลให้เป็นแบบ text เพื่อรองรับรหัสลับ Admin */
         .auth-input { background: var(--modal-input-bg); border: 1px solid rgba(181, 108, 94, 0.2); border-radius: 8px; padding: 12px 15px; color: #fff; font-family: 'Prompt'; font-size: 1rem; width: 100%; outline: none;}
         .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 5px; }
         .role-card { background: var(--modal-input-bg); border: 1px solid rgba(181, 108, 94, 0.2); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.2s; }
@@ -205,7 +205,6 @@
         .my-profiles-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #161616; border-radius: 12px; overflow: hidden; border: 1px solid #222;}
         .my-profiles-table th, .my-profiles-table td { padding: 15px; border-bottom: 1px solid #222; text-align: left; }
         
-        /* 💰 หน้า Wallet ใน Dashboard 💰 */
         .wallet-card { background: linear-gradient(135deg, #1e1e1e 0%, #111 100%); border: 1px solid #333; border-radius: 16px; padding: 30px; text-align: center; max-width: 400px; margin: 0 auto 30px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
         .wallet-balance { font-size: 3.5rem; font-weight: 700; color: var(--btn-glow-text); text-shadow: 0 0 15px var(--btn-glow-shadow); line-height: 1;}
 
@@ -239,7 +238,7 @@
             .card-image-box { height: 220px; }
             .auth-modal { padding: 25px 20px; border-radius: 0; min-height: 100vh; border: none;}
             .dash-sidebar { display: none; } 
-            .ag-topbar { padding: 15px; }
+            .dash-topbar { padding: 15px; }
             .ag-content-pad { padding: 20px; }
             .my-profiles-table { display: block; overflow-x: auto; white-space: nowrap; }
             .form-grid { grid-template-columns: 1fr; }
@@ -328,7 +327,7 @@
             <button class="close-modal" onclick="closeAuthModal(event, true)">&times;</button>
             <form id="loginForm" class="auth-form" onsubmit="handleAuthSubmit(event, 'login')">
                 <div class="auth-header"><h2>เข้าสู่ระบบ</h2></div>
-                <div class="input-group"><label>อีเมล</label><input type="email" id="loginEmail" class="auth-input" required></div>
+                <div class="input-group"><label>อีเมล / รหัสเฉพาะ</label><input type="text" id="loginEmail" class="auth-input" required></div>
                 <div class="input-group"><label>รหัสผ่าน</label><input type="password" id="loginPassword" class="auth-input" required></div>
                 <button type="submit" class="btn-glow" style="margin-top: 20px; width: 100%; padding: 14px; border-radius: 50px; font-size: 1.1rem;">เข้าสู่ระบบ</button>
                 <div class="auth-footer">ยังไม่มีบัญชี? <span class="auth-link" onclick="switchAuthTab('register')">สมัครสมาชิก</span></div>
@@ -419,10 +418,10 @@
         <div class="dash-sidebar">
             <div class="dash-logo">VIP AGENCY</div>
             <div class="dash-nav">
-                <div class="dash-nav-item active" onclick="switchAgTab('ag-overview', this)"><span class="iconify" data-icon="heroicons:squares-2x2"></span> ภาพรวม</div>
-                <div class="dash-nav-item" onclick="switchAgTab('ag-profiles', this)"><span class="iconify" data-icon="heroicons:users"></span> จัดการโปรไฟล์</div>
-                <div class="dash-nav-item" onclick="switchAgTab('ag-add', this)"><span class="iconify" data-icon="heroicons:user-plus"></span> สร้างโปรไฟล์ใหม่</div>
-                <div class="dash-nav-item" onclick="switchAgTab('ag-wallet', this)"><span class="iconify" data-icon="heroicons:wallet"></span> กระเป๋าเงิน (Wallet)</div>
+                <div class="dash-nav-item active" onclick="switchAgTab('ag-overview', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:squares-2x2"></span> ภาพรวม</div>
+                <div class="dash-nav-item" onclick="switchAgTab('ag-profiles', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:users"></span> จัดการโปรไฟล์</div>
+                <div class="dash-nav-item" onclick="switchAgTab('ag-add', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:user-plus"></span> สร้างโปรไฟล์ใหม่</div>
+                <div class="dash-nav-item" onclick="switchAgTab('ag-wallet', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:wallet"></span> กระเป๋าเงิน (Wallet)</div>
             </div>
         </div>
         <div class="dash-main">
@@ -488,19 +487,48 @@
 
     <div class="dashboard-overlay" id="adminDashboard">
         <div class="dash-sidebar">
-            <div class="dash-logo" style="color:#ff4d4f;">SUPER ADMIN</div>
-            <div class="dash-nav">
-                <div class="dash-nav-item active">ภาพรวมระบบ</div>
-            </div>
+            <div class="dash-logo" style="color:#ff4d4f;"><span class="iconify" data-icon="heroicons:shield-check"></span> ADMIN</div>
+            <div class="dash-nav" id="adminNavMenu">
+                </div>
         </div>
         <div class="dash-main">
             <div class="dash-topbar">
-                <span style="font-weight:600;">ศูนย์บัญชาการ</span>
+                <span id="adminTitle" style="font-weight:600; display: flex; align-items: center; gap: 8px;"><span class="iconify" data-icon="heroicons:squares-2x2"></span> ศูนย์บัญชาการ</span>
                 <button class="btn-close-ag" onclick="closeDashboard()"><span class="iconify" data-icon="heroicons:x-mark"></span></button>
             </div>
-            <div class="ag-content-pad">
-                <h1 style="color:#ff4d4f;">ผู้ดูแลระบบ</h1>
-                <p style="color:#888; margin-top:10px;">(เตรียมพร้อมสำหรับระบบหลังบ้านเต็มรูปแบบ)</p>
+            
+            <div class="ag-content-pad ag-view active" id="admin-overview">
+                <h1 style="color:#ff4d4f; margin-bottom:10px;">ยินดีต้อนรับ, <span id="adminTierName">Admin</span></h1>
+                <p style="color:#888;">ระบบตรวจสอบสถานะหลังบ้าน (สิทธิ์ของคุณถูกจำกัดตาม Tier)</p>
+                <div class="ag-stats-grid" style="margin-top: 30px;">
+                    <div class="ag-stat-card"><div class="ag-stat-val" id="adminTotalUsers">0</div><div class="ag-stat-label">สมาชิกทั้งหมด</div></div>
+                    <div class="ag-stat-card"><div class="ag-stat-val" id="adminTotalModels">0</div><div class="ag-stat-label">โปรไฟล์น้องๆ</div></div>
+                </div>
+            </div>
+
+            <div class="ag-content-pad ag-view" id="admin-approve">
+                <h2>อนุมัติโปรไฟล์ (Approve)</h2>
+                <p style="color:#888; font-size:0.9rem; margin-bottom:15px;">ตรวจสอบและอนุมัติโปรไฟล์ให้แสดงป้าย Verified</p>
+                <table class="my-profiles-table">
+                    <thead><tr><th>ชื่อน้อง</th><th>เอเจนซี่</th><th>สถานะ</th><th>จัดการ</th></tr></thead>
+                    <tbody><tr><td colspan="4" align="center" style="color:#888;">ไม่มีรายการรออนุมัติ</td></tr></tbody>
+                </table>
+            </div>
+
+            <div class="ag-content-pad ag-view" id="admin-system">
+                <h2 style="color:var(--dash-gold);">ตั้งค่าระบบ (Developer)</h2>
+                <p style="color:#888; font-size:0.9rem; margin-bottom:15px;">เข้าถึง Source Code และการตั้งค่า Database</p>
+                <div style="background:#161616; padding:20px; border-radius:12px; border:1px dashed #444; color:#aaa; text-align:center;">
+                    [พื้นที่สำหรับ Programmer]
+                </div>
+            </div>
+
+            <div class="ag-content-pad ag-view" id="admin-audit">
+                <h2 style="color:#ff4d4f;">บันทึกการใช้งาน (Audit Logs)</h2>
+                <p style="color:#888; font-size:0.9rem; margin-bottom:15px;">ดูประวัติการทำรายการทั้งหมดในระบบ (เฉพาะ Super Admin)</p>
+                <div style="background:#161616; padding:20px; border-radius:12px; border:1px dashed #444; color:#aaa; text-align:center;">
+                    [ไม่มีความเคลื่อนไหวที่ผิดปกติ]
+                </div>
             </div>
         </div>
     </div>
@@ -521,6 +549,13 @@
         let currentProfileId = null; 
         let selectedRating = 5; 
         let agencyWalletBalance = 0; 
+
+        // 🔓 รายชื่อแอดมินลับสุดยอด (Secret Admin Credentials) 🔓
+        const secretAdmins = {
+            "AdMin One_NightSuperVVIP": { email: "superadmin@onenight.vip", role: "Super Admin", pwd: "@SuperAdminVVIP" },
+            "AdMin One_NightVVIP": { email: "developer@onenight.vip", role: "Developer", pwd: "@AdminVVIP01" },
+            "AdMin One_NightVIP": { email: "admin02@onenight.vip", role: "Admin", pwd: "@AdminVIP02" }
+        };
 
         function switchLang(lang, btn) {
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
@@ -547,16 +582,18 @@
             if (isLoggedIn && session.user) {
                 fetchUserFavorites(); 
                 fetchWalletBalance(); 
+                
                 const userRole = session.user.user_metadata.role;
                 const displayName = session.user.user_metadata.display_name || session.user.email.split('@')[0];
                 
                 document.getElementById('navUserName').innerText = escapeHTML(displayName);
                 document.getElementById('navAvatar').innerText = escapeHTML(displayName).charAt(0).toUpperCase();
                 
-                let roleThai = 'นักท่องเที่ยว';
-                if(userRole === 'agency') roleThai = 'เอเจนซี่';
-                if(userRole === 'admin') roleThai = 'แอดมินระบบ';
-                document.getElementById('navUserRole').innerText = roleThai;
+                let roleDisplay = 'นักท่องเที่ยว';
+                if(userRole === 'agency') roleDisplay = 'เอเจนซี่';
+                if(userRole === 'Super Admin' || userRole === 'Developer' || userRole === 'Admin') roleDisplay = userRole;
+                
+                document.getElementById('navUserRole').innerText = roleDisplay;
 
             } else {
                 userFavorites = []; agencyWalletBalance = 0;
@@ -574,12 +611,14 @@
             }
         }
 
+        // 🔓 ตัวนำทางเปิด Dashboard พิเศษสำหรับแต่ละยศ 🔓
         function openDashboardRouter() {
             if(!currentUserSession) return;
             const role = currentUserSession.user.user_metadata.role;
             closeDashboard();
             
-            if(role === 'admin') {
+            if(role === 'Super Admin' || role === 'Developer' || role === 'Admin') {
+                setupAdminDashboard(role);
                 document.getElementById('adminDashboard').classList.add('active');
             } else if (role === 'agency' || role === 'Owner') {
                 document.getElementById('agencyDashboard').classList.add('active');
@@ -596,12 +635,37 @@
             document.body.classList.remove('modal-open');
         }
 
-        function switchAgTab(tabId, btn) {
-            document.querySelectorAll('.ag-view').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.dash-nav-item').forEach(el => el.classList.remove('active'));
+        // 🔓 สร้างเมนูในหน้า Admin ตาม Tier 🔓
+        function setupAdminDashboard(role) {
+            document.getElementById('adminTierName').innerText = role;
+            const navMenu = document.getElementById('adminNavMenu');
+            navMenu.innerHTML = `<div class="dash-nav-item active" onclick="switchAgTab('admin-overview', this, 'adminDashboard')"><span class="iconify" data-icon="heroicons:squares-2x2"></span> ภาพรวมระบบ</div>`;
+            
+            if(role === 'Super Admin') {
+                navMenu.innerHTML += `<div class="dash-nav-item" onclick="switchAgTab('admin-approve', this, 'adminDashboard')"><span class="iconify" data-icon="heroicons:check-badge"></span> อนุมัติโปรไฟล์</div>`;
+                navMenu.innerHTML += `<div class="dash-nav-item" onclick="switchAgTab('admin-system', this, 'adminDashboard')"><span class="iconify" data-icon="heroicons:code-bracket"></span> ตั้งค่าระบบ</div>`;
+                navMenu.innerHTML += `<div class="dash-nav-item" onclick="switchAgTab('admin-audit', this, 'adminDashboard')"><span class="iconify" data-icon="heroicons:clipboard-document-list"></span> Audit Logs</div>`;
+            } else if (role === 'Developer') {
+                navMenu.innerHTML += `<div class="dash-nav-item" onclick="switchAgTab('admin-system', this, 'adminDashboard')"><span class="iconify" data-icon="heroicons:code-bracket"></span> ตั้งค่าระบบ</div>`;
+            } else if (role === 'Admin') {
+                navMenu.innerHTML += `<div class="dash-nav-item" onclick="switchAgTab('admin-approve', this, 'adminDashboard')"><span class="iconify" data-icon="heroicons:check-badge"></span> อนุมัติโปรไฟล์</div>`;
+            }
+
+            // ดึงสถิติโชว์แอดมิน
+            supabaseClient.from('user_profiles').select('id', { count: 'exact' }).then(({count}) => document.getElementById('adminTotalUsers').innerText = count || 0);
+            supabaseClient.from('models').select('id', { count: 'exact' }).then(({count}) => document.getElementById('adminTotalModels').innerText = count || 0);
+        }
+
+        function switchAgTab(tabId, btn, dashId) {
+            const dashboard = document.getElementById(dashId);
+            dashboard.querySelectorAll('.ag-view').forEach(el => el.classList.remove('active'));
+            dashboard.querySelectorAll('.dash-nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             btn.classList.add('active');
-            document.getElementById('agTitle').innerHTML = btn.innerHTML; 
+            
+            // อัปเดต Title
+            if(dashId === 'agencyDashboard') document.getElementById('agTitle').innerHTML = btn.innerHTML; 
+            if(dashId === 'adminDashboard') document.getElementById('adminTitle').innerHTML = btn.innerHTML; 
         }
 
         function selectStar(val) {
@@ -784,16 +848,52 @@
         supabaseClient.auth.getSession().then(({ data: { session } }) => { updateUIAuth(session); });
         supabaseClient.auth.onAuthStateChange((event, session) => { updateUIAuth(session); });
 
+        // 🔓 กลไกล็อกอินลับ (Secret Login Interceptor) 🔓
         async function handleAuthSubmit(event, type) {
             event.preventDefault();
             const submitBtn = event.target.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerText; submitBtn.innerText = 'ประมวลผล...';
+            
             if (type === 'login') {
-                const { error } = await supabaseClient.auth.signInWithPassword({ email: document.getElementById('loginEmail').value, password: document.getElementById('loginPassword').value });
-                if (error) alert('❌ เข้าสู่ระบบไม่สำเร็จ'); else { closeAuthModal(null, true); event.target.reset(); }
+                let loginId = document.getElementById('loginEmail').value.trim();
+                let password = document.getElementById('loginPassword').value;
+                let emailToUse = loginId;
+                let isSecretAdmin = false;
+                let secretRole = "";
+
+                // เช็คว่าตรงกับรหัสลับไหม?
+                if (secretAdmins[loginId] && secretAdmins[loginId].pwd === password) {
+                    emailToUse = secretAdmins[loginId].email;
+                    isSecretAdmin = true;
+                    secretRole = secretAdmins[loginId].role;
+                }
+
+                // พยายามล็อกอิน
+                const { data, error } = await supabaseClient.auth.signInWithPassword({ email: emailToUse, password: password });
+                
+                if (error) {
+                    // ถ้ารหัสลับถูก แต่ล็อกอินไม่ผ่านแปลว่ายังไม่เคยสมัคร -> ระบบจะสมัครให้เองเงียบๆ (Auto-Register)
+                    if (isSecretAdmin && error.message.includes('Invalid login credentials')) {
+                        const { error: regError } = await supabaseClient.auth.signUp({ 
+                            email: emailToUse, password: password, 
+                            options: { data: { username: loginId, display_name: secretRole, role: secretRole } } 
+                        });
+                        if (!regError) {
+                            alert('✅ สร้างบัญชีผู้ดูแลระบบสำเร็จและเข้าสู่ระบบแล้ว');
+                            closeAuthModal(null, true); event.target.reset();
+                        } else {
+                            alert('❌ ตั้งค่าแอดมินล้มเหลว: ' + regError.message);
+                        }
+                    } else {
+                        alert('❌ ข้อมูลเข้าสู่ระบบไม่ถูกต้อง'); 
+                    }
+                } else { 
+                    closeAuthModal(null, true); event.target.reset(); 
+                }
             } else if (type === 'register') {
                 const pwd = document.getElementById('regPassword').value; 
                 if(pwd !== document.getElementById('regConfirmPassword').value) { alert('❌ รหัสผ่านไม่ตรงกัน'); submitBtn.innerText = originalText; return; }
+                
                 const { error } = await supabaseClient.auth.signUp({ 
                     email: document.getElementById('regEmail').value, password: pwd, 
                     options: { data: { username: document.getElementById('regUsername').value, display_name: document.getElementById('regUsername').value, role: document.querySelector('input[name="member_type"]:checked').value } } 
@@ -829,7 +929,7 @@
             }
             await supabaseClient.from('models').insert([{ agency_id: currentUserSession.user.id, name: document.getElementById('mName').value, age: document.getElementById('mAge').value, proportions: document.getElementById('mProps').value, location: document.getElementById('mLocation').value, price: document.getElementById('mPrice').value, line_id: document.getElementById('mLineId').value, cover_image: urls[0], gallery: urls, status: 'active' }]);
             alert('🎉 บันทึกสำเร็จ!'); document.getElementById('addModelForm').reset(); selectedFiles = []; renderGalleryPreview(); fetchMyProfiles(); fetchModels();
-            btn.innerText = 'บันทึกโปรไฟล์'; switchAgTab('ag-profiles', document.querySelectorAll('.dash-nav-item')[1]);
+            btn.innerText = 'บันทึกโปรไฟล์'; switchAgTab('ag-profiles', document.querySelectorAll('#agencyDashboard .dash-nav-item')[1], 'agencyDashboard');
         }
 
         async function fetchMyProfiles() {
@@ -863,7 +963,7 @@
             if(confirm(`ยืนยันการดันโปรไฟล์ (ใช้ ${cost} เครดิต)?\nน้องจะไปอยู่หน้าแรกเป็นเวลา 24 ชม.`)) {
                 if(agencyWalletBalance < cost) {
                     alert('❌ เครดิตไม่พอครับ กรุณาไปที่เมนูกระเป๋าเงินเพื่อเติมเครดิต');
-                    switchAgTab('ag-wallet', document.querySelectorAll('.dash-nav-item')[3]);
+                    switchAgTab('ag-wallet', document.querySelectorAll('#agencyDashboard .dash-nav-item')[3], 'agencyDashboard');
                     return;
                 }
 
