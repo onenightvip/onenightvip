@@ -14,10 +14,10 @@
             --accent: #b56c5e; 
             --accent-light: #e29f8c;
             
-            /* 🔥 ล็อกสีปุ่มเรืองแสง (Glow Button) 🔥 */
-            --btn-glow-bg: #8b736b; 
-            --btn-glow-text: #ffffff;
-            --btn-glow-shadow: rgba(139, 115, 107, 0.6); 
+            /* 🔥 แก้ไขสีปุ่มเรืองแสง (Glow Button) ตามรูปเป๊ะๆ 🔥 */
+            --btn-glow-bg: linear-gradient(145deg, #ffefe8, #ffd8c9); /* พีชสว่างไล่สี */
+            --btn-glow-text: #b26c5e; /* ตัวหนังสือสีน้ำตาลอมชมพู */
+            --btn-glow-shadow: rgba(255, 216, 201, 0.8); /* เงาฟุ้งสีพีช */
             
             --text-dark: #8c5a5a;
             --text-muted: #b87a7a;
@@ -40,7 +40,9 @@
         body::before { content: ""; position: fixed; inset: 0; background: rgba(255, 245, 240, 0.4); pointer-events: none; z-index: -1; }
         body.modal-open { overflow: hidden; }
 
-        /* NAVBAR */
+        /* =========================================
+           NAVBAR & RESPONSIVE
+           ========================================= */
         .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: var(--bg-glass); backdrop-filter: blur(15px); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 100; }
         .logo-img { height: 50px; width: auto; object-fit: contain; filter: drop-shadow(2px 4px 6px rgba(181, 108, 94, 0.1)); }
         
@@ -57,7 +59,7 @@
         
         .nav-user-chip { display: flex; align-items: center; gap: 10px; background: white; padding: 4px 15px 4px 4px; border-radius: 50px; border: 1px solid rgba(181, 108, 94, 0.2); cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(181, 108, 94, 0.05);}
         .nav-user-chip:hover { border-color: var(--accent); transform: translateY(-2px);}
-        .nav-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--btn-glow-bg); color: #fff; display: flex; justify-content: center; align-items: center; font-weight: bold; border: 1px solid rgba(255,255,255,0.8);}
+        .nav-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--btn-glow-bg); color: var(--btn-glow-text); display: flex; justify-content: center; align-items: center; font-weight: bold; border: 1px solid rgba(255,255,255,0.8);}
         .nav-user-info { display: flex; flex-direction: column; line-height: 1.1; text-align: left;}
         .nav-user-name { font-size: 0.85rem; font-weight: 600; color: var(--text-dark); max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
         .nav-user-role { font-size: 0.7rem; color: var(--text-muted); }
@@ -68,7 +70,7 @@
         .btn-logout { background: #ffffff; color: #ff4d4f; border: 1px solid #ff4d4f; padding: 8px 15px; border-radius: 50px; cursor: pointer; font-family: 'Prompt'; font-weight: 500; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; transition: 0.2s;}
         .btn-logout:hover { background: #fff1f0; }
 
-        /* 🔥 ปุ่มเรืองแสง (Glow Buttons) 🔥 */
+        /* 🔥 คลาสปุ่มเรืองแสง (Glow) ใช้กับปุ่มหลักทั้งหมด 🔥 */
         .btn-glow {
             background: var(--btn-glow-bg) !important; 
             color: var(--btn-glow-text) !important; 
@@ -76,18 +78,20 @@
             box-shadow: 0 0 15px 4px var(--btn-glow-shadow) !important; 
             transition: all 0.2s ease !important;
             font-family: 'Prompt', sans-serif;
+            font-weight: 600 !important;
             cursor: pointer;
         }
         .btn-glow:hover {
             transform: translateY(-2px) !important; 
-            box-shadow: 0 0 25px 6px var(--btn-glow-shadow) !important; 
-            filter: brightness(1.1) !important;
+            box-shadow: 0 0 25px 6px rgba(255, 200, 180, 0.9) !important; 
+            filter: brightness(1.05) !important;
         }
         
-        .btn-glow-sm { padding: 5px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 500;}
+        .btn-glow-sm { padding: 5px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 600;}
 
         .mobile-menu-btn { display: none; background: none; border: none; font-size: 2rem; color: var(--text-dark); cursor: pointer; }
         
+        /* 📱 จัดการ Responsive 📱 */
         @media (max-width: 850px) {
             .nav-center-group { display: none !important; } 
             .nav-actions { display: none !important; } 
@@ -117,6 +121,7 @@
         .agencies-carousel-wrapper:hover .agencies-carousel__track { animation-play-state: paused; }
         .agencies-carousel__strip { display: flex; gap: 15px; padding-right: 15px; }
         .agencies-carousel__spotlight { border: 1px solid rgba(181, 108, 94, 0.2); border-radius: 14px; display: block; flex-shrink: 0; height: 100px; overflow: hidden; position: relative; text-decoration: none; width: 240px; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.03); transition: all .25s ease; }
+        .agencies-carousel__spotlight:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(181, 108, 94, 0.15); }
         .agencies-carousel__spotlight-image { height: 100%; width: 100%; object-fit: cover; position: absolute; transition: transform .4s ease; opacity: 0.9; }
         .agencies-carousel__spotlight:hover .agencies-carousel__spotlight-image { transform: scale(1.06); opacity: 1;}
         .agencies-carousel__spotlight-overlay { background: linear-gradient(180deg,transparent,transparent 25%,rgba(253, 245, 245, 0.6) 55%,rgba(253, 245, 245, 0.95)); inset: 0; position: absolute; }
@@ -133,9 +138,9 @@
         .filter-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
         .chip { padding: 6px 15px; border-radius: 50px; background: rgba(255,255,255,0.6); border: 1px solid rgba(181, 108, 94, 0.2); color: var(--text-dark); font-size: 0.85rem; cursor: pointer; transition: 0.2s; font-family: 'Prompt';}
         .chip:hover { background: rgba(255,255,255,0.9); border-color: var(--accent); }
-        .chip.active { background: var(--btn-glow-bg); color: var(--btn-glow-text); border-color: var(--btn-glow-bg); font-weight: 600; box-shadow: 0 0 10px rgba(139, 115, 107, 0.4);}
+        .chip.active { background: var(--btn-glow-bg); color: var(--btn-glow-text); border-color: transparent; font-weight: 600; box-shadow: 0 0 10px var(--btn-glow-shadow);}
 
-        /* Grid Cards */
+        /* Grid Cards หน้าแรก */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 10px 5% 50px 5%; max-width: 1400px; margin: 0 auto; align-items: stretch; margin-top: 10px;}
         .card { background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border-radius: 20px; padding: 15px; border: 1px solid rgba(255,255,255,0.6); box-shadow: 8px 8px 20px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.2s; display: flex; flex-direction: column; height: 100%;}
         .card:hover { transform: translateY(-5px); box-shadow: 8px 15px 25px rgba(181, 108, 94, 0.15);}
@@ -152,8 +157,7 @@
         .price { font-size: 1.25rem; font-weight: bold; color: var(--accent); }
         .engagement { font-size: 0.9rem; display: flex; align-items: center; gap: 12px; color: var(--text-dark); }
         
-        .badge-image { position: absolute; top: 12px; left: 12px; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: white; background: var(--btn-glow-bg); z-index: 10; box-shadow: 0 0 10px rgba(139,115,107,0.5);}
-        /* 🔥 ป้าย HOT สำหรับคนที่โดน Boost 🔥 */
+        .badge-image { position: absolute; top: 12px; left: 12px; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: var(--btn-glow-text); background: var(--btn-glow-bg); z-index: 10; box-shadow: 0 0 10px var(--btn-glow-shadow);}
         .badge-hot { position: absolute; top: 12px; left: 12px; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: white; background: linear-gradient(45deg, #ef4444, #f97316); z-index: 10; box-shadow: 0 0 15px rgba(239,68,68,0.6); animation: pulseHot 2s infinite;}
         @keyframes pulseHot { 0% { transform: scale(1); } 50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(239,68,68,0.8); } 100% { transform: scale(1); } }
         
@@ -177,6 +181,7 @@
         .auth-input { background: var(--modal-input-bg); border: 1px solid rgba(181, 108, 94, 0.2); border-radius: 8px; padding: 12px 15px; color: #fff; font-family: 'Prompt'; font-size: 1rem; width: 100%; outline: none;}
         .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 5px; }
         .role-card { background: var(--modal-input-bg); border: 1px solid rgba(181, 108, 94, 0.2); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.2s; }
+        .role-card:hover { border-color: #777; }
         .role-radio { display: none; }
         .role-radio:checked + .role-card { border-color: var(--dash-gold); background: rgba(181, 108, 94, 0.1); color: var(--dash-gold);}
         .auth-footer { text-align: center; margin-top: 20px; font-size: 0.9rem; color: #888; }
@@ -202,7 +207,7 @@
         
         /* 💰 หน้า Wallet ใน Dashboard 💰 */
         .wallet-card { background: linear-gradient(135deg, #1e1e1e 0%, #111 100%); border: 1px solid #333; border-radius: 16px; padding: 30px; text-align: center; max-width: 400px; margin: 0 auto 30px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
-        .wallet-balance { font-size: 3.5rem; font-weight: 700; color: var(--btn-glow-bg); text-shadow: 0 0 15px rgba(139,115,107,0.5); line-height: 1;}
+        .wallet-balance { font-size: 3.5rem; font-weight: 700; color: var(--btn-glow-text); text-shadow: 0 0 15px var(--btn-glow-shadow); line-height: 1;}
 
         /* PROFILE DETAIL OVERLAY */
         .profile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f0f0f; z-index: 4000; overflow-y: auto; opacity: 0; visibility: hidden; transition: all 0.3s ease; font-family: 'Prompt', sans-serif; display: flex; flex-direction: column; }
@@ -260,7 +265,7 @@
 
             <div class="auth-buttons" id="guestMenu">
                 <button class="btn-outline" onclick="openAuthModal('login')">เข้าสู่ระบบ</button>
-                <button class="btn-glow" style="padding: 8px 25px; border-radius: 50px; font-weight: 600;" onclick="openAuthModal('register')">สมัครสมาชิก</button>
+                <button class="btn-glow" style="padding: 8px 25px; border-radius: 50px;" onclick="openAuthModal('register')">สมัครสมาชิก</button>
             </div>
 
             <div class="auth-buttons" id="loggedInMenu" style="display: none;">
@@ -291,10 +296,10 @@
         
         <div class="sheet-auth" id="mobileGuestMenu">
             <button class="btn-outline" onclick="toggleMobileMenu(); openAuthModal('login')">เข้าสู่ระบบ</button>
-            <button class="btn-glow" style="padding: 8px 20px; border-radius: 50px; font-weight: 600;" onclick="toggleMobileMenu(); openAuthModal('register')">สมัครสมาชิก</button>
+            <button class="btn-glow" style="padding: 8px 20px; border-radius: 50px;" onclick="toggleMobileMenu(); openAuthModal('register')">สมัครสมาชิก</button>
         </div>
         <div class="sheet-auth" id="mobileLoggedInMenu" style="display: none; grid-template-columns: 1fr;">
-            <button class="btn-glow" style="padding: 8px 20px; border-radius: 50px; font-weight: 600; width: 100%; justify-content: center; display: flex; align-items:center; gap:8px;" onclick="toggleMobileMenu(); openDashboardRouter()"><span class="iconify" data-icon="heroicons:user-circle"></span> บัญชีของฉัน</button>
+            <button class="btn-glow" style="padding: 8px 20px; border-radius: 50px; width: 100%; justify-content: center; display: flex; align-items:center; gap:8px;" onclick="toggleMobileMenu(); openDashboardRouter()"><span class="iconify" data-icon="heroicons:user-circle"></span> บัญชีของฉัน</button>
             <button class="btn-logout" onclick="toggleMobileMenu(); handleLogout()" style="width: 100%; justify-content: center; display: flex;">ออกจากระบบ</button>
         </div>
     </div>
@@ -515,7 +520,7 @@
         let userFavorites = []; 
         let currentProfileId = null; 
         let selectedRating = 5; 
-        let agencyWalletBalance = 0; // 💰 เก็บยอดเงินเอเจนซี่
+        let agencyWalletBalance = 0; 
 
         function switchLang(lang, btn) {
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
@@ -541,7 +546,7 @@
 
             if (isLoggedIn && session.user) {
                 fetchUserFavorites(); 
-                fetchWalletBalance(); // 💰 โหลดกระเป๋าเงินตอนล็อกอิน
+                fetchWalletBalance(); 
                 const userRole = session.user.user_metadata.role;
                 const displayName = session.user.user_metadata.display_name || session.user.email.split('@')[0];
                 
@@ -559,7 +564,6 @@
             }
         }
 
-        // 💰 โหลดข้อมูลกระเป๋าเงิน
         async function fetchWalletBalance() {
             if(!currentUserSession) return;
             const { data, error } = await supabaseClient.from('user_profiles').select('wallet_balance').eq('id', currentUserSession.user.id).single();
@@ -597,10 +601,9 @@
             document.querySelectorAll('.dash-nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             btn.classList.add('active');
-            document.getElementById('agTitle').innerHTML = btn.innerHTML; // เอา icon มาด้วย
+            document.getElementById('agTitle').innerHTML = btn.innerHTML; 
         }
 
-        // รีวิว
         function selectStar(val) {
             selectedRating = val;
             const stars = document.querySelectorAll('#starRatingSelector .iconify');
@@ -697,7 +700,6 @@
                 const heartBorder = isFav ? '#ff4d4f' : 'rgba(255, 255, 255, 0.3)';
                 const ratingAvg = model.rating_avg > 0 ? parseFloat(model.rating_avg).toFixed(1) : 'New';
                 
-                // 🔥 เช็คว่าโปรไฟล์นี้โดน Boost อยู่ไหม
                 const isBoosted = model.boost_expires_at && new Date(model.boost_expires_at) > now;
                 const badgeHtml = isBoosted ? '<span class="badge-hot"><span class="iconify" data-icon="heroicons:fire-solid"></span> HOT</span>' : '<span class="badge-image">New</span>';
 
@@ -727,7 +729,6 @@
         }
 
         async function fetchModels() {
-            // ดึงข้อมูลโดยเรียงลำดับคนที่ Boost ไว้บนสุด แล้วตามด้วยคนใหม่ล่าสุด
             const { data, error } = await supabaseClient
                 .from('models')
                 .select('*')
@@ -855,10 +856,9 @@
             tbody.innerHTML = html || '<tr><td colspan="5" align="center" style="color:#888;">ยังไม่มีโปรไฟล์</td></tr>';
         }
 
-        // 🚀 ระบบจ่ายเงินดันโปรไฟล์ (Boost) 🚀
         async function boostProfile(modelId) {
             if(!currentUserSession) return;
-            const cost = 50; // ค่าดันโปรไฟล์ 50 เครดิต
+            const cost = 50; 
             
             if(confirm(`ยืนยันการดันโปรไฟล์ (ใช้ ${cost} เครดิต)?\nน้องจะไปอยู่หน้าแรกเป็นเวลา 24 ชม.`)) {
                 if(agencyWalletBalance < cost) {
@@ -867,18 +867,15 @@
                     return;
                 }
 
-                // 1. หักเงินในกระเป๋า
                 const newBalance = agencyWalletBalance - cost;
                 await supabaseClient.from('user_profiles').update({ wallet_balance: newBalance }).eq('id', currentUserSession.user.id);
                 
-                // 2. อัปเดตเวลาหมดอายุ Boost ไปอีก 24 ชม.
                 const expiresAt = new Date();
                 expiresAt.setHours(expiresAt.getHours() + 24);
                 await supabaseClient.from('models').update({ boost_expires_at: expiresAt.toISOString() }).eq('id', modelId);
 
                 alert('🔥 ดันโปรไฟล์สำเร็จ! น้องไปอยู่หน้าแรกแล้วครับ');
                 
-                // โหลดข้อมูลใหม่เพื่ออัปเดตหน้าจอ
                 fetchWalletBalance();
                 fetchMyProfiles();
                 fetchModels();
