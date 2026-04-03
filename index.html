@@ -30,13 +30,29 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        /* 🌟 ปรับพื้นหลังลายหินอ่อน + Overlay ละมุนๆ แบบ Canva 🌟 */
         body {
-            background-image: url('bg-peach.jpg'); 
-            background-size: cover; background-position: center;
-            background-attachment: fixed; background-color: #fdf5f5; 
-            font-family: 'Prompt', sans-serif; min-height: 100vh;
+            background-image: url('marble-bg.png'); 
+            background-size: cover; 
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; 
+            background-color: #fdf5f5; 
+            font-family: 'Prompt', sans-serif; 
+            min-height: 100vh;
             overflow-x: hidden;
+            z-index: 0; /* กันไม่ให้ Overlay ทับเนื้อหา */
         }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 245, 240, 0.4); /* ปรับความนุ่ม */
+            pointer-events: none;
+            z-index: -1;
+        }
+
         body.modal-open { overflow: hidden; }
 
         /* Navbar & Menu */
@@ -218,6 +234,7 @@
         .profile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f0f0f; z-index: 4000; overflow-y: auto; opacity: 0; visibility: hidden; transition: all 0.3s ease; font-family: 'Prompt', sans-serif; display: flex; flex-direction: column; }
         .profile-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
         .btn-back-profile { position: absolute; top: 20px; left: 20px; width: 45px; height: 45px; border-radius: 50%; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 4010; transition: 0.2s; }
+        
         .profile-hero { width: 100%; height: 60vh; position: relative; flex-shrink: 0; overflow: hidden; }
         .hero-gallery { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; width: 100%; height: 100%; scroll-behavior: smooth; }
         .hero-gallery::-webkit-scrollbar { display: none; }
@@ -230,6 +247,7 @@
         .gallery-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); transition: 0.3s; }
         .gallery-dot.active { background: var(--dash-gold); width: 20px; border-radius: 4px; }
         .hero-gradient { position: absolute; bottom: 0; left: 0; width: 100%; height: 70%; background: linear-gradient(to top, #0f0f0f 0%, transparent 100%); pointer-events: none;}
+        
         .profile-content { max-width: 600px; width: 100%; margin: -60px auto 0 auto; padding: 0 5%; position: relative; z-index: 4005; color: white; flex: 1 0 auto; padding-bottom: 30px;}
         .pro-title-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;}
         .pro-name { font-size: 2.2rem; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 10px; line-height: 1; margin-bottom: 5px;}
@@ -249,6 +267,7 @@
         .pro-desc-box { background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; border-left: 4px solid var(--dash-gold); }
         .pro-desc-title { font-weight: 500; color: #fff; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;}
         .pro-desc { font-size: 0.95rem; color: #aaa; line-height: 1.6; white-space: pre-line; }
+        
         .sticky-booking-bar { position: sticky; bottom: 0; left: 0; width: 100%; background: #161616; border-top: 1px solid #2a2a2a; padding: 15px 5%; display: flex; justify-content: center; z-index: 4020; margin-top: auto; }
         .sticky-booking-container { max-width: 600px; width: 100%; display: flex; justify-content: space-between; align-items: center; }
         .book-price-box { display: flex; flex-direction: column; }
@@ -277,6 +296,17 @@
         .badge-image { position: absolute; top: 12px; left: 12px; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: white; background: var(--btn-gradient); color: var(--accent); z-index: 10; border: 1px solid rgba(255,255,255,0.5);}
         .heart-btn-card { position: absolute; bottom: 12px; right: 12px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.3); display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; transition: 0.2s;}
         .heart-btn-card:hover { background: rgba(0,0,0,0.6); }
+
+        /* 🚀 SKELETON LOADING 🚀 */
+        .skeleton-card { background: rgba(255,255,255,0.6); border-radius: 20px; padding: 15px; border: 1px solid rgba(255,255,255,0.4); height: 100%; display: flex; flex-direction: column;}
+        .skel-img { width: 100%; height: 380px; border-radius: 12px; margin-bottom: 15px;}
+        .skel-text-l { height: 24px; width: 60%; border-radius: 4px; margin-bottom: 8px;}
+        .skel-text-s { height: 16px; width: 40%; border-radius: 4px; margin-bottom: 12px;}
+        .skel-text-full { height: 16px; width: 80%; border-radius: 4px; margin-bottom: 15px; flex: 1;}
+        .skel-footer { display: flex; justify-content: space-between; border-top: 1px dashed rgba(181, 108, 94, 0.3); padding-top: 12px;}
+        .skel-price { height: 24px; width: 30%; border-radius: 4px;}
+        .skel-rate { height: 20px; width: 20%; border-radius: 4px;}
+        .skel-anim { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: skeletonShimmer 1.5s infinite; }
         
         .no-results { grid-column: 1 / -1; text-align: center; padding: 50px; color: var(--text-muted); font-size: 1.1rem; background: rgba(255,255,255,0.5); border-radius: 20px;}
 
@@ -371,6 +401,7 @@
                 <div class="auth-header"><div class="auth-header-icon"><span class="iconify" data-icon="heroicons:user-plus"></span></div><h2>เข้าร่วมกับเรา</h2></div>
                 <div class="input-group"><label>อีเมล</label><input type="email" id="regEmail" class="auth-input" required></div>
                 <div class="input-group"><label>ชื่อผู้ใช้</label><input type="text" id="regUsername" class="auth-input" required></div>
+                <div class="input-group"><label>ชื่อที่แสดง</label><input type="text" id="regDisplayName" class="auth-input"></div>
                 <div class="input-group"><label>รหัสผ่าน</label><input type="password" id="regPassword" class="auth-input" required minlength="6"></div>
                 <div class="input-group"><label>ยืนยันรหัสผ่าน</label><input type="password" id="regConfirmPassword" class="auth-input" required minlength="6"></div>
                 <div class="input-group">
@@ -392,7 +423,7 @@
     </div>
 
     <div class="agency-dashboard" id="agencyDashboard">
-        <div class="ag-sidebar">
+         <div class="ag-sidebar">
             <div class="ag-logo"><span class="iconify" data-icon="heroicons:star-solid"></span> VIP AGENCY</div>
             <div class="ag-nav">
                 <div class="ag-nav-item active" id="tabOverview" onclick="switchAgTab('overview')"><span class="iconify ag-nav-icon" data-icon="heroicons:squares-2x2"></span> ภาพรวม</div>
@@ -554,7 +585,7 @@
                 }
             } else {
                 userFavorites = []; 
-                handleSearch(); // รีเฟรชหน้าแรกให้หัวใจหายแดง
+                handleSearch(); 
             }
         }
 
@@ -716,12 +747,8 @@
 
         async function handleAuthSubmit(event, type) {
             event.preventDefault();
-            if (type === 'register') {
-                const pwd = document.getElementById('regPassword').value; const confirmPwd = document.getElementById('regConfirmPassword').value;
-                if(pwd.length < 6) { alert("รหัสผ่านต้องอย่างน้อย 6 ตัวอักษร"); return; }
-                if (pwd !== confirmPwd) { alert('❌ รหัสผ่านไม่ตรงกัน'); return; }
-            }
-            const submitBtn = event.target.querySelector('button[type="submit"]'); const originalText = submitBtn.innerText; submitBtn.innerText = 'กำลังประมวลผล...';
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerText; submitBtn.innerText = 'กำลังประมวลผล...';
             if (type === 'login') {
                 const email = document.getElementById('loginEmail').value; const password = document.getElementById('loginPassword').value;
                 const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
@@ -734,12 +761,13 @@
             submitBtn.innerText = originalText;
         }
 
-        async function handleLogout() { await supabaseClient.auth.signOut(); updateUIAuth(null); closeDashboard(); closeAgencyDashboard(); }
+        async function handleLogout() { await supabaseClient.auth.signOut(); updateUIAuth(null); closeDashboard(); closeAgencyDashboard(); fetchModels(); }
 
+        // --- ระบบ Upload รูป ---
         let selectedFiles = []; let dragStartIndex;
         function handleFileSelect(event) {
             const files = Array.from(event.target.files);
-            if (selectedFiles.length + files.length > 6) { alert("สูงสุด 6 รูปครับ"); return; }
+            if (selectedFiles.length + files.length > 6) { alert("อัปโหลดได้สูงสุด 6 รูปเท่านั้นครับ"); return; }
             files.forEach(f => { if (f.type.startsWith('image/') && f.size <= 2*1024*1024) selectedFiles.push({ id: Math.random().toString(36), file: f, preview: URL.createObjectURL(f) }); });
             renderGalleryPreview();
         }
@@ -794,6 +822,7 @@
         async function toggleStatus(id, stat) { await supabaseClient.from('models').update({ status: stat }).eq('id', id); fetchMyProfiles(); fetchModels(); }
         async function deleteModel(id, name) { if(confirm(`ลบน้อง ${name}?`)) { await supabaseClient.from('models').delete().eq('id', id); fetchMyProfiles(); fetchModels(); } }
 
+        // ลุยเลย! ดึงข้อมูลทันทีที่เปิดเว็บ
         fetchModels();
     </script>
 </body>
