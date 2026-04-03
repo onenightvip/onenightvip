@@ -13,9 +13,12 @@
         :root {
             --accent: #b56c5e; 
             --accent-light: #e29f8c;
+            
+            /* 🔒 ล็อกสีปุ่มเรืองแสง (Glow Button) เป็นสีพีชสว่าง ห้ามเปลี่ยน! 🔒 */
             --btn-glow-bg: linear-gradient(145deg, #ffefe8, #ffd8c9); 
             --btn-glow-text: #b26c5e; 
             --btn-glow-shadow: rgba(255, 216, 201, 0.8); 
+            
             --text-dark: #8c5a5a;
             --text-muted: #b87a7a;
             --bg-glass: rgba(255, 255, 255, 0.6);
@@ -23,7 +26,8 @@
             --modal-input-bg: #1a1a1a;
             --badge-green: #10b981;
             --dash-bg: #0f0f0f;
-            --dash-gold: #d4af37; 
+            /* 🔥 แก้สีเหลือง/ทอง กลับมาเป็นสีพีชละมุนธีมหลักของเว็บ 🔥 */
+            --dash-gold: var(--accent); 
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -163,7 +167,7 @@
         .req { color: #ef4444; }
         .form-input { background: #111; border: 1px solid #333; color: #fff; padding: 12px 15px; border-radius: 8px; font-family: 'Prompt'; outline: none; transition: 0.2s; width: 100%;}
         .form-input:focus { border-color: var(--dash-gold); }
-        select.form-input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2d4af37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 15px center; background-size: 15px; }
+        select.form-input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23b56c5e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 15px center; background-size: 15px; }
         .upload-zone { border: 1.5px dashed #444; border-radius: 12px; padding: 40px 20px; text-align: center; background: #111; cursor: pointer; transition: 0.2s; position: relative;}
         .upload-zone:hover { border-color: var(--dash-gold); }
         .upload-zone input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
@@ -172,6 +176,7 @@
         .gallery-preview { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 15px; }
         .img-thumb-box { width: 90px; height: 120px; position: relative; border-radius: 8px; overflow: hidden; border: 2px solid #333; background: #000; display:flex; justify-content:center; align-items:center;}
         .img-thumb-box img { width: 100%; height: 100%; object-fit: cover; }
+        .img-thumb-box video { width: 100%; height: 100%; object-fit: cover; }
         .btn-remove-img { position: absolute; top: 4px; right: 4px; background: rgba(0,0,0,0.8); color: white; border: 1px solid #444; border-radius: 50%; width: 22px; height: 22px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
         .char-counter { text-align: right; color: #666; font-size: 0.8rem; margin-top: 5px;}
 
@@ -192,6 +197,7 @@
         .pro-desc-box { background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; border-left: 4px solid var(--dash-gold); }
         .sticky-booking-bar { position: sticky; bottom: 0; left: 0; width: 100%; background: #161616; border-top: 1px solid #2a2a2a; padding: 15px 5%; display: flex; justify-content: center; z-index: 4020; margin-top: auto; }
         .sticky-booking-container { max-width: 600px; width: 100%; display: flex; justify-content: space-between; align-items: center; }
+        
         .review-card { background: #161616; border: 1px solid #2a2a2a; border-radius: 12px; padding: 15px; margin-top: 15px;}
         .review-stars { color: #fbbf24; font-size: 1rem;}
         .star-rating { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; font-size: 1.8rem; cursor: pointer; }
@@ -501,7 +507,6 @@
         }
         function closeDashboard() { document.querySelectorAll('.dashboard-overlay').forEach(el => el.classList.remove('active')); document.body.classList.remove('modal-open'); }
 
-        // 🔥 ติดอาวุธให้ Admin ใช้งาน 🔥
         function setupAdminDashboard(role) {
             document.getElementById('adminTierName').innerText = role;
             const navMenu = document.getElementById('adminNavMenu');
@@ -521,7 +526,7 @@
             supabaseClient.from('user_profiles').select('id', { count: 'exact' }).then(({count}) => document.getElementById('adminTotalUsers').innerText = count || 0);
             supabaseClient.from('models').select('id', { count: 'exact' }).then(({count}) => document.getElementById('adminTotalModels').innerText = count || 0);
             
-            fetchAdminData(role); // โหลดข้อมูลให้ตาราง Admin
+            fetchAdminData(role); 
         }
 
         function switchAgTab(tabId, btn, dashId) {
@@ -537,7 +542,6 @@
         // 👑 ฟังก์ชันของ SUPER ADMIN 👑
         // ==========================================
         async function fetchAdminData(role) {
-            // 1. ดึงเด็กที่ยังไม่ได้ Verify
             if(role === 'Super Admin' || role === 'Admin') {
                 const {data: pendingModels} = await supabaseClient.from('models').select('id, name, cover_image, user_profiles(display_name)').eq('is_verified', false);
                 let pmHtml = '';
@@ -553,7 +557,6 @@
                 document.getElementById('adminApproveTableBody').innerHTML = pmHtml || '<tr><td colspan="4" align="center" style="color:#888;">ไม่มีโปรไฟล์รออนุมัติ</td></tr>';
             }
 
-            // 2. ดึงกระเป๋าเงินเอเจนซี่ (เฉพาะ Super Admin)
             if(role === 'Super Admin') {
                 const {data: agencies} = await supabaseClient.from('user_profiles').select('id, display_name, wallet_balance').eq('role', 'agency');
                 let awHtml = '';
@@ -579,7 +582,7 @@
             else { 
                 alert('✅ อนุมัติเรียบร้อย! น้องได้รับป้าย Verified แล้ว'); 
                 fetchAdminData(currentUserSession.user.user_metadata.role); 
-                fetchModels(); // อัปเดตหน้าแรก
+                fetchModels(); 
             }
         }
 
@@ -655,7 +658,7 @@
                 location: locationStr, gender: document.getElementById('mGen').value, height: document.getElementById('mHeight').value, weight: document.getElementById('mWeight').value,
                 chest: chest, cup_size: document.getElementById('mCup').value, breast_type: document.getElementById('mBreastType').value, waist: waist, hips: hips, proportions: props, 
                 line_id: document.getElementById('mLineId').value, telegram_id: document.getElementById('mTele').value, twitter_id: document.getElementById('mTwit').value,
-                description: document.getElementById('mDesc').value, cover_image: uploadedUrls[0], gallery: uploadedUrls, status: 'active', is_verified: false // เด็กใหม่ต้องเป็น false รอแอดมินกดอนุมัติ
+                description: document.getElementById('mDesc').value, cover_image: uploadedUrls[0], gallery: uploadedUrls, status: 'active', is_verified: false 
             }]);
             
             if (error) alert('❌ Error: ' + error.message);
@@ -711,7 +714,6 @@
                 const isBoosted = model.boost_expires_at && new Date(model.boost_expires_at) > now;
                 const badgeHtml = isBoosted ? '<span class="badge-hot"><span class="iconify" data-icon="heroicons:fire-solid"></span> HOT</span>' : '<span class="badge-image">New</span>';
                 
-                // 🔥 ซ่อนป้าย Verified ถ้าน้องยังไม่ผ่านการอนุมัติ 🔥
                 const verifiedBadgeHtml = model.is_verified ? '<span class="iconify verified-badge-small" data-icon="heroicons:check-badge-solid"></span>' : '';
 
                 html += `<div class="card" onclick="viewProfile('${modelJson}')"><div class="card-image-box"><img src="${model.cover_image}" loading="lazy">${badgeHtml}<button class="heart-btn-card" style="border-color: ${heartBorder};" onclick="toggleHeartReal(${model.id}, this, event)"><span class="iconify heart-icon" data-icon="${heartIcon}" style="color: ${heartColor}; font-size: 1.5rem;"></span></button></div><div class="card-info"><div class="name-group">${verifiedBadgeHtml}<span class="card-name">${escapeHTML(model.name)}</span></div><div class="card-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent);"></span> ${escapeHTML(model.location)}</div><div class="card-footer"><div class="price">฿${model.price}</div><div class="engagement"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24;"></span> ${ratingAvg}</div></div></div></div>`;
@@ -783,7 +785,6 @@
             (data||[]).forEach(m => {
                 const isBoosted = m.boost_expires_at && new Date(m.boost_expires_at) > now;
                 const boostHtml = isBoosted ? `<span style="color:#ef4444; font-size:0.8rem; font-weight:bold;"><span class="iconify" data-icon="heroicons:fire-solid"></span> HOT</span>` : `<button class="btn-glow btn-glow-sm" onclick="boostProfile(${m.id})">🚀 ดัน (50฿)</button>`;
-                // โชว์สถานะในตารางเอเจนซี่
                 const verifiedText = m.is_verified ? '<span style="color:#10b981;">✅ อนุมัติแล้ว</span>' : '<span style="color:#f59e0b;">⏳ รออนุมัติ</span>';
                 
                 html += `<tr><td><img src="${m.cover_image}" style="width:50px; height:50px; object-fit:cover; border-radius:5px;"></td><td>${escapeHTML(m.name)}</td><td>฿${m.price}</td><td>${verifiedText}</td><td>${boostHtml}</td><td><button class="btn-danger" onclick="if(confirm('ลบโปรไฟล์นี้?')) { supabaseClient.from('models').delete().eq('id', ${m.id}).then(()=>fetchMyProfiles()); }">ลบ</button></td></tr>`;
