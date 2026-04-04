@@ -81,6 +81,7 @@ function openDashboardRouter() {
     else { document.getElementById('touristDashboard').classList.add('active'); loadTouristFavorites(); }
     document.body.classList.add('modal-open');
 }
+
 function closeDashboard() { document.querySelectorAll('.dashboard-overlay').forEach(el => el.classList.remove('active')); document.body.classList.remove('modal-open'); }
 
 function loadTouristFavorites() {
@@ -107,7 +108,7 @@ function setupAdminDashboard(role) {
     fetchAdminData(role); 
 }
 
-// 🔥 แก้ไขลูปบั๊กการสลับแท็บตรงนี้ครับ 🔥
+// 🔥 ระบบล้างฟอร์ม (แก้บั๊กกดสร้างโปรไฟล์ไม่ขึ้น) 🔥
 function clearFormOnly() {
     isEditing = false; 
     document.getElementById('addModelForm').reset(); 
@@ -118,12 +119,13 @@ function clearFormOnly() {
     document.getElementById('mDist').innerHTML = '<option value="">เลือกจังหวัดก่อน</option>'; document.getElementById('mDist').disabled = true; 
 }
 
+// เวลากดยกเลิก จะเคลียร์ฟอร์มและเด้งกลับไปหน้าจัดการโปรไฟล์
 function resetForm() {
     clearFormOnly();
-    // เวลากด "ยกเลิก" ให้เด้งกลับไปหน้าจัดการโปรไฟล์
     switchAgTab('ag-profiles', document.querySelectorAll('#agencyDashboard .dash-nav-item')[1], 'agencyDashboard');
 }
 
+// ฟังก์ชันสลับแท็บเมนูหลังบ้าน
 function switchAgTab(tabId, btn, dashId) {
     const dashboard = document.getElementById(dashId);
     dashboard.querySelectorAll('.ag-view').forEach(el => el.classList.remove('active')); 
@@ -138,10 +140,11 @@ function switchAgTab(tabId, btn, dashId) {
     }
     if(dashId === 'adminDashboard') document.getElementById('adminTitle').innerHTML = btn.innerHTML; 
     
-    // เคลียร์สถานะการแก้ไข ถ้าผู้ใช้กลับไปหน้าจัดการโปรไฟล์เอง
+    // ถ้าผู้ใช้กดกลับไปหน้า 'จัดการโปรไฟล์' ให้เคลียร์สถานะการแก้ไข
     if(tabId === 'ag-profiles') { isEditing = false; }
-    // ล้างฟอร์มให้สะอาด เฉพาะเวลากดเข้ามาหน้า "สร้างโปรไฟล์" และไม่ได้กดมาจากปุ่มแก้ไข
-    if(tabId === 'ag-add' && !isEditing) { clearFormOnly(); } 
+    
+    // ถ้าผู้ใช้กดปุ่ม 'สร้างโปรไฟล์ใหม่' จากแถบเมนูด้านซ้ายมือ ให้เคลียร์ฟอร์มให้สะอาด
+    if(btn.id === 'navAddProfileBtn') { clearFormOnly(); } 
 }
 
 async function fetchAdminData(role) {
@@ -168,7 +171,6 @@ async function fetchAdminData(role) {
 async function approveModelAdmin(modelId) { const {error} = await supabaseClient.from('models').update({is_verified: true, kyc_status: 'approved'}).eq('id', modelId); if(error) alert('Error: ' + error.message); else { alert('✅ อนุมัติเรียบร้อย! น้องได้รับป้าย Verified แล้ว'); fetchAdminData(currentUserSession.user.user_metadata.role); fetchModels(); } }
 async function topUpAgencyAdmin(agencyId, currentBalance) { const inputVal = document.getElementById(`topup_${agencyId}`).value; const amount = parseInt(inputVal); if(!amount || amount <= 0) { alert('กรุณาใส่จำนวนเงินที่ถูกต้อง'); return; } const newBalance = currentBalance + amount; const {error} = await supabaseClient.from('user_profiles').update({wallet_balance: newBalance}).eq('id', agencyId); if(error) alert('Error: ' + error.message); else { alert(`💰 เติมเงิน ${amount} บาท สำเร็จ!`); document.getElementById(`topup_${agencyId}`).value = ''; fetchAdminData('Super Admin'); } }
 
-let mediaFiles = []; let existingGallery = []; 
 function handlePremiumFileSelect(event) {
     const files = Array.from(event.target.files);
     for(let f of files) {
@@ -262,7 +264,6 @@ function closeProfile() { document.getElementById('profileDetailModal').classLis
 function switchAuthTab(tab) { document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active')); if(tab === 'login') document.getElementById('loginForm').classList.add('active'); else if(tab === 'register') document.getElementById('registerForm').classList.add('active'); else if(tab === 'forgot') document.getElementById('forgotForm').classList.add('active'); else if(tab === 'updatePwd') document.getElementById('updatePwdForm').classList.add('active'); }
 function openAuthModal(tab = 'register') { document.getElementById('authOverlay').classList.add('active'); switchAuthTab(tab); }
 function closeAuthModal(e, force) { if(force || e.target === document.getElementById('authOverlay')) document.getElementById('authOverlay').classList.remove('active'); }
-
 async function handleForgotPassword(event) { event.preventDefault(); const email = document.getElementById('forgotEmail').value.trim(); const btn = event.target.querySelector('button'); const originalText = btn.innerText; btn.innerText = 'กำลังส่ง...'; const { data, error } = await supabaseClient.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin }); if (error) { alert('❌ เกิดข้อผิดพลาด: ' + error.message); } else { alert('✅ ส่งลิงก์รีเซ็ตรหัสผ่านไปที่อีเมลของคุณแล้วครับ! (โปรดเช็คในกล่องจดหมาย หรือ Junk Mail)'); switchAuthTab('login'); } btn.innerText = originalText; }
 async function handleUpdatePassword(event) { event.preventDefault(); const newPassword = document.getElementById('newPassword').value; const btn = event.target.querySelector('button'); const originalText = btn.innerText; btn.innerText = 'กำลังอัปเดต...'; const { data, error } = await supabaseClient.auth.updateUser({ password: newPassword }); if (error) { alert('❌ เกิดข้อผิดพลาด: ' + error.message); } else { alert('🎉 เปลี่ยนรหัสผ่านสำเร็จ! กรุณาล็อกอินด้วยรหัสผ่านใหม่ครับ'); closeAuthModal(null, true); document.getElementById('loginPassword').value = ''; openAuthModal('login'); } btn.innerText = originalText; }
 
