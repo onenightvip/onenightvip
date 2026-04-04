@@ -232,7 +232,7 @@
                             <label style="color:#888;">หรือระบุจำนวนเงินที่ต้องการ (บาท)</label>
                             <input type="number" id="customTopupAmount" class="form-input" placeholder="ขั้นต่ำ 100 บาท..." min="100">
                         </div>
-                        <button class="btn-glow" id="btnGenQR" style="width: 100%; padding: 14px; border-radius: 8px; font-size: 1.1rem; display: flex; justify-content: center; align-items: center; gap: 8px;" onclick="generateMockQR()">
+                        <button class="btn-glow" id="btnGenQR" style="width: 100%; padding: 14px; border-radius: 8px; font-size: 1.1rem; display: flex; justify-content: center; align-items: center; gap: 8px;" onclick="generateRealQR()">
                             <span class="iconify" data-icon="mdi:qrcode-scan"></span> สร้าง QR Code ชำระเงิน
                         </button>
                     </div>
@@ -246,10 +246,10 @@
             <button class="kyc-close" onclick="closeQRModal()">&times;</button>
             <h2 style="color: #fff; margin-bottom: 5px;">สแกนเพื่อชำระเงิน</h2>
             <p style="color: #888; font-size: 0.9rem; margin-bottom: 20px;">รองรับแอปพลิเคชันทุกธนาคาร (PromptPay)</p>
-            <div style="background: #fff; padding: 15px; border-radius: 12px; display: inline-block; margin-bottom: 20px;"><img id="omiseQrImage" src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" style="width: 200px; height: 200px; object-fit: contain;"></div>
+            <div style="background: #fff; padding: 15px; border-radius: 12px; display: inline-block; margin-bottom: 20px;"><img id="omiseQrImage" src="" style="width: 200px; height: 200px; object-fit: contain;"></div>
             <div style="font-size: 1.5rem; color: var(--dash-gold); font-weight: bold; margin-bottom: 20px;">ยอดชำระ: <span id="qrAmountDisplay">0</span> บาท</div>
-            <div style="background: rgba(244, 63, 94, 0.1); border: 1px dashed #f43f5e; color: #f43f5e; padding: 15px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 20px; text-align: left;"><b><span class="iconify" data-icon="heroicons:exclamation-triangle"></span> แจ้งเตือน Test Mode:</b><br>ระบบจำลองการสร้าง QR Code จาก Omise <br><br>คลิกปุ่มด้านล่างเพื่อ <b>"จำลองการชำระเงินสำเร็จ"</b> ระบบจะบวกยอดเข้ากระเป๋าทันทีครับ</div>
-            <button class="btn-glow" style="width: 100%; padding: 12px; border-radius: 50px; font-size: 1rem;" onclick="simulatePaymentSuccess()"><span class="iconify" data-icon="heroicons:check-circle"></span> จำลองว่าชำระเงินสำเร็จแล้ว</button>
+            <div style="background: rgba(16, 185, 129, 0.1); border: 1px dashed #10b981; color: #10b981; padding: 15px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 20px; text-align: left;"><b><span class="iconify" data-icon="heroicons:information-circle"></span> โหมดทดสอบ (Test Mode):</b><br>สแกนจ่ายด้วยแอปไม่ได้จริง ให้ไปกด "จำลองว่าจ่ายแล้ว" ในหน้าเว็บของ Omise Dashboard นะครับ</div>
+            <button class="btn-outline" style="width: 100%; padding: 12px; border-radius: 50px; font-size: 1rem; border-color:#444; color:#fff;" onclick="closeQRModal()">ปิดหน้าต่างนี้</button>
         </div>
     </div>
 
