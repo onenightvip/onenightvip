@@ -21,7 +21,7 @@
         <div class="nav-center-group">
             <div class="nav-links">
                 <a id="navHome" class="active" onclick="switchMainView('homeView', this)">หน้าแรก</a>
-                <a id="navAgency" onclick="switchMainView('agencyListView', this)">เอเจนซี่</a>
+                <a id="navAgency" onclick="switchMainView('agencyListView', this)">เอเจนซี่ / อิสระ</a>
                 <a id="navLeaderboard" onclick="switchMainView('leaderboardView', this)">กระดานผู้นำ</a>
             </div>
         </div>
@@ -43,7 +43,7 @@
     <div class="mobile-bottom-sheet" id="mobileSheet">
         <div class="sheet-handle"></div>
         <div style="display: flex; justify-content: center; margin-bottom: 10px;"><div class="lang-switch"><button class="lang-btn active" onclick="switchLang('th', this)"><span class="iconify" data-icon="flag:th-4x3"></span> ไทย</button><button class="lang-btn" onclick="switchLang('en', this)"><span class="iconify" data-icon="flag:gb-4x3"></span> EN</button></div></div>
-        <div class="sheet-links"><a class="active" onclick="switchMainView('homeView', this); toggleMobileMenu(true);">หน้าแรก</a><a onclick="switchMainView('agencyListView', this); toggleMobileMenu(true);">เอเจนซี่</a><a onclick="switchMainView('leaderboardView', this); toggleMobileMenu(true);">กระดานผู้นำ</a></div>
+        <div class="sheet-links"><a class="active" onclick="switchMainView('homeView', this); toggleMobileMenu(true);">หน้าแรก</a><a onclick="switchMainView('agencyListView', this); toggleMobileMenu(true);">เอเจนซี่ / อิสระ</a><a onclick="switchMainView('leaderboardView', this); toggleMobileMenu(true);">กระดานผู้นำ</a></div>
         <div class="sheet-auth" id="mobileGuestMenu"><button class="btn-outline" onclick="toggleMobileMenu(true); openAuthModal('login')">เข้าสู่ระบบ</button><button class="btn-glow" style="padding: 8px 20px; border-radius: 50px;" onclick="toggleMobileMenu(true); openAuthModal('register')">สมัครสมาชิก</button></div>
         <div class="sheet-auth" id="mobileLoggedInMenu" style="display: none; grid-template-columns: 1fr;"><button class="btn-glow" style="padding: 8px 20px; border-radius: 50px; width: 100%; justify-content: center; display: flex; align-items:center; gap:8px;" onclick="toggleMobileMenu(true); openDashboardRouter()"><span class="iconify" data-icon="heroicons:user-circle"></span> บัญชีของฉัน</button><button class="btn-logout" onclick="toggleMobileMenu(true); handleLogout()" style="width: 100%; justify-content: center; display: flex;">ออกจากระบบ</button></div>
     </div>
@@ -56,7 +56,15 @@
         </div>
         <main class="grid-container" id="modelsGrid"><div class="no-results"><span class="iconify" data-icon="eos-icons:bubble-loading" style="font-size:2rem;"></span> กำลังโหลดข้อมูล...</div></main>
     </div>
-    <div id="agencyListView" class="view-section" style="max-width:1400px; margin:20px auto; padding:0 5%;"><div style="text-align:center; margin-bottom:30px;"><h2 style="color:var(--text-dark); font-size:2rem;">รายชื่อเอเจนซี่</h2><p style="color:var(--text-muted);">เลือกดูโปรไฟล์น้องๆ จากสังกัดที่คุณไว้ใจ</p></div><div class="grid-container" id="agencyListGrid" style="padding-top:0;"></div></div>
+    
+    <div id="agencyListView" class="view-section" style="max-width:1400px; margin:20px auto; padding:0 5%;">
+        <div style="text-align:center; margin-bottom:30px;">
+            <h2 style="color:var(--text-dark); font-size:2rem;">เอเจนซี่ & รับงานอิสระ</h2>
+            <p style="color:var(--text-muted);">เลือกดูโปรไฟล์จากสังกัดที่ไว้ใจ หรือน้องๆ ที่รับงานเองโดยตรง</p>
+        </div>
+        <div class="grid-container" id="agencyListGrid" style="padding-top:0;"></div>
+    </div>
+    
     <div id="leaderboardView" class="view-section" style="max-width:1400px; margin:20px auto; padding:0 5%;"><div style="text-align:center; margin-bottom:30px;"><h2 style="color:var(--text-dark); font-size:2rem;"><span class="iconify" data-icon="heroicons:trophy-solid" style="color:#FFD700;"></span> TOP 10 ดาวเด่น</h2><p style="color:var(--text-muted);">น้องๆ ที่ได้คะแนนรีวิวสูงสุดจากลูกค้า</p></div><div class="grid-container" id="leaderboardGrid" style="padding-top:0;"></div></div>
 
     <div class="auth-overlay" id="authOverlay" onclick="closeAuthModal(event)">
@@ -70,16 +78,27 @@
                 <button type="submit" class="btn-glow" style="margin-top: 15px; width: 100%; padding: 14px; border-radius: 50px; font-size: 1.1rem;">เข้าสู่ระบบ</button>
                 <div class="auth-footer">ยังไม่มีบัญชี? <span class="auth-link" onclick="switchAuthTab('register')">สมัครสมาชิก</span></div>
             </form>
+            
             <form id="registerForm" class="auth-form" onsubmit="handleAuthSubmit(event, 'register')">
                 <div class="auth-header"><h2>สมัครสมาชิก</h2></div>
                 <div class="input-group"><label>อีเมล</label><input type="email" id="regEmail" class="auth-input" required></div>
                 <div class="input-group"><label>ชื่อผู้ใช้ (อังกฤษ)</label><input type="text" id="regUsername" class="auth-input" required></div>
                 <div class="input-group"><label>รหัสผ่าน (6 ตัวขึ้นไป)</label><input type="password" id="regPassword" class="auth-input" required minlength="6"></div>
                 <div class="input-group"><label>ยืนยันรหัสผ่าน</label><input type="password" id="regConfirmPassword" class="auth-input" required minlength="6"></div>
-                <div class="input-group"><label>คุณคือใคร?</label><div class="role-grid"><label><input type="radio" name="member_type" value="tourist" class="role-radio" checked><div class="role-card"><div class="role-title">นักท่องเที่ยว</div></div></label><label><input type="radio" name="member_type" value="agency" class="role-radio"><div class="role-card"><div class="role-title">เอเจนซี่ / ผู้จัดหา</div></div></label></div></div>
+                
+                <div class="input-group">
+                    <label>คุณคือใคร?</label>
+                    <div class="role-grid" style="grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));">
+                        <label><input type="radio" name="member_type" value="tourist" class="role-radio" checked><div class="role-card" style="padding:10px;"><div class="role-title" style="font-size:0.85rem;">นักท่องเที่ยว</div></div></label>
+                        <label><input type="radio" name="member_type" value="agency" class="role-radio"><div class="role-card" style="padding:10px;"><div class="role-title" style="font-size:0.85rem;">เอเจนซี่</div></div></label>
+                        <label><input type="radio" name="member_type" value="freelance" class="role-radio"><div class="role-card" style="padding:10px;"><div class="role-title" style="font-size:0.85rem;">รับงานอิสระ</div></div></label>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn-glow" style="margin-top: 20px; width: 100%; padding: 14px; border-radius: 50px; font-size: 1.1rem;">สมัครสมาชิก</button>
                 <div class="auth-footer">มีบัญชีอยู่แล้ว? <span class="auth-link" onclick="switchAuthTab('login')">เข้าสู่ระบบ</span></div>
             </form>
+            
             <form id="forgotForm" class="auth-form" onsubmit="handleForgotPassword(event)">
                 <div class="auth-header"><h2>ลืมรหัสผ่าน</h2><p style="color:#888; font-size:0.9rem;">กรอกอีเมลเพื่อรับลิงก์รีเซ็ตรหัสผ่าน</p></div>
                 <div class="input-group"><label>อีเมลที่ใช้สมัคร</label><input type="email" id="forgotEmail" class="auth-input" required></div>
@@ -143,7 +162,7 @@
 
     <div class="dashboard-overlay" id="agencyDashboard">
         <div class="dash-sidebar">
-            <div class="dash-logo">VIP AGENCY</div>
+            <div class="dash-logo">PROVIDER DASH</div>
             <div class="dash-nav">
                 <div class="dash-nav-item active" onclick="switchAgTab('ag-overview', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:squares-2x2"></span> ภาพรวม</div>
                 <div class="dash-nav-item" onclick="switchAgTab('ag-profiles', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:users"></span> จัดการโปรไฟล์</div>
@@ -167,10 +186,7 @@
                 <div class="ag-section-box"><div class="ag-sec-title"><span class="iconify" data-icon="heroicons:presentation-chart-line"></span> แนวโน้มโปรไฟล์</div><div style="height: 300px; width: 100%;"><canvas id="trendChart"></canvas></div></div>
             </div>
 
-            <div class="ag-content-pad ag-view" id="ag-profiles">
-                <h2>จัดการโปรไฟล์</h2>
-                <div class="ag-card-list" id="myProfilesGrid"></div>
-            </div>
+            <div class="ag-content-pad ag-view" id="ag-profiles"><h2>จัดการโปรไฟล์</h2><div class="ag-card-list" id="myProfilesGrid"></div></div>
             
             <div class="ag-content-pad ag-view" id="ag-add">
                 <h2 style="color:var(--dash-gold); margin-bottom:5px;" id="addFormTitle">สร้างโปรไฟล์ใหม่</h2><p style="color:#888; font-size:0.9rem; margin-bottom:25px;">ตั้งค่าโปรไฟล์เพื่อเริ่มเชื่อมต่อกับลูกค้า</p>
@@ -182,11 +198,7 @@
                             <div class="form-grid-2"><div class="form-group"><label>ชื่อ <span class="req">*</span></label><input type="text" id="mName" class="form-input" required></div><div class="form-group"><label>อายุ <span class="req">*</span></label><input type="number" id="mAge" class="form-input" required></div></div>
                             <div class="form-grid-1"><div class="form-group"><label>สโลแกน</label><input type="text" id="mSlogan" class="form-input" placeholder="วลีเด็ดประจำตัว..."></div></div>
                             <div class="form-grid-2" style="grid-template-columns: 1fr 1fr;"><div class="form-group"><label>ราคาเริ่มต้น <span class="req">*</span></label><input type="number" id="mPrice" class="form-input" required></div><div class="form-group"><label>ภาษาที่พูดได้ <span class="req">*</span></label><select id="mLang" class="form-input" required><option value="ไทย">ไทย</option><option value="อังกฤษ">อังกฤษ</option><option value="ญี่ปุ่น">ญี่ปุ่น</option><option value="เกาหลี">เกาหลี</option><option value="จีน">จีน</option><option value="รัสเซีย">รัสเซีย</option></select></div></div>
-                            <div class="form-grid-3">
-                                <div class="form-group"><label>จังหวัด <span class="req">*</span></label><input type="text" id="mProv" class="form-input" placeholder="พิมพ์ชื่อจังหวัด..." list="provList" required><datalist id="provList"></datalist></div>
-                                <div class="form-group"><label>เขต/อำเภอ <span class="req">*</span></label><input type="text" id="mDist" class="form-input" placeholder="ระบุเขต/อำเภอ..." required></div>
-                                <div class="form-group"><label>สถานที่</label><input type="text" id="mVenue" class="form-input" placeholder="คอนโด, รร..."></div>
-                            </div>
+                            <div class="form-grid-3"><div class="form-group"><label>จังหวัด <span class="req">*</span></label><input type="text" id="mProv" class="form-input" placeholder="พิมพ์ชื่อจังหวัด..." list="provList" required><datalist id="provList"></datalist></div><div class="form-group"><label>เขต/อำเภอ <span class="req">*</span></label><input type="text" id="mDist" class="form-input" placeholder="ระบุเขต/อำเภอ..." required></div><div class="form-group"><label>สถานที่</label><input type="text" id="mVenue" class="form-input" placeholder="คอนโด, รร..."></div></div>
                             <div class="form-grid-3"><div class="form-group"><label>เพศ <span class="req">*</span></label><select id="mGen" class="form-input" required><option value="หญิง">หญิง</option><option value="ชาย">ชาย</option><option value="ยังไม่ได้แปลงเพศ">ยังไม่ได้แปลงเพศ</option><option value="แปลงเพศแล้ว">แปลงเพศแล้ว</option></select></div><div class="form-group"><label>ส่วนสูง (ซม.) <span class="req">*</span></label><input type="number" id="mHeight" class="form-input" required></div><div class="form-group"><label>น้ำหนัก (กก.) <span class="req">*</span></label><input type="number" id="mWeight" class="form-input" required></div></div>
                             <div class="form-grid-5"><div class="form-group"><label>รอบอก (นิ้ว) <span class="req">*</span></label><input type="number" id="mChest" class="form-input" onkeyup="calcCup()" required></div><div class="form-group"><label>ขนาดคัพ</label><select id="mCup" class="form-input"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option></select></div><div class="form-group"><label>ประเภทหน้าอก</label><select id="mBreastType" class="form-input"><option value="แท้">นมแท้</option><option value="ทำ">นมทำ</option></select></div><div class="form-group"><label>เอว (นิ้ว) <span class="req">*</span></label><input type="number" id="mWaist" class="form-input" required></div><div class="form-group"><label>สะโพก (นิ้ว) <span class="req">*</span></label><input type="number" id="mHips" class="form-input" required></div></div>
                             <div class="form-grid-3"><div class="form-group"><label>LINE ID <span class="req">*</span></label><input type="text" id="mLineId" class="form-input" required></div><div class="form-group"><label>Telegram</label><input type="text" id="mTele" class="form-input" placeholder="@username"></div><div class="form-group"><label>X (Twitter)</label><input type="text" id="mTwit" class="form-input" placeholder="@username"></div></div>
@@ -246,7 +258,7 @@
             <button class="kyc-close" onclick="closeKYCModal()">&times;</button>
             <h2 class="kyc-title">ยืนยันตัวตนด้วยรูปถ่าย</h2>
             <div class="kyc-subtitle" id="kycModelName">น้อง ...</div>
-            <div class="kyc-instructions"><span style="color:#fff; font-weight:500;">วิธียืนยันตัวตน:</span><br>เขียน <b>"ONENIGHTVIP"</b> วันที่วันนี้ และรหัสเอเจนซี่ของคุณลงบนกระดาษ <br>ถ่ายเซลฟี่ขณะถือกระดาษโดยต้องเห็นใบหน้าชัดเจน จากนั้นอัปโหลดรูปด้านล่าง</div>
+            <div class="kyc-instructions"><span style="color:#fff; font-weight:500;">วิธียืนยันตัวตน:</span><br>เขียน <b>"ONENIGHTVIP"</b> วันที่วันนี้ และรหัสของคุณลงบนกระดาษ <br>ถ่ายเซลฟี่ขณะถือกระดาษโดยต้องเห็นใบหน้าชัดเจน จากนั้นอัปโหลดรูปด้านล่าง</div>
             <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80" class="kyc-example-img" alt="ตัวอย่างการถ่ายรูปยืนยัน">
             <form id="kycForm" onsubmit="submitKYC(event)">
                 <input type="hidden" id="kycModelId">
@@ -264,8 +276,8 @@
         <div class="dash-main">
             <div class="dash-topbar"><span id="adminTitle" style="font-weight:600; display: flex; align-items: center; gap: 8px;"><span class="iconify" data-icon="heroicons:squares-2x2"></span> ศูนย์บัญชาการ</span><button class="btn-close-ag" onclick="closeDashboard()" style="background:transparent; color:#fff; border:none; font-size:1.5rem; cursor:pointer;"><span class="iconify" data-icon="heroicons:x-mark"></span></button></div>
             <div class="ag-content-pad ag-view active" id="admin-overview"><h1 style="color:#ff4d4f; margin-bottom:10px;">ยินดีต้อนรับ, <span id="adminTierName">Admin</span></h1><p style="color:#888;">ระบบตรวจสอบสถานะหลังบ้าน</p><div class="ag-stats-grid" style="margin-top: 30px;"><div class="ag-stat-card"><div class="ag-stat-val" id="adminTotalUsers">0</div><div class="ag-stat-label">สมาชิกทั้งหมด</div></div><div class="ag-stat-card"><div class="ag-stat-val" id="adminTotalModels">0</div><div class="ag-stat-label">โปรไฟล์น้องๆทั้งหมด</div></div></div></div>
-            <div class="ag-content-pad ag-view" id="admin-approve"><h2>อนุมัติโปรไฟล์ (Approve)</h2><table class="my-profiles-table"><thead><tr><th>รูปน้อง</th><th>ชื่อน้อง</th><th>สถานะ KYC</th><th>เอเจนซี่ที่ลง</th><th>จัดการ</th></tr></thead><tbody id="adminApproveTableBody"></tbody></table></div>
-            <div class="ag-content-pad ag-view" id="admin-wallet"><h2 style="color:var(--dash-gold);">จัดการเครดิต (Wallet)</h2><table class="my-profiles-table"><thead><tr><th>ชื่อเอเจนซี่</th><th>เครดิตปัจจุบัน</th><th>เติมเครดิต (บวกเพิ่ม)</th></tr></thead><tbody id="adminWalletTableBody"></tbody></table></div>
+            <div class="ag-content-pad ag-view" id="admin-approve"><h2>อนุมัติโปรไฟล์ (Approve)</h2><table class="my-profiles-table"><thead><tr><th>รูปน้อง</th><th>ชื่อน้อง</th><th>สถานะ KYC</th><th>คนลงงาน</th><th>จัดการ</th></tr></thead><tbody id="adminApproveTableBody"></tbody></table></div>
+            <div class="ag-content-pad ag-view" id="admin-wallet"><h2 style="color:var(--dash-gold);">จัดการเครดิต (Wallet)</h2><table class="my-profiles-table"><thead><tr><th>ชื่อเอเจนซี่ / อิสระ</th><th>เครดิตปัจจุบัน</th><th>เติมเครดิต (บวกเพิ่ม)</th></tr></thead><tbody id="adminWalletTableBody"></tbody></table></div>
             <div class="ag-content-pad ag-view" id="admin-system"><h2 style="color:#888;">ตั้งค่าระบบ (Developer)</h2></div>
             <div class="ag-content-pad ag-view" id="admin-audit"><h2 style="color:#888;">บันทึกการใช้งาน (Audit Logs)</h2></div>
         </div>
