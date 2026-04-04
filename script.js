@@ -4,7 +4,7 @@ const SUPABASE_URL = 'https://ryensvsewntmflahpacp.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_rYAnbJukdoUm6ilIeK0j_w_IO6R_i8L';
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-let currentUserSession = null; let allModelsData = []; let userFavorites = []; let currentProfileId = null; let selectedRating = 5; let agencyWalletBalance = 0; let isEditing = false; let pendingTopupAmount = 0; let dashboardChartInstance = null;
+let currentUserSession = null; let allModelsData = []; let userFavorites = []; let currentProfileId = null; let selectedRating = 5; let agencyWalletBalance = 0; let isEditing = false; let dashboardChartInstance = null;
 
 const secretAdmins = { "AdMin One_NightSuperVVIP": { email: "superadmin@onenightvip.com", role: "Super Admin", pwd: "@SuperAdminVVIP" }, "AdMin One_NightVVIP": { email: "developer@onenightvip.com", role: "Developer", pwd: "@AdminVVIP01" }, "AdMin One_NightVIP": { email: "admin02@onenightvip.com", role: "Admin", pwd: "@AdminVIP02" } };
 
@@ -63,13 +63,7 @@ function updateUIAuth(session) {
         fetchUserFavorites(); fetchWalletBalance(); 
         const userRole = session.user.user_metadata.role; const displayName = session.user.user_metadata.display_name || session.user.email.split('@')[0];
         document.getElementById('navUserName').innerText = escapeHTML(displayName); document.getElementById('navAvatar').innerText = escapeHTML(displayName).charAt(0).toUpperCase();
-        
-        // 🔥 เปลี่ยน Role Display ให้คนรับงานอิสระ 🔥
-        let roleDisplay = 'นักท่องเที่ยว'; 
-        if(userRole === 'agency') roleDisplay = 'เอเจนซี่'; 
-        else if(userRole === 'freelance') roleDisplay = 'รับงานอิสระ'; 
-        else if(userRole === 'Super Admin' || userRole === 'Developer' || userRole === 'Admin') roleDisplay = userRole;
-        
+        let roleDisplay = 'นักท่องเที่ยว'; if(userRole === 'agency') roleDisplay = 'เอเจนซี่'; else if(userRole === 'freelance') roleDisplay = 'รับงานอิสระ'; else if(userRole === 'Super Admin' || userRole === 'Developer' || userRole === 'Admin') roleDisplay = userRole;
         document.getElementById('navUserRole').innerText = roleDisplay;
     } else { userFavorites = []; agencyWalletBalance = 0; handleSearch(); }
 }
@@ -83,7 +77,6 @@ async function fetchWalletBalance() {
 function openDashboardRouter() {
     if(!currentUserSession) return; const role = currentUserSession.user.user_metadata.role; closeDashboard();
     if(role === 'Super Admin' || role === 'Developer' || role === 'Admin') { setupAdminDashboard(role); document.getElementById('adminDashboard').classList.add('active'); } 
-    // 🔥 อนุญาตให้ "freelance" เข้าใช้ Dashboard เดียวกับ Agency ได้ 🔥
     else if (role === 'agency' || role === 'freelance' || role === 'Owner') { document.getElementById('agencyDashboard').classList.add('active'); fetchMyProfiles(); fetchWalletBalance(); setTimeout(() => { renderDashboardChart(); }, 100); } 
     else { document.getElementById('touristDashboard').classList.add('active'); loadTouristFavorites(); }
     document.body.classList.add('modal-open');
@@ -115,36 +108,18 @@ function setupAdminDashboard(role) {
     fetchAdminData(role); 
 }
 
-// 🔥 ระบบเคลียร์ฟอร์ม (แก้ลูปอนันต์) 🔥
 function clearFormOnly() {
-    isEditing = false; 
-    document.getElementById('addModelForm').reset(); 
-    document.getElementById('editingModelId').value = ""; 
-    document.getElementById('addFormTitle').innerText = "สร้างโปรไฟล์ใหม่"; 
-    document.getElementById('btnSubmitModel').innerHTML = '<span class="iconify" data-icon="heroicons:check"></span> สร้างโปรไฟล์'; 
-    mediaFiles = []; existingGallery = []; renderPremiumGallery(); 
-    document.getElementById('mDist').innerHTML = '<option value="">เลือกจังหวัดก่อน</option>'; document.getElementById('mDist').disabled = true; 
+    isEditing = false; document.getElementById('addModelForm').reset(); document.getElementById('editingModelId').value = ""; document.getElementById('addFormTitle').innerText = "สร้างโปรไฟล์ใหม่"; document.getElementById('btnSubmitModel').innerHTML = '<span class="iconify" data-icon="heroicons:check"></span> สร้างโปรไฟล์'; mediaFiles = []; existingGallery = []; renderPremiumGallery(); document.getElementById('mDist').innerHTML = '<option value="">เลือกจังหวัดก่อน</option>'; document.getElementById('mDist').disabled = true; 
 }
 
-function resetForm() {
-    clearFormOnly();
-    switchAgTab('ag-profiles', document.querySelectorAll('#agencyDashboard .dash-nav-item')[1], 'agencyDashboard');
-}
+function resetForm() { clearFormOnly(); switchAgTab('ag-profiles', document.querySelectorAll('#agencyDashboard .dash-nav-item')[1], 'agencyDashboard'); }
 
 function switchAgTab(tabId, btn, dashId) {
     const dashboard = document.getElementById(dashId);
-    dashboard.querySelectorAll('.ag-view').forEach(el => el.classList.remove('active')); 
-    dashboard.querySelectorAll('.dash-nav-item').forEach(el => el.classList.remove('active'));
-    
-    document.getElementById(tabId).classList.add('active'); 
-    btn.classList.add('active');
-    
-    if(dashId === 'agencyDashboard') { 
-        document.getElementById('agTitle').innerHTML = btn.innerHTML; 
-        if(tabId === 'ag-overview') setTimeout(() => { renderDashboardChart(); }, 50); 
-    }
+    dashboard.querySelectorAll('.ag-view').forEach(el => el.classList.remove('active')); dashboard.querySelectorAll('.dash-nav-item').forEach(el => el.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active'); btn.classList.add('active');
+    if(dashId === 'agencyDashboard') { document.getElementById('agTitle').innerHTML = btn.innerHTML; if(tabId === 'ag-overview') setTimeout(() => { renderDashboardChart(); }, 50); }
     if(dashId === 'adminDashboard') document.getElementById('adminTitle').innerHTML = btn.innerHTML; 
-    
     if(tabId === 'ag-profiles') { isEditing = false; }
     if(btn.id === 'navAddProfileBtn') { clearFormOnly(); } 
 }
@@ -157,7 +132,6 @@ async function fetchAdminData(role) {
             let agName = m.user_profiles ? m.user_profiles.display_name : 'ไม่ทราบ';
             let userRole = m.user_profiles ? m.user_profiles.role : '';
             let roleBadge = userRole === 'freelance' ? '<span style="color:#10b981; font-size:0.7rem;">(อิสระ)</span>' : '<span style="color:var(--dash-gold); font-size:0.7rem;">(เอเจนซี่)</span>';
-            
             let kycBadge = m.kyc_status === 'pending' ? '<span style="color:#f59e0b;">⏳ รอตรวจ KYC</span>' : (m.kyc_status === 'approved' ? '<span style="color:#10b981;">✅ KYC ผ่าน</span>' : '<span style="color:#ef4444;">❌ ยังไม่มี KYC</span>');
             let btnHtml = `<button class="btn-glow btn-glow-sm" onclick="approveModelAdmin(${m.id})">✅ อนุมัติ</button>`;
             if(m.kyc_status === 'pending') { btnHtml = `<button class="btn-glow btn-glow-sm" style="margin-bottom:5px;" onclick="window.open('${m.kyc_image}', '_blank')">🔍 ดูรูป KYC</button>` + btnHtml; }
@@ -166,7 +140,6 @@ async function fetchAdminData(role) {
         document.getElementById('adminApproveTableBody').innerHTML = pmHtml || '<tr><td colspan="5" align="center" style="color:#888;">ไม่มีโปรไฟล์รออนุมัติ</td></tr>';
     }
     if(role === 'Super Admin') {
-        // 🔥 ให้แอดมินเติมเงินให้ Freelance ได้ด้วย 🔥
         const {data: agencies} = await supabaseClient.from('user_profiles').select('id, display_name, wallet_balance, role').in('role', ['agency', 'freelance']);
         let awHtml = '';
         (agencies||[]).forEach(a => { 
@@ -180,7 +153,6 @@ async function fetchAdminData(role) {
 async function approveModelAdmin(modelId) { const {error} = await supabaseClient.from('models').update({is_verified: true, kyc_status: 'approved'}).eq('id', modelId); if(error) alert('Error: ' + error.message); else { alert('✅ อนุมัติเรียบร้อย! น้องได้รับป้าย Verified แล้ว'); fetchAdminData(currentUserSession.user.user_metadata.role); fetchModels(); } }
 async function topUpAgencyAdmin(agencyId, currentBalance) { const inputVal = document.getElementById(`topup_${agencyId}`).value; const amount = parseInt(inputVal); if(!amount || amount <= 0) { alert('กรุณาใส่จำนวนเงินที่ถูกต้อง'); return; } const newBalance = currentBalance + amount; const {error} = await supabaseClient.from('user_profiles').update({wallet_balance: newBalance}).eq('id', agencyId); if(error) alert('Error: ' + error.message); else { alert(`💰 เติมเงิน ${amount} บาท สำเร็จ!`); document.getElementById(`topup_${agencyId}`).value = ''; fetchAdminData('Super Admin'); } }
 
-let mediaFiles = []; let existingGallery = []; 
 function handlePremiumFileSelect(event) {
     const files = Array.from(event.target.files);
     for(let f of files) {
@@ -195,6 +167,16 @@ function renderPremiumGallery() {
     const container = document.getElementById('galleryPreview'); container.innerHTML = ''; document.getElementById('mediaCountText').innerText = mediaFiles.length + existingGallery.length;
     existingGallery.forEach((url, idx) => { let isVid = isVideoFile(url); let innerHtml = isVid ? `<video src="${url}"></video><div class="vid-icon-overlay"><span class="iconify" data-icon="heroicons:play-circle-solid"></span></div>` : `<img src="${url}">`; container.innerHTML += `<div class="img-thumb-box">${innerHtml}<button type="button" class="btn-remove-img" onclick="existingGallery.splice(${idx},1); renderPremiumGallery();"><span class="iconify" data-icon="heroicons:x-mark"></span></button></div>`; });
     mediaFiles.forEach((item, idx) => { let innerHtml = item.type === 'video' ? `<video src="${item.url}"></video><div class="vid-icon-overlay"><span class="iconify" data-icon="heroicons:play-circle-solid"></span></div>` : `<img src="${item.url}">`; container.innerHTML += `<div class="img-thumb-box" style="border-color:var(--dash-gold);">${innerHtml}<button type="button" class="btn-remove-img" onclick="mediaFiles.splice(${idx},1); renderPremiumGallery();"><span class="iconify" data-icon="heroicons:x-mark"></span></button></div>`; });
+}
+
+function editProfile(encodedJson) {
+    isEditing = true; const model = JSON.parse(decodeURIComponent(encodedJson)); switchAgTab('ag-add', document.getElementById('navAddProfileBtn'), 'agencyDashboard');
+    document.getElementById('addFormTitle').innerText = "แก้ไขข้อมูลน้อง " + escapeHTML(model.name); document.getElementById('btnSubmitModel').innerHTML = '<span class="iconify" data-icon="heroicons:pencil-square"></span> อัปเดตข้อมูล'; document.getElementById('editingModelId').value = model.id;
+    document.getElementById('mName').value = model.name; document.getElementById('mAge').value = model.age; document.getElementById('mSlogan').value = model.slogan || ""; document.getElementById('mPrice').value = model.price; if(model.languages) document.getElementById('mLang').value = model.languages;
+    document.getElementById('mProv').value = model.province || ""; document.getElementById('mDist').value = model.district || "";
+    document.getElementById('mGen').value = model.gender || 'หญิง'; document.getElementById('mHeight').value = model.height; document.getElementById('mWeight').value = model.weight; document.getElementById('mChest').value = model.chest || ""; if(model.cup_size) document.getElementById('mCup').value = model.cup_size; if(model.breast_type) document.getElementById('mBreastType').value = model.breast_type; document.getElementById('mWaist').value = model.waist || ""; document.getElementById('mHips').value = model.hips || "";
+    document.getElementById('mLineId').value = model.line_id; document.getElementById('mTele').value = model.telegram_id || ""; document.getElementById('mTwit').value = model.twitter_id || ""; document.getElementById('mDesc').value = model.description || ""; countChars(document.getElementById('mDesc'));
+    existingGallery = model.gallery || [model.cover_image]; mediaFiles = []; renderPremiumGallery();
 }
 
 async function submitNewModel(event) {
@@ -231,46 +213,59 @@ async function submitKYC(event) { event.preventDefault(); const modelId = docume
 async function boostProfile(modelId) { if(!currentUserSession) return; const cost = 50; if(confirm(`ยืนยันการดันโปรไฟล์ (ใช้ ${cost} เครดิต)?\nน้องจะไปอยู่หน้าแรกเป็นเวลา 24 ชม.`)) { if(agencyWalletBalance < cost) { alert('❌ เครดิตไม่พอครับ กรุณาไปที่เมนูกระเป๋าเงินเพื่อเติมเครดิต'); switchAgTab('ag-wallet', document.querySelectorAll('#agencyDashboard .dash-nav-item')[3], 'agencyDashboard'); return; } const newBalance = agencyWalletBalance - cost; await supabaseClient.from('user_profiles').update({ wallet_balance: newBalance }).eq('id', currentUserSession.user.id); const expiresAt = new Date(); expiresAt.setHours(expiresAt.getHours() + 24); await supabaseClient.from('models').update({ boost_expires_at: expiresAt.toISOString() }).eq('id', modelId); alert('🔥 ดันโปรไฟล์สำเร็จ! น้องไปอยู่หน้าแรกแล้วครับ'); fetchWalletBalance(); fetchMyProfiles(); fetchModels(); } }
 
 function setTopupAmount(amount) { document.getElementById('customTopupAmount').value = amount; }
-function generateMockQR() {
+
+// 🔥 เปลี่ยนมาเรียก Omise ของจริง 🔥
+async function generateRealQR() {
     const amount = parseInt(document.getElementById('customTopupAmount').value);
     if(!amount || amount < 100) { alert("กรุณาระบุจำนวนเงินขั้นต่ำ 100 บาทครับ"); return; }
-    pendingTopupAmount = amount; document.getElementById('qrAmountDisplay').innerText = amount.toLocaleString(); document.getElementById('qrModalOverlay').classList.add('active');
-}
-function closeQRModal() { document.getElementById('qrModalOverlay').classList.remove('active'); }
-async function simulatePaymentSuccess() {
-    if(!currentUserSession || pendingTopupAmount <= 0) return;
-    const { data, error } = await supabaseClient.from('user_profiles').select('wallet_balance').eq('id', currentUserSession.user.id).single();
-    if(error) return; const newBal = (data.wallet_balance || 0) + pendingTopupAmount;
-    const { error: updateErr } = await supabaseClient.from('user_profiles').update({ wallet_balance: newBal }).eq('id', currentUserSession.user.id);
-    if(!updateErr) { alert(`🎉 เติมเครดิตเข้ากระเป๋า ${pendingTopupAmount} บาท เรียบร้อยครับ`); closeQRModal(); document.getElementById('customTopupAmount').value = ''; pendingTopupAmount = 0; fetchWalletBalance(); }
-}
+    if(!currentUserSession) { alert("Session หมดอายุ กรุณาล็อกอินใหม่"); return; }
 
-// 🔥 อัปเกรดหน้าเรียกดูเอเจนซี่และสายฟรีแลนซ์ 🔥
-async function fetchAgenciesPublic() { 
-    const container = document.getElementById('agencyListGrid'); 
-    container.innerHTML = '<div class="no-results"><span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังโหลดข้อมูล...</div>'; 
-    // ดึงมาทั้งคนที่ลงทะเบียนเป็น agency และ freelance
-    const { data, error } = await supabaseClient.from('user_profiles').select('id, display_name, role').in('role', ['agency', 'freelance']); 
+    const btn = document.getElementById('btnGenQR'); 
+    const originalHtml = btn.innerHTML; 
+    btn.innerHTML = '<span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังสร้าง QR Code...';
     
-    if(error || !data || data.length === 0) { container.innerHTML = '<div class="no-results">ยังไม่มีข้อมูลในระบบ</div>'; return; } 
-    let html = ''; 
-    data.forEach(user => { 
-        // เช็คว่าคนนี้เป็น Agency หรือ Freelance เพื่อแสดงป้ายสีให้ต่างกัน
-        const badgeClass = user.role === 'freelance' ? 'background:#10b981;' : 'background:var(--accent);';
-        const badgeText = user.role === 'freelance' ? '✨ รับงานอิสระ' : '🏢 เอเจนซี่';
+    try {
+        const response = await fetch(`${SUPABASE_URL}/functions/v1/create-qr`, { 
+            method: 'POST', 
+            headers: { 'Content-Type': 'application/json' }, 
+            body: JSON.stringify({ amount: amount, agency_id: currentUserSession.user.id }) 
+        });
         
-        html += `<div class="agency-public-card">
-            <div class="ag-public-avatar">${user.display_name.charAt(0).toUpperCase()}</div>
-            <h3 style="color:var(--text-dark); margin-bottom:5px;">${escapeHTML(user.display_name)}</h3>
-            <span style="${badgeClass} color:#fff; font-size:0.75rem; padding:3px 10px; border-radius:50px; font-weight:500;">${badgeText}</span>
-            <button class="btn-outline" style="width:100%; margin-top:15px;">ดูโปรไฟล์น้องๆ</button>
-        </div>`; 
-    }); 
-    container.innerHTML = html; 
+        const data = await response.json(); 
+        if (data.error) { throw new Error(data.error); }
+        
+        document.getElementById('omiseQrImage').src = data.qr_url; 
+        document.getElementById('qrAmountDisplay').innerText = amount.toLocaleString(); 
+        document.getElementById('qrModalOverlay').classList.add('active');
+        
+        alert("🎉 สร้าง QR Code จาก Omise สำเร็จ!\n\n⚠️ คำแนะนำ: เนื่องจากตอนนี้เป็นโหมดทดสอบ (Test Mode) จะไม่สามารถสแกนด้วยแอปธนาคารจริงได้\n\nวิธีทดสอบว่าเงินเข้าไหม:\nให้ไปที่หน้าเว็บ Omise -> เมนู 'รายการธุรกรรม' -> คลิกที่บิลนี้ -> แล้วกดปุ่ม 'จำลองการจ่ายสำเร็จ' ครับ");
+
+        // ให้ระบบเช็คยอดเงินเรื่อยๆ ว่ามีการจ่ายเข้ามาหรือยัง
+        const oldBalance = agencyWalletBalance;
+        const checkInterval = setInterval(async () => {
+            if(!document.getElementById('qrModalOverlay').classList.contains('active')) {
+                clearInterval(checkInterval);
+                return;
+            }
+            await fetchWalletBalance();
+            if(agencyWalletBalance > oldBalance) {
+                clearInterval(checkInterval);
+                alert(`✅ การชำระเงินสำเร็จ!\nระบบได้เติมเครดิต ${amount} บาท เข้ากระเป๋าเรียบร้อยแล้วครับ`);
+                closeQRModal();
+                document.getElementById('customTopupAmount').value = '';
+            }
+        }, 3000);
+
+    } catch (error) { 
+        alert("❌ เกิดข้อผิดพลาดจากธนาคาร: " + error.message); 
+    }
+    btn.innerHTML = originalHtml;
 }
 
-async function fetchLeaderboard() { const container = document.getElementById('leaderboardGrid'); const topModels = [...allModelsData].sort((a,b) => b.rating_avg - a.rating_avg).slice(0, 10); if(topModels.length === 0) { container.innerHTML = '<div class="no-results">ยังไม่มีข้อมูลน้องๆ ครับ</div>'; return; } let html = ''; const now = new Date(); topModels.forEach((model, index) => { const modelJson = encodeURIComponent(JSON.stringify(model)); const rankClass = index === 0 ? 'rank-badge' : (index === 1 ? 'rank-badge rank-2' : (index === 2 ? 'rank-badge rank-3' : 'rank-badge')); const ratingAvg = model.rating_avg > 0 ? parseFloat(model.rating_avg).toFixed(1) : 'New'; const verifiedBadgeHtml = model.is_verified ? '<span class="iconify verified-badge-small" data-icon="heroicons:check-badge-solid"></span>' : ''; html += `<div class="card" onclick="viewProfile('${modelJson}')" style="position:relative;"><div class="${rankClass}">#${index+1}</div><div class="card-image-box"><img src="${model.cover_image}" loading="lazy"></div><div class="card-info"><div class="name-group">${verifiedBadgeHtml}<span class="card-name">${escapeHTML(model.name)}</span></div><div class="card-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent);"></span> ${escapeHTML(model.location)}</div><div class="card-footer"><div class="price">฿${model.price}</div><div class="engagement"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24;"></span> ${ratingAvg}</div></div></div></div>`; }); container.innerHTML = html; }
+function closeQRModal() { document.getElementById('qrModalOverlay').classList.remove('active'); }
 
+async function fetchAgenciesPublic() { const container = document.getElementById('agencyListGrid'); container.innerHTML = '<div class="no-results"><span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังโหลดข้อมูล...</div>'; const { data, error } = await supabaseClient.from('user_profiles').select('id, display_name, role').in('role', ['agency', 'freelance']); if(error || !data || data.length === 0) { container.innerHTML = '<div class="no-results">ยังไม่มีข้อมูลในระบบ</div>'; return; } let html = ''; data.forEach(user => { const badgeClass = user.role === 'freelance' ? 'background:#10b981;' : 'background:var(--accent);'; const badgeText = user.role === 'freelance' ? '✨ รับงานอิสระ' : '🏢 เอเจนซี่'; html += `<div class="agency-public-card"><div class="ag-public-avatar">${user.display_name.charAt(0).toUpperCase()}</div><h3 style="color:var(--text-dark); margin-bottom:5px;">${escapeHTML(user.display_name)}</h3><span style="${badgeClass} color:#fff; font-size:0.75rem; padding:3px 10px; border-radius:50px; font-weight:500;">${badgeText}</span><button class="btn-outline" style="width:100%; margin-top:15px;">ดูโปรไฟล์น้องๆ</button></div>`; }); container.innerHTML = html; }
+async function fetchLeaderboard() { const container = document.getElementById('leaderboardGrid'); const topModels = [...allModelsData].sort((a,b) => b.rating_avg - a.rating_avg).slice(0, 10); if(topModels.length === 0) { container.innerHTML = '<div class="no-results">ยังไม่มีข้อมูลน้องๆ ครับ</div>'; return; } let html = ''; const now = new Date(); topModels.forEach((model, index) => { const modelJson = encodeURIComponent(JSON.stringify(model)); const rankClass = index === 0 ? 'rank-badge' : (index === 1 ? 'rank-badge rank-2' : (index === 2 ? 'rank-badge rank-3' : 'rank-badge')); const ratingAvg = model.rating_avg > 0 ? parseFloat(model.rating_avg).toFixed(1) : 'New'; const verifiedBadgeHtml = model.is_verified ? '<span class="iconify verified-badge-small" data-icon="heroicons:check-badge-solid"></span>' : ''; html += `<div class="card" onclick="viewProfile('${modelJson}')" style="position:relative;"><div class="${rankClass}">#${index+1}</div><div class="card-image-box"><img src="${model.cover_image}" loading="lazy"></div><div class="card-info"><div class="name-group">${verifiedBadgeHtml}<span class="card-name">${escapeHTML(model.name)}</span></div><div class="card-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent);"></span> ${escapeHTML(model.location)}</div><div class="card-footer"><div class="price">฿${model.price}</div><div class="engagement"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24;"></span> ${ratingAvg}</div></div></div></div>`; }); container.innerHTML = html; }
 function selectStar(val) { selectedRating = val; const stars = document.querySelectorAll('#starRatingSelector .iconify'); stars.forEach(s => { if(parseInt(s.getAttribute('data-val')) <= val) s.classList.add('selected'); else s.classList.remove('selected'); }); }
 async function submitReview(event) { event.preventDefault(); if(!currentUserSession || !currentProfileId) return; const comment = document.getElementById('reviewComment').value.trim(); const btn = document.getElementById('btnSubmitReview'); btn.innerText = 'กำลังส่ง...'; const { error } = await supabaseClient.from('reviews').insert([{ model_id: currentProfileId, user_id: currentUserSession.user.id, rating: selectedRating, comment: comment }]); if(error) alert("❌ Error: " + error.message); else { document.getElementById('reviewComment').value = ''; selectStar(5); loadReviews(currentProfileId); fetchModels(); } btn.innerText = 'ส่งรีวิว'; }
 async function loadReviews(modelId) { const listContainer = document.getElementById('reviewsList'); const countDisplay = document.getElementById('pdReviewCount'); const { data, error } = await supabaseClient.from('reviews').select(`rating, comment, created_at, user_profiles!inner(display_name)`).eq('model_id', modelId).order('created_at', { ascending: false }); if(error || !data) return; countDisplay.innerText = data.length; if(data.length === 0) { listContainer.innerHTML = '<p style="color:#888; text-align:center;">ยังไม่มีรีวิว</p>'; return; } let html = ''; data.forEach(r => { const starsHtml = '<span class="iconify" data-icon="heroicons:star-solid"></span>'.repeat(r.rating) + '<span class="iconify" data-icon="heroicons:star" style="color:#444;"></span>'.repeat(5 - r.rating); html += `<div class="review-card"><div class="review-header"><span class="review-user">${escapeHTML(r.user_profiles.display_name)}</span></div><div class="review-stars">${starsHtml}</div><div class="review-text">${escapeHTML(r.comment)}</div></div>`; }); listContainer.innerHTML = html; }
