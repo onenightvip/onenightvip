@@ -146,7 +146,7 @@
         .auth-link { color: var(--dash-gold); text-decoration: none; font-weight: 500; cursor: pointer; margin-left: 5px;}
 
         /* DASHBOARDS (Common) */
-        .dashboard-overlay { fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f0f0f; z-index: 5000; display: flex; opacity: 0; visibility: hidden; transition: all 0.3s ease; font-family: 'Prompt', sans-serif; color: #fff; position:fixed;}
+        .dashboard-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f0f0f; z-index: 5000; display: flex; opacity: 0; visibility: hidden; transition: all 0.3s ease; font-family: 'Prompt', sans-serif; color: #fff; }
         .dashboard-overlay.active { opacity: 1; visibility: visible; }
         .dash-sidebar { width: 250px; background: #141414; border-right: 1px solid #222; padding: 20px 0; display: flex; flex-direction: column; }
         .dash-logo { padding: 0 20px 30px 20px; font-size: 1.2rem; font-weight: 600; color: var(--dash-gold); display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #222; margin-bottom: 20px;}
@@ -350,9 +350,7 @@
                 <div class="auth-header"><h2>เข้าสู่ระบบ</h2></div>
                 <div class="input-group"><label>อีเมล / รหัสเฉพาะ</label><input type="text" id="loginEmail" class="auth-input" required></div>
                 <div class="input-group"><label>รหัสผ่าน</label><input type="password" id="loginPassword" class="auth-input" required></div>
-                <div style="text-align: right; margin-top: -10px;">
-                    <a href="#" onclick="switchAuthTab('forgot')" style="color: var(--dash-gold); font-size: 0.85rem; text-decoration: none;">ลืมรหัสผ่าน?</a>
-                </div>
+                <div style="text-align: right; margin-top: -10px;"><a href="#" onclick="switchAuthTab('forgot')" style="color: var(--dash-gold); font-size: 0.85rem; text-decoration: none;">ลืมรหัสผ่าน?</a></div>
                 <button type="submit" class="btn-glow" style="margin-top: 15px; width: 100%; padding: 14px; border-radius: 50px; font-size: 1.1rem;">เข้าสู่ระบบ</button>
                 <div class="auth-footer">ยังไม่มีบัญชี? <span class="auth-link" onclick="switchAuthTab('register')">สมัครสมาชิก</span></div>
             </form>
@@ -380,7 +378,6 @@
                 <div class="input-group"><label>รหัสผ่านใหม่ (6 ตัวขึ้นไป)</label><input type="password" id="newPassword" class="auth-input" required minlength="6"></div>
                 <button type="submit" class="btn-glow" style="margin-top: 20px; width: 100%; padding: 14px; border-radius: 50px; font-size: 1.1rem;">บันทึกรหัสผ่านใหม่</button>
             </form>
-
         </div>
     </div>
 
@@ -423,7 +420,7 @@
 
     <div class="dashboard-overlay" id="touristDashboard">
         <div class="dash-main" style="background: #fdf5f5; color: var(--text-dark);">
-            <div class="dash-topbar" style="background: rgba(255,255,255,0.9); border-bottom: 1px solid rgba(181, 108, 94, 0.2);">
+            <div class="dash-topbar" style="background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(181, 108, 94, 0.2);">
                 <span style="font-weight:600; font-size:1.2rem;"><span class="iconify" data-icon="heroicons:heart-solid" style="color:#ff4d4f;"></span> รายการโปรดของคุณ</span>
                 <button class="btn-close-ag" onclick="closeDashboard()" style="color:var(--text-dark);"><span class="iconify" data-icon="heroicons:x-mark"></span></button>
             </div>
@@ -457,8 +454,11 @@
                 <div class="ag-section-box"><div class="ag-sec-title"><span class="iconify" data-icon="heroicons:presentation-chart-line"></span> แนวโน้มโปรไฟล์</div><div style="height: 300px; width: 100%;"><canvas id="trendChart"></canvas></div></div>
             </div>
 
-            <div class="ag-content-pad ag-view" id="ag-profiles"><h2>จัดการโปรไฟล์</h2><div class="ag-card-list" id="myProfilesGrid"></div></div>
-            
+            <div class="ag-content-pad ag-view" id="ag-profiles">
+                <h2>จัดการโปรไฟล์</h2>
+                <div class="ag-card-list" id="myProfilesGrid"></div>
+            </div>
+
             <div class="ag-content-pad ag-view" id="ag-add">
                 <h2 style="color:var(--dash-gold); margin-bottom:5px;" id="addFormTitle">สร้างโปรไฟล์ใหม่</h2><p style="color:#888; font-size:0.9rem; margin-bottom:25px;">ตั้งค่าโปรไฟล์เพื่อเริ่มเชื่อมต่อกับลูกค้า</p>
                 <form id="addModelForm" onsubmit="submitNewModel(event)">
@@ -609,13 +609,9 @@
         function calcCup() { let chest = parseInt(document.getElementById('mChest').value); let cup = document.getElementById('mCup'); if(!chest) return; if(chest <= 32) cup.value = 'A'; else if(chest <= 34) cup.value = 'B'; else if(chest <= 36) cup.value = 'C'; else if(chest <= 38) cup.value = 'D'; else if(chest <= 40) cup.value = 'E'; else cup.value = 'F'; }
         const isVideoFile = (url) => url.match(/\.(mp4|webm|mov|quicktime|ogg)$/i);
 
-        // 🔥 ตัวดักจับสถานะรีเซ็ตรหัสผ่าน 🔥
         supabaseClient.auth.onAuthStateChange((event, session) => { 
             updateUIAuth(session); 
-            if (event === 'PASSWORD_RECOVERY') {
-                // ถ้ากดลิงก์จากอีเมล ให้โชว์ฟอร์มตั้งรหัสใหม่
-                openAuthModal('updatePwd');
-            }
+            if (event === 'PASSWORD_RECOVERY') { openAuthModal('updatePwd'); }
         });
 
         function updateUIAuth(session) {
@@ -787,7 +783,6 @@
         async function fetchAgenciesPublic() { const container = document.getElementById('agencyListGrid'); container.innerHTML = '<div class="no-results"><span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังโหลดข้อมูล...</div>'; const { data, error } = await supabaseClient.from('user_profiles').select('id, display_name').eq('role', 'agency'); if(error || !data || data.length === 0) { container.innerHTML = '<div class="no-results">ยังไม่มีเอเจนซี่ในระบบ</div>'; return; } let html = ''; data.forEach(ag => { html += `<div class="agency-public-card"><div class="ag-public-avatar">${ag.display_name.charAt(0).toUpperCase()}</div><h3 style="color:var(--text-dark); margin-bottom:10px;">${escapeHTML(ag.display_name)}</h3><button class="btn-outline" style="width:100%; margin-top:10px;">ดูเด็กในสังกัด</button></div>`; }); container.innerHTML = html; }
         async function fetchLeaderboard() { const container = document.getElementById('leaderboardGrid'); const topModels = [...allModelsData].sort((a,b) => b.rating_avg - a.rating_avg).slice(0, 10); if(topModels.length === 0) { container.innerHTML = '<div class="no-results">ยังไม่มีข้อมูลน้องๆ ครับ</div>'; return; } let html = ''; const now = new Date(); topModels.forEach((model, index) => { const modelJson = encodeURIComponent(JSON.stringify(model)); const rankClass = index === 0 ? 'rank-badge' : (index === 1 ? 'rank-badge rank-2' : (index === 2 ? 'rank-badge rank-3' : 'rank-badge')); const ratingAvg = model.rating_avg > 0 ? parseFloat(model.rating_avg).toFixed(1) : 'New'; const verifiedBadgeHtml = model.is_verified ? '<span class="iconify verified-badge-small" data-icon="heroicons:check-badge-solid"></span>' : ''; html += `<div class="card" onclick="viewProfile('${modelJson}')" style="position:relative;"><div class="${rankClass}">#${index+1}</div><div class="card-image-box"><img src="${model.cover_image}" loading="lazy"></div><div class="card-info"><div class="name-group">${verifiedBadgeHtml}<span class="card-name">${escapeHTML(model.name)}</span></div><div class="card-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent);"></span> ${escapeHTML(model.location)}</div><div class="card-footer"><div class="price">฿${model.price}</div><div class="engagement"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24;"></span> ${ratingAvg}</div></div></div></div>`; }); container.innerHTML = html; }
 
-        // 🔥 ฟังก์ชันสลับหน้า Auth Modal (อัปเกรด Forgot Password) 🔥
         function switchAuthTab(tab) { 
             document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
             if(tab === 'login') document.getElementById('loginForm').classList.add('active');
@@ -795,52 +790,20 @@
             else if(tab === 'forgot') document.getElementById('forgotForm').classList.add('active');
             else if(tab === 'updatePwd') document.getElementById('updatePwdForm').classList.add('active');
         }
-        
         function openAuthModal(tab = 'register') { document.getElementById('authOverlay').classList.add('active'); switchAuthTab(tab); }
         function closeAuthModal(e, force) { if(force || e.target === document.getElementById('authOverlay')) document.getElementById('authOverlay').classList.remove('active'); }
         
-        // 🔥 ฟังก์ชันขอลืมรหัสผ่าน 🔥
         async function handleForgotPassword(event) {
-            event.preventDefault();
-            const email = document.getElementById('forgotEmail').value.trim();
-            const btn = event.target.querySelector('button');
-            const originalText = btn.innerText;
-            btn.innerText = 'กำลังส่ง...';
-
-            // ส่งอีเมลรีเซ็ต (จะพากลับมาที่เว็บเดิม)
-            const { data, error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-                redirectTo: window.location.origin, 
-            });
-
-            if (error) {
-                alert('❌ เกิดข้อผิดพลาด: ' + error.message);
-            } else {
-                alert('✅ ส่งลิงก์รีเซ็ตรหัสผ่านไปที่อีเมลของคุณแล้วครับ! (โปรดเช็คในกล่องจดหมาย หรือ Junk Mail)');
-                switchAuthTab('login');
-            }
+            event.preventDefault(); const email = document.getElementById('forgotEmail').value.trim(); const btn = event.target.querySelector('button'); const originalText = btn.innerText; btn.innerText = 'กำลังส่ง...';
+            const { data, error } = await supabaseClient.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin });
+            if (error) { alert('❌ เกิดข้อผิดพลาด: ' + error.message); } else { alert('✅ ส่งลิงก์รีเซ็ตรหัสผ่านไปที่อีเมลของคุณแล้วครับ! (โปรดเช็คในกล่องจดหมาย หรือ Junk Mail)'); switchAuthTab('login'); }
             btn.innerText = originalText;
         }
 
-        // 🔥 ฟังก์ชันตั้งรหัสผ่านใหม่ 🔥
         async function handleUpdatePassword(event) {
-            event.preventDefault();
-            const newPassword = document.getElementById('newPassword').value;
-            const btn = event.target.querySelector('button');
-            const originalText = btn.innerText;
-            btn.innerText = 'กำลังอัปเดต...';
-
-            const { data, error } = await supabaseClient.auth.updateUser({
-                password: newPassword
-            });
-
-            if (error) {
-                alert('❌ เกิดข้อผิดพลาด: ' + error.message);
-            } else {
-                alert('🎉 เปลี่ยนรหัสผ่านสำเร็จ! กรุณาล็อกอินด้วยรหัสผ่านใหม่ครับ');
-                closeAuthModal(null, true);
-                document.getElementById('loginPassword').value = '';
-                openAuthModal('login'); // เด้งให้ล็อกอินใหม่
-            }
+            event.preventDefault(); const newPassword = document.getElementById('newPassword').value; const btn = event.target.querySelector('button'); const originalText = btn.innerText; btn.innerText = 'กำลังอัปเดต...';
+            const { data, error } = await supabaseClient.auth.updateUser({ password: newPassword });
+            if (error) { alert('❌ เกิดข้อผิดพลาด: ' + error.message); } else { alert('🎉 เปลี่ยนรหัสผ่านสำเร็จ! กรุณาล็อกอินด้วยรหัสผ่านใหม่ครับ'); closeAuthModal(null, true); document.getElementById('loginPassword').value = ''; openAuthModal('login'); }
             btn.innerText = originalText;
         }
 
