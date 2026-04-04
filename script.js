@@ -107,13 +107,41 @@ function setupAdminDashboard(role) {
     fetchAdminData(role); 
 }
 
+// 🔥 แก้ไขลูปบั๊กการสลับแท็บตรงนี้ครับ 🔥
+function clearFormOnly() {
+    isEditing = false; 
+    document.getElementById('addModelForm').reset(); 
+    document.getElementById('editingModelId').value = ""; 
+    document.getElementById('addFormTitle').innerText = "สร้างโปรไฟล์ใหม่"; 
+    document.getElementById('btnSubmitModel').innerHTML = '<span class="iconify" data-icon="heroicons:check"></span> สร้างโปรไฟล์'; 
+    mediaFiles = []; existingGallery = []; renderPremiumGallery(); 
+    document.getElementById('mDist').innerHTML = '<option value="">เลือกจังหวัดก่อน</option>'; document.getElementById('mDist').disabled = true; 
+}
+
+function resetForm() {
+    clearFormOnly();
+    // เวลากด "ยกเลิก" ให้เด้งกลับไปหน้าจัดการโปรไฟล์
+    switchAgTab('ag-profiles', document.querySelectorAll('#agencyDashboard .dash-nav-item')[1], 'agencyDashboard');
+}
+
 function switchAgTab(tabId, btn, dashId) {
     const dashboard = document.getElementById(dashId);
-    dashboard.querySelectorAll('.ag-view').forEach(el => el.classList.remove('active')); dashboard.querySelectorAll('.dash-nav-item').forEach(el => el.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active'); btn.classList.add('active');
-    if(dashId === 'agencyDashboard') { document.getElementById('agTitle').innerHTML = btn.innerHTML; if(tabId === 'ag-overview') setTimeout(() => { renderDashboardChart(); }, 50); }
+    dashboard.querySelectorAll('.ag-view').forEach(el => el.classList.remove('active')); 
+    dashboard.querySelectorAll('.dash-nav-item').forEach(el => el.classList.remove('active'));
+    
+    document.getElementById(tabId).classList.add('active'); 
+    btn.classList.add('active');
+    
+    if(dashId === 'agencyDashboard') { 
+        document.getElementById('agTitle').innerHTML = btn.innerHTML; 
+        if(tabId === 'ag-overview') setTimeout(() => { renderDashboardChart(); }, 50); 
+    }
     if(dashId === 'adminDashboard') document.getElementById('adminTitle').innerHTML = btn.innerHTML; 
-    if(tabId === 'ag-add' && !isEditing) { resetForm(); } 
+    
+    // เคลียร์สถานะการแก้ไข ถ้าผู้ใช้กลับไปหน้าจัดการโปรไฟล์เอง
+    if(tabId === 'ag-profiles') { isEditing = false; }
+    // ล้างฟอร์มให้สะอาด เฉพาะเวลากดเข้ามาหน้า "สร้างโปรไฟล์" และไม่ได้กดมาจากปุ่มแก้ไข
+    if(tabId === 'ag-add' && !isEditing) { clearFormOnly(); } 
 }
 
 async function fetchAdminData(role) {
@@ -157,18 +185,11 @@ function renderPremiumGallery() {
     mediaFiles.forEach((item, idx) => { let innerHtml = item.type === 'video' ? `<video src="${item.url}"></video><div class="vid-icon-overlay"><span class="iconify" data-icon="heroicons:play-circle-solid"></span></div>` : `<img src="${item.url}">`; container.innerHTML += `<div class="img-thumb-box" style="border-color:var(--dash-gold);">${innerHtml}<button type="button" class="btn-remove-img" onclick="mediaFiles.splice(${idx},1); renderPremiumGallery();"><span class="iconify" data-icon="heroicons:x-mark"></span></button></div>`; });
 }
 
-function resetForm() {
-    isEditing = false; document.getElementById('addModelForm').reset(); document.getElementById('editingModelId').value = ""; document.getElementById('addFormTitle').innerText = "สร้างโปรไฟล์ใหม่"; document.getElementById('btnSubmitModel').innerHTML = '<span class="iconify" data-icon="heroicons:check"></span> สร้างโปรไฟล์'; mediaFiles = []; existingGallery = []; renderPremiumGallery(); switchAgTab('ag-profiles', document.querySelectorAll('#agencyDashboard .dash-nav-item')[1], 'agencyDashboard');
-}
-
 function editProfile(encodedJson) {
     isEditing = true; const model = JSON.parse(decodeURIComponent(encodedJson)); switchAgTab('ag-add', document.getElementById('navAddProfileBtn'), 'agencyDashboard');
     document.getElementById('addFormTitle').innerText = "แก้ไขข้อมูลน้อง " + escapeHTML(model.name); document.getElementById('btnSubmitModel').innerHTML = '<span class="iconify" data-icon="heroicons:pencil-square"></span> อัปเดตข้อมูล'; document.getElementById('editingModelId').value = model.id;
     document.getElementById('mName').value = model.name; document.getElementById('mAge').value = model.age; document.getElementById('mSlogan').value = model.slogan || ""; document.getElementById('mPrice').value = model.price; if(model.languages) document.getElementById('mLang').value = model.languages;
-    
-    document.getElementById('mProv').value = model.province || ""; 
-    document.getElementById('mDist').value = model.district || "";
-    
+    document.getElementById('mProv').value = model.province || ""; document.getElementById('mDist').value = model.district || "";
     document.getElementById('mGen').value = model.gender || 'หญิง'; document.getElementById('mHeight').value = model.height; document.getElementById('mWeight').value = model.weight; document.getElementById('mChest').value = model.chest || ""; if(model.cup_size) document.getElementById('mCup').value = model.cup_size; if(model.breast_type) document.getElementById('mBreastType').value = model.breast_type; document.getElementById('mWaist').value = model.waist || ""; document.getElementById('mHips').value = model.hips || "";
     document.getElementById('mLineId').value = model.line_id; document.getElementById('mTele').value = model.telegram_id || ""; document.getElementById('mTwit').value = model.twitter_id || ""; document.getElementById('mDesc').value = model.description || ""; countChars(document.getElementById('mDesc'));
     existingGallery = model.gallery || [model.cover_image]; mediaFiles = []; renderPremiumGallery();
@@ -262,4 +283,4 @@ async function handleAuthSubmit(event, type) {
 
 async function handleLogout() { await supabaseClient.auth.signOut(); updateUIAuth(null); closeDashboard(); fetchModels(); switchMainView('homeView', document.getElementById('navHome')); }
 
-fetchModels(); // เริ่มโหลดรายชื่อตอนเปิดเว็บ
+fetchModels();
