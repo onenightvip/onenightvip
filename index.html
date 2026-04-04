@@ -146,7 +146,7 @@
         .auth-link { color: var(--dash-gold); text-decoration: none; font-weight: 500; cursor: pointer; margin-left: 5px;}
 
         /* DASHBOARDS (Common) */
-        .dashboard-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f0f0f; z-index: 5000; display: flex; opacity: 0; visibility: hidden; transition: all 0.3s ease; font-family: 'Prompt', sans-serif; color: #fff; }
+        .dashboard-overlay { fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f0f0f; z-index: 5000; display: flex; opacity: 0; visibility: hidden; transition: all 0.3s ease; font-family: 'Prompt', sans-serif; color: #fff; position:fixed;}
         .dashboard-overlay.active { opacity: 1; visibility: visible; }
         .dash-sidebar { width: 250px; background: #141414; border-right: 1px solid #222; padding: 20px 0; display: flex; flex-direction: column; }
         .dash-logo { padding: 0 20px 30px 20px; font-size: 1.2rem; font-weight: 600; color: var(--dash-gold); display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #222; margin-bottom: 20px;}
@@ -345,14 +345,19 @@
     <div class="auth-overlay" id="authOverlay" onclick="closeAuthModal(event)">
         <div class="auth-modal" id="authModal">
             <button class="close-modal" onclick="closeAuthModal(event, true)">&times;</button>
-            <form id="loginForm" class="auth-form" onsubmit="handleAuthSubmit(event, 'login')">
+            
+            <form id="loginForm" class="auth-form active" onsubmit="handleAuthSubmit(event, 'login')">
                 <div class="auth-header"><h2>เข้าสู่ระบบ</h2></div>
                 <div class="input-group"><label>อีเมล / รหัสเฉพาะ</label><input type="text" id="loginEmail" class="auth-input" required></div>
                 <div class="input-group"><label>รหัสผ่าน</label><input type="password" id="loginPassword" class="auth-input" required></div>
-                <button type="submit" class="btn-glow" style="margin-top: 20px; width: 100%; padding: 14px; border-radius: 50px; font-size: 1.1rem;">เข้าสู่ระบบ</button>
+                <div style="text-align: right; margin-top: -10px;">
+                    <a href="#" onclick="switchAuthTab('forgot')" style="color: var(--dash-gold); font-size: 0.85rem; text-decoration: none;">ลืมรหัสผ่าน?</a>
+                </div>
+                <button type="submit" class="btn-glow" style="margin-top: 15px; width: 100%; padding: 14px; border-radius: 50px; font-size: 1.1rem;">เข้าสู่ระบบ</button>
                 <div class="auth-footer">ยังไม่มีบัญชี? <span class="auth-link" onclick="switchAuthTab('register')">สมัครสมาชิก</span></div>
             </form>
-            <form id="registerForm" class="auth-form active" onsubmit="handleAuthSubmit(event, 'register')">
+            
+            <form id="registerForm" class="auth-form" onsubmit="handleAuthSubmit(event, 'register')">
                 <div class="auth-header"><h2>สมัครสมาชิก</h2></div>
                 <div class="input-group"><label>อีเมล</label><input type="email" id="regEmail" class="auth-input" required></div>
                 <div class="input-group"><label>ชื่อผู้ใช้ (อังกฤษ)</label><input type="text" id="regUsername" class="auth-input" required></div>
@@ -362,6 +367,20 @@
                 <button type="submit" class="btn-glow" style="margin-top: 20px; width: 100%; padding: 14px; border-radius: 50px; font-size: 1.1rem;">สมัครสมาชิก</button>
                 <div class="auth-footer">มีบัญชีอยู่แล้ว? <span class="auth-link" onclick="switchAuthTab('login')">เข้าสู่ระบบ</span></div>
             </form>
+
+            <form id="forgotForm" class="auth-form" onsubmit="handleForgotPassword(event)">
+                <div class="auth-header"><h2>ลืมรหัสผ่าน</h2><p style="color:#888; font-size:0.9rem;">กรอกอีเมลของคุณเพื่อรับลิงก์รีเซ็ตรหัสผ่าน</p></div>
+                <div class="input-group"><label>อีเมลที่ใช้สมัคร</label><input type="email" id="forgotEmail" class="auth-input" required></div>
+                <button type="submit" class="btn-glow" style="margin-top: 20px; width: 100%; padding: 14px; border-radius: 50px; font-size: 1.1rem;">ส่งลิงก์รีเซ็ตรหัสผ่าน</button>
+                <div class="auth-footer"><span class="auth-link" onclick="switchAuthTab('login')">กลับไปหน้าเข้าสู่ระบบ</span></div>
+            </form>
+
+            <form id="updatePwdForm" class="auth-form" onsubmit="handleUpdatePassword(event)">
+                <div class="auth-header"><h2>ตั้งรหัสผ่านใหม่</h2></div>
+                <div class="input-group"><label>รหัสผ่านใหม่ (6 ตัวขึ้นไป)</label><input type="password" id="newPassword" class="auth-input" required minlength="6"></div>
+                <button type="submit" class="btn-glow" style="margin-top: 20px; width: 100%; padding: 14px; border-radius: 50px; font-size: 1.1rem;">บันทึกรหัสผ่านใหม่</button>
+            </form>
+
         </div>
     </div>
 
@@ -499,23 +518,10 @@
             <button class="kyc-close" onclick="closeQRModal()">&times;</button>
             <h2 style="color: #fff; margin-bottom: 5px;">สแกนเพื่อชำระเงิน</h2>
             <p style="color: #888; font-size: 0.9rem; margin-bottom: 20px;">รองรับแอปพลิเคชันทุกธนาคาร (PromptPay)</p>
-            
-            <div style="background: #fff; padding: 15px; border-radius: 12px; display: inline-block; margin-bottom: 20px;">
-                <img id="omiseQrImage" src="" style="width: 200px; height: 200px; object-fit: contain;">
-            </div>
-            
-            <div style="font-size: 1.5rem; color: var(--dash-gold); font-weight: bold; margin-bottom: 20px;">
-                ยอดชำระ: <span id="qrAmountDisplay">0</span> บาท
-            </div>
-            
-            <div style="background: rgba(16, 185, 129, 0.1); border: 1px dashed #10b981; color: #10b981; padding: 15px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 20px; text-align: left;">
-                <b><span class="iconify" data-icon="heroicons:information-circle"></span> โหมดทดสอบ (Test Mode):</b><br>
-                สแกนจ่ายด้วยแอปไม่ได้จริง ให้ไปกด "จำลองว่าจ่ายแล้ว" ในหน้าเว็บของ Omise Dashboard นะครับ
-            </div>
-            
-            <button class="btn-outline" style="width: 100%; padding: 12px; border-radius: 50px; font-size: 1rem; border-color:#444; color:#fff;" onclick="closeQRModal()">
-                ปิดหน้าต่างนี้
-            </button>
+            <div style="background: #fff; padding: 15px; border-radius: 12px; display: inline-block; margin-bottom: 20px;"><img id="omiseQrImage" src="" style="width: 200px; height: 200px; object-fit: contain;"></div>
+            <div style="font-size: 1.5rem; color: var(--dash-gold); font-weight: bold; margin-bottom: 20px;">ยอดชำระ: <span id="qrAmountDisplay">0</span> บาท</div>
+            <div style="background: rgba(16, 185, 129, 0.1); border: 1px dashed #10b981; color: #10b981; padding: 15px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 20px; text-align: left;"><b><span class="iconify" data-icon="heroicons:information-circle"></span> โหมดทดสอบ (Test Mode):</b><br>สแกนจ่ายด้วยแอปไม่ได้จริง ให้ไปกด "จำลองว่าจ่ายแล้ว" ในหน้าเว็บของ Omise Dashboard นะครับ</div>
+            <button class="btn-outline" style="width: 100%; padding: 12px; border-radius: 50px; font-size: 1rem; border-color:#444; color:#fff;" onclick="closeQRModal()">ปิดหน้าต่างนี้</button>
         </div>
     </div>
 
@@ -602,6 +608,15 @@
         function countChars(obj) { document.getElementById('charNum').innerText = obj.value.length; }
         function calcCup() { let chest = parseInt(document.getElementById('mChest').value); let cup = document.getElementById('mCup'); if(!chest) return; if(chest <= 32) cup.value = 'A'; else if(chest <= 34) cup.value = 'B'; else if(chest <= 36) cup.value = 'C'; else if(chest <= 38) cup.value = 'D'; else if(chest <= 40) cup.value = 'E'; else cup.value = 'F'; }
         const isVideoFile = (url) => url.match(/\.(mp4|webm|mov|quicktime|ogg)$/i);
+
+        // 🔥 ตัวดักจับสถานะรีเซ็ตรหัสผ่าน 🔥
+        supabaseClient.auth.onAuthStateChange((event, session) => { 
+            updateUIAuth(session); 
+            if (event === 'PASSWORD_RECOVERY') {
+                // ถ้ากดลิงก์จากอีเมล ให้โชว์ฟอร์มตั้งรหัสใหม่
+                openAuthModal('updatePwd');
+            }
+        });
 
         function updateUIAuth(session) {
             currentUserSession = session; const isLoggedIn = session !== null;
@@ -753,70 +768,103 @@
 
         async function boostProfile(modelId) { if(!currentUserSession) return; const cost = 50; if(confirm(`ยืนยันการดันโปรไฟล์ (ใช้ ${cost} เครดิต)?\nน้องจะไปอยู่หน้าแรกเป็นเวลา 24 ชม.`)) { if(agencyWalletBalance < cost) { alert('❌ เครดิตไม่พอครับ กรุณาไปที่เมนูกระเป๋าเงินเพื่อเติมเครดิต'); switchAgTab('ag-wallet', document.querySelectorAll('#agencyDashboard .dash-nav-item')[3], 'agencyDashboard'); return; } const newBalance = agencyWalletBalance - cost; await supabaseClient.from('user_profiles').update({ wallet_balance: newBalance }).eq('id', currentUserSession.user.id); const expiresAt = new Date(); expiresAt.setHours(expiresAt.getHours() + 24); await supabaseClient.from('models').update({ boost_expires_at: expiresAt.toISOString() }).eq('id', modelId); alert('🔥 ดันโปรไฟล์สำเร็จ! น้องไปอยู่หน้าแรกแล้วครับ'); fetchWalletBalance(); fetchMyProfiles(); fetchModels(); } }
 
-        // 🔥 ฟังก์ชันเสก QR Code ของจริงจาก Edge Function (Omise) 🔥
         function setTopupAmount(amount) { document.getElementById('customTopupAmount').value = amount; }
-        
         async function generateRealQR() {
             const amount = parseInt(document.getElementById('customTopupAmount').value);
             if(!amount || amount < 100) { alert("กรุณาระบุจำนวนเงินขั้นต่ำ 100 บาทครับ"); return; }
             if(!currentUserSession) { alert("Session หมดอายุ กรุณาล็อกอินใหม่"); return; }
-
-            const btn = document.getElementById('btnGenQR');
-            const originalHtml = btn.innerHTML;
-            btn.innerHTML = '<span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังสร้าง QR Code...';
-            
+            const btn = document.getElementById('btnGenQR'); const originalHtml = btn.innerHTML; btn.innerHTML = '<span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังสร้าง QR Code...';
             try {
-                // ยิง API ไปที่ Supabase Edge Function ตัวที่เราเพิ่งสร้าง
-                const response = await fetch(`${SUPABASE_URL}/functions/v1/create-qr`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        amount: amount, 
-                        agency_id: currentUserSession.user.id 
-                    })
-                });
-
-                const data = await response.json();
-
-                if (data.error) { throw new Error(data.error); }
-
-                // โชว์รูป QR Code
-                document.getElementById('omiseQrImage').src = data.qr_url;
-                document.getElementById('qrAmountDisplay').innerText = amount.toLocaleString();
-                document.getElementById('qrModalOverlay').classList.add('active');
-                
-                // แจ้งเตือนแอดมินว่ามันยังเป็น Test Mode
+                const response = await fetch(`${SUPABASE_URL}/functions/v1/create-qr`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ amount: amount, agency_id: currentUserSession.user.id }) });
+                const data = await response.json(); if (data.error) { throw new Error(data.error); }
+                document.getElementById('omiseQrImage').src = data.qr_url; document.getElementById('qrAmountDisplay').innerText = amount.toLocaleString(); document.getElementById('qrModalOverlay').classList.add('active');
                 alert("ระบบพร้อมใช้งานแล้วครับ!\nแต่เนื่องจากเป็น Test Mode การสแกนจ่ายด้วยแอปจริงจะไม่ผ่านนะครับ\n(ลองเทสต์ในหน้าเว็บ Omise หรือกดปิดหน้าต่างนี้ไปก่อนได้เลย)");
-
-            } catch (error) {
-                alert("❌ เกิดข้อผิดพลาดในการสร้าง QR: " + error.message);
-            }
-            
+            } catch (error) { alert("❌ เกิดข้อผิดพลาดในการสร้าง QR: " + error.message); }
             btn.innerHTML = originalHtml;
         }
-
         function closeQRModal() { document.getElementById('qrModalOverlay').classList.remove('active'); }
 
         async function fetchAgenciesPublic() { const container = document.getElementById('agencyListGrid'); container.innerHTML = '<div class="no-results"><span class="iconify" data-icon="eos-icons:bubble-loading"></span> กำลังโหลดข้อมูล...</div>'; const { data, error } = await supabaseClient.from('user_profiles').select('id, display_name').eq('role', 'agency'); if(error || !data || data.length === 0) { container.innerHTML = '<div class="no-results">ยังไม่มีเอเจนซี่ในระบบ</div>'; return; } let html = ''; data.forEach(ag => { html += `<div class="agency-public-card"><div class="ag-public-avatar">${ag.display_name.charAt(0).toUpperCase()}</div><h3 style="color:var(--text-dark); margin-bottom:10px;">${escapeHTML(ag.display_name)}</h3><button class="btn-outline" style="width:100%; margin-top:10px;">ดูเด็กในสังกัด</button></div>`; }); container.innerHTML = html; }
         async function fetchLeaderboard() { const container = document.getElementById('leaderboardGrid'); const topModels = [...allModelsData].sort((a,b) => b.rating_avg - a.rating_avg).slice(0, 10); if(topModels.length === 0) { container.innerHTML = '<div class="no-results">ยังไม่มีข้อมูลน้องๆ ครับ</div>'; return; } let html = ''; const now = new Date(); topModels.forEach((model, index) => { const modelJson = encodeURIComponent(JSON.stringify(model)); const rankClass = index === 0 ? 'rank-badge' : (index === 1 ? 'rank-badge rank-2' : (index === 2 ? 'rank-badge rank-3' : 'rank-badge')); const ratingAvg = model.rating_avg > 0 ? parseFloat(model.rating_avg).toFixed(1) : 'New'; const verifiedBadgeHtml = model.is_verified ? '<span class="iconify verified-badge-small" data-icon="heroicons:check-badge-solid"></span>' : ''; html += `<div class="card" onclick="viewProfile('${modelJson}')" style="position:relative;"><div class="${rankClass}">#${index+1}</div><div class="card-image-box"><img src="${model.cover_image}" loading="lazy"></div><div class="card-info"><div class="name-group">${verifiedBadgeHtml}<span class="card-name">${escapeHTML(model.name)}</span></div><div class="card-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent);"></span> ${escapeHTML(model.location)}</div><div class="card-footer"><div class="price">฿${model.price}</div><div class="engagement"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24;"></span> ${ratingAvg}</div></div></div></div>`; }); container.innerHTML = html; }
 
-        function selectStar(val) { selectedRating = val; const stars = document.querySelectorAll('#starRatingSelector .iconify'); stars.forEach(s => { if(parseInt(s.getAttribute('data-val')) <= val) s.classList.add('selected'); else s.classList.remove('selected'); }); }
-        async function submitReview(event) { event.preventDefault(); if(!currentUserSession || !currentProfileId) return; const comment = document.getElementById('reviewComment').value.trim(); const btn = document.getElementById('btnSubmitReview'); btn.innerText = 'กำลังส่ง...'; const { error } = await supabaseClient.from('reviews').insert([{ model_id: currentProfileId, user_id: currentUserSession.user.id, rating: selectedRating, comment: comment }]); if(error) alert("❌ Error: " + error.message); else { document.getElementById('reviewComment').value = ''; selectStar(5); loadReviews(currentProfileId); fetchModels(); } btn.innerText = 'ส่งรีวิว'; }
-        async function loadReviews(modelId) { const listContainer = document.getElementById('reviewsList'); const countDisplay = document.getElementById('pdReviewCount'); const { data, error } = await supabaseClient.from('reviews').select(`rating, comment, created_at, user_profiles!inner(display_name)`).eq('model_id', modelId).order('created_at', { ascending: false }); if(error || !data) return; countDisplay.innerText = data.length; if(data.length === 0) { listContainer.innerHTML = '<p style="color:#888; text-align:center;">ยังไม่มีรีวิว</p>'; return; } let html = ''; data.forEach(r => { const starsHtml = '<span class="iconify" data-icon="heroicons:star-solid"></span>'.repeat(r.rating) + '<span class="iconify" data-icon="heroicons:star" style="color:#444;"></span>'.repeat(5 - r.rating); html += `<div class="review-card"><div class="review-header"><span class="review-user">${escapeHTML(r.user_profiles.display_name)}</span></div><div class="review-stars">${starsHtml}</div><div class="review-text">${escapeHTML(r.comment)}</div></div>`; }); listContainer.innerHTML = html; }
-        async function fetchUserFavorites() { if(!currentUserSession) return; const { data, error } = await supabaseClient.from('favorites').select('model_id').eq('user_id', currentUserSession.user.id); if(!error && data) { userFavorites = data.map(f => f.model_id); handleSearch(); } }
-        async function toggleHeartReal(modelId, btn, event) { if(event) event.stopPropagation(); if(!currentUserSession) { alert("กรุณาล็อกอินก่อนครับ"); return; } const icon = btn.querySelector('.iconify'); const isLiked = userFavorites.includes(modelId); if (isLiked) { icon.setAttribute('data-icon', 'mdi:cards-heart-outline'); icon.style.color = 'white'; btn.style.borderColor = 'rgba(255, 255, 255, 0.3)'; userFavorites = userFavorites.filter(id => id !== modelId); await supabaseClient.from('favorites').delete().match({ user_id: currentUserSession.user.id, model_id: modelId }); } else { icon.setAttribute('data-icon', 'mdi:cards-heart'); icon.style.color = '#ff4d4f'; btn.style.borderColor = '#ff4d4f'; userFavorites.push(modelId); await supabaseClient.from('favorites').insert([{ user_id: currentUserSession.user.id, model_id: modelId }]); } }
-        let currentFilter = 'all'; function setFilter(filterType, btnElement) { currentFilter = filterType; document.querySelectorAll('.filter-chips .chip').forEach(c => c.classList.remove('active')); btnElement.classList.add('active'); handleSearch(); }
-        function handleSearch() { const searchText = document.getElementById('searchInput').value.toLowerCase(); let filteredData = allModelsData.filter(model => { const matchSearch = model.name.toLowerCase().includes(searchText) || (model.location && model.location.toLowerCase().includes(searchText)); let matchFilter = true; if (currentFilter === 'new') { const diffTime = Math.abs(new Date() - new Date(model.created_at)); matchFilter = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) <= 7; } else if (currentFilter === 'budget') { matchFilter = model.price < 2000; } else if (currentFilter === 'favorite') { matchFilter = userFavorites.includes(model.id); } return matchSearch && matchFilter; }); renderGrid(filteredData); }
-        function renderGrid(dataToRender) { const grid = document.getElementById('modelsGrid'); if (dataToRender.length === 0) { grid.innerHTML = '<div class="no-results">ไม่พบน้องๆ ครับ 🥲</div>'; return; } let html = ''; const now = new Date(); dataToRender.forEach(model => { const modelJson = encodeURIComponent(JSON.stringify(model)); const isFav = userFavorites.includes(model.id); const heartIcon = isFav ? 'mdi:cards-heart' : 'mdi:cards-heart-outline'; const heartColor = isFav ? '#ff4d4f' : 'white'; const heartBorder = isFav ? '#ff4d4f' : 'rgba(255, 255, 255, 0.3)'; const ratingAvg = model.rating_avg > 0 ? parseFloat(model.rating_avg).toFixed(1) : 'New'; const isBoosted = model.boost_expires_at && new Date(model.boost_expires_at) > now; const badgeHtml = isBoosted ? '<span class="badge-hot"><span class="iconify" data-icon="heroicons:fire-solid"></span> HOT</span>' : '<span class="badge-image">New</span>'; const verifiedBadgeHtml = model.is_verified ? '<span class="iconify verified-badge-small" data-icon="heroicons:check-badge-solid"></span>' : ''; html += `<div class="card" onclick="viewProfile('${modelJson}')"><div class="card-image-box"><img src="${model.cover_image}" loading="lazy">${badgeHtml}<button class="heart-btn-card" style="border-color: ${heartBorder};" onclick="toggleHeartReal(${model.id}, this, event)"><span class="iconify heart-icon" data-icon="${heartIcon}" style="color: ${heartColor}; font-size: 1.5rem;"></span></button></div><div class="card-info"><div class="name-group">${verifiedBadgeHtml}<span class="card-name">${escapeHTML(model.name)}</span></div><div class="card-location"><span class="iconify" data-icon="mdi:map-marker" style="color: var(--accent);"></span> ${escapeHTML(model.location)}</div><div class="card-footer"><div class="price">฿${model.price}</div><div class="engagement"><span class="iconify" data-icon="heroicons:star-solid" style="color: #fbbf24;"></span> ${ratingAvg}</div></div></div></div>`; }); grid.innerHTML = html; }
-        async function fetchModels() { const { data, error } = await supabaseClient.from('models').select('*').eq('status', 'active').order('boost_expires_at', { ascending: false, nullsFirst: false }).order('created_at', { ascending: false }); if (error || !data) return; allModelsData = data; handleSearch(); }
-        window.setMainMedia = function(url, isVideo, thumbElement) { const imgEl = document.getElementById('pdMainImage'); const vidEl = document.getElementById('pdMainVideo'); if (isVideo) { imgEl.style.display = 'none'; vidEl.style.display = 'block'; vidEl.src = url; vidEl.play(); } else { vidEl.style.display = 'none'; vidEl.pause(); imgEl.style.display = 'block'; imgEl.src = url; } document.querySelectorAll('.pro-thumb-item').forEach(el => el.classList.remove('active')); if(thumbElement) thumbElement.classList.add('active'); };
-        function viewProfile(encodedJson) { const model = JSON.parse(decodeURIComponent(encodedJson)); currentProfileId = model.id; const images = (model.gallery && model.gallery.length > 0) ? model.gallery : [model.cover_image]; setMainMedia(images[0], isVideoFile(images[0]), null); const thumbList = document.getElementById('pdThumbList'); thumbList.innerHTML = ''; if (images.length > 1) { images.forEach((url, idx) => { const isVid = isVideoFile(url) ? true : false; const innerHtml = isVid ? `<video src="${url}"></video><div class="vid-icon-overlay" style="font-size:1rem;"><span class="iconify" data-icon="heroicons:play-circle-solid"></span></div>` : `<img src="${url}">`; thumbList.innerHTML += `<div class="pro-thumb-item ${idx === 0 ? 'active' : ''}" onclick="setMainMedia('${url}', ${isVid}, this)">${innerHtml}</div>`; }); thumbList.style.display = 'flex'; } else { thumbList.style.display = 'none'; } document.getElementById('pdName').innerText = model.name; const slg = document.getElementById('pdSlogan'); if(model.slogan) { slg.innerText = `"${model.slogan}"`; slg.style.display = 'block'; } else { slg.style.display = 'none'; } document.getElementById('pdLoc').innerText = model.location; document.getElementById('pdAge').innerText = model.age || '-'; document.getElementById('pdProps').innerText = model.proportions || '-'; const cupTxt = model.cup_size ? `${model.cup_size} (${model.breast_type || 'ไม่ระบุ'})` : '-'; document.getElementById('pdCup').innerText = cupTxt; document.getElementById('pdHeight').innerText = model.height || '-'; document.getElementById('pdWeight').innerText = model.weight || '-'; document.getElementById('pdLang').innerText = model.languages || '-'; document.getElementById('pdPrice').innerText = model.price; document.getElementById('pdDesc').innerText = model.description || '-'; let rawLine = model.line_id || ''; let lineUrl = rawLine; if (!rawLine.startsWith('http')) { lineUrl = rawLine.startsWith('@') ? `https://line.me/R/ti/p/${rawLine}` : `https://line.me/ti/p/~${rawLine}`; } document.getElementById('btnBookNow').onclick = function() { window.open(lineUrl, '_blank'); }; const teleBtn = document.getElementById('pdTeleBtn'); const twitBtn = document.getElementById('pdTwitBtn'); const socContainer = document.getElementById('pdSocialsContainer'); let hasSocials = false; if(model.telegram_id) { teleBtn.style.display = 'flex'; teleBtn.href = `https://t.me/${model.telegram_id.replace('@','')}`; hasSocials = true; } else { teleBtn.style.display = 'none'; } if(model.twitter_id) { twitBtn.style.display = 'flex'; twitBtn.href = `https://x.com/${model.twitter_id.replace('@','')}`; hasSocials = true; } else { twitBtn.style.display = 'none'; } socContainer.style.display = hasSocials ? 'flex' : 'none'; const modalHeartBtn = document.getElementById('btnProHeart'); const icon = modalHeartBtn.querySelector('.iconify'); const isFav = userFavorites.includes(model.id); icon.setAttribute('data-icon', isFav ? 'mdi:cards-heart' : 'mdi:cards-heart-outline'); icon.style.color = isFav ? '#ff4d4f' : 'white'; modalHeartBtn.style.borderColor = isFav ? '#ff4d4f' : 'rgba(255, 255, 255, 0.3)'; modalHeartBtn.onclick = function() { toggleHeartReal(model.id, this, null); }; loadReviews(model.id); document.getElementById('profileDetailModal').classList.add('active'); document.body.classList.add('modal-open'); }
-        function closeProfile() { document.getElementById('profileDetailModal').classList.remove('active'); document.body.classList.remove('modal-open'); document.getElementById('pdMainVideo').pause(); }
-        function switchAuthTab(tab) { document.getElementById('loginForm').classList.toggle('active', tab === 'login'); document.getElementById('registerForm').classList.toggle('active', tab === 'register'); }
+        // 🔥 ฟังก์ชันสลับหน้า Auth Modal (อัปเกรด Forgot Password) 🔥
+        function switchAuthTab(tab) { 
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            if(tab === 'login') document.getElementById('loginForm').classList.add('active');
+            else if(tab === 'register') document.getElementById('registerForm').classList.add('active');
+            else if(tab === 'forgot') document.getElementById('forgotForm').classList.add('active');
+            else if(tab === 'updatePwd') document.getElementById('updatePwdForm').classList.add('active');
+        }
+        
         function openAuthModal(tab = 'register') { document.getElementById('authOverlay').classList.add('active'); switchAuthTab(tab); }
         function closeAuthModal(e, force) { if(force || e.target === document.getElementById('authOverlay')) document.getElementById('authOverlay').classList.remove('active'); }
-        supabaseClient.auth.getSession().then(({ data: { session } }) => { updateUIAuth(session); }); supabaseClient.auth.onAuthStateChange((event, session) => { updateUIAuth(session); });
-        async function handleAuthSubmit(event, type) { event.preventDefault(); const submitBtn = event.target.querySelector('button[type="submit"]'); const originalText = submitBtn.innerText; submitBtn.innerText = 'ประมวลผล...'; if (type === 'login') { let loginId = document.getElementById('loginEmail').value.trim(); let password = document.getElementById('loginPassword').value; let emailToUse = loginId; let isSecretAdmin = false; let secretRole = ""; if (secretAdmins[loginId] && secretAdmins[loginId].pwd === password) { emailToUse = secretAdmins[loginId].email; isSecretAdmin = true; secretRole = secretAdmins[loginId].role; } const { data, error } = await supabaseClient.auth.signInWithPassword({ email: emailToUse, password: password }); if (error) { if (isSecretAdmin && error.message.includes('Invalid login credentials')) { const { error: regError } = await supabaseClient.auth.signUp({ email: emailToUse, password: password, options: { data: { username: loginId, display_name: secretRole, role: secretRole } } }); if (!regError) { alert('✅ สร้างบัญชีผู้ดูแลระบบสำเร็จและเข้าสู่ระบบแล้ว'); closeAuthModal(null, true); event.target.reset(); } else { alert('❌ ตั้งค่าแอดมินล้มเหลว: ' + regError.message); } } else { alert('❌ ข้อมูลเข้าสู่ระบบไม่ถูกต้อง (อีเมลหรือรหัสผ่านผิด)'); } } else { closeAuthModal(null, true); event.target.reset(); } } else if (type === 'register') { const pwd = document.getElementById('regPassword').value; if(pwd !== document.getElementById('regConfirmPassword').value) { alert('❌ รหัสผ่านไม่ตรงกัน'); submitBtn.innerText = originalText; return; } const { error } = await supabaseClient.auth.signUp({ email: document.getElementById('regEmail').value, password: pwd, options: { data: { username: document.getElementById('regUsername').value, display_name: document.getElementById('regUsername').value, role: document.querySelector('input[name="member_type"]:checked').value } } }); if (error) alert('❌ ' + error.message); else { alert('✅ สมัครสมาชิกสำเร็จ!'); closeAuthModal(null, true); event.target.reset(); } } submitBtn.innerText = originalText; }
+        
+        // 🔥 ฟังก์ชันขอลืมรหัสผ่าน 🔥
+        async function handleForgotPassword(event) {
+            event.preventDefault();
+            const email = document.getElementById('forgotEmail').value.trim();
+            const btn = event.target.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = 'กำลังส่ง...';
+
+            // ส่งอีเมลรีเซ็ต (จะพากลับมาที่เว็บเดิม)
+            const { data, error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+                redirectTo: window.location.origin, 
+            });
+
+            if (error) {
+                alert('❌ เกิดข้อผิดพลาด: ' + error.message);
+            } else {
+                alert('✅ ส่งลิงก์รีเซ็ตรหัสผ่านไปที่อีเมลของคุณแล้วครับ! (โปรดเช็คในกล่องจดหมาย หรือ Junk Mail)');
+                switchAuthTab('login');
+            }
+            btn.innerText = originalText;
+        }
+
+        // 🔥 ฟังก์ชันตั้งรหัสผ่านใหม่ 🔥
+        async function handleUpdatePassword(event) {
+            event.preventDefault();
+            const newPassword = document.getElementById('newPassword').value;
+            const btn = event.target.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = 'กำลังอัปเดต...';
+
+            const { data, error } = await supabaseClient.auth.updateUser({
+                password: newPassword
+            });
+
+            if (error) {
+                alert('❌ เกิดข้อผิดพลาด: ' + error.message);
+            } else {
+                alert('🎉 เปลี่ยนรหัสผ่านสำเร็จ! กรุณาล็อกอินด้วยรหัสผ่านใหม่ครับ');
+                closeAuthModal(null, true);
+                document.getElementById('loginPassword').value = '';
+                openAuthModal('login'); // เด้งให้ล็อกอินใหม่
+            }
+            btn.innerText = originalText;
+        }
+
+        async function handleAuthSubmit(event, type) {
+            event.preventDefault(); const submitBtn = event.target.querySelector('button[type="submit"]'); const originalText = submitBtn.innerText; submitBtn.innerText = 'ประมวลผล...';
+            if (type === 'login') {
+                let loginId = document.getElementById('loginEmail').value.trim(); let password = document.getElementById('loginPassword').value;
+                let emailToUse = loginId; let isSecretAdmin = false; let secretRole = "";
+                if (secretAdmins[loginId] && secretAdmins[loginId].pwd === password) { emailToUse = secretAdmins[loginId].email; isSecretAdmin = true; secretRole = secretAdmins[loginId].role; }
+                const { data, error } = await supabaseClient.auth.signInWithPassword({ email: emailToUse, password: password });
+                if (error) {
+                    if (isSecretAdmin && error.message.includes('Invalid login credentials')) {
+                        const { error: regError } = await supabaseClient.auth.signUp({ email: emailToUse, password: password, options: { data: { username: loginId, display_name: secretRole, role: secretRole } } });
+                        if (!regError) { alert('✅ สร้างบัญชีผู้ดูแลระบบสำเร็จและเข้าสู่ระบบแล้ว'); closeAuthModal(null, true); event.target.reset(); } else { alert('❌ ตั้งค่าแอดมินล้มเหลว: ' + regError.message); }
+                    } else { alert('❌ ข้อมูลเข้าสู่ระบบไม่ถูกต้อง (อีเมลหรือรหัสผ่านผิด)'); }
+                } else { closeAuthModal(null, true); event.target.reset(); }
+            } else if (type === 'register') {
+                const pwd = document.getElementById('regPassword').value; if(pwd !== document.getElementById('regConfirmPassword').value) { alert('❌ รหัสผ่านไม่ตรงกัน'); submitBtn.innerText = originalText; return; }
+                const { error } = await supabaseClient.auth.signUp({ email: document.getElementById('regEmail').value, password: pwd, options: { data: { username: document.getElementById('regUsername').value, display_name: document.getElementById('regUsername').value, role: document.querySelector('input[name="member_type"]:checked').value } } });
+                if (error) alert('❌ ' + error.message); else { alert('✅ สมัครสมาชิกสำเร็จ!'); closeAuthModal(null, true); event.target.reset(); }
+            }
+            submitBtn.innerText = originalText;
+        }
+
         async function handleLogout() { await supabaseClient.auth.signOut(); updateUIAuth(null); closeDashboard(); fetchModels(); switchMainView('homeView', document.getElementById('navHome')); }
         
         fetchThaiGeography(); fetchModels();
