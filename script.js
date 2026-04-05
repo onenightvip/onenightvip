@@ -252,8 +252,29 @@ async function handleAuthSubmit(event, type) {
         const { data, error } = await supabaseClient.auth.signInWithPassword({ email: emailToUse, password: password });
         if (error) { if (isSecretAdmin && error.message.includes('Invalid login credentials')) { const { error: regError } = await supabaseClient.auth.signUp({ email: emailToUse, password: password, options: { data: { username: loginId, display_name: secretRole, role: secretRole } } }); if (!regError) { alert('✅ สร้างบัญชีผู้ดูแลระบบสำเร็จและเข้าสู่ระบบแล้ว'); closeAuthModal(null, true); event.target.reset(); } else { alert('❌ ตั้งค่าแอดมินล้มเหลว: ' + regError.message); } } else { alert('❌ ข้อมูลเข้าสู่ระบบไม่ถูกต้อง'); } } else { closeAuthModal(null, true); event.target.reset(); }
     } else if (type === 'register') {
-        const pwd = document.getElementById('regPassword').value; if(pwd !== document.getElementById('regConfirmPassword').value) { alert('❌ รหัสผ่านไม่ตรงกัน'); submitBtn.innerText = originalText; return; }
-        const { error } = await supabaseClient.auth.signUp({ email: document.getElementById('regEmail').value, password: pwd, options: { data: { username: document.getElementById('regUsername').value, display_name: document.getElementById('regUsername').value, role: document.querySelector('input[name="member_type"]:checked').value } } });
+        const pwd = document.getElementById('regPassword').value; 
+        if(pwd !== document.getElementById('regConfirmPassword').value) { alert('❌ รหัสผ่านไม่ตรงกัน'); submitBtn.innerText = originalText; return; }
+        
+        // 🔥 ดึงรหัสแนะนำเพื่อนจากช่องกรอก
+        const referralCode = document.getElementById('regReferral').value.trim();
+        
+        // 🔥 สร้างรหัสแนะนำตัวของตัวเองแบบสุ่ม (เช่น A1B2C3)
+        const myNewReferralCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+
+        const { error } = await supabaseClient.auth.signUp({ 
+            email: document.getElementById('regEmail').value, 
+            password: pwd, 
+            options: { 
+                data: { 
+                    username: document.getElementById('regUsername').value, 
+                    display_name: document.getElementById('regDisplayName').value || document.getElementById('regUsername').value, 
+                    role: document.querySelector('input[name="member_type"]:checked').value,
+                    my_referral_code: myNewReferralCode, // บันทึกรหัสตัวเอง
+                    referred_by: referralCode // บันทึกว่าใครชวนมา
+                } 
+            } 
+        });
+        
         if (error) alert('❌ ' + error.message); else { alert('✅ สมัครสมาชิกสำเร็จ!'); closeAuthModal(null, true); event.target.reset(); }
     }
     submitBtn.innerText = originalText;
