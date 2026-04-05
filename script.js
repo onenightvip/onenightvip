@@ -241,21 +241,50 @@ function renderPremiumGallery() {
     mediaFiles.forEach((item, idx) => { let innerHtml = item.type === 'video' ? `<video src="${item.url}"></video><div class="vid-icon-overlay"><span class="iconify" data-icon="heroicons:play-circle-solid"></span></div>` : `<img src="${item.url}">`; container.innerHTML += `<div class="img-thumb-box" style="border-color:var(--dash-gold);">${innerHtml}<button type="button" class="btn-remove-img" onclick="mediaFiles.splice(${idx},1); renderPremiumGallery();"><span class="iconify" data-icon="heroicons:x-mark"></span></button></div>`; });
 }
 
+// 🔥 ฟังก์ชันแก้ไขโปรไฟล์ (แก้บั๊กลบความจำตอนสลับแท็บ) 🔥
 function editProfileById(id) {
     const model = myAgencyModels.find(m => m.id === id);
     if(!model) return;
     
-    isEditing = true; switchAgTab('ag-add', document.getElementById('navAddProfileBtn'), 'agencyDashboard');
-    document.getElementById('addFormTitle').innerText = "แก้ไขข้อมูลน้อง " + escapeHTML(model.name); document.getElementById('btnSubmitModel').innerHTML = '<span class="iconify" data-icon="heroicons:pencil-square"></span> อัปเดตข้อมูล'; document.getElementById('editingModelId').value = model.id;
-    document.getElementById('mName').value = model.name || ""; document.getElementById('mAge').value = model.age || ""; document.getElementById('mSlogan').value = model.slogan || ""; document.getElementById('mPrice').value = model.price || ""; if(model.languages) document.getElementById('mLang').value = model.languages;
+    // 1. สลับแท็บไปหน้าฟอร์มก่อน (ระบบจะแอบล้างฟอร์มและตั้งค่าเป็นโหมดสร้างใหม่)
+    switchAgTab('ag-add', document.getElementById('navAddProfileBtn'), 'agencyDashboard');
+    
+    // 2. เราต้องประกาศทับลงไปทันทีว่า "นี่คือโหมดแก้ไขนะ ห้ามสร้างใหม่!" (isEditing = true)
+    isEditing = true; 
+    document.getElementById('addFormTitle').innerText = "แก้ไขข้อมูลน้อง " + escapeHTML(model.name); 
+    document.getElementById('btnSubmitModel').innerHTML = '<span class="iconify" data-icon="heroicons:pencil-square"></span> อัปเดตข้อมูล'; 
+    document.getElementById('editingModelId').value = model.id;
+    
+    // 3. ดึงข้อมูลเดิมมาใส่ช่องต่างๆ ให้ครบ
+    document.getElementById('mName').value = model.name || ""; 
+    document.getElementById('mAge').value = model.age || ""; 
+    document.getElementById('mSlogan').value = model.slogan || ""; 
+    document.getElementById('mPrice').value = model.price || ""; 
+    if(model.languages) document.getElementById('mLang').value = model.languages;
     
     document.getElementById('mProv').value = model.province || ""; 
     updateDistrictList(model.province || ""); // ดึงรายการอำเภอมาให้
     document.getElementById('mDist').value = model.district || "";
+    document.getElementById('mDist').disabled = false; // ปลดล็อกช่องเขต/อำเภอ
     
-    document.getElementById('mGen').value = model.gender || 'หญิง'; document.getElementById('mHeight').value = model.height || ""; document.getElementById('mWeight').value = model.weight || ""; document.getElementById('mChest').value = model.chest || ""; if(model.cup_size) document.getElementById('mCup').value = model.cup_size; if(model.breast_type) document.getElementById('mBreastType').value = model.breast_type; document.getElementById('mWaist').value = model.waist || ""; document.getElementById('mHips').value = model.hips || "";
-    document.getElementById('mLineId').value = model.line_id || ""; document.getElementById('mTele').value = model.telegram_id || ""; document.getElementById('mTwit').value = model.twitter_id || ""; document.getElementById('mDesc').value = model.description || ""; countChars(document.getElementById('mDesc'));
-    existingGallery = model.gallery || [model.cover_image]; mediaFiles = []; renderPremiumGallery();
+    document.getElementById('mGen').value = model.gender || 'หญิง'; 
+    document.getElementById('mHeight').value = model.height || ""; 
+    document.getElementById('mWeight').value = model.weight || ""; 
+    document.getElementById('mChest').value = model.chest || ""; 
+    if(model.cup_size) document.getElementById('mCup').value = model.cup_size; 
+    if(model.breast_type) document.getElementById('mBreastType').value = model.breast_type; 
+    document.getElementById('mWaist').value = model.waist || ""; 
+    document.getElementById('mHips').value = model.hips || "";
+    
+    document.getElementById('mLineId').value = model.line_id || ""; 
+    document.getElementById('mTele').value = model.telegram_id || ""; 
+    document.getElementById('mTwit').value = model.twitter_id || ""; 
+    document.getElementById('mDesc').value = model.description || ""; 
+    countChars(document.getElementById('mDesc'));
+    
+    existingGallery = model.gallery || [model.cover_image]; 
+    mediaFiles = []; 
+    renderPremiumGallery();
 }
 
 async function submitNewModel(event) {
