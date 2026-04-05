@@ -283,3 +283,10 @@ async function handleAuthSubmit(event, type) {
 async function handleLogout() { await supabaseClient.auth.signOut(); updateUIAuth(null); closeDashboard(); fetchModels(); switchMainView('homeView', document.getElementById('navHome')); }
 
 fetchModels();
+function copyReferralCode() {
+    const code = document.getElementById('myReferralCodeDisplay').innerText;
+    if(code && code !== '------') {
+        navigator.clipboard.writeText(code);
+        alert('คัดลอกรหัสแนะนำเรียบร้อยแล้ว: ' + code);
+    }
+}
