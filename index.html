@@ -295,11 +295,32 @@
             </div>
 
             <div class="ag-content-pad ag-view" id="ag-profiles">
-                <h2>จัดการโปรไฟล์</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+                    <div>
+                        <h1 class="dash-page-title" style="margin: 0;">โปรไฟล์ของฉัน <span style="color:#666; font-size:1.2rem; font-weight:normal;">(<span id="statTotalProfilesInline">0</span>)</span></h1>
+                        <p style="color: #888; font-size: 0.9rem; margin-top: 5px;">จัดการโปรไฟล์และติดตามประสิทธิภาพ</p>
+                    </div>
+                    <button class="btn-outline" style="color: var(--dash-gold); border-color: var(--dash-gold); display: flex; align-items: center; gap: 5px; padding: 10px 20px;" onclick="switchAgTab('ag-add', null, 'agencyDashboard')">
+                        <span class="iconify" data-icon="heroicons:plus"></span> สร้างโปรไฟล์
+                    </button>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap;">
+                    <div class="search-box" style="flex: 1; min-width: 250px;">
+                        <span class="iconify search-icon" data-icon="heroicons:magnifying-glass" style="color:#666;"></span>
+                        <input type="text" class="search-input" style="background:#111; border:1px solid #333; padding-left: 40px;" placeholder="ค้นหาโปรไฟล์...">
+                    </div>
+                    <button class="btn-outline" style="border-color:#333; color:#ccc; background:#111;"><span class="iconify" data-icon="heroicons:funnel"></span> ทุกสถานะ <span class="iconify" data-icon="heroicons:chevron-down" style="font-size:0.8rem; margin-left:5px;"></span></button>
+                    <button class="btn-outline" style="border-color:#333; color:#ccc; background:#111;"><span class="iconify" data-icon="heroicons:arrows-up-down"></span> ใหม่สุด <span class="iconify" data-icon="heroicons:chevron-down" style="font-size:0.8rem; margin-left:5px;"></span></button>
+                </div>
+
                 <div class="ag-card-list" id="myProfilesGrid"></div>
             </div>
-            
             <div class="ag-content-pad ag-view" id="ag-add">
+                <button class="btn-outline" style="border:none; color:#888; padding:0; margin-bottom:20px; display:flex; align-items:center; gap:5px;" onclick="switchAgTab('ag-profiles', document.querySelectorAll('.dash-nav-item')[1], 'agencyDashboard')">
+                    <span class="iconify" data-icon="heroicons:arrow-left"></span> กลับ
+                </button>
+                
                 <h2 style="color:var(--dash-gold); margin-bottom:5px;" id="addFormTitle">สร้างโปรไฟล์ใหม่</h2>
                 <p style="color:#888; font-size:0.9rem; margin-bottom:25px;">ตั้งค่าโปรไฟล์เพื่อเริ่มเชื่อมต่อกับลูกค้า</p>
                 <form id="addModelForm" onsubmit="submitNewModel(event)">
