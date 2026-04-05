@@ -214,7 +214,74 @@ async function submitNewModel(event) {
     if (errorMsg) { alert('❌ Error: ' + errorMsg); } else { alert(isEditing ? '✅ อัปเดตข้อมูลสำเร็จ!' : '🎉 สร้างโปรไฟล์สำเร็จ! (รอแอดมินตรวจสอบ)'); resetForm(); fetchMyProfiles(); fetchModels(); } btn.innerHTML = originalHtml; 
 }
 
-async function fetchMyProfiles() { const grid = document.getElementById('myProfilesGrid'); const { data } = await supabaseClient.from('models').select('*').eq('agency_id', currentUserSession.user.id).order('created_at', { ascending: false }); myAgencyModels = data || []; document.getElementById('statTotalProfiles').innerText = data ? data.length : 0; let html = ''; const now = new Date(); if (!data || data.length === 0) { grid.innerHTML = '<div style="color:#888; grid-column:1/-1;">ยังไม่มีโปรไฟล์ในระบบ</div>'; return; } data.forEach(m => { const isBoosted = m.boost_expires_at && new Date(m.boost_expires_at) > now; const boostHtml = isBoosted ? `<span style="color:#ef4444; font-size:0.8rem; font-weight:bold; background:rgba(0,0,0,0.5); padding:4px 8px; border-radius:50px;"><span class="iconify" data-icon="heroicons:fire-solid"></span> 🔥 HOT</span>` : `<button class="btn-glow btn-glow-sm" onclick="boostProfile(${m.id})">🚀 ดัน (50฿)</button>`; let statusHtml = ''; let kycBtnHtml = ''; if (m.is_verified) { statusHtml = '<span class="status-verified"><span class="iconify" data-icon="heroicons:check-circle"></span> อนุมัติแล้ว</span>'; } else if (m.kyc_status === 'pending') { statusHtml = '<span class="status-pending"><span class="iconify" data-icon="heroicons:clock"></span> รอตรวจ KYC</span>'; } else { statusHtml = '<span class="status-pending" style="color:#ef4444;"><span class="iconify" data-icon="heroicons:exclamation-circle"></span> ยังไม่ยืนยันตัวตน</span>'; kycBtnHtml = `<button class="btn-ag-action btn-ag-verify" onclick="openKYCModal(${m.id}, '${escapeHTML(m.name)}')"><span class="iconify" data-icon="heroicons:shield-check"></span> ยืนยันตัวตน</button>`; } html += `<div class="ag-profile-card"><img src="${m.cover_image}" class="ag-card-img" loading="lazy"><div style="position:absolute; top:10px; left:10px;">${boostHtml}</div><div class="ag-card-content"><div class="ag-card-title">${escapeHTML(m.name)} <div class="ag-card-status">${statusHtml}</div></div><div class="ag-card-price">฿${m.price}</div><div class="ag-card-actions">${kycBtnHtml}<button class="btn-ag-action btn-ag-edit" onclick="editProfileById(${m.id})"><span class="iconify" data-icon="heroicons:pencil-square"></span> แก้ไขข้อมูล</button><button class="btn-ag-action btn-ag-delete" onclick="if(confirm('ลบโปรไฟล์นี้? ข้อมูลจะหายทั้งหมด')) { supabaseClient.from('models').delete().eq('id', ${m.id}).then(()=>fetchMyProfiles()); }"><span class="iconify" data-icon="heroicons:trash"></span> ลบทิ้ง</button></div></div></div>`; }); grid.innerHTML = html; }
+async function fetchMyProfiles() { 
+    const grid = document.getElementById('myProfilesGrid'); 
+    const { data } = await supabaseClient.from('models').select('*').eq('agency_id', currentUserSession.user.id).order('created_at', { ascending: false }); 
+    myAgencyModels = data || []; 
+    
+    // อัปเดตตัวเลขจำนวนโปรไฟล์
+    document.getElementById('statTotalProfiles').innerText = data ? data.length : 0; 
+    const inlineStat = document.getElementById('statTotalProfilesInline');
+    if(inlineStat) inlineStat.innerText = data ? data.length : 0;
+
+    let html = ''; 
+    const now = new Date(); 
+    if (!data || data.length === 0) { 
+        grid.innerHTML = '<div style="color:#888; grid-column:1/-1;">ยังไม่มีโปรไฟล์ในระบบ ลองสร้างโปรไฟล์แรกเลยครับ!</div>'; 
+        return; 
+    } 
+
+    data.forEach(m => { 
+        // ป้ายสถานะมุมขวาล่างรูป
+        let statusBadge = '';
+        let kycBtnHtml = '';
+        if (m.is_verified) {
+            statusBadge = `<div style="position:absolute; bottom:10px; right:10px; background:rgba(16, 185, 129, 0.2); border:1px solid #10b981; color:#10b981; padding:4px 10px; border-radius:50px; font-size:0.75rem; font-weight:600;"><span class="iconify" data-icon="heroicons:check"></span> ใช้งาน</div>`;
+        } else if (m.kyc_status === 'pending') {
+            statusBadge = `<div style="position:absolute; bottom:10px; right:10px; background:rgba(245, 158, 11, 0.2); border:1px solid #f59e0b; color:#f59e0b; padding:4px 10px; border-radius:50px; font-size:0.75rem; font-weight:600;"><span class="iconify" data-icon="heroicons:clock"></span> รอดำเนินการ</div>`;
+        } else {
+            statusBadge = `<div style="position:absolute; bottom:10px; right:10px; background:rgba(102, 102, 102, 0.5); border:1px solid #888; color:#fff; padding:4px 10px; border-radius:50px; font-size:0.75rem; font-weight:600;">ปิดใช้งาน</div>`;
+            kycBtnHtml = `<button class="btn-ag-card-action" onclick="openKYCModal(${m.id}, '${escapeHTML(m.name)}')"><span class="iconify" data-icon="heroicons:shield-check"></span> ยืนยัน (KYC)</button>`;
+        }
+
+        // ป้ายใหม่ หรือ ป้ายดันโปรไฟล์มุมซ้ายบน
+        const isBoosted = m.boost_expires_at && new Date(m.boost_expires_at) > now; 
+        const topBadge = isBoosted ? 
+            `<div style="position:absolute; top:10px; left:10px; background:rgba(239, 68, 68, 0.8); border:1px solid #ef4444; color:#fff; padding:4px 10px; border-radius:50px; font-size:0.75rem; font-weight:600;"><span class="iconify" data-icon="heroicons:fire-solid"></span> HOT</div>` : 
+            `<div style="position:absolute; top:10px; left:10px; background:rgba(16, 185, 129, 0.2); border:1px solid #10b981; color:#10b981; padding:4px 10px; border-radius:50px; font-size:0.75rem; font-weight:600;"><span class="iconify" data-icon="heroicons:sparkles"></span> ใหม่</div>`;
+
+        html += `
+            <div class="ag-pro-card-premium">
+                <div class="ag-pro-card-img-box">
+                    <img src="${m.cover_image}" loading="lazy">
+                    ${topBadge}
+                    ${statusBadge}
+                </div>
+                <div class="ag-pro-card-info">
+                    <div style="font-size:1.1rem; font-weight:600; color:#fff; margin-bottom:5px;">${escapeHTML(m.name)} <span style="color:#888; font-size:0.9rem; font-weight:normal;">(${m.age || '-'})</span></div>
+                    <div style="color:#888; font-size:0.8rem; margin-bottom:5px; display:flex; align-items:center; gap:5px;"><span class="iconify" data-icon="mdi:map-marker" style="color:var(--dash-gold);"></span> ${m.province || '-'}, ${m.district || '-'}</div>
+                    <div style="display:flex; justify-content:space-between; color:#aaa; font-size:0.8rem; margin-bottom:10px;">
+                        <span>${m.proportions || '-'} (${m.breast_type || '-'})</span>
+                        <span>${m.gender || 'หญิง'}</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                        <span style="color:var(--dash-gold); font-weight:bold; font-size:1.1rem;">฿${m.price}</span>
+                        <span style="color:#666; font-size:0.85rem;"><span class="iconify" data-icon="heroicons:heart-solid" style="color:#ff4d4f;"></span> - (0)</span>
+                    </div>
+                    
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        <button class="btn-ag-card-action" onclick="alert('ระบบเพิ่มสตอรี่วิดีโอกำลังจะมาเร็วๆ นี้ครับ!')"><span class="iconify" data-icon="heroicons:video-camera"></span> เพิ่มสตอรี่</button>
+                        ${kycBtnHtml}
+                        <button class="btn-ag-card-action" onclick="editProfileById(${m.id})"><span class="iconify" data-icon="heroicons:pencil"></span> แก้ไข</button>
+                        <button class="btn-ag-card-action" onclick="alert('ระบบหยุดรับงานชั่วคราว อยู่ระหว่างพัฒนาครับ')"><span class="iconify" data-icon="heroicons:pause"></span> หยุดชั่วคราว</button>
+                        <button class="btn-ag-card-action" onclick="if(confirm('ลบโปรไฟล์นี้? ข้อมูลจะหายทั้งหมด')) { supabaseClient.from('models').delete().eq('id', ${m.id}).then(()=>fetchMyProfiles()); }"><span class="iconify" data-icon="heroicons:trash"></span> ลบ</button>
+                    </div>
+                </div>
+            </div>
+        `; 
+    }); 
+    grid.innerHTML = html; 
+}
 function openKYCModal(modelId, name) { document.getElementById('kycModelId').value = modelId; document.getElementById('kycModelName').innerText = "น้อง " + escapeHTML(name); document.getElementById('kycFile').value = ''; document.getElementById('kycFileName').innerText = 'คลิกเพื่ออัปโหลดรูปถ่าย (ไม่เกิน 5MB)'; document.getElementById('kycModalOverlay').classList.add('active'); }
 function closeKYCModal() { document.getElementById('kycModalOverlay').classList.remove('active'); }
 async function submitKYC(event) { event.preventDefault(); const modelId = document.getElementById('kycModelId').value; const fileInput = document.getElementById('kycFile'); const btn = event.target.querySelector('button'); const originalHtml = btn.innerHTML; if(fileInput.files.length === 0) { alert('กรุณาแนบรูปถ่ายครับ'); return; } btn.innerHTML = 'กำลังส่งข้อมูล...'; const file = fileInput.files[0]; const fExt = file.name.split('.').pop(); const fName = 'kyc/' + currentUserSession.user.id + '/' + modelId + '_' + Date.now() + '.' + fExt; const { error: uploadErr } = await supabaseClient.storage.from('profile_images').upload(fName, file); if (uploadErr) { alert('อัปโหลดรูปล้มเหลว: ' + uploadErr.message); btn.innerHTML = originalHtml; return; } const kycUrl = supabaseClient.storage.from('profile_images').getPublicUrl(fName).data.publicUrl; const { error: updateErr } = await supabaseClient.from('models').update({ kyc_image: kycUrl, kyc_status: 'pending' }).eq('id', modelId); if(updateErr) alert('บันทึก KYC ล้มเหลว: ' + updateErr.message); else { alert('✅ ส่งรูปยืนยันตัวตนเรียบร้อย! โปรดรอแอดมินตรวจสอบครับ'); closeKYCModal(); fetchMyProfiles(); } btn.innerHTML = originalHtml; }
