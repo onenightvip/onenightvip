@@ -322,3 +322,51 @@ body.theme-pastel {
 .auth-premium-card label {
     color: #ccc !important;
 }
+/* 🔥 PREMIUM DASHBOARD UPGRADE 🔥 */
+.dash-sidebar {
+    background-color: #0a0a0a !important;
+    border-right: 1px solid #222 !important;
+}
+.dash-nav-item {
+    color: #888 !important;
+    border-radius: 8px !important;
+    margin-bottom: 5px !important;
+    transition: all 0.3s ease !important;
+}
+.dash-nav-item:hover {
+    background-color: #1a1a1a !important;
+    color: #fff !important;
+}
+.dash-nav-item.active {
+    background-color: rgba(212, 175, 55, 0.1) !important;
+    color: var(--dash-gold) !important;
+    border-left: 4px solid var(--dash-gold) !important;
+}
+
+/* กล่องสถิติสุดหรู */
+.ag-stat-box {
+    background: #141414 !important;
+    border: 1px solid #222 !important;
+    border-radius: 12px !important;
+}
+.ag-stat-box:hover {
+    border-color: var(--dash-gold) !important;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.1) !important;
+}
+.ag-stat-val {
+    color: #fff !important;
+}
+
+/* แก้บั๊กปุ่ม สร้าง QR Code (และปุ่ม Glow อื่นๆ ให้เป็นสีทอง-ดำ ชัดเจน) */
+.btn-glow {
+    background: linear-gradient(135deg, #D4AF37 0%, #AA771C 100%) !important;
+    color: #000 !important;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3) !important;
+    border: none !important;
+    font-weight: 600 !important;
+    text-shadow: none !important;
+}
+.btn-glow:hover {
+    background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 100%) !important;
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5) !important;
+}
