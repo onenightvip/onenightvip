@@ -404,3 +404,48 @@ body.theme-pastel {
 .form-group label .req {
     color: #ef4444 !important; /* เครื่องหมายดอกจันสีแดง */
 }
+/* 🔥 PREMIUM AGENCY PROFILE CARD 🔥 */
+.ag-pro-card-premium {
+    background: #141414;
+    border: 1px solid #333;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: 0.3s;
+}
+.ag-pro-card-premium:hover {
+    border-color: var(--dash-gold);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+}
+.ag-pro-card-img-box {
+    width: 100%;
+    aspect-ratio: 3/4;
+    position: relative;
+    overflow: hidden;
+}
+.ag-pro-card-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.ag-pro-card-info {
+    padding: 15px;
+}
+.btn-ag-card-action {
+    width: 100%;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    color: var(--dash-gold);
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.btn-ag-card-action:hover {
+    background: rgba(212, 175, 55, 0.1);
+    border-color: var(--dash-gold);
+}
