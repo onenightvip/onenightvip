@@ -171,3 +171,24 @@ async function approveModelAdmin(modelId) {
 }
 
 fetchModels();
+// ซ่อมระบบเมนูแอดมินที่หายไป
+function setupAdminDashboard(role) {
+    document.getElementById('adminNavMenu').innerHTML = `
+        <div class="dash-nav-item active" onclick="switchAgTab('admin-overview', this, 'adminDashboard')"><span class="iconify" data-icon="heroicons:squares-2x2"></span> ภาพรวมระบบ</div>
+        <div class="dash-nav-item" onclick="switchAgTab('admin-approve', this, 'adminDashboard')"><span class="iconify" data-icon="heroicons:check-badge"></span> อนุมัติโปรไฟล์</div>
+        <div class="dash-nav-item" onclick="switchAgTab('admin-wallet', this, 'adminDashboard')"><span class="iconify" data-icon="heroicons:currency-dollar"></span> จัดการเครดิต (Wallet)</div>
+    `;
+    fetchAdminData(role);
+}
+
+// อัปเดตตัวเปิด Dashboard ให้เรียกใช้แอดมิน
+function openDashboardRouter() {
+    if(!currentUserSession) return; const role = currentUserSession.user.user_metadata.role; document.body.classList.add('modal-open');
+    if(role === 'Super Admin') { 
+        document.getElementById('adminDashboard').classList.add('active'); 
+        setupAdminDashboard(role); 
+    } else if (role === 'agency' || role === 'tourist') { 
+        document.getElementById('agencyDashboard').classList.add('active'); 
+        applyTheme(myCurrentTheme); fetchMyProfiles(); fetchReferralData(); 
+    } 
+}
