@@ -238,15 +238,43 @@
 
     <div class="dashboard-overlay" id="agencyDashboard">
         <div class="dash-sidebar">
-            <div class="dash-logo">PROVIDER DASH</div>
+            <div class="dash-logo" style="color: var(--dash-gold); font-size: 1.5rem; letter-spacing: 1px;">
+                <img src="https://img2.pic.in.th/-190481cb09d161ee46.png" style="height: 30px; object-fit: contain;">
+            </div>
             <div class="dash-nav">
                 <div class="dash-nav-item active" onclick="switchAgTab('ag-overview', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:squares-2x2"></span> ภาพรวม</div>
-                <div class="dash-nav-item" onclick="switchAgTab('ag-profiles', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:users"></span> จัดการโปรไฟล์</div>
-                <div class="dash-nav-item" id="navAddProfileBtn" onclick="switchAgTab('ag-add', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:user-plus"></span> สร้างโปรไฟล์ใหม่</div>
-                <div class="dash-nav-item" onclick="switchAgTab('ag-referral', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:users"></span> แนะนำเพื่อน</div>
+                <div class="dash-nav-item" onclick="switchAgTab('ag-profiles', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:users"></span> โปรไฟล์ของฉัน</div>
+                <div class="dash-nav-item" onclick="switchAgTab('ag-stats', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:chart-bar"></span> สถิติ</div>
+                <div class="dash-nav-item" onclick="switchAgTab('ag-reviews', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:chat-bubble-left-ellipsis"></span> รีวิว</div>
                 <div class="dash-nav-item" onclick="switchAgTab('ag-wallet', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:wallet"></span> กระเป๋าเงิน</div>
+                
+                <hr style="border: 0; border-top: 1px solid #222; margin: 15px 0;">
+                
+                <div class="dash-nav-item" onclick="switchAgTab('ag-notifications', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:bell"></span> การแจ้งเตือน</div>
+                <div class="dash-nav-item" onclick="switchAgTab('ag-referral', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:user-plus"></span> การแนะนำเพื่อน</div>
+                <div class="dash-nav-item" onclick="switchAgTab('ag-theme', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:cog-8-tooth"></span> ตั้งค่าร้านค้า</div>
             </div>
         </div>
+        <div class="dash-main">
+            <div class="dash-topbar" style="background: #0a0a0a; border-bottom: 1px solid #222; padding: 15px 30px;">
+                <span id="agTitle" style="font-weight:600; display: flex; align-items: center; gap: 8px; color:#fff; font-size:1.2rem;">
+                    <span class="iconify" data-icon="heroicons:squares-2x2"></span> แดชบอร์ด
+                </span>
+                <div style="display:flex; align-items:center; gap:20px;">
+                    <button style="background:transparent; border:none; color:#fff; font-size:1.5rem; position:relative; cursor:pointer;">
+                        <span class="iconify" data-icon="heroicons:bell"></span>
+                        <span style="position:absolute; top:-5px; right:-5px; background:#f43f5e; color:#fff; font-size:0.6rem; padding:2px 5px; border-radius:50px;">0</span>
+                    </button>
+                    <div style="display:flex; align-items:center; gap:10px; cursor:pointer;" onclick="closeDashboard()">
+                        <div style="width:35px; height:35px; border-radius:50%; background:var(--dash-gold); color:#000; display:flex; justify-content:center; align-items:center; font-weight:bold;">
+                            <span id="agTopbarAvatarText">U</span>
+                            <img src="" id="agTopbarAvatarImg" style="width:100%; height:100%; object-fit:cover; border-radius:50%; display:none;">
+                        </div>
+                        <span id="agTopbarName" style="color:#fff; font-size:0.9rem;">My Agency</span>
+                        <span class="iconify" data-icon="heroicons:chevron-down" style="color:#888;"></span>
+                    </div>
+                </div>
+            </div>
         <div class="dash-main">
             <div class="dash-topbar">
                 <span id="agTitle" style="font-weight:600; display: flex; align-items: center; gap: 8px;"><span class="iconify" data-icon="heroicons:squares-2x2"></span> ภาพรวม</span>
