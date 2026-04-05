@@ -148,7 +148,15 @@ async function fetchAdminData(role) {
 async function approveModelAdmin(modelId) { 
     const {error} = await supabaseClient.from('models').update({is_verified: true, kyc_status: 'approved'}).eq('id', modelId); 
     if(error) alert('Error: ' + error.message); 
-    else { alert('✅ อนุมัติเรียบร้อย! น้องได้รับป้าย Verified แล้ว'); fetchAdminData(currentUserSession.user.user_metadata.role); fetchModels(); } 
+    else { 
+        alert('✅ อนุมัติเรียบร้อย! น้องได้รับป้าย Verified แล้ว'); 
+        
+        // ⏳ หน่วงเวลา 0.5 วินาที ให้ Supabase เซฟข้อมูลให้เสร็จก่อนดึงตารางใหม่
+        setTimeout(() => {
+            fetchAdminData(currentUserSession.user.user_metadata.role); 
+            fetchModels(); 
+        }, 500);
+    } 
 }
 
 async function topUpAgencyAdmin(agencyId, currentBalance) { 
