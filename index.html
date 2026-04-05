@@ -234,14 +234,16 @@
                         <span class="iconify" data-icon="heroicons:bell"></span>
                         <span style="position:absolute; top:-5px; right:-5px; background:#f43f5e; color:#fff; font-size:0.6rem; padding:2px 5px; border-radius:50px;">0</span>
                     </button>
-                    <div style="display:flex; align-items:center; gap:10px; cursor:pointer;" onclick="closeDashboard()">
-                        <div style="width:35px; height:35px; border-radius:50%; background:var(--dash-gold); color:#000; display:flex; justify-content:center; align-items:center; font-weight:bold;">
-                            <span id="agTopbarAvatarText">U</span>
-                            <img src="" id="agTopbarAvatarImg" style="width:100%; height:100%; object-fit:cover; border-radius:50%; display:none;">
-                        </div>
-                        <span id="agTopbarName" style="color:#fff; font-size:0.9rem;">My Agency</span>
-                        <span class="iconify" data-icon="heroicons:chevron-down" style="color:#888;"></span>
-                    </div>
+                   <div style="display:flex; align-items:center; gap:10px;">
+    <div style="width:35px; height:35px; border-radius:50%; background:var(--dash-gold); color:#000; display:flex; justify-content:center; align-items:center; font-weight:bold;">
+        <span id="agTopbarAvatarText">U</span>
+        <img src="" id="agTopbarAvatarImg" style="width:100%; height:100%; object-fit:cover; border-radius:50%; display:none;">
+    </div>
+    <span id="agTopbarName" style="color:#fff; font-size:0.9rem;">My Agency</span>
+</div>
+<button class="btn-close-ag" onclick="closeDashboard()" style="background:transparent; color:#888; border:none; font-size:1.5rem; cursor:pointer; margin-left:15px;">
+    <span class="iconify" data-icon="heroicons:x-mark"></span>
+</button>
                 </div>
             </div>
 
