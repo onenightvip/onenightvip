@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ONENIGHTVIP | Exclusive VIP Club</title>
-    <meta name="description" content="ONENIGHTVIP คลับระดับ VIP บริการประทับใจ">
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -106,7 +105,6 @@
 
     <div id="authView" class="view-section auth-full-page">
         <div class="auth-premium-card">
-            
             <form id="loginForm" class="auth-form active" onsubmit="handleAuthSubmit(event, 'login')">
                 <div class="auth-icon-top"><span class="iconify" data-icon="heroicons:lock-closed"></span></div>
                 <div style="text-align: center; margin-bottom: 30px;">
@@ -178,24 +176,6 @@
                 <div class="input-group"><label>อีเมล</label><input type="email" id="forgotEmail" class="auth-input" placeholder="your@email.com" required></div>
                 <button type="submit" class="btn-glow" style="width: 100%; padding: 14px; border-radius: 8px; font-size: 1rem; font-weight: 500;">ส่งลิงก์รีเซ็ต</button>
                 <div style="text-align: center; margin-top: 20px; color: var(--dash-gold); font-size: 0.9rem; cursor: pointer; font-weight: 500;" onclick="switchAuthTab('login')">กลับไปเข้าสู่ระบบ</div>
-            </form>
-        </div>
-    </div>
-                <button type="submit" class="btn-glow" style="margin-top: 20px; width: 100%; padding: 14px; border-radius: 50px; font-size: 1.1rem;">สมัครสมาชิก</button>
-                <div class="auth-footer">มีบัญชีอยู่แล้ว? <span class="auth-link" onclick="switchAuthTab('login')">เข้าสู่ระบบ</span></div>
-            </form>
-            
-            <form id="forgotForm" class="auth-form" onsubmit="handleForgotPassword(event)">
-                <div class="auth-header"><h2>ลืมรหัสผ่าน</h2><p style="color:#888; font-size:0.9rem;">กรอกอีเมลเพื่อรับลิงก์รีเซ็ตรหัสผ่าน</p></div>
-                <div class="input-group"><label>อีเมลที่ใช้สมัคร</label><input type="email" id="forgotEmail" class="auth-input" required></div>
-                <button type="submit" class="btn-glow" style="margin-top: 20px; width: 100%; padding: 14px; border-radius: 50px;">ส่งลิงก์รีเซ็ตรหัสผ่าน</button>
-                <div class="auth-footer"><span class="auth-link" onclick="switchAuthTab('login')">กลับไปหน้าเข้าสู่ระบบ</span></div>
-            </form>
-
-            <form id="updatePwdForm" class="auth-form" onsubmit="handleUpdatePassword(event)">
-                <div class="auth-header"><h2>ตั้งรหัสผ่านใหม่</h2></div>
-                <div class="input-group"><label>รหัสผ่านใหม่ (6 ตัวขึ้นไป)</label><input type="password" id="newPassword" class="auth-input" required minlength="6"></div>
-                <button type="submit" class="btn-glow" style="margin-top: 20px; width: 100%; padding: 14px; border-radius: 50px;">บันทึกรหัสผ่านใหม่</button>
             </form>
         </div>
     </div>
@@ -277,7 +257,7 @@
             </div>
             
             <div class="ag-content-pad ag-view active" id="ag-overview">
-                <div class="dash-header-row"><div><h1 class="dash-page-title">สถิติ</h1><div class="dash-page-subtitle">ติดตามผลงานและข้อมูลผู้เข้าชม</div></div><select class="form-input" style="width: auto; padding: 8px 30px 8px 15px; font-size: 0.85rem; background-color: #161616;"><option>7 วันที่ผ่านมา</option><option>30 วันที่ผ่านมา</option></select></div>
+                <div class="dash-header-row"><div><h1 class="dash-page-title">สถิติ</h1><div class="dash-page-subtitle">ติดตามผลงานและข้อมูลผู้เข้าชม</div></div></div>
                 <div class="ag-stats-card-group">
                     <div class="ag-stat-box"><div class="ag-stat-icon"><span class="iconify" data-icon="heroicons:eye"></span></div><div class="ag-stat-badge"><span class="iconify" data-icon="heroicons:arrow-trending-up"></span> 100.0%</div><div class="ag-stat-val">698</div><div class="ag-stat-label">ยอดเข้าชมโปรไฟล์</div></div>
                     <div class="ag-stat-box"><div class="ag-stat-icon" style="color:#f43f5e; background:rgba(244, 63, 94, 0.1);"><span class="iconify" data-icon="heroicons:heart"></span></div><div class="ag-stat-val">0</div><div class="ag-stat-label">รายการโปรด</div></div>
@@ -318,24 +298,11 @@
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="form-grid-3">
-                                <div class="form-group">
-                                    <label>จังหวัด <span class="req">*</span></label>
-                                    <input type="text" id="mProv" class="form-input" placeholder="พิมพ์ชื่อจังหวัด..." list="provList" autocomplete="off" required>
-                                    <datalist id="provList"></datalist>
-                                </div>
-                                <div class="form-group">
-                                    <label>เขต/อำเภอ <span class="req">*</span></label>
-                                    <input type="text" id="mDist" class="form-input" placeholder="ระบุเขต/อำเภอ..." list="distList" autocomplete="off" required>
-                                    <datalist id="distList"></datalist>
-                                </div>
-                                <div class="form-group">
-                                    <label>สถานที่</label>
-                                    <input type="text" id="mVenue" class="form-input" placeholder="คอนโด, รร...">
-                                </div>
+                                <div class="form-group"><label>จังหวัด <span class="req">*</span></label><input type="text" id="mProv" class="form-input" placeholder="พิมพ์ชื่อจังหวัด..." list="provList" autocomplete="off" required><datalist id="provList"></datalist></div>
+                                <div class="form-group"><label>เขต/อำเภอ <span class="req">*</span></label><input type="text" id="mDist" class="form-input" placeholder="ระบุเขต/อำเภอ..." list="distList" autocomplete="off" required><datalist id="distList"></datalist></div>
+                                <div class="form-group"><label>สถานที่</label><input type="text" id="mVenue" class="form-input" placeholder="คอนโด, รร..."></div>
                             </div>
-
                             <div class="form-grid-3">
                                 <div class="form-group"><label>เพศ <span class="req">*</span></label><select id="mGen" class="form-input" required><option value="หญิง">หญิง</option><option value="ชาย">ชาย</option><option value="ยังไม่ได้แปลงเพศ">ยังไม่ได้แปลงเพศ</option><option value="แปลงเพศแล้ว">แปลงเพศแล้ว</option></select></div>
                                 <div class="form-group"><label>ส่วนสูง (ซม.) <span class="req">*</span></label><input type="number" id="mHeight" class="form-input" required></div>
@@ -380,7 +347,6 @@
             <div class="ag-content-pad ag-view" id="ag-theme">
                 <h2 style="color:var(--dash-gold); margin-bottom:5px;">ตั้งค่าร้านค้า / ธีม</h2>
                 <p style="color:#888; font-size:0.9rem; margin-bottom:25px;">สร้างเอกลักษณ์ให้ร้านคุณโดดเด่นกว่าใคร</p>
-                
                 <div style="background: #161616; padding: 25px; border-radius: 12px; border: 1px solid #333; margin-bottom: 30px; display:flex; align-items:center; gap:25px;">
                     <div id="agencyAvatarPreview" style="width: 90px; height: 90px; border-radius: 50%; background: var(--btn-glow-bg); color: var(--btn-glow-text); display: flex; justify-content: center; align-items: center; font-size: 2.5rem; font-weight: bold; overflow: hidden; border:2px solid var(--dash-gold);">
                         <img src="" id="agLogoImg" style="width:100%; height:100%; object-fit:cover; display:none;">
@@ -393,7 +359,6 @@
                         <button class="btn-outline" style="border-color:#444; color:#fff;" onclick="document.getElementById('agencyLogoFile').click()"><span class="iconify" data-icon="heroicons:camera"></span> เลือกรูปภาพใหม่</button>
                     </div>
                 </div>
-
                 <h3 style="color:#fff; margin-bottom:15px; font-size:1.1rem;">เลือกสีธีมประจำร้าน</h3>
                 <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:20px;">
                     <div class="theme-select-card" onclick="saveTheme('default', this)"><div style="height:100px; background:#fdf5f5; border-radius:8px; border:2px solid #b56c5e;"></div><div style="margin-top:10px; text-align:center; font-weight:500; color:#fff;">Rose Gold (ค่าเริ่มต้น)</div></div>
