@@ -370,3 +370,37 @@ body.theme-pastel {
     background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 100%) !important;
     box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5) !important;
 }
+/* 🔥 PREMIUM PROFILE FORM & CARDS 🔥 */
+.form-card {
+    background: transparent !important;
+    border: 1px solid #333 !important;
+    border-radius: 12px !important;
+    margin-bottom: 25px !important;
+}
+.form-card-header {
+    background: rgba(255,255,255,0.03) !important;
+    border-bottom: 1px solid #333 !important;
+    color: var(--dash-gold) !important;
+    font-size: 1.1rem !important;
+}
+.form-input {
+    background: #111 !important;
+    border: 1px solid #333 !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    padding: 12px 15px !important;
+    transition: 0.3s !important;
+}
+.form-input:focus {
+    border-color: var(--dash-gold) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2) !important;
+}
+.form-group label {
+    color: #ccc !important;
+    font-weight: 500 !important;
+    margin-bottom: 8px !important;
+}
+.form-group label .req {
+    color: #ef4444 !important; /* เครื่องหมายดอกจันสีแดง */
+}
