@@ -9,7 +9,6 @@
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -85,16 +84,7 @@
                 <div class="input-group"><label>ชื่อผู้ใช้ (อังกฤษ)</label><input type="text" id="regUsername" class="auth-input" required></div>
                 <div class="input-group"><label>รหัสผ่าน (6 ตัวขึ้นไป)</label><input type="password" id="regPassword" class="auth-input" required minlength="6"></div>
                 <div class="input-group"><label>ยืนยันรหัสผ่าน</label><input type="password" id="regConfirmPassword" class="auth-input" required minlength="6"></div>
-                
-                <div class="input-group">
-                    <label>คุณคือใคร?</label>
-                    <div class="role-grid" style="grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));">
-                        <label><input type="radio" name="member_type" value="tourist" class="role-radio" checked><div class="role-card" style="padding:10px;"><div class="role-title" style="font-size:0.85rem;">นักท่องเที่ยว</div></div></label>
-                        <label><input type="radio" name="member_type" value="agency" class="role-radio"><div class="role-card" style="padding:10px;"><div class="role-title" style="font-size:0.85rem;">เอเจนซี่</div></div></label>
-                        <label><input type="radio" name="member_type" value="freelance" class="role-radio"><div class="role-card" style="padding:10px;"><div class="role-title" style="font-size:0.85rem;">รับงานอิสระ</div></div></label>
-                    </div>
-                </div>
-
+                <div class="input-group"><label>คุณคือใคร?</label><div class="role-grid" style="grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));"><label><input type="radio" name="member_type" value="tourist" class="role-radio" checked><div class="role-card" style="padding:10px;"><div class="role-title" style="font-size:0.85rem;">นักท่องเที่ยว</div></div></label><label><input type="radio" name="member_type" value="agency" class="role-radio"><div class="role-card" style="padding:10px;"><div class="role-title" style="font-size:0.85rem;">เอเจนซี่</div></div></label><label><input type="radio" name="member_type" value="freelance" class="role-radio"><div class="role-card" style="padding:10px;"><div class="role-title" style="font-size:0.85rem;">รับงานอิสระ</div></div></label></div></div>
                 <button type="submit" class="btn-glow" style="margin-top: 20px; width: 100%; padding: 14px; border-radius: 50px; font-size: 1.1rem;">สมัครสมาชิก</button>
                 <div class="auth-footer">มีบัญชีอยู่แล้ว? <span class="auth-link" onclick="switchAuthTab('login')">เข้าสู่ระบบ</span></div>
             </form>
@@ -167,6 +157,9 @@
                 <div class="dash-nav-item active" onclick="switchAgTab('ag-overview', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:squares-2x2"></span> ภาพรวม</div>
                 <div class="dash-nav-item" onclick="switchAgTab('ag-profiles', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:users"></span> จัดการโปรไฟล์</div>
                 <div class="dash-nav-item" id="navAddProfileBtn" onclick="switchAgTab('ag-add', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:user-plus"></span> สร้างโปรไฟล์ใหม่</div>
+                
+                <div class="dash-nav-item" onclick="switchAgTab('ag-theme', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:paint-brush"></span> ตกแต่งร้านค้า</div>
+                
                 <div class="dash-nav-item" onclick="switchAgTab('ag-wallet', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:wallet"></span> กระเป๋าเงิน</div>
             </div>
         </div>
@@ -198,21 +191,7 @@
                             <div class="form-grid-2"><div class="form-group"><label>ชื่อ <span class="req">*</span></label><input type="text" id="mName" class="form-input" required></div><div class="form-group"><label>อายุ <span class="req">*</span></label><input type="number" id="mAge" class="form-input" required></div></div>
                             <div class="form-grid-1"><div class="form-group"><label>สโลแกน</label><input type="text" id="mSlogan" class="form-input" placeholder="วลีเด็ดประจำตัว..."></div></div>
                             <div class="form-grid-2" style="grid-template-columns: 1fr 1fr;"><div class="form-group"><label>ราคาเริ่มต้น <span class="req">*</span></label><input type="number" id="mPrice" class="form-input" required></div><div class="form-group"><label>ภาษาที่พูดได้ <span class="req">*</span></label><select id="mLang" class="form-input" required><option value="ไทย">ไทย</option><option value="อังกฤษ">อังกฤษ</option><option value="ญี่ปุ่น">ญี่ปุ่น</option><option value="เกาหลี">เกาหลี</option><option value="จีน">จีน</option><option value="รัสเซีย">รัสเซีย</option></select></div></div>
-                            
-                            <div class="form-grid-3">
-                                <div class="form-group">
-                                    <label>จังหวัด <span class="req">*</span></label>
-                                    <input type="text" id="mProv" class="form-input" placeholder="พิมพ์ชื่อจังหวัด..." list="provList" required>
-                                    <datalist id="provList"></datalist>
-                                </div>
-                                <div class="form-group">
-                                    <label>เขต/อำเภอ <span class="req">*</span></label>
-                                    <input type="text" id="mDist" class="form-input" placeholder="ระบุเขต/อำเภอ..." list="distList" required>
-                                    <datalist id="distList"></datalist>
-                                </div>
-                                <div class="form-group"><label>สถานที่</label><input type="text" id="mVenue" class="form-input" placeholder="คอนโด, รร..."></div>
-                            </div>
-
+                            <div class="form-grid-3"><div class="form-group"><label>จังหวัด <span class="req">*</span></label><input type="text" id="mProv" class="form-input" placeholder="พิมพ์ชื่อจังหวัด..." list="provList" required><datalist id="provList"></datalist></div><div class="form-group"><label>เขต/อำเภอ <span class="req">*</span></label><input type="text" id="mDist" class="form-input" placeholder="ระบุเขต/อำเภอ..." list="distList" required><datalist id="distList"></datalist></div><div class="form-group"><label>สถานที่</label><input type="text" id="mVenue" class="form-input" placeholder="คอนโด, รร..."></div></div>
                             <div class="form-grid-3"><div class="form-group"><label>เพศ <span class="req">*</span></label><select id="mGen" class="form-input" required><option value="หญิง">หญิง</option><option value="ชาย">ชาย</option><option value="ยังไม่ได้แปลงเพศ">ยังไม่ได้แปลงเพศ</option><option value="แปลงเพศแล้ว">แปลงเพศแล้ว</option></select></div><div class="form-group"><label>ส่วนสูง (ซม.) <span class="req">*</span></label><input type="number" id="mHeight" class="form-input" required></div><div class="form-group"><label>น้ำหนัก (กก.) <span class="req">*</span></label><input type="number" id="mWeight" class="form-input" required></div></div>
                             <div class="form-grid-5"><div class="form-group"><label>รอบอก (นิ้ว) <span class="req">*</span></label><input type="number" id="mChest" class="form-input" onkeyup="calcCup()" required></div><div class="form-group"><label>ขนาดคัพ</label><select id="mCup" class="form-input"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option></select></div><div class="form-group"><label>ประเภทหน้าอก</label><select id="mBreastType" class="form-input"><option value="แท้">นมแท้</option><option value="ทำ">นมทำ</option></select></div><div class="form-group"><label>เอว (นิ้ว) <span class="req">*</span></label><input type="number" id="mWaist" class="form-input" required></div><div class="form-group"><label>สะโพก (นิ้ว) <span class="req">*</span></label><input type="number" id="mHips" class="form-input" required></div></div>
                             <div class="form-grid-3"><div class="form-group"><label>LINE ID <span class="req">*</span></label><input type="text" id="mLineId" class="form-input" required></div><div class="form-group"><label>Telegram</label><input type="text" id="mTele" class="form-input" placeholder="@username"></div><div class="form-group"><label>X (Twitter)</label><input type="text" id="mTwit" class="form-input" placeholder="@username"></div></div>
@@ -230,12 +209,35 @@
                 </form>
             </div>
             
+            <div class="ag-content-pad ag-view" id="ag-theme">
+                <h2 style="color:var(--dash-gold); margin-bottom:5px;">ตกแต่งหน้าร้าน (Theme)</h2>
+                <p style="color:#888; font-size:0.9rem; margin-bottom:25px;">เลือกสีสันที่เป็นเอกลักษณ์ของคุณ (ลูกค้าจะเห็นสีนี้เมื่อกดเข้าดูโปรไฟล์เด็กในสังกัดคุณ)</p>
+                
+                <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:20px;">
+                    <div class="theme-select-card" onclick="saveTheme('default', this)">
+                        <div style="height:100px; background:#fdf5f5; border-radius:8px; border:2px solid #b56c5e;"></div>
+                        <div style="margin-top:10px; text-align:center; font-weight:500; color:#fff;">Rose Gold (ค่าเริ่มต้น)</div>
+                    </div>
+                    <div class="theme-select-card" onclick="saveTheme('gold', this)">
+                        <div style="height:100px; background:#0a0a0a; border-radius:8px; border:2px solid #D4AF37;"></div>
+                        <div style="margin-top:10px; text-align:center; font-weight:500; color:#D4AF37;">Luxury Gold</div>
+                    </div>
+                    <div class="theme-select-card" onclick="saveTheme('cyber', this)">
+                        <div style="height:100px; background:#050510; border-radius:8px; border:2px solid #00ffcc;"></div>
+                        <div style="margin-top:10px; text-align:center; font-weight:500; color:#00ffcc;">Dark Neon</div>
+                    </div>
+                    <div class="theme-select-card" onclick="saveTheme('pastel', this)">
+                        <div style="height:100px; background:#fdfbfb; border-radius:8px; border:2px solid #ff758c;"></div>
+                        <div style="margin-top:10px; text-align:center; font-weight:500; color:#ff758c;">Sweet Pastel</div>
+                    </div>
+                </div>
+            </div>
+
             <div class="ag-content-pad ag-view" id="ag-wallet">
                 <div class="wallet-card" style="max-width: 600px; margin: 0 auto;">
                     <h3 style="color:#888; font-weight:400; margin-bottom:10px;">ยอดเครดิตคงเหลือ</h3>
                     <div class="wallet-balance"><span id="mainWalletBalance">0</span></div>
                     <p style="color:#666; font-size:0.85rem; margin-top:5px; margin-bottom:25px;">1 เครดิต = 1 บาท</p>
-                    
                     <div style="background: #111; padding: 25px; border-radius: 12px; border: 1px solid #333; text-align: left;">
                         <h4 style="color: var(--dash-gold); margin-bottom: 15px; font-size:1.1rem;"><span class="iconify" data-icon="heroicons:bolt"></span> เติมเครดิตอัตโนมัติ (PromptPay QR)</h4>
                         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px;">
