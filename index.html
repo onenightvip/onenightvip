@@ -104,33 +104,83 @@
         <div class="grid-container" id="leaderboardGrid" style="padding-top:0;"></div>
     </div>
 
-    <div class="auth-overlay" id="authOverlay" onclick="closeAuthModal(event)">
-        <div class="auth-modal" id="authModal">
-            <button class="close-modal" onclick="closeAuthModal(event, true)">&times;</button>
+    <div id="authView" class="view-section auth-full-page">
+        <div class="auth-premium-card">
             
             <form id="loginForm" class="auth-form active" onsubmit="handleAuthSubmit(event, 'login')">
-                <div class="auth-header"><h2>เข้าสู่ระบบ</h2></div>
-                <div class="input-group"><label>อีเมล์ / ยูส</label><input type="text" id="loginEmail" class="auth-input" required></div>
-                <div class="input-group"><label>รหัสผ่าน</label><input type="password" id="loginPassword" class="auth-input" required></div>
-                <div style="text-align: right; margin-top: -10px;"><a href="#" onclick="switchAuthTab('forgot')" style="color: var(--dash-gold); font-size: 0.85rem; text-decoration: none;">ลืมรหัสผ่าน?</a></div>
-                <button type="submit" class="btn-glow" style="margin-top: 15px; width: 100%; padding: 14px; border-radius: 50px; font-size: 1.1rem;">เข้าสู่ระบบ</button>
-                <div class="auth-footer">ยังไม่มีบัญชี? <span class="auth-link" onclick="switchAuthTab('register')">สมัครสมาชิก</span></div>
-            </form>
-            
-            <form id="registerForm" class="auth-form" onsubmit="handleAuthSubmit(event, 'register')">
-                <div class="auth-header"><h2>สมัครสมาชิก</h2></div>
-                <div class="input-group"><label>อีเมล</label><input type="email" id="regEmail" class="auth-input" required></div>
-                <div class="input-group"><label>ชื่อผู้ใช้ (อังกฤษ)</label><input type="text" id="regUsername" class="auth-input" required></div>
-                <div class="input-group"><label>รหัสผ่าน (6 ตัวขึ้นไป)</label><input type="password" id="regPassword" class="auth-input" required minlength="6"></div>
-                <div class="input-group"><label>ยืนยันรหัสผ่าน</label><input type="password" id="regConfirmPassword" class="auth-input" required minlength="6"></div>
+                <div class="auth-icon-top"><span class="iconify" data-icon="heroicons:lock-closed"></span></div>
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h2 style="color: #fff; font-size: 1.5rem; margin-bottom: 5px;">ยินดีต้อนรับกลับ</h2>
+                    <p style="color: #888; font-size: 0.9rem;">เข้าสู่ระบบเพื่อดำเนินการต่อ</p>
+                </div>
+                <div class="input-group"><label>อีเมล์ / ยูส *</label><input type="text" id="loginEmail" class="auth-input" placeholder="your@email.com" required></div>
                 <div class="input-group">
-                    <label>คุณคือใคร?</label>
-                    <div class="role-grid" style="grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));">
-                        <label><input type="radio" name="member_type" value="tourist" class="role-radio" checked><div class="role-card" style="padding:10px;"><div class="role-title" style="font-size:0.85rem;">นักท่องเที่ยว</div></div></label>
-                        <label><input type="radio" name="member_type" value="agency" class="role-radio"><div class="role-card" style="padding:10px;"><div class="role-title" style="font-size:0.85rem;">เอเจนซี่</div></div></label>
-                        <label><input type="radio" name="member_type" value="freelance" class="role-radio"><div class="role-card" style="padding:10px;"><div class="role-title" style="font-size:0.85rem;">รับงานอิสระ</div></div></label>
+                    <div style="display: flex; justify-content: space-between;"><label>รหัสผ่าน *</label><a href="#" onclick="switchAuthTab('forgot')" style="color: var(--dash-gold); font-size: 0.85rem; text-decoration: none;">ลืมรหัสผ่าน?</a></div>
+                    <input type="password" id="loginPassword" class="auth-input" placeholder="รหัสผ่านของคุณ" required>
+                </div>
+                <div class="dummy-captcha">
+                    <div style="display: flex; align-items: center; gap: 10px;"><span class="iconify" data-icon="heroicons:check-circle-solid" style="color: #10b981; font-size: 1.5rem;"></span> สำเร็จ!</div>
+                    <div style="font-size: 0.7rem; color: #666; text-align: right;"><b>ONENIGHTVIP</b><br>ระบบรักษาความปลอดภัย</div>
+                </div>
+                <button type="submit" class="btn-glow" style="width: 100%; padding: 14px; border-radius: 8px; font-size: 1rem; font-weight: 500;">เข้าสู่ระบบ</button>
+                <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.9rem;">ยังไม่มีบัญชี? <span style="color: var(--dash-gold); cursor: pointer; font-weight: 500;" onclick="switchAuthTab('register')">สมัครสมาชิก</span></div>
+            </form>
+
+            <form id="registerForm" class="auth-form" onsubmit="handleAuthSubmit(event, 'register')">
+                <div class="auth-icon-top"><span class="iconify" data-icon="heroicons:user-plus"></span></div>
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h2 style="color: #fff; font-size: 1.5rem; margin-bottom: 5px;">เข้าร่วมกับเรา</h2>
+                    <p style="color: #888; font-size: 0.9rem;">สร้างบัญชีเพื่อเริ่มต้น</p>
+                </div>
+                <div class="input-group"><label>อีเมล *</label><input type="email" id="regEmail" class="auth-input" placeholder="your@email.com" required></div>
+                <div class="input-group"><label>ชื่อผู้ใช้ (ยูสเซอร์เนม) *</label><input type="text" id="regUsername" class="auth-input" placeholder="ภาษาอังกฤษ 3-30 ตัวอักษร" required></div>
+                <div class="input-group"><label>ชื่อที่แสดง (นามแฝงร้าน)</label><input type="text" id="regDisplayName" class="auth-input" placeholder="แสดงต่อสาธารณะ (ไม่บังคับ)"></div>
+                <div class="input-group"><label>รหัสผ่าน *</label><input type="password" id="regPassword" class="auth-input" placeholder="รหัสผ่านของคุณ" required minlength="6"><div style="font-size:0.75rem; color:#666; margin-top:5px;">ต้องมีอย่างน้อย 6 ตัวอักษร</div></div>
+                <div class="input-group"><label>ยืนยันรหัสผ่าน *</label><input type="password" id="regConfirmPassword" class="auth-input" placeholder="ยืนยันรหัสผ่านของคุณ" required minlength="6"></div>
+                
+                <div class="input-group">
+                    <label>ฉันเป็น... *</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 5px;">
+                        <label>
+                            <input type="radio" name="member_type" value="tourist" class="role-radio" style="display:none;" checked>
+                            <div class="role-card-premium">
+                                <span class="iconify" data-icon="heroicons:user" style="font-size: 1.5rem; color:var(--dash-gold); margin-bottom:5px;"></span>
+                                <div style="color:#fff; font-weight:500; font-size:0.95rem;">นักท่องเที่ยว</div>
+                                <div style="color:#888; font-size:0.75rem;">พบปะและแบ่งปัน</div>
+                            </div>
+                        </label>
+                        <label>
+                            <input type="radio" name="member_type" value="agency" class="role-radio" style="display:none;">
+                            <div class="role-card-premium">
+                                <span class="iconify" data-icon="heroicons:sparkles" style="font-size: 1.5rem; color:var(--dash-gold); margin-bottom:5px;"></span>
+                                <div style="color:#fff; font-weight:500; font-size:0.95rem;">คลับ / เอเจนซี่</div>
+                                <div style="color:#888; font-size:0.75rem;">สร้างความสัมพันธ์</div>
+                            </div>
+                        </label>
                     </div>
                 </div>
+
+                <div class="input-group"><label>รหัสแนะนำ</label><input type="text" id="regReferral" class="auth-input" placeholder="กรอกรหัสแนะนำ (ไม่บังคับ)"></div>
+                
+                <label style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; cursor: pointer;">
+                    <input type="checkbox" id="ageConfirm" required style="margin-top: 4px;">
+                    <span style="color: #ccc; font-size: 0.85rem;">ฉันยืนยันว่าอายุ 20 ปีขึ้นไป และยอมรับข้อตกลงการใช้งาน *</span>
+                </label>
+
+                <div class="dummy-captcha"><div style="display: flex; align-items: center; gap: 10px;"><span class="iconify" data-icon="heroicons:check-circle-solid" style="color: #10b981; font-size: 1.5rem;"></span> สำเร็จ!</div><div style="font-size: 0.7rem; color: #666; text-align: right;"><b>ONENIGHTVIP</b></div></div>
+                <button type="submit" class="btn-glow" style="width: 100%; padding: 14px; border-radius: 8px; font-size: 1rem; font-weight: 500;">สมัครสมาชิก</button>
+                <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.9rem;">มีบัญชีอยู่แล้ว? <span style="color: var(--dash-gold); cursor: pointer; font-weight: 500;" onclick="switchAuthTab('login')">เข้าสู่ระบบ</span></div>
+            </form>
+
+            <form id="forgotForm" class="auth-form" onsubmit="handleForgotPassword(event)">
+                <div class="auth-icon-top"><span class="iconify" data-icon="heroicons:key"></span></div>
+                <div style="text-align: center; margin-bottom: 30px;"><h2 style="color: #fff; font-size: 1.5rem; margin-bottom: 5px;">รีเซ็ตรหัสผ่าน</h2><p style="color: #888; font-size: 0.9rem;">กรอกอีเมลเพื่อรับลิงก์รีเซ็ตรหัสผ่าน</p></div>
+                <div class="input-group"><label>อีเมล</label><input type="email" id="forgotEmail" class="auth-input" placeholder="your@email.com" required></div>
+                <button type="submit" class="btn-glow" style="width: 100%; padding: 14px; border-radius: 8px; font-size: 1rem; font-weight: 500;">ส่งลิงก์รีเซ็ต</button>
+                <div style="text-align: center; margin-top: 20px; color: var(--dash-gold); font-size: 0.9rem; cursor: pointer; font-weight: 500;" onclick="switchAuthTab('login')">กลับไปเข้าสู่ระบบ</div>
+            </form>
+        </div>
+    </div>
                 <button type="submit" class="btn-glow" style="margin-top: 20px; width: 100%; padding: 14px; border-radius: 50px; font-size: 1.1rem;">สมัครสมาชิก</button>
                 <div class="auth-footer">มีบัญชีอยู่แล้ว? <span class="auth-link" onclick="switchAuthTab('login')">เข้าสู่ระบบ</span></div>
             </form>
