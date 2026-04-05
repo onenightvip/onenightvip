@@ -25,7 +25,18 @@ body.modal-open { overflow: hidden; }
 .auth-buttons { display: flex; gap: 10px; align-items: center; }
 .btn-outline { background: #ffffff; color: var(--accent); border: 1px solid var(--accent); padding: 8px 20px; border-radius: 50px; font-weight: 500; cursor: pointer; font-family: 'Prompt'; transition: 0.2s;}
 .btn-logout { background: #ffffff; color: #ff4d4f; border: 1px solid #ff4d4f; padding: 8px 15px; border-radius: 50px; cursor: pointer; font-family: 'Prompt'; font-weight: 500;}
-.btn-glow { background: var(--btn-glow-bg) !important; color: var(--btn-glow-text) !important; border: none !important; box-shadow: 0 0 15px 4px var(--btn-glow-shadow) !important; font-family: 'Prompt', sans-serif; font-weight: 600 !important; cursor: pointer; }
+.btn-glow { 
+    background: var(--btn-glow-bg) !important; 
+    color: var(--btn-glow-text) !important; 
+    border: none !important; 
+    box-shadow: 0 0 15px 4px var(--btn-glow-shadow) !important; 
+    font-weight: 600 !important; 
+    text-shadow: none !important; 
+    cursor: pointer;
+}
+.btn-glow:hover {
+    transform: translateY(-2px);
+}
 .mobile-menu-btn { display: none; background: none; border: none; font-size: 2rem; color: var(--text-dark); cursor: pointer; }
 
 @media (max-width: 850px) { .nav-center-group, .nav-actions { display: none !important; } .mobile-menu-btn { display: block !important; } }
@@ -111,7 +122,18 @@ body.theme-gold { --accent: #D4AF37; --btn-glow-bg: linear-gradient(145deg, #333
 .dash-nav-item.active { background-color: rgba(212, 175, 55, 0.1) !important; color: var(--dash-gold) !important; border-left: 4px solid var(--dash-gold) !important; }
 .ag-stat-box { background: #141414 !important; border: 1px solid #222 !important; border-radius: 12px !important; padding: 20px;}
 .ag-stat-val { color: #fff !important; font-size: 1.8rem; font-weight: 600; display: flex;}
-.btn-glow { background: linear-gradient(135deg, #D4AF37 0%, #AA771C 100%) !important; color: #000 !important; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3) !important; font-weight: 600 !important; text-shadow: none !important; border: none; cursor: pointer;}
+.btn-glow { 
+    background: var(--btn-glow-bg) !important; 
+    color: var(--btn-glow-text) !important; 
+    border: none !important; 
+    box-shadow: 0 0 15px 4px var(--btn-glow-shadow) !important; 
+    font-weight: 600 !important; 
+    text-shadow: none !important; 
+    cursor: pointer;
+}
+.btn-glow:hover {
+    transform: translateY(-2px);
+}
 .form-card { background: transparent !important; border: 1px solid #333 !important; border-radius: 12px !important; margin-bottom: 25px !important; }
 .form-card-header { background: rgba(255,255,255,0.03) !important; border-bottom: 1px solid #333 !important; color: var(--dash-gold) !important; padding: 15px 25px; }
 .form-card-body { padding: 25px; }
