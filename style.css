@@ -228,3 +228,31 @@ body.modal-open { overflow: hidden; }
     .ag-stats-card-group { grid-template-columns: repeat(2, 1fr); }
     .my-profiles-table { display: block; overflow-x: auto; white-space: nowrap; }
 }
+
+/* 🔥 THEME CUSTOMIZATION 🔥 */
+body.theme-gold {
+    --accent: #D4AF37; --accent-light: #F3E5AB; 
+    --btn-glow-bg: linear-gradient(145deg, #333, #111); 
+    --btn-glow-text: #D4AF37; --btn-glow-shadow: rgba(212, 175, 55, 0.4); 
+    --text-dark: #fff; --text-muted: #aaa; 
+    --bg-glass: rgba(20, 20, 20, 0.8); --dash-bg: #050505; 
+    background-color: #111; background-image: none;
+}
+body.theme-cyber {
+    --accent: #00ffcc; --accent-light: #00b3ff; 
+    --btn-glow-bg: linear-gradient(145deg, #002233, #001122); 
+    --btn-glow-text: #00ffcc; --btn-glow-shadow: rgba(0, 255, 204, 0.5); 
+    --text-dark: #fff; --text-muted: #888; 
+    --bg-glass: rgba(0, 15, 25, 0.8); --dash-bg: #020205; 
+    background-color: #050510; background-image: none;
+}
+body.theme-pastel {
+    --accent: #ff758c; --accent-light: #ff7eb3; 
+    --btn-glow-bg: linear-gradient(145deg, #fff, #ffe5ec); 
+    --btn-glow-text: #ff758c; --btn-glow-shadow: rgba(255, 117, 140, 0.4); 
+    --text-dark: #555; --text-muted: #999; 
+    --bg-glass: rgba(255, 255, 255, 0.8); --dash-bg: #fefefe; 
+    background-color: #fcf9f9; background-image: none;
+}
+.theme-select-card { cursor: pointer; transition: 0.2s; padding: 15px; border-radius: 16px; background: #161616; border: 2px solid #333; }
+.theme-select-card:hover { transform: translateY(-5px); border-color: var(--dash-gold); }
