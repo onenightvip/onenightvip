@@ -256,3 +256,33 @@ body.theme-pastel {
 }
 .theme-select-card { cursor: pointer; transition: 0.2s; padding: 15px; border-radius: 16px; background: #161616; border: 2px solid #333; }
 .theme-select-card:hover { transform: translateY(-5px); border-color: var(--dash-gold); }
+/* 🔥 PREMIUM AUTH PAGE 🔥 */
+.auth-full-page {
+    display: none; justify-content: center; align-items: center; 
+    min-height: 100vh; background-color: #0a0a0a; padding: 20px;
+    background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.15) 0%, transparent 50%);
+}
+.auth-full-page.active { display: flex; }
+.auth-premium-card {
+    background: #141414; width: 100%; max-width: 450px; 
+    padding: 40px 30px; border-radius: 16px; border: 1px solid #333;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+}
+.auth-icon-top {
+    width: 60px; height: 60px; background: rgba(212, 175, 55, 0.1); 
+    border: 1px solid var(--dash-gold); border-radius: 16px; 
+    display: flex; justify-content: center; align-items: center; 
+    margin: 0 auto 20px auto; color: var(--dash-gold); font-size: 2rem;
+}
+.dummy-captcha {
+    background: #1a1a1a; border: 1px solid #333; padding: 15px; 
+    border-radius: 8px; display: flex; justify-content: space-between; 
+    align-items: center; margin-bottom: 20px; color: #fff; font-size: 0.9rem;
+}
+.role-card-premium {
+    background: #111; border: 1px solid #333; border-radius: 12px; 
+    padding: 15px 10px; text-align: center; cursor: pointer; transition: 0.3s;
+}
+.role-radio:checked + .role-card-premium {
+    border-color: var(--dash-gold); background: rgba(212, 175, 55, 0.05);
+}
