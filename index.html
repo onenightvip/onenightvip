@@ -11,46 +11,497 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <script>
+        const savedTheme = localStorage.getItem('agencyTheme');
+        if(savedTheme && savedTheme !== 'default') document.body.classList.add('theme-' + savedTheme);
+    </script>
+
     <nav class="navbar">
         <div class="logo-container" onclick="switchMainView('homeView', document.getElementById('navHome'))">
             <img src="https://img2.pic.in.th/-190481cb09d161ee46.png" class="logo-img">
         </div>
-        <div class="nav-actions" id="guestMenu">
-            <button class="btn-outline" onclick="openAuthModal('login')">เข้าสู่ระบบ</button>
-            <button class="btn-glow" onclick="openAuthModal('register')">สมัครสมาชิก</button>
-        </div>
-        <div class="nav-actions" id="loggedInMenu" style="display: none;">
-            <div class="nav-user-chip" onclick="openDashboardRouter()">
-                <div class="nav-avatar" id="navAvatar"><span id="navAvatarText">U</span></div>
-                <span class="nav-user-name" id="navUserName">Username</span>
+        <div class="nav-center-group">
+            <div class="nav-links">
+                <a id="navHome" class="active" onclick="switchMainView('homeView', this)">หน้าแรก</a>
+                <a id="navAgency" onclick="switchMainView('agencyListView', this)">เอเจนซี่ / อิสระ</a>
+                <a id="navLeaderboard" onclick="switchMainView('leaderboardView', this)">กระดานผู้นำ</a>
             </div>
-            <button class="btn-logout" onclick="handleLogout()"><span class="iconify" data-icon="heroicons:arrow-right-on-rectangle"></span></button>
         </div>
+        <div class="nav-actions">
+            <div class="lang-switch">
+                <button class="lang-btn active" onclick="switchLang('th', this)"><span class="iconify" data-icon="flag:th-4x3"></span> ไทย</button>
+                <button class="lang-btn" onclick="switchLang('en', this)"><span class="iconify" data-icon="flag:gb-4x3"></span> EN</button>
+            </div>
+            <div class="auth-buttons" id="guestMenu">
+                <button class="btn-outline" onclick="openAuthModal('login')">เข้าสู่ระบบ</button>
+                <button class="btn-glow" style="padding: 8px 25px; border-radius: 50px;" onclick="openAuthModal('register')">สมัครสมาชิก</button>
+            </div>
+            <div class="auth-buttons" id="loggedInMenu" style="display: none;">
+                <div class="nav-user-chip" onclick="openDashboardRouter()">
+                    <div class="nav-avatar" id="navAvatar" style="overflow:hidden;">
+                        <img src="" id="navAvatarImg" style="width:100%; height:100%; object-fit:cover; display:none;">
+                        <span id="navAvatarText">U</span>
+                    </div>
+                    <div class="nav-user-info">
+                        <span class="nav-user-name" id="navUserName">Username</span>
+                        <span class="nav-user-role" id="navUserRole">Tourist</span>
+                    </div>
+                </div>
+                <button class="btn-logout" onclick="handleLogout()" title="ออกจากระบบ"><span class="iconify" data-icon="heroicons:arrow-right-on-rectangle"></span></button>
+            </div>
+        </div>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu(false)"><span class="iconify" data-icon="heroicons:bars-3-bottom-right"></span></button>
     </nav>
+
+    <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileMenu(true)"></div>
+    <div class="mobile-bottom-sheet" id="mobileSheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-links">
+            <a class="active" onclick="switchMainView('homeView', this); toggleMobileMenu(true);">หน้าแรก</a>
+            <a onclick="switchMainView('agencyListView', this); toggleMobileMenu(true);">เอเจนซี่ / อิสระ</a>
+            <a onclick="switchMainView('leaderboardView', this); toggleMobileMenu(true);">กระดานผู้นำ</a>
+        </div>
+        <div class="sheet-auth" id="mobileGuestMenu">
+            <button class="btn-outline" onclick="toggleMobileMenu(true); openAuthModal('login')">เข้าสู่ระบบ</button>
+            <button class="btn-glow" style="padding: 8px 20px; border-radius: 50px;" onclick="toggleMobileMenu(true); openAuthModal('register')">สมัครสมาชิก</button>
+        </div>
+        <div class="sheet-auth" id="mobileLoggedInMenu" style="display: none; grid-template-columns: 1fr;">
+            <button class="btn-glow" style="padding: 8px 20px; border-radius: 50px; width: 100%; justify-content: center; display: flex; align-items:center; gap:8px;" onclick="toggleMobileMenu(true); openDashboardRouter()"><span class="iconify" data-icon="heroicons:user-circle"></span> บัญชีของฉัน</button>
+            <button class="btn-logout" onclick="toggleMobileMenu(true); handleLogout()" style="width: 100%; justify-content: center; display: flex;">ออกจากระบบ</button>
+        </div>
+    </div>
+
+    <div id="homeView" class="view-section active">
+        <div class="search-filter-container">
+            <div class="search-box">
+                <span class="iconify search-icon" data-icon="heroicons:magnifying-glass"></span>
+                <input type="text" class="search-input" id="searchInput" placeholder="ค้นหาชื่อน้อง, พิกัด..." onkeyup="handleSearch()">
+            </div>
+            <div class="filter-chips">
+                <button class="chip active" onclick="setFilter('all', this)">ทั้งหมด</button>
+                <button class="chip" onclick="setFilter('new', this)">🔥 มาใหม่</button>
+                <button class="chip" onclick="setFilter('budget', this)">💸 ต่ำกว่า 2,000</button>
+                <button class="chip" id="btnFilterFav" onclick="setFilter('favorite', this)" style="display:none;">❤️ น้องที่ถูกใจ</button>
+            </div>
+        </div>
+        <main class="grid-container" id="modelsGrid"><div class="no-results"><span class="iconify" data-icon="eos-icons:bubble-loading" style="font-size:2rem;"></span> กำลังโหลดข้อมูล...</div></main>
+    </div>
+    
+    <div id="agencyListView" class="view-section" style="max-width:1400px; margin:20px auto; padding:0 5%;">
+        <div style="text-align:center; margin-bottom:30px;">
+            <h2 style="color:var(--text-dark); font-size:2rem;">เอเจนซี่ & รับงานอิสระ</h2>
+            <p style="color:var(--text-muted);">เลือกดูโปรไฟล์จากสังกัดที่ไว้ใจ หรือน้องๆ ที่รับงานเองโดยตรง</p>
+        </div>
+        <div class="grid-container" id="agencyListGrid" style="padding-top:0;"></div>
+    </div>
+    
+    <div id="leaderboardView" class="view-section" style="max-width:1400px; margin:20px auto; padding:0 5%;">
+        <div style="text-align:center; margin-bottom:30px;">
+            <h2 style="color:var(--text-dark); font-size:2rem;"><span class="iconify" data-icon="heroicons:trophy-solid" style="color:#FFD700;"></span> TOP 10 ดาวเด่น</h2>
+            <p style="color:var(--text-muted);">น้องๆ ที่ได้คะแนนรีวิวสูงสุดจากลูกค้า</p>
+        </div>
+        <div class="grid-container" id="leaderboardGrid" style="padding-top:0;"></div>
+    </div>
+
+    <div id="authView" class="view-section auth-full-page">
+        <div class="auth-premium-card">
+            <form id="loginForm" class="auth-form active" onsubmit="handleAuthSubmit(event, 'login')">
+                <div class="auth-icon-top"><span class="iconify" data-icon="heroicons:lock-closed"></span></div>
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h2 style="color: #fff; font-size: 1.5rem; margin-bottom: 5px;">ยินดีต้อนรับกลับ</h2>
+                    <p style="color: #888; font-size: 0.9rem;">เข้าสู่ระบบเพื่อดำเนินการต่อ</p>
+                </div>
+                <div class="input-group"><label>อีเมล์ / ยูส *</label><input type="text" id="loginEmail" class="auth-input" placeholder="your@email.com" required></div>
+                <div class="input-group">
+                    <div style="display: flex; justify-content: space-between;"><label>รหัสผ่าน *</label><a href="#" onclick="switchAuthTab('forgot')" style="color: var(--dash-gold); font-size: 0.85rem; text-decoration: none;">ลืมรหัสผ่าน?</a></div>
+                    <input type="password" id="loginPassword" class="auth-input" placeholder="รหัสผ่านของคุณ" required>
+                </div>
+                <div class="dummy-captcha">
+                    <div style="display: flex; align-items: center; gap: 10px;"><span class="iconify" data-icon="heroicons:check-circle-solid" style="color: #10b981; font-size: 1.5rem;"></span> สำเร็จ!</div>
+                    <div style="font-size: 0.7rem; color: #666; text-align: right;"><b>ONENIGHTVIP</b><br>ระบบรักษาความปลอดภัย</div>
+                </div>
+                <button type="submit" class="btn-glow" style="width: 100%; padding: 14px; border-radius: 8px; font-size: 1rem; font-weight: 500;">เข้าสู่ระบบ</button>
+                <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.9rem;">ยังไม่มีบัญชี? <span style="color: var(--dash-gold); cursor: pointer; font-weight: 500;" onclick="switchAuthTab('register')">สมัครสมาชิก</span></div>
+            </form>
+
+            <form id="registerForm" class="auth-form" onsubmit="handleAuthSubmit(event, 'register')">
+                <div class="auth-icon-top"><span class="iconify" data-icon="heroicons:user-plus"></span></div>
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h2 style="color: #fff; font-size: 1.5rem; margin-bottom: 5px;">เข้าร่วมกับเรา</h2>
+                    <p style="color: #888; font-size: 0.9rem;">สร้างบัญชีเพื่อเริ่มต้น</p>
+                </div>
+                <div class="input-group"><label>อีเมล *</label><input type="email" id="regEmail" class="auth-input" placeholder="your@email.com" required></div>
+                <div class="input-group"><label>ชื่อผู้ใช้ (ยูสเซอร์เนม) *</label><input type="text" id="regUsername" class="auth-input" placeholder="ภาษาอังกฤษ 3-30 ตัวอักษร" required></div>
+                <div class="input-group"><label>ชื่อที่แสดง (นามแฝงร้าน)</label><input type="text" id="regDisplayName" class="auth-input" placeholder="แสดงต่อสาธารณะ (ไม่บังคับ)"></div>
+                <div class="input-group"><label>รหัสผ่าน *</label><input type="password" id="regPassword" class="auth-input" placeholder="รหัสผ่านของคุณ" required minlength="6"><div style="font-size:0.75rem; color:#666; margin-top:5px;">ต้องมีอย่างน้อย 6 ตัวอักษร</div></div>
+                <div class="input-group"><label>ยืนยันรหัสผ่าน *</label><input type="password" id="regConfirmPassword" class="auth-input" placeholder="ยืนยันรหัสผ่านของคุณ" required minlength="6"></div>
+                
+                <div class="input-group">
+                    <label>ฉันเป็น... *</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 5px;">
+                        <label>
+                            <input type="radio" name="member_type" value="tourist" class="role-radio" style="display:none;" checked>
+                            <div class="role-card-premium">
+                                <span class="iconify" data-icon="heroicons:user" style="font-size: 1.5rem; color:var(--dash-gold); margin-bottom:5px;"></span>
+                                <div style="color:#fff; font-weight:500; font-size:0.95rem;">นักท่องเที่ยว</div>
+                                <div style="color:#888; font-size:0.75rem;">พบปะและแบ่งปัน</div>
+                            </div>
+                        </label>
+                        <label>
+                            <input type="radio" name="member_type" value="agency" class="role-radio" style="display:none;">
+                            <div class="role-card-premium">
+                                <span class="iconify" data-icon="heroicons:sparkles" style="font-size: 1.5rem; color:var(--dash-gold); margin-bottom:5px;"></span>
+                                <div style="color:#fff; font-weight:500; font-size:0.95rem;">คลับ / เอเจนซี่</div>
+                                <div style="color:#888; font-size:0.75rem;">สร้างความสัมพันธ์</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="input-group"><label>รหัสแนะนำ</label><input type="text" id="regReferral" class="auth-input" placeholder="กรอกรหัสแนะนำ (ไม่บังคับ)"></div>
+                
+                <label style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; cursor: pointer;">
+                    <input type="checkbox" id="ageConfirm" required style="margin-top: 4px;">
+                    <span style="color: #ccc; font-size: 0.85rem;">ฉันยืนยันว่าอายุ 20 ปีขึ้นไป และยอมรับข้อตกลงการใช้งาน *</span>
+                </label>
+
+                <div class="dummy-captcha"><div style="display: flex; align-items: center; gap: 10px;"><span class="iconify" data-icon="heroicons:check-circle-solid" style="color: #10b981; font-size: 1.5rem;"></span> สำเร็จ!</div><div style="font-size: 0.7rem; color: #666; text-align: right;"><b>ONENIGHTVIP</b></div></div>
+                <button type="submit" class="btn-glow" style="width: 100%; padding: 14px; border-radius: 8px; font-size: 1rem; font-weight: 500;">สมัครสมาชิก</button>
+                <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.9rem;">มีบัญชีอยู่แล้ว? <span style="color: var(--dash-gold); cursor: pointer; font-weight: 500;" onclick="switchAuthTab('login')">เข้าสู่ระบบ</span></div>
+            </form>
+
+            <form id="forgotForm" class="auth-form" onsubmit="handleForgotPassword(event)">
+                <div class="auth-icon-top"><span class="iconify" data-icon="heroicons:key"></span></div>
+                <div style="text-align: center; margin-bottom: 30px;"><h2 style="color: #fff; font-size: 1.5rem; margin-bottom: 5px;">รีเซ็ตรหัสผ่าน</h2><p style="color: #888; font-size: 0.9rem;">กรอกอีเมลเพื่อรับลิงก์รีเซ็ตรหัสผ่าน</p></div>
+                <div class="input-group"><label>อีเมล</label><input type="email" id="forgotEmail" class="auth-input" placeholder="your@email.com" required></div>
+                <button type="submit" class="btn-glow" style="width: 100%; padding: 14px; border-radius: 8px; font-size: 1rem; font-weight: 500;">ส่งลิงก์รีเซ็ต</button>
+                <div style="text-align: center; margin-top: 20px; color: var(--dash-gold); font-size: 0.9rem; cursor: pointer; font-weight: 500;" onclick="switchAuthTab('login')">กลับไปเข้าสู่ระบบ</div>
+            </form>
+        </div>
+    </div>
+
+    <div class="profile-overlay" id="profileDetailModal">
+        <button class="btn-back-profile" onclick="closeProfile()"><span class="iconify" data-icon="heroicons:arrow-left"></span></button>
+        <div class="profile-hero"><img id="pdMainImage" src=""><video id="pdMainVideo" controls playsinline style="display:none;"></video><div class="hero-gradient"></div></div>
+        <div class="pro-thumb-container" id="pdThumbList"></div>
+        <div class="profile-content">
+            <div class="pro-title-row">
+                <div class="pro-name-group">
+                    <h1 class="pro-name" id="pdName">ชื่อน้อง</h1><div class="pro-slogan" id="pdSlogan"></div><div class="pro-location"><span class="iconify" style="color: var(--dash-gold);" data-icon="mdi:map-marker"></span> <span id="pdLoc">พิกัด</span></div>
+                </div>
+                <button class="btn-pro-icon" id="btnProHeart" style="background:rgba(255,255,255,0.1); border:1px solid #333; width:45px; height:45px; border-radius:50%; display:flex; justify-content:center; align-items:center; cursor:pointer;"><span class="iconify heart-icon" data-icon="mdi:cards-heart-outline" style="font-size:1.5rem;"></span></button>
+            </div>
+            <div class="pro-socials" id="pdSocialsContainer">
+                <a href="#" target="_blank" class="btn-social" id="pdTeleBtn"><span class="iconify" data-icon="logos:telegram"></span> Telegram</a>
+                <a href="#" target="_blank" class="btn-social" id="pdTwitBtn"><span class="iconify" data-icon="ri:twitter-x-fill"></span> Twitter</a>
+            </div>
+            <div class="pro-stats-grid">
+                <div class="pro-stat-item"><div class="pro-stat-val" id="pdAge">-</div><div class="pro-stat-label">อายุ</div></div>
+                <div class="pro-stat-item"><div class="pro-stat-val" id="pdProps">-</div><div class="pro-stat-label">สัดส่วน</div></div>
+                <div class="pro-stat-item"><div class="pro-stat-val" id="pdCup">-</div><div class="pro-stat-label">หน้าอก</div></div>
+                <div class="pro-stat-item"><div class="pro-stat-val" id="pdHeight">-</div><div class="pro-stat-label">ส่วนสูง (ซม.)</div></div>
+                <div class="pro-stat-item"><div class="pro-stat-val" id="pdWeight">-</div><div class="pro-stat-label">น้ำหนัก (กก.)</div></div>
+                <div class="pro-stat-item"><div class="pro-stat-val" id="pdLang" style="font-size:0.9rem;">-</div><div class="pro-stat-label">ภาษา</div></div>
+            </div>
+            <div class="pro-section">
+                <h3 class="pro-sec-title"><span class="iconify" data-icon="heroicons:document-text" style="color:var(--dash-gold);"></span> คำอธิบาย</h3>
+                <div class="pro-desc-box"><div class="pro-desc" id="pdDesc">-</div></div>
+            </div>
+            <div class="pro-section">
+                <h3 class="pro-sec-title"><span class="iconify" data-icon="heroicons:star" style="color:var(--dash-gold);"></span> รีวิวจากลูกค้า (<span id="pdReviewCount">0</span>)</h3>
+                <div id="pleaseLoginReview" style="background:#1a1a1a; border-radius:12px; padding:15px; text-align:center;"><p style="color: #888; font-size: 0.9rem; margin-bottom: 10px;">กรุณาล็อกอินเพื่อรีวิวน้องๆ</p></div>
+                <form id="reviewForm" style="display:none; background:#1a1a1a; border-radius:12px; padding:15px;" onsubmit="submitReview(event)">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;"><span style="font-weight: 600; font-size: 0.95rem;">ให้คะแนน</span><div class="star-rating" id="starRatingSelector"><span class="iconify" data-icon="heroicons:star-solid" data-val="5" onclick="selectStar(5)"></span><span class="iconify" data-icon="heroicons:star-solid" data-val="4" onclick="selectStar(4)"></span><span class="iconify" data-icon="heroicons:star-solid" data-val="3" onclick="selectStar(3)"></span><span class="iconify" data-icon="heroicons:star-solid" data-val="2" onclick="selectStar(2)"></span><span class="iconify" data-icon="heroicons:star-solid" data-val="1" onclick="selectStar(1)"></span></div></div>
+                    <textarea id="reviewComment" class="form-control" rows="2" placeholder="ประทับใจแค่ไหน บอกหน่อย..." required style="background:#111; border:none; color:#fff; width:100%; padding:10px; border-radius:8px; outline:none;"></textarea>
+                    <button type="submit" class="btn-glow" id="btnSubmitReview" style="padding: 8px 20px; border-radius:50px; font-size: 0.9rem; margin-top: 10px;">ส่งรีวิว</button>
+                </form>
+                <div id="reviewsList" style="margin-top:15px;"></div>
+            </div>
+        </div>
+        <div class="sticky-booking-bar">
+            <div class="sticky-booking-container">
+                <div class="book-price-box"><span class="book-label">ราคาเริ่มต้น</span><span class="book-price">฿<span id="pdPrice">0</span></span></div>
+                <button class="btn-glow" id="btnBookNow" style="padding: 12px 35px; border-radius: 50px; font-size: 1.1rem; display: flex; align-items: center; gap: 5px;"><span class="iconify" data-icon="bi:line" style="font-size: 1.2rem;"></span> จองคิว</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-overlay" id="touristDashboard">
+        <div class="dash-main" style="background: #fdf5f5; color: var(--text-dark);">
+            <div class="dash-topbar" style="background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(181, 108, 94, 0.2);">
+                <span style="font-weight:600; font-size:1.2rem;"><span class="iconify" data-icon="heroicons:heart-solid" style="color:#ff4d4f;"></span> รายการโปรดของคุณ</span>
+                <button class="btn-close-ag" onclick="closeDashboard()" style="color:var(--text-dark); background:transparent; border:none; font-size:1.5rem; cursor:pointer;"><span class="iconify" data-icon="heroicons:x-mark"></span></button>
+            </div>
+            <div class="ag-content-pad"><div class="grid-container" id="touristFavGrid" style="padding-top:0;"></div></div>
+        </div>
+    </div>
 
     <div class="dashboard-overlay" id="agencyDashboard">
         <div class="dash-sidebar">
+            <div class="dash-logo" style="color: var(--dash-gold); font-size: 1.5rem; letter-spacing: 1px;">
+                <img src="https://img2.pic.in.th/-190481cb09d161ee46.png" style="height: 30px; object-fit: contain;">
+            </div>
             <div class="dash-nav">
-                <div class="dash-nav-item active" onclick="switchAgTab('ag-overview', this, 'agencyDashboard')">ภาพรวม</div>
-                <div class="dash-nav-item" onclick="switchAgTab('ag-profiles', this, 'agencyDashboard')">โปรไฟล์ของฉัน</div>
-                <div class="dash-nav-item" onclick="switchAgTab('ag-wallet', this, 'agencyDashboard')">กระเป๋าเงิน</div>
-                <div class="dash-nav-item" onclick="switchAgTab('ag-referral', this, 'agencyDashboard')">แนะนำเพื่อน</div>
+                <div class="dash-nav-item active" onclick="switchAgTab('ag-overview', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:squares-2x2"></span> ภาพรวม</div>
+                <div class="dash-nav-item" onclick="switchAgTab('ag-profiles', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:users"></span> โปรไฟล์ของฉัน</div>
+                <div class="dash-nav-item" onclick="switchAgTab('ag-stats', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:chart-bar"></span> สถิติ</div>
+                <div class="dash-nav-item" onclick="switchAgTab('ag-reviews', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:chat-bubble-left-ellipsis"></span> รีวิว</div>
+                <div class="dash-nav-item" onclick="switchAgTab('ag-wallet', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:wallet"></span> กระเป๋าเงิน</div>
+                
+                <hr style="border: 0; border-top: 1px solid #222; margin: 15px 0;">
+                
+                <div class="dash-nav-item" onclick="switchAgTab('ag-notifications', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:bell"></span> การแจ้งเตือน</div>
+                <div class="dash-nav-item" onclick="switchAgTab('ag-referral', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:user-plus"></span> การแนะนำเพื่อน</div>
+                <div class="dash-nav-item" onclick="switchAgTab('ag-theme', this, 'agencyDashboard')"><span class="iconify" data-icon="heroicons:cog-8-tooth"></span> ตั้งค่าร้านค้า</div>
             </div>
         </div>
         <div class="dash-main">
-            <div class="dash-topbar" style="background:#0a0a0a; border-bottom:1px solid #222; padding:15px 30px; display:flex; justify-content:space-between; align-items:center;">
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <div style="width:35px; height:35px; border-radius:50%; background:var(--dash-gold); color:#000; display:flex; justify-content:center; align-items:center; font-weight:bold;">
-                        <span id="agTopbarAvatarText">U</span>
+            <div class="dash-topbar" style="background: #0a0a0a; border-bottom: 1px solid #222; padding: 15px 30px;">
+                <span id="agTitle" style="font-weight:600; display: flex; align-items: center; gap: 8px; color:#fff; font-size:1.2rem;">
+                    <span class="iconify" data-icon="heroicons:squares-2x2"></span> แดชบอร์ด
+                </span>
+                <div style="display:flex; align-items:center; gap:20px;">
+                    <button style="background:transparent; border:none; color:#fff; font-size:1.5rem; position:relative; cursor:pointer;">
+                        <span class="iconify" data-icon="heroicons:bell"></span>
+                        <span style="position:absolute; top:-5px; right:-5px; background:#f43f5e; color:#fff; font-size:0.6rem; padding:2px 5px; border-radius:50px;">0</span>
+                    </button>
+                    <div style="display:flex; align-items:center; gap:10px; cursor:pointer;" onclick="closeDashboard()">
+                        <div style="width:35px; height:35px; border-radius:50%; background:var(--dash-gold); color:#000; display:flex; justify-content:center; align-items:center; font-weight:bold;">
+                            <span id="agTopbarAvatarText">U</span>
+                            <img src="" id="agTopbarAvatarImg" style="width:100%; height:100%; object-fit:cover; border-radius:50%; display:none;">
+                        </div>
+                        <span id="agTopbarName" style="color:#fff; font-size:0.9rem;">My Agency</span>
+                        <span class="iconify" data-icon="heroicons:chevron-down" style="color:#888;"></span>
                     </div>
-                    <span id="agTopbarName" style="color:#fff;">My Agency</span>
                 </div>
-                <button onclick="closeDashboard()" style="background:transparent; border:none; color:#888; font-size:1.5rem; cursor:pointer;">&times;</button>
             </div>
-            <div class="ag-content-pad ag-view active" id="ag-overview">...</div>
-            <div class="ag-content-pad ag-view" id="ag-profiles">...</div>
-            <div class="ag-content-pad ag-view" id="ag-wallet">...</div>
-            <div class="ag-content-pad ag-view" id="ag-referral">...</div>
+        <div class="dash-main">
+            <div class="dash-topbar">
+                <span id="agTitle" style="font-weight:600; display: flex; align-items: center; gap: 8px;"><span class="iconify" data-icon="heroicons:squares-2x2"></span> ภาพรวม</span>
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <div style="background: rgba(139, 115, 107, 0.2); border: 1px solid var(--dash-gold); padding: 5px 15px; border-radius: 50px; font-size: 0.9rem; color: var(--dash-gold); font-weight: 600;"><span class="iconify" data-icon="heroicons:currency-dollar"></span> <span id="quickWalletBalance">0</span> ฿</div>
+                    <button class="btn-close-ag" onclick="closeDashboard()" style="background:transparent; color:#fff; border:none; font-size:1.5rem; cursor:pointer;"><span class="iconify" data-icon="heroicons:x-mark"></span></button>
+                </div>
+            </div>
+            
+            <div class="ag-content-pad ag-view active" id="ag-overview">
+                <div class="dash-header-row"><div><h1 class="dash-page-title">สถิติ</h1><div class="dash-page-subtitle">ติดตามผลงานและข้อมูลผู้เข้าชม</div></div></div>
+                <div class="ag-stats-card-group">
+                    <div class="ag-stat-box"><div class="ag-stat-icon"><span class="iconify" data-icon="heroicons:eye"></span></div><div class="ag-stat-badge"><span class="iconify" data-icon="heroicons:arrow-trending-up"></span> 100.0%</div><div class="ag-stat-val">698</div><div class="ag-stat-label">ยอดเข้าชมโปรไฟล์</div></div>
+                    <div class="ag-stat-box"><div class="ag-stat-icon" style="color:#f43f5e; background:rgba(244, 63, 94, 0.1);"><span class="iconify" data-icon="heroicons:heart"></span></div><div class="ag-stat-val">0</div><div class="ag-stat-label">รายการโปรด</div></div>
+                    <div class="ag-stat-box"><div class="ag-stat-icon" style="color:#3b82f6; background:rgba(59, 130, 246, 0.1);"><span class="iconify" data-icon="heroicons:chat-bubble-left-ellipsis"></span></div><div class="ag-stat-val">0</div><div class="ag-stat-label">รีวิว</div></div>
+                    <div class="ag-stat-box"><div class="ag-stat-icon" style="color:#a855f7; background:rgba(168, 85, 247, 0.1);"><span class="iconify" data-icon="heroicons:play-circle"></span></div><div class="ag-stat-val" id="statTotalProfiles">0</div><div class="ag-stat-label">โปรไฟล์ของฉัน</div></div>
+                </div>
+            </div>
+
+            <div class="ag-content-pad ag-view" id="ag-profiles">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+                    <div>
+                        <h1 class="dash-page-title" style="margin: 0;">โปรไฟล์ของฉัน <span style="color:#666; font-size:1.2rem; font-weight:normal;">(<span id="statTotalProfilesInline">0</span>)</span></h1>
+                        <p style="color: #888; font-size: 0.9rem; margin-top: 5px;">จัดการโปรไฟล์และติดตามประสิทธิภาพ</p>
+                    </div>
+                    <button class="btn-outline" style="color: var(--dash-gold); border-color: var(--dash-gold); display: flex; align-items: center; gap: 5px; padding: 10px 20px;" onclick="switchAgTab('ag-add', null, 'agencyDashboard')">
+                        <span class="iconify" data-icon="heroicons:plus"></span> สร้างโปรไฟล์
+                    </button>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap;">
+                    <div class="search-box" style="flex: 1; min-width: 250px;">
+                        <span class="iconify search-icon" data-icon="heroicons:magnifying-glass" style="color:#666;"></span>
+                        <input type="text" class="search-input" style="background:#111; border:1px solid #333; padding-left: 40px;" placeholder="ค้นหาโปรไฟล์...">
+                    </div>
+                    <button class="btn-outline" style="border-color:#333; color:#ccc; background:#111;"><span class="iconify" data-icon="heroicons:funnel"></span> ทุกสถานะ <span class="iconify" data-icon="heroicons:chevron-down" style="font-size:0.8rem; margin-left:5px;"></span></button>
+                    <button class="btn-outline" style="border-color:#333; color:#ccc; background:#111;"><span class="iconify" data-icon="heroicons:arrows-up-down"></span> ใหม่สุด <span class="iconify" data-icon="heroicons:chevron-down" style="font-size:0.8rem; margin-left:5px;"></span></button>
+                </div>
+
+                <div class="ag-card-list" id="myProfilesGrid"></div>
+            </div>
+            <div class="ag-content-pad ag-view" id="ag-add">
+                <button class="btn-outline" style="border:none; color:#888; padding:0; margin-bottom:20px; display:flex; align-items:center; gap:5px;" onclick="switchAgTab('ag-profiles', document.querySelectorAll('.dash-nav-item')[1], 'agencyDashboard')">
+                    <span class="iconify" data-icon="heroicons:arrow-left"></span> กลับ
+                </button>
+                
+                <h2 style="color:var(--dash-gold); margin-bottom:5px;" id="addFormTitle">สร้างโปรไฟล์ใหม่</h2>
+                <p style="color:#888; font-size:0.9rem; margin-bottom:25px;">ตั้งค่าโปรไฟล์เพื่อเริ่มเชื่อมต่อกับลูกค้า</p>
+                <form id="addModelForm" onsubmit="submitNewModel(event)">
+                    <input type="hidden" id="editingModelId" value=""> 
+                    <div class="form-card">
+                        <div class="form-card-header"><span class="iconify" data-icon="heroicons:user"></span> รายละเอียดโปรไฟล์</div>
+                        <div class="form-card-body">
+                            <div class="form-grid-2">
+                                <div class="form-group"><label>ชื่อ <span class="req">*</span></label><input type="text" id="mName" class="form-input" required></div>
+                                <div class="form-group"><label>อายุ <span class="req">*</span></label><input type="number" id="mAge" class="form-input" required></div>
+                            </div>
+                            <div class="form-grid-1"><div class="form-group"><label>สโลแกน</label><input type="text" id="mSlogan" class="form-input" placeholder="วลีเด็ดประจำตัว..."></div></div>
+                            <div class="form-grid-2" style="grid-template-columns: 1fr 1fr;">
+                                <div class="form-group"><label>ราคาเริ่มต้น <span class="req">*</span></label><input type="number" id="mPrice" class="form-input" required></div>
+                                <div class="form-group">
+                                    <label>ภาษาที่พูดได้ <span class="req">*</span></label>
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; background:#111; padding:12px; border-radius:8px; border:1px solid #333;">
+                                        <label style="color:#fff; display:flex; align-items:center; gap:5px;"><input type="checkbox" name="mLang" value="ไทย" checked> ไทย</label>
+                                        <label style="color:#fff; display:flex; align-items:center; gap:5px;"><input type="checkbox" name="mLang" value="อังกฤษ"> อังกฤษ</label>
+                                        <label style="color:#fff; display:flex; align-items:center; gap:5px;"><input type="checkbox" name="mLang" value="จีน"> จีน</label>
+                                        <label style="color:#fff; display:flex; align-items:center; gap:5px;"><input type="checkbox" name="mLang" value="ญี่ปุ่น"> ญี่ปุ่น</label>
+                                        <label style="color:#fff; display:flex; align-items:center; gap:5px;"><input type="checkbox" name="mLang" value="เกาหลี"> เกาหลี</label>
+                                        <label style="color:#fff; display:flex; align-items:center; gap:5px;"><input type="checkbox" name="mLang" value="รัสเซีย"> รัสเซีย</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-grid-3">
+                                <div class="form-group"><label>จังหวัด <span class="req">*</span></label><input type="text" id="mProv" class="form-input" placeholder="พิมพ์ชื่อจังหวัด..." list="provList" autocomplete="off" required><datalist id="provList"></datalist></div>
+                                <div class="form-group"><label>เขต/อำเภอ <span class="req">*</span></label><input type="text" id="mDist" class="form-input" placeholder="ระบุเขต/อำเภอ..." list="distList" autocomplete="off" required><datalist id="distList"></datalist></div>
+                                <div class="form-group"><label>สถานที่</label><input type="text" id="mVenue" class="form-input" placeholder="คอนโด, รร..."></div>
+                            </div>
+                            <div class="form-grid-3">
+                                <div class="form-group"><label>เพศ <span class="req">*</span></label><select id="mGen" class="form-input" required><option value="หญิง">หญิง</option><option value="ชาย">ชาย</option><option value="ยังไม่ได้แปลงเพศ">ยังไม่ได้แปลงเพศ</option><option value="แปลงเพศแล้ว">แปลงเพศแล้ว</option></select></div>
+                                <div class="form-group"><label>ส่วนสูง (ซม.) <span class="req">*</span></label><input type="number" id="mHeight" class="form-input" required></div>
+                                <div class="form-group"><label>น้ำหนัก (กก.) <span class="req">*</span></label><input type="number" id="mWeight" class="form-input" required></div>
+                            </div>
+                            <div class="form-grid-5">
+                                <div class="form-group"><label>รอบอก (นิ้ว) <span class="req">*</span></label><input type="number" id="mChest" class="form-input" onkeyup="calcCup()" required></div>
+                                <div class="form-group"><label>ขนาดคัพ</label><select id="mCup" class="form-input"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option></select></div>
+                                <div class="form-group"><label>ประเภทหน้าอก</label><select id="mBreastType" class="form-input"><option value="แท้">นมแท้</option><option value="ทำ">นมทำ</option></select></div>
+                                <div class="form-group"><label>เอว (นิ้ว) <span class="req">*</span></label><input type="number" id="mWaist" class="form-input" required></div>
+                                <div class="form-group"><label>สะโพก (นิ้ว) <span class="req">*</span></label><input type="number" id="mHips" class="form-input" required></div>
+                            </div>
+                            <div class="form-grid-3">
+                                <div class="form-group"><label>LINE ID <span class="req">*</span></label><input type="text" id="mLineId" class="form-input" required></div>
+                                <div class="form-group"><label>Telegram</label><input type="text" id="mTele" class="form-input" placeholder="@username"></div>
+                                <div class="form-group"><label>X (Twitter)</label><input type="text" id="mTwit" class="form-input" placeholder="@username"></div>
+                            </div>
+                            <div class="form-grid-1">
+                                <div class="form-group"><label>คำอธิบาย</label><textarea id="mDesc" class="form-input" rows="6" maxlength="3000" onkeyup="countChars(this)" style="resize:none;"></textarea><div class="char-counter"><span id="charNum">0</span>/3000</div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-card">
+                        <div class="form-card-header"><span class="iconify" data-icon="heroicons:photo"></span> รูปภาพและวิดีโอ (<span id="mediaCountText">0</span>/6)</div>
+                        <div class="form-card-body">
+                            <div class="upload-zone" onclick="document.getElementById('mGalleryFiles').click()">
+                                <div class="upload-icon"><span class="iconify" data-icon="heroicons:photo"></span></div>
+                                <div class="upload-text">รูปภาพสูงสุด 6 ไฟล์ (รูปละไม่เกิน 5MB)<br>วิดีโอสูงสุด 2 ไฟล์ (ไฟล์ละไม่เกิน 50MB)<br>รวมกันทั้งหมดต้องไม่เกิน 6 ไฟล์</div>
+                                <input type="file" id="mGalleryFiles" accept="image/*,video/mp4,video/quicktime" multiple onchange="handlePremiumFileSelect(event)">
+                            </div>
+                            <div style="color:#666; font-size:0.8rem; margin-top:10px;">ต้องมีรูปภาพอย่างน้อย 1 รูป</div>
+                            <div class="gallery-preview" id="galleryPreview"></div>
+                        </div>
+                    </div>
+                    <div style="text-align: right; margin-top: 10px;">
+                        <button type="button" class="btn-outline" style="display:inline-block; border-color:#444; color:#fff; background:#111; margin-right:10px;" onclick="resetForm()">ยกเลิก</button>
+                        <button type="submit" class="btn-glow" id="btnSubmitModel" style="display:inline-block; padding: 10px 30px; border-radius: 8px;"><span class="iconify" data-icon="heroicons:check"></span> บันทึกข้อมูล</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="ag-content-pad ag-view" id="ag-theme">
+                <h2 style="color:var(--dash-gold); margin-bottom:5px;">ตั้งค่าร้านค้า / ธีม</h2>
+                <p style="color:#888; font-size:0.9rem; margin-bottom:25px;">สร้างเอกลักษณ์ให้ร้านคุณโดดเด่นกว่าใคร</p>
+                <div style="background: #161616; padding: 25px; border-radius: 12px; border: 1px solid #333; margin-bottom: 30px; display:flex; align-items:center; gap:25px;">
+                    <div id="agencyAvatarPreview" style="width: 90px; height: 90px; border-radius: 50%; background: var(--btn-glow-bg); color: var(--btn-glow-text); display: flex; justify-content: center; align-items: center; font-size: 2.5rem; font-weight: bold; overflow: hidden; border:2px solid var(--dash-gold);">
+                        <img src="" id="agLogoImg" style="width:100%; height:100%; object-fit:cover; display:none;">
+                        <span id="agLogoText">U</span>
+                    </div>
+                    <div>
+                        <h3 style="color:#fff; margin-bottom:5px;">โลโก้ / รูปโปรไฟล์สังกัด</h3>
+                        <p style="color:#888; font-size:0.85rem; margin-bottom:15px;">รูปนี้จะโชว์ให้ลูกค้าเห็นในหน้ารวมเอเจนซี่</p>
+                        <input type="file" id="agencyLogoFile" accept="image/*" style="display:none;" onchange="uploadAgencyLogo(event)">
+                        <button class="btn-outline" style="border-color:#444; color:#fff;" onclick="document.getElementById('agencyLogoFile').click()"><span class="iconify" data-icon="heroicons:camera"></span> เลือกรูปภาพใหม่</button>
+                    </div>
+                </div>
+                <h3 style="color:#fff; margin-bottom:15px; font-size:1.1rem;">เลือกสีธีมประจำร้าน</h3>
+                <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:20px;">
+                    <div class="theme-select-card" onclick="saveTheme('default', this)"><div style="height:100px; background:#fdf5f5; border-radius:8px; border:2px solid #b56c5e;"></div><div style="margin-top:10px; text-align:center; font-weight:500; color:#fff;">Rose Gold (ค่าเริ่มต้น)</div></div>
+                    <div class="theme-select-card" onclick="saveTheme('gold', this)"><div style="height:100px; background:#0a0a0a; border-radius:8px; border:2px solid #D4AF37;"></div><div style="margin-top:10px; text-align:center; font-weight:500; color:#D4AF37;">Luxury Gold</div></div>
+                    <div class="theme-select-card" onclick="saveTheme('cyber', this)"><div style="height:100px; background:#050510; border-radius:8px; border:2px solid #00ffcc;"></div><div style="margin-top:10px; text-align:center; font-weight:500; color:#00ffcc;">Dark Neon</div></div>
+                    <div class="theme-select-card" onclick="saveTheme('pastel', this)"><div style="height:100px; background:#fdfbfb; border-radius:8px; border:2px solid #ff758c;"></div><div style="margin-top:10px; text-align:center; font-weight:500; color:#ff758c;">Sweet Pastel</div></div>
+                </div>
+            </div>
+
+            <div class="ag-content-pad ag-view" id="ag-referral">
+                <div class="dash-header-row">
+                    <div>
+                        <h1 class="dash-page-title" style="display:flex; align-items:center; gap:10px;">
+                            <span class="iconify" data-icon="heroicons:user-group"></span> การแนะนำเพื่อน
+                        </h1>
+                        <div class="dash-page-subtitle">ชวนเพื่อนมาสมัคร เพื่อรับเครดิตฟรี!</div>
+                    </div>
+                </div>
+
+                <div style="background: #161616; padding: 25px; border-radius: 12px; border: 1px solid #333; margin-bottom: 30px;">
+                    <p style="color:#888; font-size:0.85rem; margin-bottom:5px;">รหัสแนะนำของคุณ</p>
+                    <div style="display:flex; align-items:center; gap:15px; margin-bottom: 20px;">
+                        <h2 style="color:var(--dash-gold); font-size:2.5rem; letter-spacing: 5px; margin:0;" id="myReferralCodeDisplay">------</h2>
+                        <button class="btn-outline" style="border-color:#444; color:#fff;" onclick="copyReferralCode()"><span class="iconify" data-icon="heroicons:clipboard-document"></span> คัดลอกรหัส</button>
+                    </div>
+
+                    <div class="ag-stats-card-group" style="grid-template-columns: repeat(3, 1fr);">
+                        <div class="ag-stat-box" style="text-align:center;">
+                            <div class="ag-stat-val" id="statReferCount" style="font-size:2rem; justify-content:center;">0</div>
+                            <div class="ag-stat-label">เชิญแล้วทั้งหมด</div>
+                        </div>
+                        <div class="ag-stat-box" style="text-align:center;">
+                            <div class="ag-stat-val" style="font-size:2rem; justify-content:center;">0</div>
+                            <div class="ag-stat-label">ผ่านเกณฑ์</div>
+                        </div>
+                        <div class="ag-stat-box" style="text-align:center;">
+                            <div class="ag-stat-val" style="font-size:2rem; color:var(--dash-gold); justify-content:center;">0</div>
+                            <div class="ag-stat-label">เครดิตที่ได้รับ</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        <div class="form-group" style="margin-bottom:20px;">
+                            <label style="color:#888;">หรือระบุจำนวนเงินที่ต้องการ (บาท)</label>
+                            <input type="number" id="customTopupAmount" class="form-input" placeholder="ขั้นต่ำ 100 บาท..." min="100">
+                        </div>
+                        <button class="btn-glow" id="btnGenQR" style="width: 100%; padding: 14px; border-radius: 8px; font-size: 1.1rem; display: flex; justify-content: center; align-items: center; gap: 8px;" onclick="generateRealQR()">
+                            <span class="iconify" data-icon="mdi:qrcode-scan"></span> สร้าง QR Code ชำระเงิน
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="kyc-overlay" id="qrModalOverlay">
+        <div class="kyc-modal" style="text-align: center; max-width: 400px;">
+            <button class="kyc-close" onclick="closeQRModal()">&times;</button>
+            <h2 style="color: #fff; margin-bottom: 5px;">สแกนเพื่อชำระเงิน</h2>
+            <p style="color: #888; font-size: 0.9rem; margin-bottom: 20px;">รองรับแอปพลิเคชันทุกธนาคาร (PromptPay)</p>
+            <div style="background: #fff; padding: 15px; border-radius: 12px; display: inline-block; margin-bottom: 20px;"><img id="omiseQrImage" src="" style="width: 200px; height: 200px; object-fit: contain;"></div>
+            <div style="font-size: 1.5rem; color: var(--dash-gold); font-weight: bold; margin-bottom: 20px;">ยอดชำระ: <span id="qrAmountDisplay">0</span> บาท</div>
+            <div style="background: rgba(16, 185, 129, 0.1); border: 1px dashed #10b981; color: #10b981; padding: 15px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 20px; text-align: left;"><b><span class="iconify" data-icon="heroicons:information-circle"></span> โหมดทดสอบ (Test Mode):</b><br>สแกนจ่ายด้วยแอปไม่ได้จริง ให้ไปกด "จำลองว่าจ่ายแล้ว" ในหน้าเว็บของ Omise Dashboard นะครับ</div>
+            <button class="btn-outline" style="width: 100%; padding: 12px; border-radius: 50px; font-size: 1rem; border-color:#444; color:#fff;" onclick="closeQRModal()">ปิดหน้าต่างนี้</button>
+        </div>
+    </div>
+
+    <div class="kyc-overlay" id="kycModalOverlay">
+        <div class="kyc-modal">
+            <button class="kyc-close" onclick="closeKYCModal()">&times;</button>
+            <h2 class="kyc-title">ยืนยันตัวตนด้วยรูปถ่าย</h2>
+            <div class="kyc-subtitle" id="kycModelName">น้อง ...</div>
+            <div class="kyc-instructions"><span style="color:#fff; font-weight:500;">วิธียืนยันตัวตน:</span><br>เขียน <b>"ONENIGHTVIP"</b> วันที่วันนี้ และรหัสของคุณลงบนกระดาษ <br>ถ่ายเซลฟี่ขณะถือกระดาษโดยต้องเห็นใบหน้าชัดเจน จากนั้นอัปโหลดรูปด้านล่าง</div>
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80" class="kyc-example-img" alt="ตัวอย่างการถ่ายรูปยืนยัน">
+            <form id="kycForm" onsubmit="submitKYC(event)">
+                <input type="hidden" id="kycModelId">
+                <div class="upload-zone" onclick="document.getElementById('kycFile').click()" style="padding:20px;"><div class="upload-icon" style="font-size:2rem; margin-bottom:5px;"><span class="iconify" data-icon="heroicons:camera"></span></div><div class="upload-text" id="kycFileName">คลิกเพื่ออัปโหลดรูปถ่าย (ไม่เกิน 5MB)</div><input type="file" id="kycFile" accept="image/*" required onchange="document.getElementById('kycFileName').innerText = this.files[0].name"></div>
+                <button type="submit" class="btn-glow" style="width: 100%; padding: 12px; border-radius: 8px; margin-top: 15px; font-size: 1rem;"><span class="iconify" data-icon="heroicons:shield-check"></span> ส่งข้อมูลยืนยันตัวตน</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="dashboard-overlay" id="adminDashboard">
+        <div class="dash-sidebar">
+            <div class="dash-logo" style="color:#ff4d4f;"><span class="iconify" data-icon="heroicons:shield-check"></span> ADMIN</div>
+            <div class="dash-nav" id="adminNavMenu"></div>
+        </div>
+        <div class="dash-main">
+            <div class="dash-topbar"><span id="adminTitle" style="font-weight:600; display: flex; align-items: center; gap: 8px;"><span class="iconify" data-icon="heroicons:squares-2x2"></span> ศูนย์บัญชาการ</span><button class="btn-close-ag" onclick="closeDashboard()" style="background:transparent; color:#fff; border:none; font-size:1.5rem; cursor:pointer;"><span class="iconify" data-icon="heroicons:x-mark"></span></button></div>
+            <div class="ag-content-pad ag-view active" id="admin-overview"><h1 style="color:#ff4d4f; margin-bottom:10px;">ยินดีต้อนรับ, <span id="adminTierName">Admin</span></h1><p style="color:#888;">ระบบตรวจสอบสถานะหลังบ้าน</p><div class="ag-stats-grid" style="margin-top: 30px;"><div class="ag-stat-card"><div class="ag-stat-val" id="adminTotalUsers">0</div><div class="ag-stat-label">สมาชิกทั้งหมด</div></div><div class="ag-stat-card"><div class="ag-stat-val" id="adminTotalModels">0</div><div class="ag-stat-label">โปรไฟล์น้องๆทั้งหมด</div></div></div></div>
+            <div class="ag-content-pad ag-view" id="admin-approve"><h2>อนุมัติโปรไฟล์ (Approve)</h2><table class="my-profiles-table"><thead><tr><th>รูปน้อง</th><th>ชื่อน้อง</th><th>สถานะ KYC</th><th>คนลงงาน</th><th>จัดการ</th></tr></thead><tbody id="adminApproveTableBody"></tbody></table></div>
+            <div class="ag-content-pad ag-view" id="admin-wallet"><h2 style="color:var(--dash-gold);">จัดการเครดิต (Wallet)</h2><table class="my-profiles-table"><thead><tr><th>ชื่อเอเจนซี่ / อิสระ</th><th>เครดิตปัจจุบัน</th><th>เติมเครดิต (บวกเพิ่ม)</th></tr></thead><tbody id="adminWalletTableBody"></tbody></table></div>
+            <div class="ag-content-pad ag-view" id="admin-system"><h2 style="color:#888;">ตั้งค่าระบบ (Developer)</h2></div>
+            <div class="ag-content-pad ag-view" id="admin-audit"><h2 style="color:#888;">บันทึกการใช้งาน (Audit Logs)</h2></div>
         </div>
     </div>
 
