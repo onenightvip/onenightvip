@@ -457,3 +457,36 @@ body.theme-pastel {
 .skeleton-img, .skeleton-text {
     animation: skeleton-loading 1.5s infinite ease-in-out;
 }
+/* --- SKELETON LOADING ANIMATION --- */
+
+/* กำหนดการกะพริบเป็นโทนชมพูจางๆ ตามธีมหลัก */
+@keyframes skeleton-loading {
+    0% { background-color: rgba(181, 108, 94, 0.1); } /* ใช้สีจาก --accent แบบจาง */
+    50% { background-color: rgba(181, 108, 94, 0.2); }
+    100% { background-color: rgba(181, 108, 94, 0.1); }
+}
+
+/* สไตล์สำหรับการ์ดจำลอง (Skeleton Card) */
+.skeleton-card {
+    pointer-events: none;
+    border: 1px solid rgba(181, 108, 94, 0.1) !important;
+}
+
+.skeleton-img, .skeleton-text {
+    animation: skeleton-loading 1.5s infinite ease-in-out;
+    background-size: 200% 100%;
+}
+
+.skeleton-img {
+    background-color: #eee;
+    height: 380px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.skeleton-text {
+    background-color: #eee;
+    height: 20px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
