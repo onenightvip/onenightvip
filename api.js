@@ -34,3 +34,15 @@ async function fetchUserFavorites() {
         handleSearch(); [cite: 375]
     } 
 }
+async function fetchModels() { 
+    showSkeleton(); // โชว์ Skeleton ก่อนโหลดจริง
+    const { data, error } = await supabaseClient.from('models')
+        .select('*, user_profiles(theme_color)')
+        .eq('status', 'active')
+        .order('created_at', { ascending: false });
+    
+    if (!error && data) {
+        allModelsData = data;
+        handleSearch(); // วาดข้อมูลจริงทับ Skeleton
+    }
+}
