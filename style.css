@@ -449,3 +449,11 @@ body.theme-pastel {
     background: rgba(212, 175, 55, 0.1);
     border-color: var(--dash-gold);
 }
+@keyframes skeleton-loading {
+    0% { background-color: rgba(226, 159, 140, 0.1); } /* ใช้ค่า --accent-light แบบจาง */
+    50% { background-color: rgba(226, 159, 140, 0.3); }
+    100% { background-color: rgba(226, 159, 140, 0.1); }
+}
+.skeleton-img, .skeleton-text {
+    animation: skeleton-loading 1.5s infinite ease-in-out;
+}
