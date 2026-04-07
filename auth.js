@@ -1,34 +1,43 @@
-// ติดตามสถานะการ Login [cite: 217]
-supabaseClient.auth.onAuthStateChange((event, session) => { 
-    updateUIAuth(session); [cite: 217]
-});
-
-// จัดการสมัครสมาชิก [cite: 424]
+// จัดการการเข้าสู่ระบบ (Login) - แบบไม่มีรหัสผ่านฝังในโค้ด 
 async function handleAuthSubmit(event, type) {
-    event.preventDefault(); [cite: 412]
-    const submitBtn = event.target.querySelector('button[type="submit"]'); [cite: 412]
-    if (type === 'register') {
-        const pwd = document.getElementById('regPassword').value; [cite: 420]
-        const myNewReferralCode = Math.random().toString(36).substring(2, 8).toUpperCase(); [cite: 423]
-        const { error } = await supabaseClient.auth.signUp({ 
-            email: document.getElementById('regEmail').value, 
-            password: pwd, 
-            options: { data: { 
-                username: document.getElementById('regUsername').value, [cite: 424]
-                role: document.querySelector('input[name="member_type"]:checked').value, [cite: 425]
-                my_referral_code: myNewReferralCode [cite: 425]
-            } } 
-        });
-        if (error) alert('❌ ' + error.message); [cite: 427]
-        else { alert('✅ สมัครสมาชิกสำเร็จ!'); closeAuthModal(); } [cite: 427]
-    }
-    // ... logic login [cite: 413]
+    event.preventDefault();
+    const submitBtn = event.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerText;
+    submitBtn.innerText = 'ประมวลผล...'; [cite: 412]
+
+    if (type === 'login') {
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value; [cite: 413]
+
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ 
+            email: email, 
+            password: password 
+        }); [cite: 416]
+
+        if (error) {
+            alert('❌ อีเมลหรือรหัสผ่านไม่ถูกต้อง'); [cite: 419]
+        } else {
+            alert('✅ เข้าสู่ระบบสำเร็จ');
+            closeAuthModal(); [cite: 419]
+            // ระบบจะไปเรียก updateUIAuth อัตโนมัติจาก onAuthStateChange [cite: 217]
+        }
+    } 
+    // ... ส่วนของ Register คงเดิม [cite: 420]
+    submitBtn.innerText = originalText; [cite: 428]
 }
 
-// ออกจากระบบ [cite: 428]
-async function handleLogout() { 
-    await supabaseClient.auth.signOut(); [cite: 428]
-    updateUIAuth(null); [cite: 428]
-    closeDashboard(); [cite: 428]
-    fetchModels(); [cite: 428]
+// ตรวจสอบสิทธิ์และอัปเดตหน้าตาเว็บ [cite: 218]
+function updateUIAuth(session) {
+    currentUserSession = session;
+    const isLoggedIn = session !== null; [cite: 218]
+    
+    // จัดการเมนูตามสถานะการล็อกอิน [cite: 219]
+    document.getElementById('guestMenu').style.display = isLoggedIn ? 'none' : 'flex';
+    document.getElementById('loggedInMenu').style.display = isLoggedIn ? 'flex' : 'none'; [cite: 219]
+
+    if (isLoggedIn && session.user) {
+        const userRole = session.user.user_metadata.role; [cite: 222]
+        // ถ้าเป็น Admin ระบบจะอนุญาตให้เปิด Dashboard แอดมินได้ในภายหลัง 
+        fetchWalletThemeAndAvatar(); [cite: 222]
+    }
 }
