@@ -490,3 +490,32 @@ body.theme-pastel {
     border-radius: 4px;
     margin-bottom: 10px;
 }
+/* ล้างสีทองทิ้ง ใช้สีชมพู Rose Gold ตามธีมหลัก */
+.btn-glow {
+    background: var(--btn-glow-bg) !important; /* ชมพูพาสเทลตาม root */
+    color: var(--btn-glow-text) !important;   /* ชมพูเข้ม */
+    box-shadow: 0 4px 15px var(--btn-glow-shadow) !important;
+    border: none !important;
+}
+
+.btn-glow:hover {
+    filter: brightness(1.05) !important;
+    transform: translateY(-2px) !important;
+}
+
+.dash-nav-item.active {
+    background-color: rgba(181, 108, 94, 0.15) !important; /* ชมพูจาง */
+    color: var(--accent) !important; /* ชมพูหลัก #b56c5e */
+    border-left: 4px solid var(--accent) !important;
+}
+
+.ag-stat-box:hover {
+    border-color: var(--accent) !important;
+}
+
+/* Skeleton Loading สีชมพู */
+@keyframes skeleton-loading {
+    0% { background-color: rgba(181, 108, 94, 0.1); }
+    50% { background-color: rgba(181, 108, 94, 0.2); }
+    100% { background-color: rgba(181, 108, 94, 0.1); }
+}
