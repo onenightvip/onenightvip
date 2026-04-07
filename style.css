@@ -1,17 +1,17 @@
 :root {
-    --accent: #b56c5e; 
-    --accent-light: #e29f8c;
-    --btn-glow-bg: linear-gradient(145deg, #ffefe8, #ffd8c9); 
-    --btn-glow-text: #b26c5e; 
-    --btn-glow-shadow: rgba(255, 216, 201, 0.8); 
-    --text-dark: #8c5a5a;
-    --text-muted: #b87a7a;
+    --accent: #b56c5e;               /* สีชมพูน้ำตาลหลัก [cite: 1060] */
+    --accent-light: #e29f8c;         /* สีชมพูอ่อน [cite: 1060] */
+    --btn-glow-bg: linear-gradient(145deg, #ffefe8, #ffd8c9); /* พื้นหลังปุ่มชมพูพาสเทล [cite: 1060] */
+    --btn-glow-text: #b26c5e;        /* ตัวอักษรสีชมพูเข้ม [cite: 1060] */
+    --btn-glow-shadow: rgba(255, 216, 201, 0.8); /* เงาเรืองแสงสีชมพู [cite: 1060] */
+    --text-dark: #8c5a5a;            /* ตัวอักษรโทนน้ำตาลชมพู [cite: 1061] */
+    --text-muted: #b87a7a;           /* ตัวอักษรสีจางโทนชมพู [cite: 1061] */
     --bg-glass: rgba(255, 255, 255, 0.6);
     --modal-bg: #111111; 
     --modal-input-bg: #1a1a1a;
     --badge-green: #10b981;
     --dash-bg: #0f0f0f;
-    --dash-gold: var(--accent); 
+    --dash-gold: var(--accent);       /* ใช้สีชมพูหลักแทนสีทอง [cite: 1061] */
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
