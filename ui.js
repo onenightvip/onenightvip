@@ -26,3 +26,18 @@ function renderGrid(dataToRender) {
     });
     grid.innerHTML = html; [cite: 385]
 }
+function showSkeleton() {
+    const grid = document.getElementById('modelsGrid');
+    let skeletonHtml = '';
+    // สร้างการ์ดเปล่า 8 ใบ
+    for (let i = 0; i < 8; i++) {
+        skeletonHtml += `
+            <div class="card skeleton-card">
+                <div class="skeleton-img" style="background: #eee; height: 380px; border-radius: 12px; margin-bottom: 15px;"></div>
+                <div class="skeleton-text" style="background: #eee; height: 20px; width: 60%; margin-bottom: 10px; border-radius: 4px;"></div>
+                <div class="skeleton-text" style="background: #eee; height: 15px; width: 40%; border-radius: 4px;"></div>
+            </div>
+        `;
+    }
+    grid.innerHTML = skeletonHtml;
+}
